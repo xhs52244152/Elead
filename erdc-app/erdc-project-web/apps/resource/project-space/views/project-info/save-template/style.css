@@ -1,0 +1,55 @@
+.template-info {
+  background: #fff;
+  height: calc(100vh - 112px);
+  background: #fff;
+}
+.template-info .form_title {
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.template-info .basic-information {
+  height: calc(100% - 54px);
+  padding: 16px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.template-info .basic-information .contraction-panel__content {
+  padding-bottom: 0;
+}
+.template-info .basic-information .basic-msg .panelContent {
+  margin-bottom: 24px;
+}
+.template-info .common-btn {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #EBEBEB;
+  padding: 12px 0;
+}
+
+.success-create-project.el-dialog.no-footer .el-dialog__body {
+  padding: 20px;
+}
+.success-create-project .tip {
+  display: flex;
+}
+.success-create-project .tip p {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.success-create-project .tip .erd-icon-success-solid {
+  margin-right: 4px;
+  font-size: 24px;
+  color: #00a854;
+}
+.success-create-project .btn-list {
+  text-align: center;
+  margin-top: 20px;
+}
+.success-create-project .btn-list .el-button + .el-button {
+  margin-left: 2px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,44 @@
+$ui-width: 1224; //设计图的基准宽
+$ui-height: 696; //设计图的基准高
+
+@function vw($px) {
+    @return $px / $ui-width * 100vw;
+}
+
+@function vh($px) {
+    @return $px / $ui-height * 100vh;
+}
+
+.parent-element-center {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: middle;
+    overflow: hidden;
+}
+.svg-content {
+    // display: inline-block;
+    // position: absolute;
+    // top: 60;
+    // left: 65;
+    background-color: rgb(233, 239, 243);
+    border-radius: 50%;
+    transform: rotate(-90deg);
+    .c-box {
+        fill: rgb(233, 239, 243);
+        stroke: lightskyblue;
+        stroke-width: 32;
+    }
+}
+
+.element-center {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    font-size: vw(20);
+    background-color: #3b3743;
+    color: #ffffff;
+}

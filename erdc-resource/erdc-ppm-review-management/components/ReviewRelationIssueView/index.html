@@ -1,0 +1,35 @@
+<div class="w-100p h-100p">
+    <fam-view-table
+        ref="reviewIssuetable"
+        :default-table-height="defaultTableHeight"
+        :is-adaptive-height="false"
+        :view-table-config="viewTableConfig"
+        @action-click="actionClick"
+    >
+        <template
+            v-for="slot in getSlotsName(slotsField)"
+            v-slot:[slot]="{scope}"
+        >
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+    <fam-association-object
+        v-if="showDialog"
+        :class-name="reViewClass"
+        table-key="IssueView"
+        :visible.sync="showDialog"
+        @after-request="afterRequest"
+        @before-submit="beforeSubmit"
+        :url-config="urlConfig"
+        :showCount="false"
+        :enableScrollLoad="true"
+    >
+    </fam-association-object>
+</div>

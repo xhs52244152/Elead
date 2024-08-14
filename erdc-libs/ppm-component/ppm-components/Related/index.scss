@@ -1,0 +1,44 @@
+
+.related-list {
+    height: 100%;
+    #FamViewNavbar {
+        display: none;
+    }
+    .el-tab-pane {
+        padding: var(--largeSpace) 0;
+    }
+    // .related-list {
+    //     min-height: 220px;
+    //     max-height: calc(100vh - 222px);
+    //     overflow: auto;
+        
+    // }
+    .related-list-show {
+        margin-bottom: var(--superSpace);
+    }
+    #FamViewTable {
+        .advanced-table-container {
+            padding: 0;
+            
+        }
+    }
+}
+.ppm-related_task {
+    .vxe-table--fixed-right-wrapper {
+        z-index: 1;
+    }
+}
+.related-project-selector {
+    width: 200px;
+    margin-right: var(--bigSpace);
+
+    .el-form {
+        width: 100%;
+        .el-form-item {
+            width: 100%;
+            .el-form-item__content {
+                width: 100% !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<div
+    class="ppm-project-form m-12"
+    v-fam-fs
+>
+    <common-create-form
+        @before-submit="beforeSubmit"
+        :formSlotData="formData"
+        :configParameter="configParameter"
+        @after-submit="afterSubmit"
+        @fieldsChange="fieldsChange"
+    >
+        <!-- <template v-slot:status="scope">
+            <erd-input
+                v-model="formData.status"
+                autofocus
+            />
+        </template> -->
+    </common-create-form>
+</div>

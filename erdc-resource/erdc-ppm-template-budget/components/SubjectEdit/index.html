@@ -1,0 +1,23 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="title"
+>
+    <fam-advanced-form
+        ref="form"
+        :model.sync="formData"
+        :form-id="formId"
+        :class-name="className"
+        :query-layout-params="queryLayoutParams()"
+    ></fam-advanced-form>
+    <template #footer>
+        <template v-if="type !== 'detail'">
+            <erd-button
+                type="primary"
+                @click="handleConfirm"
+                :loading="isSaving"
+                >{{ i18n.confirm }}</erd-button
+            >
+            <erd-button @click="handleCancel">{{ i18n.cancel }}</erd-button>
+        </template>
+    </template>
+</erd-ex-dialog>

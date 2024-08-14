@@ -1,0 +1,123 @@
+<div class="info-compare-relation-object h-100p">
+    <erd-tabs
+        v-model="activeName"
+        class="bg-white h-100p"
+        @tab-click="handleClick"
+    >
+        <erd-tab-pane
+            v-for="item in tabs"
+            :key="item.key"
+            :label="item.label"
+            :name="item.key"
+            :lazy="true"
+            :class="item.clazz || ''"
+            :disabled="item.loading"
+        >
+            <template v-if="item.key != 'erd.cloud.ppm.budget.entity.Budget'">
+                <div
+                    class="h-100p"
+                    v-if="activeName == item.key && reset"
+                    v-loading="item.loading"
+                >
+                    <div class="relation-object-operate mb-12">
+                        <erd-input
+                            v-model="searchStr"
+                            class="relation-fuzzy-search"
+                            style="width: 300px"
+                            @keyup.enter.native="fnSearch"
+                            clearable
+                            :placeholder="i18n.pleaseEnterTips"
+                            @clear="fnRefreshTable"
+                        >
+                            <template #suffix>
+                                <i
+                                    class="el-input__icon erd-iconfont erd-icon-search search-suffix-icon"
+                                    @click="fnSearch"
+                                ></i>
+                            </template>
+                        </erd-input>
+                        <erd-button
+                            class="table-control-icon"
+                            @click="fnShowColSetting()"
+                            icon="el-icon-setting"
+                        ></erd-button>
+                    </div>
+                    <erd-row class="grid-row-content">
+                        <erd-col
+                            v-for="(element, index) in item.options"
+                            class="grid-col"
+                            style="height: calc(100% - 36px)"
+                            :span="item.options.length == 1 ? 24 : (item.options.length > 2 ? 8 : 12)"
+                        >
+                            <div class="header-title-text">{{element.headerTitle}}</div>
+                            <vxe-grid
+                                class="grid-table-content h-100p"
+                                :class="index != 0 ? 'grid-table-overflow' : ''"
+                                :key="index"
+                                :cell-style="(val) => cellStyle(val, index)"
+                                header-cell-class-name="grid-header-content"
+                                :row-class-name="rowClassName"
+                                v-bind="element"
+                                @scroll="gridScroll"
+                            ></vxe-grid>
+                        </erd-col>
+                    </erd-row>
+                </div>
+            </template>
+            <template v-else>
+                <div class="relation-object-operate mb-12">
+                    <erd-input
+                        v-model="searchStr"
+                        class="relation-fuzzy-search"
+                        style="width: 300px"
+                        @keyup.enter.native="fnSearch"
+                        clearable
+                        :placeholder="i18n.pleaseEnterTips"
+                        @clear="fnRefreshTable"
+                    >
+                        <template #suffix>
+                            <i
+                                class="el-input__icon erd-iconfont erd-icon-search search-suffix-icon"
+                                @click="fnSearch"
+                            ></i>
+                        </template>
+                    </erd-input>
+                </div>
+                <erd-row
+                    class="grid-row-content"
+                    style="overflow: auto"
+                    v-if="activeName == 'erd.cloud.ppm.budget.entity.Budget'"
+                >
+                    <erd-col
+                        v-for="(element, index) in budgetData"
+                        class="grid-col"
+                        style="height: calc(100% - 66px)"
+                        :span="budgetData.length == 1 ? 24 : (budgetData.length > 2 ? 8 : 12)"
+                    >
+                        <div class="header-title-text">{{element.headerTitle}}</div>
+                        <vxe-grid
+                            class="grid-table-content h-100p"
+                            :key="index"
+                            :cell-style="(val) => cellStyleBudget(val, index)"
+                            header-cell-class-name="grid-header-content"
+                            :row-class-name="rowClassName"
+                            v-bind="element"
+                        ></vxe-grid>
+                    </erd-col>
+                </erd-row>
+            </template>
+        </erd-tab-pane>
+    </erd-tabs>
+
+    <!-- 列配置 -->
+    <fam-table-col-set
+        :visible.sync="colSettingVisible"
+        :title="i18n.fieldSettings"
+        :columns-list="columnSetList"
+        :default-columns="defaultColumns"
+        show-label="title"
+        value-key="field"
+        type="colSet"
+        @onsubmit="fnColSettingSubmit"
+    ></fam-table-col-set>
+</div>

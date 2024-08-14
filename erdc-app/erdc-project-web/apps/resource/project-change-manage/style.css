@@ -1,0 +1,40 @@
+.project_change_manage {
+  height: 100%;
+  background: #fff;
+  padding: 16px;
+}
+.project_change_manage .project_change_manage_list {
+  margin-bottom: 12px;
+  height: calc(100% - 42px);
+  border-bottom: 1px solid #ebebeb;
+  overflow: auto;
+}
+.project_change_manage .project_change_manage_list .manage_list_content {
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+  line-height: 40px;
+}
+.project_change_manage .project_change_manage_list .manage_list_content .content_left {
+  width: 150px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  margin-right: 20px;
+}
+.project_change_manage .project_change_manage_list .manage_list_content .content_right {
+  width: calc(100% - 170px);
+}
+.project_change_manage .project_change_manage_list .manage_list_content .content_right div {
+  font-size: var(--fontSize);
+}
+.project_change_manage .project_change_manage_list .manage_list_content .content_right .manage_select {
+  display: flex;
+}
+.project_change_manage .project_change_manage_list .manage_list_content .content_right .manage_select .manage_select_list {
+  margin-right: 10px;
+}
+.project_change_manage .project_change_btn {
+  text-align: center;
+}/*# sourceMappingURL=style.css.map */

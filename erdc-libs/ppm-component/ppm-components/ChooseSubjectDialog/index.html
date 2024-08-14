@@ -1,0 +1,41 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="innerTitle"
+    custom-class="choose-subject-dialog"
+>
+    <!-- 折叠面板：所属父节点 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold1"
+        :title="i18n['toParentNode']"
+    >
+        <div class="parent-node">
+            <label>{{i18n['parentNode']}}</label>
+            <span>{{parentPathName || '--'}}</span>
+        </div>
+    </erd-contraction-panel>
+    <!-- 折叠面板：选择科目 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold2"
+        :title="i18n['selectSubject']"
+    >
+        <!-- :view-table-height="260" -->
+        <fam-view-table
+            :view-table-config="viewTableConfig"
+            :enable-scroll-load="true"
+            :is-adaptive-height="true"
+            style="height: 300px"
+        >
+        </fam-view-table>
+    </erd-contraction-panel>
+
+    <template #footer>
+        <template>
+            <erd-button
+                type="primary"
+                @click="handleConfirm"
+                >{{ i18nMappingObj.confirm }}</erd-button
+            >
+            <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </template>
+</erd-ex-dialog>

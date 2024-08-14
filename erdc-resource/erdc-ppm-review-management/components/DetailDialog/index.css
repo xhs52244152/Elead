@@ -1,0 +1,9 @@
+.ppm-process-dialog .el-dialog__body {
+  padding: 0;
+}
+.ppm-process-dialog .detail-content .el-tab-pane {
+  padding: 16px 0;
+}
+.ppm-process-dialog .detail-content .table-container {
+  margin-top: var(--largeSpace);
+}/*# sourceMappingURL=index.css.map */

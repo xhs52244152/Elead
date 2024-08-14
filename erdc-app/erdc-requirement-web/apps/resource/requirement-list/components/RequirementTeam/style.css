@@ -1,0 +1,8 @@
+.ppm-requirement-team {
+  padding: var(--bigSpace);
+  height: 100%;
+}
+.ppm-requirement-team #fam-team {
+  background: white;
+  padding: var(--largeSpace);
+}/*# sourceMappingURL=style.css.map */

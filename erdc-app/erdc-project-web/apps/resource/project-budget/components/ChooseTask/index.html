@@ -1,0 +1,27 @@
+<erd-ex-dialog
+    custom-class="choose-task-dialog-box"
+    :visible.sync="dialogVisible"
+    :title="dialogTitle"
+    @fullscreen="onFullscreen"
+>
+    <fam-view-table
+        ref="taskList"
+        :view-table-config="viewTableConfig"
+        :enable-scroll-load="true"
+        is-adaptive-height
+        :style="{height: tableHeight}"
+    >
+    </fam-view-table>
+    <!-- 底部按钮 -->
+    <template #footer>
+        <template>
+            <erd-button
+                type="primary"
+                @click="handleConfirm"
+                :loading="isLoading"
+                >{{ i18n.confirm }}</erd-button
+            >
+            <erd-button @click="handleCancel">{{ i18n.cancel }}</erd-button>
+        </template>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,46 @@
+<div class="ppm-product-info">
+    <resizable-container :left="left">
+        <template v-slot:left>
+            <system-tree
+                @node-type-click="handleNodeClick"
+                :title="i18nMappingObj.treeTitle"
+                @operate-click="handleOperate"
+                :className="className"
+                ref="systemProductTree"
+            ></system-tree>
+        </template>
+        <template v-slot:right>
+            <system-define-detail
+                :treeDetail="treeDetail"
+                ref="systemProductDetail"
+                @edit-data="handleEdit"
+                currentMenu="Products"
+            ></system-define-detail>
+        </template>
+    </resizable-container>
+    <move-dialog
+        v-if="showMoveDialog"
+        :oid="oid"
+        :currentOid="currentOid"
+        :currentSelectTreeData="currentSelectTreeData"
+        :visible.sync="showMoveDialog"
+        @submit-success="afterSubmit"
+        :className="className"
+    ></move-dialog>
+
+    <system-dialog-form
+        v-if="showFormDialog"
+        :visible.sync="showFormDialog"
+        :title="formDialogTitle"
+        :className="className"
+        ruleCode="productInfoCodeType"
+        :editableAttrs="['parentRef', 'status', 'category', 'identifierNo']"
+        :currentSelectTreeData="currentSelectTreeData"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        @echo-data="echoData"
+        :oid="oid"
+        :currentOid="currentOid"
+        :layoutName="layoutName"
+    ></system-dialog-form>
+</div>

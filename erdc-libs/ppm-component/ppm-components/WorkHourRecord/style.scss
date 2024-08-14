@@ -1,0 +1,23 @@
+.ppm-workhour-history-list {
+    height: calc(100vh - 350px) !important;
+    #FamViewNavbar {
+        display: none;
+    }
+    // .fam-erd-table-container {
+    //     min-height: 180px;
+    // }
+
+    &#FamViewTable .advanced-table-container {
+        padding: 0;
+    }
+
+    #ComponentWapper-erdTable .erd_table-empty {
+        height: 100%;
+    }
+}
+
+.ppm-work-hour-register-form {
+    &.fam-dynamic-form > .el-row--flex .el-col:last-child {
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,42 @@
+#titleBox {
+    font-weight: bold;
+    font-size: large;
+}
+#two_hour {
+    border: 1px solid #cccccc;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    ul {
+        display: flex;
+        justify-content: center;
+        li {
+            padding-right: 60px;
+            padding-top: 20px;
+        }
+    }
+}
+.form_box {
+    display: flex;
+    flex-direction: column;
+}
+.nav_div_form {
+    margin-left: 135px;
+    margin-right: -4px;
+    margin-bottom: 12px;
+    .el-date-editor.el-input {
+        width: 390px;
+    }
+}
+.nav_div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.width_margin {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.primaryIdBox {
+    float: left;
+    font-size: 14px;
+}

@@ -1,0 +1,13 @@
+.ppm-label-form {
+    width: 100%;
+}
+.ppm-label-form .el-form-item {
+    width: 100%;
+}
+.ppm-label-form .el-form-item .el-form-item__content {
+    width: 100% !important;
+    min-height: 22px;
+    background: #fff;
+    /* height: 26px;
+    min-height: 26px; */
+}

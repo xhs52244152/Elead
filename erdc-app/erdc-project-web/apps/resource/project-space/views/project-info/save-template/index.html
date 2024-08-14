@@ -1,0 +1,55 @@
+<div class="template-info">
+    <erd-scrollbar class="basic-information">
+        <h1 class="form_title">{{ i18nMappingObj.saveTemplate }}</h1>
+        <erd-contraction-panel
+            class="basic-msg"
+            :unfold.sync="panelUnfold"
+            :title="i18nMappingObj.baseInfo"
+        >
+            <template v-slot:content>
+                <FamDynamicForm
+                    ref="basicInfo"
+                    :form.sync="formData"
+                    :data="formConfigs"
+                    :editableAttr="editableAttr"
+                    :query-layout-params="queryLayoutParams()"
+                >
+                </FamDynamicForm>
+            </template>
+        </erd-contraction-panel>
+        <fam-advanced-form
+            ref="infoForm"
+            :model.sync="detailFormData"
+            :form-id="formId"
+            :model-mapper="modelMapper"
+            :oid="oid"
+            @fieldChange="fieldChange"
+            :query-layout-params="queryLayoutParams()"
+            :class-name="className"
+            :schema-mapper="schemaMapper"
+        >
+            <template v-slot:copy-relation-module="scope">
+                <erd-checkbox-group
+                    v-model="checkedModule"
+                    @change="handleCheckedModule"
+                >
+                    <erd-checkbox
+                        v-for="(item, index) in moduleArr"
+                        :label="item.value"
+                        :key="item.index"
+                        @change="handleCheckedModule(item.value, $event)"
+                        >{{item.label}}</erd-checkbox
+                    >
+                </erd-checkbox-group>
+            </template>
+        </fam-advanced-form>
+    </erd-scrollbar>
+    <div class="common-btn">
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.close }}</erd-button>
+    </div>
+</div>

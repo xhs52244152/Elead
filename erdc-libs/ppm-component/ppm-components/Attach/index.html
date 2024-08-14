@@ -1,0 +1,93 @@
+<div class="attach-container">
+    <erd-row v-if="showTableBtn || showSearchInput">
+        <erd-col :span="4">
+            <erd-input
+                style="min-width: 200px"
+                v-if="showSearchInput"
+                :placeholder="i18nMappingObj.pleaseEnter"
+                suffix-icon="erd-iconfont erd-icon-search"
+                v-model="searchKey"
+                clearable
+                @keyup.enter.native="searchData"
+                @clear="searchData"
+                @blur="searchData"
+            >
+            </erd-input>
+        </erd-col>
+        <erd-col :span="20">
+            <slot name="table-attach-btn">
+                <div
+                    class="upload_btn_list"
+                    v-if="showTableBtn"
+                >
+                    <div
+                        v-for="item in tableBtn"
+                        :key="item.oid"
+                    >
+                        <erd-button
+                            v-if="!item.actionDto.hide"
+                            style="margin-left: 8px"
+                            @click="actionClick(item.actionDto)"
+                        >
+                            {{ item.actionDto.displayName }}
+                        </erd-button>
+                    </div>
+                </div>
+            </slot>
+            <fam-upload
+                v-show="false"
+                class="upload-demo"
+                ref="myUpload"
+                :limit="10"
+                :on-change="onChange"
+                :on-exceed="handleExceed"
+                :auto-upload="false"
+                :file-list="fileList"
+                action=""
+            >
+            </fam-upload>
+        </erd-col>
+    </erd-row>
+    <div class="erd-table-body-container">
+        <erd-table
+            :column="tableColumns"
+            :data="tableData"
+            class="attach_table"
+            height="100%"
+            @checkbox-change="changeSelect"
+            @checkbox-all="selectAllEvent"
+            v-bind="extendsProps"
+            show-overflow
+            border
+        >
+            <template #column:default:uploadState="{data}">
+                <span :class="{upload_fail: data.row.uploadState === 'fail'}"
+                    >{{ getState(data.row.uploadState) }}</span
+                >
+            </template>
+            <template #column:default:fileName="{data}">
+                <a
+                    v-if="isProcess"
+                    @click="download(data.row)"
+                    >{{ data.row.fileName }}</a
+                >
+                <span v-else>{{ data.row.fileName }}</span>
+            </template>
+            <template #column:default:operation="{data}">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(data.row)"
+                    :action-data="data.row"
+                    @click="onCommand"
+                ></fam-action-pulldowm>
+            </template>
+            <template
+                v-slot:empty
+                v-if="showCustomFooterSlot"
+            >
+                <slot name="empty"> </slot>
+            </template>
+        </erd-table>
+    </div>
+    <fam-file-preview ref="filePreview"></fam-file-preview>
+</div>

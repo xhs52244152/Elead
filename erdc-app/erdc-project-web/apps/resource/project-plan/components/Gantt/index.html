@@ -1,0 +1,204 @@
+<div class="ppm-gantt">
+    <!-- 计划集选择 -->
+    <erd-form
+        inline
+        class="ppm-label-form mb-lg ppm-gantt-planset-container"
+    >
+        <div style="margin-right: var(--normalSpace)">
+            <!-- 计划集 -->
+            <component-width-label
+                ref="planSetSelect"
+                is-render="plan-set-select"
+                v-model="currentPlanSet"
+                :item-label="i18nMappingObj.plan"
+                :project-oid="projectOid"
+                :removeable="false"
+                :clearable="false"
+                :class="['ppm-plan-set-selector-container', {
+                'fam-form-item-width-value': currentPlanSet !== ''
+            }]"
+                style="width: 160px"
+                :selectOnly="!!businessScene"
+                :disabled="!!businessScene && !!businessCurrentPlanSet"
+            >
+            </component-width-label>
+            <!-- 添加计划弹窗搜索 -->
+            <erd-input
+                v-if="businessScene"
+                v-model="searchStr"
+                class="fam-fuzzy-search"
+                style="width: 200px"
+                @keyup.enter.native="fnSearch"
+                :clearable="true"
+                :placeholder="i18n.pleaseEnter"
+                @clear="fnSearch"
+            >
+                <template #suffix>
+                    <i
+                        class="el-input__icon erd-iconfont erd-icon-search search-suffix-icon"
+                        @click="fnSearch"
+                    ></i>
+                </template>
+            </erd-input>
+        </div>
+        <!-- 展开层级 -->
+        <component-width-label
+            v-if="!businessScene"
+            is-render="erd-ex-select"
+            v-model="currentLevel"
+            :label="i18nMappingObj.level"
+            :options="levelOptions"
+            :removeable="false"
+            :clearable="false"
+            class="ppm-plan-set-selector-container"
+            style="width: 160px"
+        >
+        </component-width-label>
+        <!-- 高级筛选-控制按钮 -->
+        <erd-button
+            v-if="!businessScene"
+            class="fam-advanced-filter-btn"
+            @click="showAdvancedFilter = !showAdvancedFilter"
+            type="text"
+        >
+            {{i18n.advancedFilter}}
+        </erd-button>
+        <erd-button
+            v-if="businessScene"
+            class="fam-object-select__setting"
+            @click="colSettingVisible = true"
+            type="fill-icon"
+            icon="el-icon-setting"
+        ></erd-button>
+    </erd-form>
+
+    <div
+        id="ppm-gantt-container"
+        class="flex flex-column"
+    >
+        <!-- 高级筛选-面板 -->
+        <fam-advanced-group
+            v-if="showAdvancedFilter"
+            ref="advancedGroup"
+            :main-model-type="className"
+            is-panel
+            show-advanced-history
+            @height-change="onAdvancedHeightChange"
+            @onsubmit="onAdvancedFilterSubmit"
+        ></fam-advanced-group>
+
+        <div
+            class="top-opt-container"
+            v-if="!businessScene"
+        >
+            <div class="w-100p flex">
+                <fam-action-button
+                    class="toolbar-action-button top-opt-container__left"
+                    :action-data="tableSelectData"
+                    :action-config="basicActionConfig"
+                    :before-validator-query="beforeValidatorQuery"
+                    :args="args"
+                    ref="actionBtn"
+                    @click="onTopMenuBasicClick"
+                ></fam-action-button>
+                <div class="top-opt-container__right flex">
+                    <!-- 远程功能按钮 -->
+                    <fam-action-button
+                        class="toolbar-action-button"
+                        :action-data="tableSelectData"
+                        :action-config="actionConfig"
+                        :args="args"
+                        ref="actionOptionBtn"
+                        :extend-disabled-validate="extendDisabledValidate"
+                        :before-validator-query="beforeValidatorQuery"
+                        @click="onTopMenuClick"
+                        style="margin-left: auto"
+                    ></fam-action-button>
+
+                    <erd-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="i18nMappingObj.refresh"
+                        placement="top"
+                    >
+                        <erd-button
+                            type="fill-icon"
+                            icon="el-icon-refresh"
+                            @click="refresh"
+                        >
+                        </erd-button>
+                    </erd-tooltip>
+                    <erd-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="i18nMappingObj.fieldSet"
+                        placement="top"
+                    >
+                        <erd-button
+                            class="fam-object-select__setting"
+                            @click="colSettingVisible = true"
+                            type="fill-icon"
+                            icon="el-icon-setting"
+                        ></erd-button>
+                    </erd-tooltip>
+                </div>
+            </div>
+        </div>
+        <div
+            v-loading="loading"
+            :style="'height:' + ganttHeight + '; min-height: 200px;'"
+        >
+            <iframe
+                ref="iframe"
+                :src="iframeSrc"
+                :width="width"
+                height="100%"
+                style="border: none"
+            ></iframe>
+        </div>
+
+        <!-- 列配置 -->
+        <fam-table-col-set
+            :visible.sync="colSettingVisible"
+            :title="i18nMappingObj.columnConf"
+            :columns-list="columnSetList"
+            :default-columns="defaultColumns"
+            show-label="label"
+            value-key="attrName"
+            type="colSet"
+            @onsubmit="fnColSettingSubmit"
+        ></fam-table-col-set>
+
+        <!-- 下拉菜单 -->
+        <dropdown-menu
+            ref="dropdownMenu"
+            :action-name="moreBtnKey"
+            @item-click="onListMenuClick"
+        ></dropdown-menu>
+
+        <!-- 查看前后置任务 -->
+        <front-task-dialog
+            v-if="frontTaskVisible"
+            :visible.sync="frontTaskVisible"
+            :task-oid="currentTask.UID"
+            :un-saved-tasks="unSavedTasks"
+        ></front-task-dialog>
+        <!-- 上传交付件 弹窗 -->
+        <erd-ex-dialog
+            :visible.sync="uploadDeliverableVisible"
+            :title="'交付物'"
+            size="large"
+            custom-class="upload-deliverable-dialog"
+            @fullscreen="onDeliveryFullscreen"
+            @closed="onDeliverableClosed"
+        >
+            <delivery-detail
+                v-if="uploadDeliverableVisible"
+                :poid="currentTask.UID"
+                :isAddContainerRef="true"
+                ref="deliveryDetailRef"
+                @close-dialog="uploadDeliverableVisible = false"
+            ></delivery-detail>
+        </erd-ex-dialog>
+    </div>
+</div>

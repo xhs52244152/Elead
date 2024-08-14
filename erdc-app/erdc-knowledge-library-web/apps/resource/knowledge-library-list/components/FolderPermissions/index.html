@@ -1,0 +1,53 @@
+<div class="h-100p knowledge-permissions">
+    <resizable-container>
+        <template v-slot:left>
+            <folder-list-tree
+                ref="folderListTree"
+                v-bind="$attrs"
+                :folder-tree-title="i18n.knowledgeLibrary"
+                :current-folder="row"
+                @node-folder-click="nodeClick"
+            >
+                <template #custom-tree-node="{scope}">
+                    <span>{{scope.node.label}}</span>
+                </template>
+            </folder-list-tree>
+        </template>
+        <template v-slot:right>
+            <div class="h-100p w-100p p-16">
+                <div class="permission-left-return flex align-items-center">
+                    <div
+                        class="flex"
+                        @click="cancelReadPermission"
+                    >
+                        <erd-icon
+                            icon="el-icon-back"
+                            class="return-icon"
+                        ></erd-icon>
+                        <div class="return-content">{{ $t('back') }}</div>
+                        <div class="permission-line-style"></div>
+                    </div>
+                    <span
+                        style="font-size: var(--fontSizeLarge); color: #333333; font-weight: bolder; line-height: 28px"
+                    >
+                        <!-- {{ $t('folderPermission') }} -->
+                        {{ folderPath }}
+                    </span>
+                </div>
+                <fam-object-permission
+                    style="height: calc(100% - 16px); padding-top: 16px"
+                    ref="famObjectPermission"
+                    :query-params="{ data: { appName: 'PPM' } }"
+                    :include-ancestor-domain="includeAncestorDomain"
+                    @permissionReady="permissionReady"
+                ></fam-object-permission>
+                <!-- 暂时先注释，后续会优化创建权限，状态、类型下拉值 -->
+                <!-- :before-request="beforeRequest"
+                :statusQueryParams="statusQueryParams"
+                :custom-get-type-data="customGetTypeData"
+                :type-tree-props="typeTreeProps"
+                type-node-key="typeOid" -->
+            </div>
+        </template>
+    </resizable-container>
+</div>

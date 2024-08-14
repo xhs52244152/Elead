@@ -1,0 +1,116 @@
+<div class="p-lg h-100p">
+    <div
+        class="bg-white ppm-work-hour-form-container"
+        v-loading="loading"
+    >
+        <erd-scrollbar
+            class="h-100p"
+            wrapper-class="h-100p"
+            view-class="h-100p"
+        >
+            <div class="pt-xl">
+                <div class="text-xl font-bold flex justify-center align-items-center">
+                    <div class="position-relative text-xl font-bold flex justify-center align-items-center">
+                        <erd-link
+                            v-if="openType === 'create'"
+                            @click="changeWeek(-1)"
+                            class="erd-iconfont erd-icon-arrow-left mr-32"
+                            :underline="false"
+                            :disabled="loading"
+                        ></erd-link>
+                        <span
+                            :class="['flex justify-center align-items-center', {
+                                'cursor-not-allowed': loading && openType === 'create',
+                                'cursor-pointer': !loading && openType === 'create'
+                            }]"
+                            @click="openWeekSelector"
+                        >
+                            {{ currentWeekText }}
+                            <erd-link
+                                v-if="openType === 'create'"
+                                class="erd-iconfont erd-icon-arrow-down ml-4"
+                                :underline="false"
+                                :disabled="loading"
+                            ></erd-link>
+                        </span>
+                        <erd-link
+                            v-if="openType === 'create'"
+                            @click="changeWeek(1)"
+                            class="erd-iconfont erd-icon-arrow-right ml-32"
+                            :underline="false"
+                            :disabled="loading"
+                        ></erd-link>
+                        <erd-date-picker
+                            class="ppm-work-hour-weekPicker"
+                            ref="weekPicker"
+                            v-model="date"
+                            type="week"
+                            format="yyyy 第 WW 周"
+                            :placeholder="i18nMappingObj.selectWeek"
+                            :picker-options="pickerOptions"
+                            :disabled="loading"
+                        ></erd-date-picker>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <erd-tag size="mini">{{ userName }}</erd-tag>
+                    <erd-tag
+                        size="mini"
+                        type="warning"
+                        >{{ state }}</erd-tag
+                    >
+                </div>
+            </div>
+
+            <div class="ptb-xl ppm-workhour-table-container">
+                <template v-for="item in tabs">
+                    <div class="position-relative ppm-workhour-table-panel">
+                        <erd-contraction-panel
+                            :unfold.sync="panelUnfolds[item.name]"
+                            :title="item.title || ''"
+                        >
+                            <template v-slot:header-right>
+                                <erd-button
+                                    v-show="panelUnfolds[item.name]"
+                                    @click="addObject(item.name)"
+                                    >{{ i18nMappingObj.increase }}</erd-button
+                                >
+                            </template>
+                            <template v-slot:content>
+                                <work-hour-table
+                                    v-if="currentWeek.length"
+                                    :week="currentWeek"
+                                    :data="tableData[item.name]"
+                                    :ref="item.name"
+                                    :dialog-config="item.dialogConfig"
+                                    :type-reference="item.typeReference"
+                                    :work-hour-class-name="item.workHourClassName"
+                                    :readonly="readonly"
+                                >
+                                </work-hour-table>
+                            </template>
+                        </erd-contraction-panel>
+                    </div>
+                </template>
+            </div>
+        </erd-scrollbar>
+    </div>
+    <div class="ppm-workhour-submit-container">
+        <erd-button
+            type="primary"
+            @click="submit(true)"
+            >{{ i18nMappingObj.submit }}</erd-button
+        >
+        <erd-button
+            :disabled="loading"
+            @click="submit"
+            >{{ i18nMappingObj.save }}</erd-button
+        >
+        <erd-button
+            v-if="false"
+            :disabled="loading"
+            >{{ i18nMappingObj.saveDraft }}</erd-button
+        >
+        <erd-button @click="close">{{ i18nMappingObj.close }}</erd-button>
+    </div>
+</div>

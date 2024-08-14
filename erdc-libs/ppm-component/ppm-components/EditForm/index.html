@@ -1,0 +1,77 @@
+<div
+    class="form_edit_content"
+    v-fam-fs
+>
+    <erd-scrollbar class="form_content_body">
+        <h1
+            class="form_title"
+            v-if="compConfig.title"
+        >
+            {{compConfig.title}}
+        </h1>
+        <component
+            v-bind="basicProps"
+            @projectType="handleProjectType"
+            :is="currentComponent"
+            ref="basicInfo"
+            @getLayoutData="getLayoutData"
+        ></component>
+
+        <fam-advanced-form
+            v-if="compConfig.showDetailForm && oid"
+            ref="infoForm"
+            :model.sync="formDefaultData"
+            form-id="UPDATE"
+            :oid="oid"
+            :class-name="className"
+            :schema-mapper="schemaMapper"
+            :scoped-slots="scopedSlots"
+            :editableAttr="editableAttr"
+            :query-layout-params="queryLayoutParams"
+            @fieldChange="fieldChange"
+            v-bind="$attrs"
+            :model-mapper="modelMapper"
+        >
+            <template
+                v-for="(slot, slotName) in scopedSlots"
+                v-slot:[slotName]="slotProps"
+            >
+                <slot
+                    :name="slotName"
+                    v-bind="slotProps"
+                ></slot>
+            </template>
+        </fam-advanced-form>
+    </erd-scrollbar>
+    <div
+        class="ppm-common-btn"
+        v-if="openType!=='DETAIL'"
+    >
+        <erd-button
+            type="primary"
+            @click="confirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.close }}</erd-button>
+    </div>
+    <erd-ex-dialog
+        :visible.sync="visible"
+        :title="i18nMappingObj.tip"
+        size="mini"
+        :show-close="false"
+        custom-class="success-create-project"
+    >
+        <div class="tip">
+            <erd-icon icon="success-solid"></erd-icon>
+            <div class="tip-right">
+                <p>{{i18nMappingObj.updateSuccess}}</p>
+                <span>{{i18nMappingObj.doSome}}</span>
+            </div>
+        </div>
+        <div class="btn-list">
+            <erd-button @click="handleClick('look')">{{i18nMappingObj.lookDetail}}</erd-button>
+            <erd-button @click="handleClick('edit')">{{i18nMappingObj.continueCreating}}</erd-button>
+            <erd-button @click="handleClick('back')">{{i18nMappingObj.backList}}</erd-button>
+        </div>
+    </erd-ex-dialog>
+</div>

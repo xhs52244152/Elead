@@ -1,0 +1,11 @@
+.choose-subject-dialog .parent-node label {
+  display: inline-block;
+  width: 106px;
+  text-align: right;
+  margin-right: var(--normalSpace);
+}
+
+.choose-subject-dialog .advanced-table-container .viewtable-body-container.pb-xl {
+  padding-bottom: 0 !important;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,174 @@
+<div
+    id="task-table-container"
+    class="bg-white"
+>
+    <fam-view-table
+        v-if="isReady"
+        ref="taskList"
+        :class="{
+            'plan-set-table': showPlanSet
+        }"
+        :view-table-config="viewTableConfig"
+        :view-table-height="isDashboard ? 320 : ''"
+        :enable-scroll-load="enableScrollLoad"
+        @callback="renderTableCallback"
+        @action-click="actionClick"
+        is-adaptive-height
+    >
+        <template
+            v-if="showPlanSet && isDashboard"
+            #left:toolbar:first
+        >
+            <!-- 计划集 -->
+            <erd-form
+                inline
+                @submit.native.prevent
+            >
+                <!-- 计划集 -->
+                <component-width-label
+                    ref="planSetSelect"
+                    is-render="plan-set-select"
+                    v-model="currentPlanSet"
+                    :item-label="i18nMappingObj.plan"
+                    :project-oid="projectOid"
+                    :removeable="false"
+                    :clearable="false"
+                    :selectOnly="true"
+                    :showAllPlanSet="true"
+                    :class="['ppm-plan-set-selector-container', {
+                    'fam-form-item-width-value': currentPlanSet !== ''
+                }]"
+                >
+                </component-width-label>
+            </erd-form>
+        </template>
+        <template #right:toolbar:first>
+            <div class="mt-10">
+                <!-- 基线 -->
+                <baseline-select
+                    v-if="taskTableConfigKey === 'projectTaskList'"
+                    :class-name="className"
+                    @change="changeBaseline"
+                ></baseline-select>
+            </div>
+        </template>
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-model="groupAttrName"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="changeGroupData"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            #table:toolbar:basicfilter:first
+            v-if="showPlanSet"
+        >
+            <!-- 计划集 -->
+            <component-width-label
+                ref="planSetSelect"
+                is-render="plan-set-select"
+                v-model="currentPlanSet"
+                :item-label="i18nMappingObj.plan"
+                :project-oid="projectOid"
+                :removeable="false"
+                :clearable="false"
+                :selectOnly="true"
+                :showAllPlanSet="true"
+                :class="['ppm-plan-set-selector-container', {
+                    'fam-form-item-width-value': currentPlanSet !== ''
+                }]"
+            >
+            </component-width-label>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#name:content'"
+                :class="{'ppm-link-name': !scope.row.isGroupRow && !scope.row.isPlanSet, 'ppm-essipsis-inline-name': true, 'ppm-task-more-btn': scope.row.isMore}"
+                @click="openDetail(scope.row)"
+            >
+                <template
+                    v-if="scope.row.isGroupRow && showPlanSet && groupAttrName==='erd.cloud.ppm.plan.entity.Task#taskColor' && scope.row?.children.length > 0"
+                >
+                    <span
+                        :style="{width: '10px',
+                            height: '10px',
+                            borderRadius: '50%',
+                            display: 'inline-block', 
+                            backgroundColor: scope.row.children[0]['erd.cloud.ppm.plan.entity.Task#taskColor'] || 'none'}"
+                    ></span>
+                    {{scope.row['erd.cloud.ppm.plan.entity.Task#name']}}
+                </template>
+                <template v-else>{{scope.row['erd.cloud.ppm.plan.entity.Task#name']}}</template>
+            </span>
+            <div
+                class="milestone_lignt"
+                v-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#taskColor:content' && !scope.row.isPlanSet""
+            >
+                <i :style="{background: scope.row['erd.cloud.ppm.plan.entity.Task#taskColor'] || 'none'}"></i>
+                <span
+                    v-if="getTaskColor(scope.row.attrRawList)?.value"
+                    class="task-warning-label"
+                    :style="{ color: getTaskColor(scope.row.attrRawList)?.displayName }"
+                >
+                    {{getTaskColor(scope.row.attrRawList)?.value}}
+                </span>
+                <span
+                    class="mr-3"
+                    title="交付物"
+                    ><i
+                        class="erd-iconfont erd-icon-batching"
+                        style="margin-right: 4px"
+                    ></i>
+                    {{getTaskColor(scope.row.attrRawList)?.label}}
+                </span>
+                <div
+                    class="mr-3 upload-deliverable-btn"
+                    :class="{'events-none': scope.row.collectChangeTask}"
+                    title="上传交付物"
+                    @click="uploadDeliverable({ UID: scope.row?.oid })"
+                >
+                    <i class="erd-iconfont erd-icon-upload"></i>
+                </div>
+            </div>
+            <div
+                v-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#planInfo.completionRate:content' && !scope.row.isGroupRow && !scope.row.isPlanSet"
+            >
+                <div class="completionRate-box">
+                    <svg-circle :rate="getCompletionRate(scope.row)"></svg-circle>
+                    <div>{{ getCompletionRate(scope.row, '%')}}</div>
+                </div>
+            </div>
+        </template>
+    </fam-view-table>
+
+    <!-- 上传交付件 弹窗 -->
+    <erd-ex-dialog
+        :visible.sync="uploadDeliverableVisible"
+        :title="'交付物'"
+        size="large"
+        custom-class="upload-deliverable-dialog"
+        @fullscreen="onDeliveryFullscreen"
+        @closed="onDeliverableClosed"
+    >
+        <delivery-detail
+            v-if="uploadDeliverableVisible"
+            ref="deliveryDetailRef"
+            :poid="currentTask.UID"
+            :isAddContainerRef="true"
+        ></delivery-detail>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,42 @@
+<div class="review-library-container h-100p flex flex-column">
+    <fam-view-table
+        ref="libraryList"
+        :view-table-config="viewTableConfig"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.cbb.review.entity.ReviewElement#content:content'"
+                :class="{'library-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="handleDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.cbb.review.entity.ReviewElement#content']}}
+            </span>
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+
+    <library-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :title="formDialogTitle"
+        :editableAttrs="editableAttrs"
+        :className="className"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        @echo-data="echoData"
+        @edit="edit"
+        :oid="oid"
+        :layoutName="layoutName"
+    ></library-dialog>
+</div>

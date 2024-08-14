@@ -1,0 +1,46 @@
+#task-relevance-container .fam-view-navbar-component {
+    display: none;
+}
+
+#ppm-related_objects {
+    .panelLeft {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 700;
+        opacity: 0.85;
+        color: #000;
+    }
+    .advanced-table-container {
+        padding: 0 !important;
+    }
+}
+
+.ppm-related_task {
+    &.ContractionPanel {
+        margin-bottom: var(--superSpace);
+    }
+
+    .contraction-panel__content {
+        padding-bottom: 0;
+    }
+}
+
+// #pane-RelevanceList {
+//     height: 100%;
+//     #ppm-related_objects {
+//         height: 100%;
+//         .ContractionPanel {
+//             height: 100%;
+//             .panelContent {
+//                 height: calc(100% - 20px);
+//                 .contraction-panel__content {
+//                     height: 100%;
+//                     #task-relevance-container {
+//                         height: 100%;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

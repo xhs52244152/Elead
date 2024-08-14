@@ -1,0 +1,31 @@
+<div class="h-100p">
+    <fam-advanced-table
+        :view-table-config="viewTableConfig"
+        :enable-scroll-load="false"
+        ref="famTableRef"
+        class="relation-subject-table"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 行内操作 -->
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-advanced-table>
+    <choose-subject-dialog
+        v-if="chooseSubjectVisible"
+        :visible.sync="chooseSubjectVisible"
+        :relationOid="relationOid"
+        :parentSubjectOid="parentSubjectOid"
+        :findParentConfig="findParentConfig"
+        @success="refresh"
+    ></choose-subject-dialog>
+</div>

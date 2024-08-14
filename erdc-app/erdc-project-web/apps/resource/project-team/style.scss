@@ -1,0 +1,18 @@
+.team_content {
+    background: #fff;
+    height: 100%;
+    .el-tabs {
+        height: 100%;
+        .el-tabs__header {
+            background-color: var(--colorFullBg);
+        }
+        .el-tabs__content {
+            padding: 16px;
+            height: calc(100% - 40px);
+            .el-tab-pane {
+                height: 100%;
+                padding: 0;
+            }
+        }
+    }
+}

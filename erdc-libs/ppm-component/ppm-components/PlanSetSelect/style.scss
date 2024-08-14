@@ -1,0 +1,40 @@
+.ppm-plan-set-select {
+    .el-select-dropdown__item {
+        width: auto !important;
+
+        .el-tree-node:has(.ppm-plan-set-link) {
+            border-top: 1px solid var(--colorSplit);
+            padding-top: var(--miniSpace);
+            margin-top: var(--miniSpace);
+        }
+    }
+
+    .el-tree-node[aria-disabled]>.el-tree-node__content:has(.ppm-plan-set-link) {
+        cursor: pointer;
+    }
+    .el-input {
+     .el-input__prefix>span {
+            display: inline-block;
+            color: var(--colorTextNormal);
+            padding: 0 8px;
+        }
+    }
+}
+
+.ppm-plan-set-selector-container .el-form-item__content {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.ppm-planset-edit-table .vxe-table--render-default .col--edit.col--actived .vxe-cell--tree-node,
+.ppm-planset-edit-table .vxe-table--render-default .col--edit.col--actived .vxe-tree-cell {
+    padding-left: 0 !important;
+}
+
+.ppm-planset-edit-table .vxe-table--render-default .col--edit.col--actived .vxe-cell--tree-node .vxe-tree--btn-wrapper {
+    display: none;
+}
+
+.ppm-planset-parent-form .el-form-item__label {
+    color: var(--colorTextNormal);
+}

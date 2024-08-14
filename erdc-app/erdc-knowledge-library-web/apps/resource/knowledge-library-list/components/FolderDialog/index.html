@@ -1,0 +1,41 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="dialogTitle"
+    size="large"
+>
+    <basic-info
+        ref="basicForm"
+        :get-container-ref="getContainerRef"
+        :type-name="typeName"
+        :custom-form-config="customFormConfig"
+        :custom-render-layout-form="customRenderLayoutForm"
+        :currentType="currentType"
+        :form-slots="formSlots"
+        :form-slots-props="formSlotsProps"
+        class="pb-12"
+        v-bind="$attrs"
+    >
+    </basic-info>
+    <common-form
+        v-if="typeOid"
+        :key="refreshKey"
+        class="m-0 pt-12"
+        ref="detailForm"
+        :layout-name="layoutName"
+        :form-id="formId"
+        :form-slots="{}"
+        :class-name="className"
+        :business-oid="rowData.oid"
+        :custom-query-params="customQueryParams"
+    ></common-form>
+    <template #footer>
+        <template>
+            <erd-button
+                type="primary"
+                @click="confirm"
+                >{{ $t('confirm') }}</erd-button
+            >
+            <erd-button @click="cancel">{{ $t('cancel') }}</erd-button>
+        </template>
+    </template>
+</erd-ex-dialog>

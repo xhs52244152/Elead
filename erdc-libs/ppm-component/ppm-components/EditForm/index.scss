@@ -1,0 +1,61 @@
+.form_edit_content {
+    display: flex;
+    flex-direction: column;
+    .ppm-common-btn {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        border-top: 1px solid #EBEBEB;
+        padding: 12px 0;
+    }
+    .form_title {
+        margin-bottom: 16px;
+        color: rgba(0, 0, 0, 0.85);
+        letter-spacing: 0;
+        line-height: 28px;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    .form_content_body {
+        overflow: hidden;
+        overflow-y: auto;
+        flex-grow: 1;
+        background: #fff;
+        padding: 16px;
+
+        .basic-msg {
+            .panelContent {
+                margin-bottom: 24px;
+            }
+
+            .set_basic_style.last-line-no-bottom .el-col:nth-last-child(2) {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .success-create-project {
+        &.el-dialog.no-footer .el-dialog__body {
+            padding: 20px;
+        }
+        .tip {
+            display: flex;
+            p {
+                font-weight: 700;
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+            .erd-icon-success-solid {
+                margin-right: 4px;
+                font-size: 24px;
+                color: #00a854;
+            }
+        }
+        .btn-list {
+            text-align: center;
+            margin-top: 20px;
+            .el-button + .el-button {
+                margin-left: 2px;
+            }
+        }
+    }
+}

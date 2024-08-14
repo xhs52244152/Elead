@@ -1,0 +1,40 @@
+<div>
+    <erd-tree-select
+        ref="select"
+        popper-class="ppm-plan-set-select"
+        class="w-100p ppm-plan-set-select"
+        :data="options"
+        :props="defaultProps"
+        filterable
+        node-key="oid"
+        v-model="dataValue"
+        @node-click="onNodeClick"
+        :default-value="dataValue"
+        :placeholder="placeholder"
+        :disabled="disabled"
+    >
+        <template v-slot="{ data, node }">
+            <div class="custom-tree-node">
+                <a
+                    v-if="data.type === 'link'"
+                    class="ppm-plan-set-link"
+                    >{{ data.name }}</a
+                >
+                <span v-else>{{ data.name }}</span>
+            </div>
+        </template>
+
+        <template
+            v-if="itemLabel"
+            slot="prefix"
+        >
+            <span>{{itemLabel}}</span>
+        </template>
+    </erd-tree-select>
+
+    <!-- 编辑计划集弹窗 -->
+    <edit-plan-set
+        ref="editPlanSet"
+        @after-update="refresh"
+    ></edit-plan-set>
+</div>

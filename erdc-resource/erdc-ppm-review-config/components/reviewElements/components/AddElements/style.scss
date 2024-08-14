@@ -1,0 +1,12 @@
+
+.add-elements {
+    height: 640px;
+    .el-dialog__body {
+        height: 84%;
+        #FamViewTable {
+            .advanced-table-container {
+                padding: 0;
+            }
+        }
+    }
+}

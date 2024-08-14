@@ -1,0 +1,10 @@
+<div v-fam-fs>
+    <history-record
+        @action-click="actionClick"
+        v-if="oid && className"
+        :oid="oid"
+        :viewTableConfig="viewTableConfig"
+        :className="className"
+    >
+    </history-record>
+</div>

@@ -1,0 +1,43 @@
+.budget-custom-list {
+    /* 隐藏单元格的编辑图标 */
+    .erd_table-editIcon:after {
+        display: none;
+    }
+
+    .bg-stage-cell {
+        background-color: #F0F2F5;
+    }
+    .text-align-right {
+        text-align: right;
+    }
+}
+.header-tag {
+    display: inline;
+    line-height: 20px;
+    padding: 0 4px;
+    font-weight: 200;
+    border-radius: 2px;
+    font-size: 12px;
+    margin-right: 4px;
+    user-select: none;
+
+    &.default-style {
+        border: none;
+        background-color: #DEE0E4;
+        color: #6F7886;
+    }
+}
+
+.expenses-rate-tag {
+    display: inline;
+    line-height: 22px;
+    padding: 0 4px;
+    font-weight: 200;
+    border-radius: 2px;
+    user-select: none;
+
+    &.exceed {
+        border: 1px solid #F5222D;
+        color: #F5222D;
+    }
+}

@@ -1,0 +1,10 @@
+.ppm-common-attach {
+  height: 100%;
+  width: 100%;
+}
+.ppm-common-attach .common-attach-list {
+  padding: 0;
+}
+.ppm-common-attach .common-attach-list .erd-table-body-container {
+  margin-top: 0px;
+}/*# sourceMappingURL=index.css.map */

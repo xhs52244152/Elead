@@ -1,0 +1,19 @@
+<div class="ppm-business-basic-info">
+    <erd-button
+        v-if="treeDetail.status !== 'inactive'"
+        plain
+        class="info-edit"
+        @click="handleEdit"
+        >编辑</erd-button
+    >
+    <fam-advanced-form
+        v-if="oid"
+        ref="dynamicForm"
+        :model.sync="formData"
+        :form-id="layoutName"
+        :class-name="className"
+        :object-oid="oid"
+        :query-layout-params="queryLayoutParams()"
+    >
+    </fam-advanced-form>
+</div>

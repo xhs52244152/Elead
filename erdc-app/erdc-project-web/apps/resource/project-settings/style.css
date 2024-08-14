@@ -1,0 +1,58 @@
+.project_settings {
+  height: 100%;
+  background: #fff;
+  padding: 16px;
+}
+.project_settings .project_settings_list {
+  margin-bottom: 12px;
+  height: calc(100% - 42px);
+  border-bottom: 1px solid #ebebeb;
+  overflow: auto;
+}
+.project_settings .project_settings_list .settings_list_content {
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+  line-height: 40px;
+}
+.project_settings .project_settings_list .settings_list_content .content_left {
+  width: 150px;
+  text-align: right;
+  font-size: var(--fontSize);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 20px;
+}
+.project_settings .project_settings_list .settings_list_content .content_right {
+  width: calc(100% - 170px);
+}
+.project_settings .project_settings_list .settings_list_content .content_right .el-radio-group {
+  margin-left: 20px;
+}
+.project_settings .project_settings_list .settings_list_content .content_right div {
+  font-size: var(--fontSize);
+}
+.project_settings .project_settings_list .settings_list_content .content_right .el-radio-group:first-child {
+  margin-left: 0;
+}
+.project_settings .project_settings_list .settings_list_content .content_right .switch-content {
+  display: flex;
+  align-items: center;
+}
+.project_settings .project_settings_list .settings_list_content .content_right .content_right_body {
+  display: flex;
+  flex-wrap: wrap;
+}
+.project_settings .project_settings_list .settings_list_content .content_right .content_right_body .content_right_list {
+  margin-right: 10px;
+}
+.project_settings .project_settings_list .settings_list_content .content_right .content_right_body .content_right_list span {
+  font-size: var(--fontSize);
+}
+.project_settings .project_settings_list .settings_list_content .content_right .content_right_body .content_right_list .el-input {
+  width: 60px;
+}
+.project_settings .project_settings_btn {
+  text-align: center;
+}/*# sourceMappingURL=style.css.map */

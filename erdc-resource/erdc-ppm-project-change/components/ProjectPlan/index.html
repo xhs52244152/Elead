@@ -1,0 +1,147 @@
+<div id="project-plan">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18n.planChange"
+    >
+        <template v-slot:header-right>
+            <template v-if="readonly">
+                <erd-button
+                    type="primary"
+                    @click="onActionClick('change_info')"
+                    >{{i18n.changeInfo}}</erd-button
+                ></template
+            >
+            <template v-else>
+                <erd-button
+                    type="primary"
+                    @click="onActionClick('create_task')"
+                    >{{i18n.create}}</erd-button
+                >
+                <erd-button @click="onActionClick('add_task')">{{i18n.add}}</erd-button>
+                <erd-button @click="onActionClick('remove_task')">{{i18n.remove}}</erd-button>
+            </template>
+        </template>
+        <template v-slot:content>
+            <fam-view-table
+                v-if="showTable"
+                ref="table"
+                :view-table-config="viewTableConfig"
+                @action-click="onActionClick"
+                :enable-scroll-load="false"
+                class="project-plan-table"
+                :default-table-height="450"
+                :is-adaptive-height="false"
+            >
+                <template
+                    v-for="slot in slotsNameList"
+                    v-slot:[slot]="{scope}"
+                >
+                    <div v-if="slot === 'column:default:operation:content'">
+                        <erd-dropdown
+                            trigger="click"
+                            @command="(type)=>(handleCommand(type, scope.row))"
+                        >
+                            <span class="erd-dropdown-link">
+                                <a> {{i18n.operation}}</a><i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <erd-dropdown-menu slot="dropdown">
+                                <erd-dropdown-item
+                                    v-if="scope.row.action!=='DELETE'&&scope.row.action!=='CREATE'"
+                                    command="cutPlan"
+                                    >{{i18n.cut}}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    v-if="scope.row.action!=='DELETE'"
+                                    command="createSubTask"
+                                    >{{i18n.createSubTask}}</erd-dropdown-item
+                                >
+                            </erd-dropdown-menu>
+                        </erd-dropdown>
+                    </div>
+                    <!-- 预计开始时间 -->
+                    <div
+                        v-else-if="slot === 'column:edit:timeInfo.scheduledStartTime:content'&&scope.row.action!=='DELETE'"
+                    >
+                        <erd-date-picker
+                            style="width: 100%"
+                            v-model="scope.row['timeInfo.scheduledStartTime']"
+                            type="date"
+                            :editable="false"
+                            :clearable="false"
+                            :picker-options="pickerOptionsStart(scope.row['timeInfo.scheduledEndTime'])"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                            @change="val=>changeStartime(val,scope.row)"
+                        >
+                        </erd-date-picker>
+                    </div>
+                    <!-- 预计结束时间 -->
+                    <div
+                        v-else-if="slot === 'column:edit:timeInfo.scheduledEndTime:content'&&scope.row.action!=='DELETE'"
+                    >
+                        <erd-date-picker
+                            style="width: 100%"
+                            v-model="scope.row['timeInfo.scheduledEndTime']"
+                            type="date"
+                            :editable="false"
+                            :clearable="false"
+                            :picker-options="pickerOptionsFinish(scope.row['timeInfo.scheduledStartTime'])"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                            @change="val=>changeFinishTime(val,scope.row)"
+                        >
+                        </erd-date-picker>
+                    </div>
+                    <!-- 资源角色 -->
+                    <div v-else-if="slot === 'column:edit:resAssignments:content'&&scope.row.action!=='DELETE'">
+                        <project-assignments-select
+                            v-model="scope.row['resAssignments']"
+                            :projectOid="projectOid"
+                            :props="{clearable: false}"
+                            @valueChange="changeResAssignments($event, scope.row)"
+                        ></project-assignments-select>
+                    </div>
+                    <!-- 责任人 -->
+                    <div v-else-if="slot === 'column:edit:responsiblePerson:content'&&scope.row.action!=='DELETE'">
+                        <fam-member-select
+                            ref="famMemberSelect"
+                            search-scop="container"
+                            :value="getValue(scope.row,'value')"
+                            :defaultValue="getValue(scope.row)"
+                            :params="{roleCode: getResAssignmentsValue(scope.row) || ''}"
+                            :multiple="false"
+                            :containerOid="containerRef"
+                            @change="val=>changeResponsiblePerson(val,scope.row)"
+                        ></fam-member-select>
+                    </div>
+                </template>
+            </fam-view-table>
+        </template>
+    </erd-contraction-panel>
+    <erd-ex-dialog
+        :title="i18n.projectPlan"
+        :visible.sync="showAddProjectDialog"
+        size="large"
+        :hideFullScreenBtn="true"
+    >
+        <div>
+            <gantt-view
+                v-if="showAddProjectDialog"
+                ref="ganttView"
+                businessScene="changeSelectList"
+                :projectId="projectOid"
+                :businessCurrentPlanSet="currentPlanSet"
+                currentLevel="1"
+                :conditionDtoList="conditionDtoList"
+            ></gantt-view>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="addProjectConfirm"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="showAddProjectDialog = false;">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

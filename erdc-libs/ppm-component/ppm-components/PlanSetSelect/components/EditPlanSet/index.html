@@ -1,0 +1,100 @@
+<div>
+    <erd-ex-dialog
+        :visible.sync="visible"
+        :title="title"
+        size="meduim"
+    >
+        <div>
+            <fam-advanced-table
+                v-if="visible"
+                ref="table"
+                :view-table-config="viewTableConfig"
+                @action-click="onActionClick"
+                :table-height="tableHeight"
+                class="ppm-planset-edit-table"
+            >
+                <template
+                    v-for="slot in slotsNameList"
+                    v-slot:[slot]="{scope}"
+                >
+                    <div v-if="slot === 'column:default:name:content'">
+                        <div v-if="scope.row.isNew && !scope.row.name" class="ppm-common-edit-cell">
+                            <div class="ppm-common-edit-cell--text">请输入或选择已有领域</div>
+                            <erd-link
+                                class="erd-iconfont erd-icon-edit"
+                                :underline="false"
+                            ></erd-link>
+                        </div>
+                        <span v-else>{{ scope.row.name }}</span>
+                    </div>
+                    <div v-if="slot === 'column:edit:name:content'">
+                        <erd-select
+                            :ref="scope.row.id"
+                            popper-class="vxe-select-option--wrapper vxe-table--ignore-clear"
+                            v-model="scope.row.name"
+                            placeholder="请输入或选择已有领域"
+                            allow-create
+                            filterable
+                            default-first-option
+                            @change="onChangeName(scope.row)"
+                            class="w-100p"
+                        >
+                            <erd-option
+                                v-for="(item, index) in domainOptions"
+                                :label="item.label"
+                                :value="item.label"
+                                :key="index"
+                            ></erd-option>
+                        </erd-select>
+                    </div>
+                    <div v-if="slot === 'column:default:area:content'">
+                        <span>{{ domainName(scope.row)}}</span>
+                    </div>
+                    <div v-else-if="slot === 'column:default:operation:content'">
+                        <fam-action-pulldowm
+                            :is-operation="true"
+                            :action-config="getActionConfig(scope.row)"
+                            :action-data="scope.row"
+                            @click="onCommand"
+                        ></fam-action-pulldowm>
+                    </div>
+                </template>
+            </fam-advanced-table>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="handleConfirm"
+                >确定</erd-button
+            >
+            <erd-button @click="close">取消</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :visible.sync="parentSelector.visible"
+        :title="parentSelector.title"
+        size="small"
+    >
+        <erd-form class="ppm-planset-parent-form">
+            <erd-form-item label="选择父节点">
+                <erd-tree-select
+                    class="w-100p"
+                    v-model="parentSelector.value"
+                    :data="parentSelector.options"
+                    filterable
+                    node-key="id"
+                    :props="parentSelector.defaultProps"
+                ></erd-tree-select>
+            </erd-form-item>
+        </erd-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="handleParentConfirm"
+                >确定</erd-button
+            >
+            <erd-button @click="parentSelector.visible = false">取消</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

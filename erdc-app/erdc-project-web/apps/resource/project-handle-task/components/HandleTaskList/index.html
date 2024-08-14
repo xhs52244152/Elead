@@ -1,0 +1,80 @@
+<div
+    class="handle-task-container"
+    :class="{ 'hide-handle-task-navbar': configKey === 'related' }"
+>
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        ref="handleTaskList"
+        @callback="renderTableCallback"
+        :enable-scroll-load="enableScrollLoad"
+    >
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-model="groupAttrName"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="changeGroupData"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <span
+                v-if="slot === `column:default:${nameField}:content`"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="openDetail(scope.row)"
+            >
+                {{scope.row[nameField]}}
+            </span>
+            <template
+                v-if="slot === `column:default:erd.cloud.ppm.plan.entity.DiscreteTask#planInfo.description:content`"
+            >
+                <span
+                    class="description-content"
+                    v-html="scope.row['erd.cloud.ppm.plan.entity.DiscreteTask#planInfo.description']"
+                ></span>
+            </template>
+            <div v-if="slot === 'column:default:operation:content' && !scope.row.isGroupRow">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true, 'handleTask']"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+    <fam-association-object
+        v-if="showDialog"
+        :class-name="className"
+        table-key="DiscreteTaskView"
+        :visible.sync="showDialog"
+        :left-table-columns="leftTableColumns"
+        @after-request="afterRequest"
+        @before-submit="beforeSubmit"
+        :url-config="extendParams"
+        :showCount="false"
+        :enableScrollLoad="true"
+    >
+        <!-- <template slot="left-search-main-content">
+            <erd-input
+                placeholder="请输入搜索内容"
+                v-model="searchLefttKey"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+                style="width: 100px; flex: 1"
+            ></erd-input>
+        </template> -->
+    </fam-association-object>
+</div>

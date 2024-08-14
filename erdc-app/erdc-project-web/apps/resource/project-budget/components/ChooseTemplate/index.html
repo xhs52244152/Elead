@@ -1,0 +1,125 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="dialogTitle"
+    custom-class="choose-budget-template"
+    :close-on-press-escape="canClose"
+    :show-close="canClose"
+>
+    <!-- 折叠面板：选择模板 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold1"
+        :title="i18n['selectTemplate']"
+    >
+        <fam-dynamic-form
+            ref="formRef1"
+            :form.sync="formData"
+            :data="formConfigs1"
+            :labelWidth="labelWidth"
+        >
+            <!-- 选择模板名称 -->
+            <template v-slot:chooseComponent="scope">
+                <template-select-table
+                    :value.sync="scope.data[scope.formConfig.field]"
+                    style="width: 100%"
+                ></template-select-table>
+            </template>
+        </fam-dynamic-form>
+    </erd-contraction-panel>
+    <!-- 折叠面板：基本信息 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold2"
+        :title="i18n['basicInfo']"
+    >
+        <FamDynamicForm
+            ref="formRef2"
+            :form.sync="formData"
+            :data="formConfigs2"
+            :labelWidth="labelWidth"
+        >
+            <!-- 模板维度 -->
+            <template v-slot:radioComponent="scope">
+                <erd-radio-group
+                    v-model="scope.data[scope.formConfig.field]"
+                    @change="valueChange(scope.formConfig.field, scope.data)"
+                >
+                    <erd-radio :label="'stageMode'">{{i18n['byCustom']}}</erd-radio>
+                    <erd-radio :label="'dateMode'">{{i18n['byYearMonth']}}</erd-radio>
+                </erd-radio-group>
+            </template>
+            <!-- 是否需要详细计划 -->
+            <template v-slot:radioPlanComponent="scope">
+                <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                    <erd-radio :label="true">{{i18n['yes']}}</erd-radio>
+                    <erd-radio :label="false">{{i18n['no']}}</erd-radio>
+                </erd-radio-group>
+            </template>
+            <!-- 选择年月区间 -->
+            <template v-slot:timeRangeComponent="scope">
+                <el-date-picker
+                    v-model="scope.data[scope.formConfig.field]"
+                    type="monthrange"
+                    :range-separator="i18n['timeSplit']"
+                    :start-placeholder="i18n['timeStartMonth']"
+                    :end-placeholder="i18n['timeEndMonth']"
+                >
+                </el-date-picker>
+            </template>
+        </FamDynamicForm>
+    </erd-contraction-panel>
+    <!-- 折叠面板：编辑阶段 -->
+    <erd-contraction-panel
+        v-if="!hiddenEditStage"
+        :unfold.sync="unfold3"
+        :title="i18n['editCol']"
+    >
+        <div class="edit-stage-table-toolbar">
+            <erd-button @click="handleAddRow">{{ i18n.create }}</erd-button>
+        </div>
+        <erd-table
+            border
+            :row-config="{isCurrent: true, isHover: true}"
+            :edit-config="{trigger: 'click', mode: 'cell'}"
+            :column-config="{resizable: true}"
+            align="left"
+            :data="stageTableData"
+            :column="stageTableColumns"
+            show-overflow
+            ref="stageTableRef"
+        >
+            <!-- 编辑时的插槽：阶段名称 -->
+            <template #column:edit:name="{data}">
+                <erd-input
+                    v-model="data.row[data.column.property]"
+                    :placeholder="i18n['pleaseEnter']"
+                    :maxlength="64"
+                    show-word-limit
+                    @input="stageNameInput(data.row, data.column.property)"
+                ></erd-input>
+            </template>
+            <!-- 插槽：操作列 -->
+            <template #column:default:operation="{data}">
+                <a
+                    href="javascript:void(0)"
+                    @click="handleRowDelete(data)"
+                    >{{i18n['delete']}}</a
+                >
+            </template>
+        </erd-table>
+    </erd-contraction-panel>
+    <!-- 底部按钮 -->
+    <template #footer>
+        <template>
+            <erd-button
+                type="primary"
+                @click="handleSave"
+                :loading="isSaving"
+                >{{ i18n.confirm }}</erd-button
+            >
+            <erd-button
+                v-if="canClose"
+                @click="handleCancel"
+                >{{ i18n.cancel }}</erd-button
+            >
+        </template>
+    </template>
+</erd-ex-dialog>

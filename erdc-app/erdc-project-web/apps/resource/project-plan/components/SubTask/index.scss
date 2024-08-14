@@ -1,0 +1,20 @@
+.sub-task-content{
+    height: 100%;
+    .fam-view-navbar-component{
+        display: none;
+    }    
+    .sub_task_oper{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        padding-bottom: 16px;
+    }
+}
+
+#pane-SubTask {
+    height: 100%;
+}
+
+.p-0{
+    padding: 0 !important;
+}

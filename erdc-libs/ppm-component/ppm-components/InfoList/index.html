@@ -1,0 +1,16 @@
+<ul class="info_list">
+    <li
+        class="info_list_show"
+        v-for="(i,idx) in infoData"
+        :key="i.title"
+    >
+        <img
+            :src="imgArr[idx]"
+            alt=""
+        />
+        <p class="info_msg">
+            <span>{{i.value}}</span>
+            <span>{{i.title}}</span>
+        </p>
+    </li>
+</ul>

@@ -1,0 +1,96 @@
+<div class="h-100p flex flex-column">
+    <!-- <div>
+        <FamSecondaryMenu v-if="showSecondaryMenu"></FamSecondaryMenu>
+    </div> -->
+    <div id="project_content">
+        <fam-view-table
+            :view-table-config="viewTableConfig"
+            :is-adaptive-height="true"
+            :enable-scroll-load="enableScrollLoad"
+            @callback="fnCallback"
+            class="view_table"
+            ref="famViewTable"
+        >
+            <template #right:viewNavbar:end>
+                <div class="project_nav_right">
+                    <erd-form
+                        inline
+                        class="ppm-label-form"
+                    >
+                        <simple-select
+                            v-model="groupName"
+                            :options="groupOptions"
+                            @change="handleGroup"
+                        >
+                        </simple-select>
+                    </erd-form>
+                </div>
+            </template>
+            <template
+                v-for="slot in slotsNameList"
+                v-slot:[slot]="{scope}"
+            >
+                <div
+                    class="completion_rate"
+                    v-if="slot === 'column:default:erd.cloud.ppm.project.entity.Project#completionRate:content' && !scope.row.isGroupRow"
+                >
+                    <svg-circle :rate="getCompletionRate(scope.row)"></svg-circle>
+                    <span class="completion_rate_num">{{getCompletionRate(scope.row, '%') }}</span>
+                    <!-- <span>--</span> -->
+                </div>
+                <template
+                    v-if="slot === 'column:default:erd.cloud.ppm.project.entity.Project#projectManager:content' && !scope.row.isGroupRow"
+                >
+                    <span
+                        v-if="scope.row['erd.cloud.ppm.project.entity.Project#projectManager']"
+                        class="project_manager ppm-essipsis-project-manager"
+                    >
+                        {{scope.row['erd.cloud.ppm.project.entity.Project#projectManager']}} ({{ scope.row['code']}})
+                    </span>
+                    <span v-else>--</span>
+                </template>
+                <span
+                    v-if="slot === 'column:default:erd.cloud.ppm.project.entity.Project#name:content'"
+                    :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                    @click="handleDetail(scope.row)"
+                >
+                    {{scope.row['erd.cloud.ppm.project.entity.Project#name'] || '-' }}
+                </span>
+                <div
+                    class="project_lignt"
+                    v-if="slot === 'column:default:erd.cloud.ppm.project.entity.Project#projectProgressDisplay:content' && !scope.row.isGroupRow"
+                >
+                    <erd-popover
+                        placement="top"
+                        title=""
+                        trigger="hover"
+                        :content="projectScheduleTip(scope.row.attrRawList)"
+                    >
+                        <i
+                            slot="reference"
+                            :style="{background: projectScheduleTip(scope.row.attrRawList, true)}"
+                        ></i>
+                    </erd-popover>
+                </div>
+                <div v-if="slot === 'column:default:operation:content' && showOperate && !scope.row.isGroupRow">
+                    <fam-action-pulldowm
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :extendDisabledValidate="extendDisabledValidate"
+                        :action-data="scope.row"
+                        :args="[vm, scope.row, true]"
+                    ></fam-action-pulldowm>
+                </div>
+            </template>
+        </fam-view-table>
+
+        <export-dialog
+            v-if="exportVisible"
+            :visible.sync="exportVisible"
+            :business-name="businessName"
+            :request-config="requestConfig"
+            :className="className"
+            @submit-success-callback="handlerDialogSuccess"
+        ></export-dialog>
+    </div>
+</div>

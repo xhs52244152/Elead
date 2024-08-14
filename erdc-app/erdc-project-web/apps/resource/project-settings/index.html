@@ -1,0 +1,68 @@
+<div class="project_settings">
+    <ul class="project_settings_list">
+        <li
+            class="settings_list_content"
+            v-for="item in configs"
+            :key="item.name"
+        >
+            <div
+                class="content_left"
+                :title="item.name"
+            >
+                {{item.name}}
+            </div>
+            <div class="content_right">
+                <template v-if="singleType.includes(item.filed)">
+                    <erd-radio-group
+                        v-model="selectVal[item.filed].value"
+                        v-for="it in item.data"
+                    >
+                        <erd-radio :label="it.value">{{it.label}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <div
+                    v-if="filedArr.includes(item.filed)"
+                    class="switch-content"
+                >
+                    <erd-switch v-model="selectVal[item.filed].value.available"> </erd-switch>
+                    <div class="content_right_body flex-1 pl-8">
+                        <div class="content_right_list">
+                            <span>{{item.filed === 'projectLightNotice' ? i18n.projectLight : i18n.orangeLight}}</span>
+                            <erd-input
+                                v-model="selectVal[item.filed].value.lightYellowNum"
+                                type="number"
+                                size="small"
+                                :min="0"
+                                @input="onInput($event,item.filed,'lightYellowNum')"
+                                @blur="onBlur($event,item.filed,'lightYellowNum')"
+                            >
+                            </erd-input>
+                            <span>{{item.filed === 'projectLightNotice' ? i18n.percentage : i18n.day}}，</span>
+                        </div>
+                        <div class="content_right_list">
+                            <span>{{item.filed === 'projectLightNotice' ? i18n.projectRedLight : i18n.redLight}}</span>
+                            <erd-input
+                                v-model="selectVal[item.filed].value.lightRedNum"
+                                type="number"
+                                size="small"
+                                :min="0"
+                                @input="onInput($event,item.filed,'lightRedNum')"
+                                @blur="onBlur($event,item.filed,'lightRedNum')"
+                            >
+                            </erd-input>
+                            <span>{{item.filed === 'projectLightNotice' ? i18n.percentage : i18n.day}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="project_settings_btn">
+        <erd-button
+            type="primary"
+            @click="confirm"
+            :loading="isSaving"
+            >{{ i18n.confirm }}</erd-button
+        >
+    </div>
+</div>

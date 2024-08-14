@@ -1,0 +1,39 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="60%"
+>
+    <fam-advanced-form
+        ref="layoutForm"
+        :model.sync="formData"
+        :form-id="layoutName"
+        :class-name="className"
+        :editableAttr="editableAttrs"
+        :schema-mapper="schemaMapper"
+        :query-layout-params="queryLayoutParams()"
+    >
+    </fam-advanced-form>
+    <Files
+        ref="deliverFiles"
+        class="library-files-list"
+        downloadUrl="/element/content/file/download"
+        :showUpload="!viewReview"
+        uploadUrl="/element/content/file/upload"
+        tableListUrl="/element/content/attachment/list"
+        :class-name="className"
+        :businessOid="oid"
+        :quickBinding="false"
+        :realTimeDelete="false"
+        :operationConfigName="operationConfigName"
+    >
+    </Files>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            :loading="isSaving"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

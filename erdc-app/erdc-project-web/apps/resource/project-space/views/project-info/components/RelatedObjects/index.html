@@ -1,0 +1,22 @@
+<div class="ppm-related_objects">
+    <slot name="content:before"></slot>
+
+    <template v-for="(panel, index) in panelList">
+        <erd-contraction-panel
+            v-if="panel.isShow"
+            :unfold.sync="paneUnfold[panel.name]"
+            :title="panel.title"
+            class="ppm-related_objects__panel"
+        >
+            <template v-slot:content>
+                <component
+                    :is="panel.name"
+                    v-bind="panel.props"
+                    v-on="panel.listeners"
+                ></component>
+            </template>
+        </erd-contraction-panel>
+    </template>
+
+    <slot name="content:after"></slot>
+</div>

@@ -1,0 +1,6 @@
+{
+  "name": "@erdc-libs/ppm-workflow-resource",
+  "description": "PPM 工作流资源包",
+  "version": "3.1.0-rc4",
+  "devDependencies": {}
+}

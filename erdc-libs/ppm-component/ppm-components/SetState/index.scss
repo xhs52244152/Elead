@@ -1,0 +1,19 @@
+.set-state-container{
+    .common-box{
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--bigSpace);
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .label-box{
+            width: 56px;
+            text-align: right;
+            margin-right: var(--normalSpace);
+        }
+        .select-box{
+            width: calc(100% - 65px);
+        }
+    }
+}
+ 

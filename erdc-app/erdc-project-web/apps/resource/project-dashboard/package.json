@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/project-dashboard",
+  "version": "3.1.0-rc4",
+  "description": "仪表盘",
+  "erdcData": {
+    "widget": false
+  }
+}

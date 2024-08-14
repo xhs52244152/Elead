@@ -1,0 +1,21 @@
+<div class="task_report">
+    <h3 class="report_echart_title">{{i18n.taskReport}}</h3>
+    <div class="task_report_echart">
+        <plan-set-distribut class="report_echart"></plan-set-distribut>
+        <completion-rate-distribut class="report_echart"></completion-rate-distribut>
+        <state-distribut class="report_echart"></state-distribut>
+    </div>
+    <div class="task_report_list">
+        <dashboard-config
+            :showDataTime="false"
+            :titleName="i18n.OverdueTask"
+            :layout="[{ x: 0, y: 0, w: 24, h: 11, i: 3 }]"
+        >
+            <template #content>
+                <div>
+                    <task-list></task-list>
+                </div>
+            </template>
+        </dashboard-config>
+    </div>
+</div>

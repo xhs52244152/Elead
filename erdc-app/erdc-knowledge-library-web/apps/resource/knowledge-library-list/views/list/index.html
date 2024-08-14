@@ -1,0 +1,102 @@
+<div
+    class="h-100p"
+    id="knowledge-list"
+    v-if="containerRef"
+>
+    <folder-list
+        ref="folderList"
+        v-bind="folderProps"
+        v-if="!isPermission"
+        @node-folder-click="onNodeFolderClick"
+    >
+        <template #tree-search-right>
+            <fam-action-button
+                class="toolbar-action-button top-opt-container__left ml-8"
+                :action-data="{}"
+                :action-config="getTreeActionConfig()"
+                :args="[vm, {}]"
+            ></fam-action-button>
+        </template>
+        <template #custom-tree-node="{scope}">
+            <div
+                class="custom-tree-node"
+                @mouseenter="mouseenter(scope)"
+                @mouseleave="mouseleave(scope)"
+            >
+                <div
+                    class="tree-text"
+                    :title="scope.node.label"
+                >
+                    <em
+                        class="erd-iconfont erd-icon-folder"
+                        style="font-size: 16px"
+                    ></em>
+                    <span>{{scope.node.label}}</span>
+                </div>
+                <fam-action-pulldown
+                    v-show="scope.data.show && scope.node.level !== +1"
+                    :is-operation="true"
+                    :action-config="getFolderActionConfig(scope.data)"
+                    :action-data="scope.data"
+                    :args="[vm, scope.data, true]"
+                >
+                    <template #customLabel>
+                        <span class="erd-dropdown-link"
+                            ><i
+                                class="erd-iconfont erd-icon-more"
+                                style="font-size: 16px"
+                            ></i
+                        ></span>
+                    </template>
+                </fam-action-pulldown></div
+        ></template>
+        <template #column:default:name="{ data }">
+            <span
+                class="text-link cursor-pointer"
+                @click="openDocument(data)"
+                >{{ data.row.name }}</span
+            >
+        </template>
+        <template #column:default:identifierNo="{ data }"> {{ data.row.identifierNo || '—' }} </template>
+        <template #column:default:version="{ data }"> {{ data.row.version || '—' }} </template>
+        <template #column:default:statusDisplayName="{ data }"> {{ data.row.statusDisplayName || '—' }} </template>
+        <template #column:default:operation="{ data }">
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="getActionConfig(data.row)"
+                :action-data="data.row"
+                :args="[vm, data.row, true, 'knowledgeLibrary']"
+            ></fam-action-pulldown>
+        </template>
+        <template #column:default:icon="{ data }">
+            <i
+                v-if="data.row.idKey === typeName"
+                :class="data.row.icon"
+            ></i>
+            <i
+                v-else
+                :class="getIconStyle(data.row.icon).iconClass"
+                :style="getIconStyle(data.row.icon).iconStyle"
+            ></i>
+        </template>
+    </folder-list>
+    <folder-permissions
+        v-else
+        :row="currentRow"
+        :container-ref="containerRef"
+        @cancel="cancelPermission"
+    >
+    </folder-permissions>
+    <folder-dialog
+        v-if="folderVisible"
+        :visible.sync="folderVisible"
+        :container-ref="containerRef"
+        :type-name="typeName"
+        :class-name="typeName"
+        :current-type="currentType"
+        :row-data="currentRow"
+        :current-tree-node="currentTreeNode"
+        :is-move="isMove"
+        @confirm="handleConfirm"
+    ></folder-dialog>
+</div>

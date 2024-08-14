@@ -1,0 +1,19 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="svg-content"
+    :viewbox="viewbox"
+    :width="diameterShow"
+    :height="diameterShow"
+>
+    <!-- 外部圆圈，固定360度圆圈 -->
+    <!-- <circle :cx="size" :cy="size" :r="raduisActual" :stroke-width="strokeWidthIn" :stroke="strokeBgColor" fill="none"> -->
+    <!-- 百分比 -->
+    <circle
+        class="c-box"
+        v-if="rate"
+        cx="12"
+        cy="12"
+        r="16"
+        :stroke-dasharray="strokeDasharray"
+    ></circle>
+</svg>

@@ -1,0 +1,13 @@
+<div
+    v-fam-fs
+    class="ppm-template-create template_create template_common"
+>
+    <common-form
+        class="template_common_form"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        :formSlotData="formData"
+        :configParameter="configParameter"
+        @fieldsChange="onFieldChange"
+    ></common-form>
+</div>

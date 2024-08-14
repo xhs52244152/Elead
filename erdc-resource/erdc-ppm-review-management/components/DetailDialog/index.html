@@ -1,0 +1,39 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :modal-append-to-body="true"
+    custom-class="ppm-process-dialog"
+    :title="i18nMappingObj.detaiInfo"
+    fullscreen
+    :hideFullScreenBtn="true"
+    destroy-on-close
+>
+    <div class="detail-content">
+        <erd-tabs
+            v-model="activeName"
+            @tab-click="handleTabClick"
+            lazy
+        >
+            <erd-tab-pane
+                v-for="item in tabsData"
+                :key="item.activeName"
+                :label="item.name"
+                :name="item.activeName"
+                :lazy="true"
+            >
+                <erd-scrollbar style="height: 550px">
+                    <component
+                        :ref="item.activeName"
+                        :is="item.activeName"
+                        :container-ref-oid="containerRefOid"
+                        :leafNode="leafNode"
+                        :form-info="formInfo"
+                        :businessData="businessData"
+                        :zoomFlag="visible"
+                        v-bind="$attrs"
+                        v-on="$listeners"
+                    ></component>
+                </erd-scrollbar>
+            </erd-tab-pane>
+        </erd-tabs>
+    </div>
+</erd-ex-dialog>

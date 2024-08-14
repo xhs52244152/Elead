@@ -1,0 +1,37 @@
+<div
+    v-fam-fs
+    class="team_content"
+>
+    <erd-tabs
+        v-model="activeName"
+        @tab-click="handleClick"
+    >
+        <erd-tab-pane
+            v-for="item in tabsData"
+            :key="item.oid"
+            :label="item.labelName"
+            :name="item.labelName"
+        >
+            <template>
+                <Team
+                    v-if="item.currentComponent === 'Team' && activeName === item.labelName && isReady"
+                    :show-create-role="showCreateRole"
+                    :product-oid="oid"
+                    :container-team-ref="containerTeamRef"
+                    :query-params="queryParams"
+                    :team-table-type="teamTableType"
+                    :show-participant-type="showParticipantType"
+                    :action-config="actionConfig"
+                    :biz-oid="oid"
+                    :change-table-config="changeTableConfig"
+                ></Team>
+                <component
+                    v-if="item.currentComponent !== 'Team' && activeName === item.labelName"
+                    :is="item.currentComponent"
+                    :oid="item.oid"
+                    :isShow="false"
+                ></component>
+            </template>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

@@ -1,0 +1,78 @@
+<div class="sub-task-content">
+    <fam-view-table
+        ref="subTaskList"
+        :view-table-config="viewTableConfig"
+        :default-table-height="450"
+        :enable-scroll-load="enableScrollLoad"
+        @action-click="actionClick"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{ scope }"
+        >
+            <div>
+                <template v-if="slot=='column:default:operation:content'">
+                    <fam-action-pulldowm
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :action-data="scope.row"
+                        :args="[vm, scope.row, true,'subTask']"
+                        @click="onCommand"
+                    ></fam-action-pulldowm>
+                </template>
+            </div>
+        </template>
+    </fam-view-table>
+    <copy-or-move
+        type="move"
+        ref="copyOrMove"
+        :visible.sync="showCopyOrMoveDialog"
+        :class-name="className"
+        :view-ref="viewRef"
+        :is-template="isTemplate"
+        :parent-config="{ show: true }"
+        use-plan-set
+        @editCopyOrMoveConfirm="moveToProject"
+    ></copy-or-move>
+    <erd-ex-dialog
+        :visible.sync="showDialog"
+        :title="i18nMappingObj.sddSubtask"
+        :show-close="true"
+        custom-class="success-create-project"
+    >
+        <div class="dialog_content">
+            <div class="tree_content">
+                <div class="controlled-demo__left-header">
+                    <erd-input
+                        v-model="keyword"
+                        :placeholder="i18nMappingObj.pleaseSelect"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                        clearable
+                        @input="onKeywordChange"
+                    ></erd-input>
+                </div>
+
+                <erd-ex-tree
+                    ref="tree"
+                    :data="treeData"
+                    :props="treeProps"
+                    :default-expanded-keys="expandedKeys"
+                    node-key="oid"
+                    :filter-node-method="filterNode"
+                    show-checkbox
+                ></erd-ex-tree>
+            </div>
+            <div
+                class="dialog_button_box"
+                style="border-top: 1px solid #eee; display: flex; justify-content: center; padding: 10px 0; width: 100%"
+            >
+                <erd-button
+                    type="primary"
+                    @click="dialogConfirm"
+                    >{{i18nMappingObj.comfirm}}</erd-button
+                >
+                <erd-button @click="showDialog = false">{{i18nMappingObj.cancel}}</erd-button>
+            </div>
+        </div>
+    </erd-ex-dialog>
+</div>

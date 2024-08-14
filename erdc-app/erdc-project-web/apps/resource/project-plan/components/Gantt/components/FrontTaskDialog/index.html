@@ -1,0 +1,32 @@
+<erd-ex-dialog
+    :visible.sync="dataVisible"
+    :title="i18nMappingObj.viewFrontAndBackTask"
+    size="large"
+>
+    <erd-contraction-panel
+        :unfold.sync="preUnfold"
+        :title="i18nMappingObj.predecessors"
+    >
+        <template #content="scoped">
+            <fam-view-table
+                ref="preTable"
+                :view-table-config="preTaskTableConfig"
+                :is-adaptive-height="false"
+                class="ppm-hide-navbar"
+            ></fam-view-table>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="postUnfold"
+        :title="i18nMappingObj.postTask"
+    >
+        <template #content="scoped">
+            <fam-view-table
+                ref="postTable"
+                :view-table-config="postTaskTableConfig"
+                :is-adaptive-height="false"
+                class="ppm-hide-navbar"
+            ></fam-view-table>
+        </template>
+    </erd-contraction-panel>
+</erd-ex-dialog>

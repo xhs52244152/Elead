@@ -1,0 +1,52 @@
+#ProjectTemplateImport {
+    .el-dialog {
+        height: 80%;
+        .el-dialog__body{
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 96.8px);
+        }
+    }
+    .baseInfo {
+        .contraction-panel__content>div{
+            margin-bottom: 10px;
+        }
+        .contraction-panel__content{
+            .el-select,
+            .ppm-plan-set-selector-container,
+            .erd-tree-select{
+                width: 100%;
+            }
+        }
+    }
+    .importTask {
+        height: calc(100% - 182px);
+        .panelContent{
+            height: calc(100% - 24px);
+            .contraction-panel__content{
+                height: 100%;
+                .taskContent{
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                }
+                .searchInput{
+                    margin-bottom: 10px;
+                }
+                .taskTree{
+                    height: 100%;
+                    .el-tree {
+                        height: 100%;
+                        overflow: auto;
+                    }
+                    .rootNode{
+                        font-family: "Microsoft YaHei";
+                        font-size: var(--fontSize);
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
+

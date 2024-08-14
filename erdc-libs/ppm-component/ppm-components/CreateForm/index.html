@@ -1,0 +1,71 @@
+<div class="form_create_content">
+    <erd-scrollbar class="form_content_body">
+        <h1 class="form_title">{{compConfig.title}}</h1>
+        <component
+            v-bind="basicProps"
+            @projectType="handleProjectType"
+            :is="currentComponent"
+            ref="basicInfo"
+            @getLayoutData="getLayoutData"
+        ></component>
+
+        <fam-advanced-form
+            ref="infoForm"
+            :model.sync="formData"
+            form-id="CREATE"
+            :class-name="className"
+            :readonly="readonly"
+            :schema-mapper="schemaMapper"
+            :scoped-slots="scopedSlots"
+            :editableAttr="editableAttr"
+            :query-layout-params="queryLayoutParams"
+            @fieldChange="fieldChange"
+            v-on="$listeners"
+        >
+            <template
+                v-for="(slot, slotName) in scopedSlots"
+                v-slot:[slotName]="slotProps"
+            >
+                <slot
+                    :name="slotName"
+                    v-bind="slotProps"
+                ></slot>
+            </template>
+        </fam-advanced-form>
+    </erd-scrollbar>
+    <div class="ppm-common-btn">
+        <erd-button
+            type="primary"
+            @click="confirm"
+            :loading="isSaving"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button
+            @click="saveDraft"
+            v-if="compConfig.saveDraft"
+            :loading="isSaving"
+            >{{ i18nMappingObj.saveDraft }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.close }}</erd-button>
+    </div>
+    <erd-ex-dialog
+        :visible.sync="visible"
+        :title="i18nMappingObj.tip"
+        size="mini"
+        :show-close="false"
+        custom-class="success-create-project"
+    >
+        <div class="tip">
+            <erd-icon icon="success-solid"></erd-icon>
+            <div class="tip-right">
+                <p>{{i18nMappingObj.createSuccess}}</p>
+                <span style="font-size: 12px">{{i18nMappingObj.doSome}}</span>
+            </div>
+        </div>
+        <div class="btn-list">
+            <erd-button @click="handleClick('setTeam')">{{i18nMappingObj.setTeam}}</erd-button>
+            <erd-button @click="handleClick('createTask')">{{i18nMappingObj.createTask}}</erd-button>
+            <erd-button @click="handleClick('back')">{{i18nMappingObj.backList}}</erd-button>
+        </div>
+    </erd-ex-dialog>
+</div>

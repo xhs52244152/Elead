@@ -1,0 +1,26 @@
+.budget-template-edit-wrap {
+    margin: var(--largeSpace) var(--largeSpace) 0;
+    overflow: hidden;
+    .budget-template-header {
+        display: inline-flex;
+    }
+    .budget-template-container {
+        overflow-y: auto;
+        flex: 1;
+        .el-tabs .el-tabs__content {
+            overflow-y: auto;
+            padding: var(--largeSpace);
+            height: 100%;
+        }
+        .single-tab-container .el-tabs__header {
+            display: none;
+        }
+    }
+    .budget-template-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: var(--dialogFooterPadding);
+        border-top: 1px solid var(--colorSplit);
+    }
+}

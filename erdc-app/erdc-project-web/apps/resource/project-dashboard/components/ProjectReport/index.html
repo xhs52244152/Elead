@@ -1,0 +1,38 @@
+<div class="project_report">
+    <dashboard-config
+        :showDataTime="false"
+        :titleName="i18n.ProjectSchedule"
+        :layout="[{ x: 0, y: 0, w: 24, h: 7, i: 3 }]"
+    >
+        <template #content>
+            <div class="project_report_list">
+                <ul class="report_list_percentage">
+                    <li
+                        v-for="(item, index) in projectArr"
+                        :key="index"
+                    >
+                        <template v-if="item.type">
+                            <!-- 项目状态 -->
+                            <erd-progress
+                                type="circle"
+                                color="#2779FF"
+                                :percentage="100"
+                                :format="() => item.val"
+                            >
+                            </erd-progress>
+                            <h3 class="report_list_name state_label">{{item.name}}</h3>
+                        </template>
+                        <template v-else>
+                            <erd-progress
+                                type="circle"
+                                color="#2779FF"
+                                :percentage="item.val"
+                            ></erd-progress>
+                            <h3 class="report_list_name">{{item.name}}</h3>
+                        </template>
+                    </li>
+                </ul>
+            </div>
+        </template>
+    </dashboard-config>
+</div>

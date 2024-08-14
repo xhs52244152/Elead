@@ -1,0 +1,71 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="600px"
+>
+    <erd-alert
+        v-if="show"
+        :title="tipTitle"
+        type="info"
+        show-icon
+        class="erd_alert_tip"
+    >
+    </erd-alert>
+    <ul
+        class="move_body"
+        v-if="show"
+    >
+        <li class="move_body_label">
+            <span class="move_label">{{i18nMappingObj.name}}</span>
+            <span>{{currentPosition}}</span>
+        </li>
+        <li>
+            <span class="move_label">
+                <span class="color-error">*</span>
+                <span>{{i18nMappingObj.position}}</span>
+            </span>
+            <erd-tree-select
+                v-model="value"
+                :data="treeData"
+                show-node-context
+                filterable
+                node-key="key"
+                :highlight-current="true"
+                :props="defaultProps"
+                @node-click="onCheck"
+            >
+            </erd-tree-select>
+        </li>
+    </ul>
+    <ul
+        v-else
+        class="move_body move_relative_team"
+    >
+        <li>
+            <span class="move_label">{{i18nMappingObj.productName}}</span>
+            <span>{{currentPosition}}</span>
+        </li>
+        <li>
+            <span class="move_label">{{i18nMappingObj.selectTeam}}</span>
+            <erd-tree-select
+                v-model="value"
+                :data="treeData"
+                :props="defaultProps"
+                :highlight-current="true"
+                node-key="key"
+                filterable
+                @node-click="onCheck"
+                show-node-context
+            >
+            </erd-tree-select>
+        </li>
+    </ul>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

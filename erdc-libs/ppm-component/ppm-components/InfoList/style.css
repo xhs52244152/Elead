@@ -1,0 +1,26 @@
+.info_list {
+  display: flex;
+  padding: 0 16px 0 16px;
+  margin-bottom: 0;
+}
+.info_list .info_list_show {
+  display: flex;
+  margin-right: 56px;
+}
+.info_list .info_list_show img {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+}
+.info_list .info_list_show p.info_msg span {
+  display: block;
+  color: var(--colorTextNormal);
+  opacity: .45;
+  font-size: 12px;
+}
+.info_list .info_list_show p.info_msg span:first-child {
+  height: 24px;
+  color: var(--colorTextNormal);
+  opacity: 1;
+  font-size: 14px;
+}

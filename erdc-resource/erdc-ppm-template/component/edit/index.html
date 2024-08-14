@@ -1,0 +1,18 @@
+<div
+    v-fam-fs
+    class="template_edit template_common"
+>
+    <common-edit-form
+        class="template_common_form"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        @echo-data="echoData"
+        @cancel="handleCancel"
+        @fieldsChange="onFieldChange"
+        :formSlotData="formData"
+        :configParameter="configParameter"
+        :oid="oid"
+        :model-mapper="formModelMapper"
+        :query-layout-params="queryLayoutParams()"
+    ></common-edit-form>
+</div>

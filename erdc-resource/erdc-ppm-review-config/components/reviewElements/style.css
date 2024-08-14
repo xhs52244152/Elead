@@ -1,0 +1,8 @@
+.review_element {
+  height: calc(100% + 16px);
+}
+.review_element .relative_team_head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}/*# sourceMappingURL=style.css.map */

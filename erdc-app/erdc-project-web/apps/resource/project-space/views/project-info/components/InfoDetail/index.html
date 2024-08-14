@@ -1,0 +1,20 @@
+<div>
+    <div class="basic-information">
+        <fam-advanced-form
+            ref="infoForm"
+            :model.sync="formData"
+            form-id="DETAIL"
+            :query-layout-params="queryLayoutParams"
+            :class-name="className"
+            :schema-mapper="schemaMapper"
+        >
+            <!-- <template v-slot:type-reference="scope">
+          <div>这里是插槽22222</div>
+      </template>
+      <template v-slot:test-slot="scope">
+          <div>dsds</div>
+          <erd-button>编辑</erd-button>
+      </template> -->
+        </fam-advanced-form>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div>
+    <erd-form
+        inline
+        class="ppm-label-form"
+    >
+        <component-width-label
+            v-if="type === 'widthLabel'"
+            is-render="erd-ex-select"
+            v-model="dataValue"
+            filterable
+            remote
+            reserve-keyword
+            :placeholder="placeholder"
+            :remote-method="searchProjMethod"
+            :loading="loading"
+            :label="label"
+            :options="options"
+            :multiple="multiple"
+            :default-props="defaultProps"
+            v-bind="$attrs"
+            v-on="$listeners"
+            :removeable="false"
+            :clearable="clearable"
+        >
+        </component-width-label>
+        <erd-ex-select
+            v-else
+            v-model="dataValue"
+            filterable
+            remote
+            :clearable="clearable"
+            reserve-keyword
+            :placeholder="placeholder"
+            :remote-method="searchProjMethod"
+            :loading="loading"
+            :options="options"
+            :multiple="multiple"
+            :default-props="defaultProps"
+            v-bind="$attrs"
+            v-on="$listeners"
+        ></erd-ex-select>
+    </erd-form>
+
+    <!-- <erd-select
+        v-model="dataValue"
+        :multiple="multiple"
+        filterable
+        remote
+        reserve-keyword
+        placeholder="请输入关键词"
+        :remote-method="searchProjMethod"
+        :loading="loading"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
+        <erd-option
+            v-for="item in options"
+            :key="item.oid"
+            :label="item.displayName"
+            :value="item.oid"
+        >
+        </erd-option>
+    </erd-select> -->
+</div>

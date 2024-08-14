@@ -1,0 +1,18 @@
+.relative_team .relative_team_head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.erd_alert_tip {
+  width: 568px !important;
+}
+
+.move_body li {
+  line-height: 32px;
+}
+.move_body li .move_label {
+  margin-right: 8px;
+}
+.move_body li:first-child {
+  margin-bottom: 12px;
+}/*# sourceMappingURL=style.css.map */

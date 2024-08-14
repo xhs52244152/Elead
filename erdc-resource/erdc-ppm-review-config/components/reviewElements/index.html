@@ -1,0 +1,55 @@
+<div class="review_element">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :isAdaptiveHeight="true"
+        ref="reviewElements"
+        @action-click="actionClick"
+        :enable-scroll-load="true"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{ scope }"
+        >
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    @click="onCommand"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+    <cropping-dialog
+        v-if="showCroppDialog"
+        :className="className"
+        :visible.sync="showCroppDialog"
+        :title="i18nMappingObj.batchSetCropping"
+        :oid="oid"
+        :selectList="selectList"
+        :currentSelectTreeData="treeDetail"
+        @submit-success="afterSubmit"
+    ></cropping-dialog>
+    <add-elements-dialog
+        v-if="showAlementsDialog"
+        :className="className"
+        :visible.sync="showAlementsDialog"
+        :title="i18nMappingObj.addReviewElements"
+        :oid="oid"
+        :currentSelectTreeData="treeDetail"
+        @submit-success="afterSubmit"
+    ></add-elements-dialog>
+
+    <library-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :title="i18nMappingObj.viewReviewElements"
+        :editableAttrs="[]"
+        :showEdit="false"
+        :className="ReviewLibraryClassName"
+        @echo-data="echoData"
+        :oid="reviewId"
+        layoutName="DETAIL"
+    ></library-dialog>
+</div>

@@ -1,0 +1,105 @@
+
+.ppm-layout-content {
+  background: #fff;
+}
+
+.ppm-erd-tab-container .fam-view-table-component .advanced-table-container {
+    padding: 0;
+}
+
+.ppm-erd-tab-container .fam-view-table-component .advanced-table-container {
+    padding: 0;
+}
+
+.ppm-label-form.el-form--inline {
+    display: flex;
+    align-items: center;
+}
+.ppm-label-form.el-form--inline .el-form-item {
+    margin: 0 var(--normalSpace) 0 0;
+}
+.ppm-label-form.el-form--inline .el-form-item:last-child {
+    margin: 0;
+}
+.ppm-label-form.el-form--inline .el-form-item .el-form-item__content {
+    width: 100px;
+}
+.ppm-label-form.el-form--inline .ppm-task-group-select .el-form-item__content {
+    width: 160px;
+}
+.ppm-essipsis-inline-name, .ppm-essipsis-project-manager {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap
+}
+.ppm-link-name{
+    color: var(--colorPrimary);
+    cursor: pointer;
+}
+.ppm-link-name:hover{
+    color: var(--colorPrimaryLighter);
+    cursor: pointer;
+}
+
+.ppm-common-btn {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #ebebeb;
+    padding: 12px 0;
+    background: #ffffff;
+}
+
+.ppm-table-hide-view #FamViewNavbar {
+    display: none;
+}
+
+.ppm-append-btn .el-input-group__append {
+    color: var(--colorTextNormal);
+    background: #f1f1f1;
+    border: var(--inputBorder);
+}
+
+.ppm-hide-navbar #FamViewNavbar {
+    display: none;
+}
+
+.ppm-select-100p>.el-select {
+    width: 100%;
+}
+
+.ppm-viewtable-pd-0#FamViewTable .advanced-table-container {
+    padding: 0;
+}
+
+.ppm-common-edit-cell {
+    display: flex;
+    align-items: center;
+}
+.ppm-common-edit-cell .ppm-common-edit-cell--text {
+    color: var(--colorTextPlaceholder);
+}
+.ppm-common-edit-cell .erd-icon-edit {
+    margin-left: auto;
+    display: none;
+}
+td.vxe-body--column:has(.ppm-common-edit-cell):hover .erd-icon-edit {
+    display: inline-block;
+}
+
+/* 通用表单页面 */
+#fam_common_page_info .el-tabs__content #FamViewTable .advanced-table-container {
+    padding: 0;
+}
+
+/* 通用对象选择下拉框 */
+.ppm-object-select-w100,
+.ppm-object-select-w100 .ppm-label-form,
+.ppm-object-select-w100 .ppm-label-form>div,
+.ppm-object-select-w100 .ppm-label-form>div>div {
+    width: 100%;
+}
+
+/* 导出图标颜色设置 */
+.custom_export_icon .el-notification__icon.el-icon-info{
+    color: var(--alertInfoLightColor);
+}

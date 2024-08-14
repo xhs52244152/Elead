@@ -1,0 +1,96 @@
+<div class="h-100p flex flex-column baseline-info-compare">
+    <div
+        class="plr-xl flex justify-between align-items-center"
+        style="margin-bottom: var(--largeSpace)"
+    >
+        <FormPageTitle v-bind="pageTitle"></FormPageTitle>
+        <div class="info-compare-object-operate">
+            <span class="mr-12">
+                <erd-checkbox
+                    v-if="isHideCheckbox"
+                    v-model="isOnlyDifferentChecked"
+                    :disabled="checkboxDisabled"
+                    @change="handleOnlyDifferent"
+                    >{{i18n.onlyDisplayDifferent}}</erd-checkbox
+                >
+            </span>
+            <erd-button
+                class="compare-add-btn"
+                type="primary"
+                @click="handleAddObject"
+                >{{i18n.addComparisonObject}}</erd-button
+            >
+        </div>
+    </div>
+    <erd-tabs
+        v-model="activeName"
+        @tab-click="handleClickTab(activeName)"
+        class="bg-white baseline-info-compare-tabs"
+    >
+        <erd-tab-pane
+            class="h-100p"
+            v-for="item in tabs"
+            :key="item.key"
+            :label="item.label"
+            :name="item.key"
+            :lazy="true"
+            :class="item.clazz || ''"
+        >
+            <template v-if="item.key === activeName">
+                <component
+                    :is="item.componentName"
+                    v-bind="item.props"
+                    v-on="item.eventMethods || {}"
+                    :ref="item.ref"
+                >
+                </component>
+            </template>
+        </erd-tab-pane>
+    </erd-tabs>
+
+    <!-- 增加对象 -->
+    <FamAssociationObject
+        v-if="objectForm.visible"
+        :title="objectForm.title"
+        :visible.sync="objectForm.visible"
+        :class-name="className"
+        app-name="PPM"
+        :left-table-columns="leftTableColumns"
+        :table-key="tableKey"
+        @after-request="afterRequest"
+        @before-submit="beforeSubmit"
+        ref="famAssociationObjectRef"
+        :url-config="urlConfig"
+    >
+        <template #left-search-left>
+            <div class="flex justify-around">
+                <erd-select
+                    class="mr-8"
+                    v-model="viewType"
+                    @change="viewTypeChange"
+                >
+                    <erd-option
+                        v-for="item in viewTypes"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    >
+                    </erd-option>
+                </erd-select>
+                <!-- <erd-select
+                    v-model="childType"
+                    @change="childTypeChange"
+                    style="margin-right: 8px"
+                >
+                    <erd-option
+                        v-for="item in childTypes"
+                        :key="item.typeOid"
+                        :label="item.displayName"
+                        :value="item.typeOid"
+                    >
+                    </erd-option>
+                </erd-select> -->
+            </div>
+        </template>
+    </FamAssociationObject>
+</div>

@@ -1,0 +1,45 @@
+<div class="msg-comment">
+    <div class="msg-comment-wrapper">
+        <div
+            class="msg-comment"
+            v-for="(msgComment, index) in msgCommentList"
+            :key="msgComment.id"
+            :label="msgComment.id"
+        >
+            <img
+                v-if="msgComment.isShowMsgNewImg"
+                class="msg-comment-new-img"
+                src=""
+                width="40"
+            />
+            <div
+                v-else
+                class="msg-comment-new-img-empty"
+            ></div>
+            <erd-card
+                :body-style="{padding:'10px 0 0 0',height:'85px'}"
+                shadow="hover"
+                class="msg-comment-card"
+            >
+                <div class="msg-comment-row-wrapper">
+                    <div class="mc-user-wrapper">
+                        <div class="mc-user-avatar">
+                            <el-avatar
+                                :size="32"
+                                :src="msgComment.umsUserInfo.avatar"
+                            ></el-avatar>
+                        </div>
+                        <div>
+                            <div class="mc-user-name">
+                                <span style="color: #252525">张三</span>
+                                <span style="margin-left: 10px">评论了你</span>
+                                <span style="margin-left: 10px; color: #888888; font-size: 10px">03-11 18:24</span>
+                            </div>
+                            <div class="mc-user-content">需关注负极材料供应商的品质稳定性</div>
+                        </div>
+                    </div>
+                </div>
+            </erd-card>
+        </div>
+    </div>
+</div>

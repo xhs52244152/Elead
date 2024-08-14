@@ -1,0 +1,24 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="60%"
+>
+    <fam-advanced-form
+        ref="layoutForm"
+        :model.sync="formData"
+        :form-id="layoutName"
+        :class-name="className"
+        :editableAttr="editableAttrs"
+        :query-layout-params="queryLayoutParams()"
+    >
+    </fam-advanced-form>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            :loading="isSaving"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

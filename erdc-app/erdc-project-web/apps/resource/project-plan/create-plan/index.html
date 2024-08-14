@@ -1,0 +1,44 @@
+<div id="plan_create">
+    <create-form
+        ref="createForm"
+        class="template_common_form"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        :formSlotData="formData"
+        :configParameter="configParameter"
+        :schema-mapper="schemaMapper"
+        @echo-data="echoData"
+        :editableAttr="editableAttr"
+        @fieldsChange="fieldsChange"
+    >
+        <template #res-assignments="scoped">
+            <project-assignments-select
+                v-model="resAssignments"
+                @change="onAssignmentsChange"
+            ></project-assignments-select>
+        </template>
+        <template #collect-ref="scoped">
+            <plan-set-select
+                v-model="collectId"
+                disabled
+                :project-oid="projectOid"
+                class="w-100p"
+            ></plan-set-select>
+        </template>
+        <template #parent-ref="scoped">
+            <erd-ex-select
+                v-model="parentTask"
+                filterable
+                remote
+                reserve-keyword
+                :placeholder="i18nMappingObj.pleaseEnterKeyword"
+                :remote-method="searchTaskMethod"
+                :options="parentTaskOptions"
+                :default-props="defaultProps"
+                clearable
+                class="w-100p ppm-select-100p"
+            >
+            </erd-ex-select>
+        </template>
+    </create-form>
+</div>

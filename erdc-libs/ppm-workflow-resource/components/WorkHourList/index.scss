@@ -1,0 +1,18 @@
+.ppm-process-work-hour{
+    margin: 0 var(--largeSpace);
+    .ContractionPanel{
+        .panelTitle{
+            font-size: var(--fontSize);
+        }
+    } 
+    .process-base-info{
+        .el-tooltip{
+            .fam-dynamic-form__label--labelText {
+                color: var(--colorTextExplain) !important;
+            }
+        }
+    }
+    .table-container{
+        margin-top: var(--largeSpace);
+    }
+}

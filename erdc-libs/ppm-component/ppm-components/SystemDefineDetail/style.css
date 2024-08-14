@@ -1,0 +1,68 @@
+.fam-type-manager-info {
+  height: 100%;
+}
+.fam-type-manager-info .fam-type-info__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 8px 16px;
+}
+.fam-type-manager-info .fam-type-info__title {
+  width: 100%;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 0;
+}
+.fam-type-manager-info .fam-type-info__title span.el-tooltip {
+  font-size: 18px;
+  font-weight: 700;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.fam-type-manager-info .fam-type-info__base {
+  padding-left: 4px;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs .el-tabs__content {
+  flex-grow: 1;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs .el-tabs__content > .el-tab-pane {
+  height: 100%;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs .el-tabs__content .advanced-table-container {
+  padding: 0 !important;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs__nav-scroll {
+  padding: 0;
+}
+.fam-type-manager-info .fam-type-info__base .baseInfo {
+  margin-top: 12px;
+}
+.fam-type-manager-info .fam-type-info__base .baseInfo span {
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 22px;
+  font-weight: 400;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs__content {
+  padding: 16px;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+.fam-type-manager-info .detail-single {
+  padding: 0 16px;
+}/*# sourceMappingURL=style.css.map */

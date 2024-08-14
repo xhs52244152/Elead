@@ -1,0 +1,92 @@
+<div class="project_change_manage">
+    <ul class="project_change_manage_list">
+        <li
+            class="manage_list_content"
+            v-for="item in configs"
+            :key="item.name"
+        >
+            <div
+                class="content_left"
+                :title="item.name"
+            >
+                {{item.name}}
+            </div>
+            <div class="content_right">
+                <template v-if="selectType.includes(item.filed)">
+                    <div class="manage_select">
+                        <div class="manage_select_list">
+                            <span>{{i18n.projectStatus}}：</span>
+                            <erd-select
+                                v-model="selectVal[item.filed].value.projectStatus"
+                                multiple
+                                collapse-tags
+                            >
+                                <erd-option
+                                    v-for="option in projectState"
+                                    :key="option.key"
+                                    :label="option.displayName"
+                                    :value="option.key"
+                                ></erd-option>
+                            </erd-select>
+                        </div>
+                        <div class="manage_select_list">
+                            <span>{{i18n.taskStatus}}：</span>
+                            <erd-select
+                                v-model="selectVal[item.filed].value.projectTaskStatus"
+                                multiple
+                                collapse-tags
+                            >
+                                <erd-option
+                                    v-for="option in taskState"
+                                    :key="option.key"
+                                    :label="option.displayName"
+                                    :value="option.key"
+                                ></erd-option>
+                            </erd-select>
+                        </div>
+                        <div
+                            class="manage_select_list"
+                            v-if="false"
+                        >
+                            <span>{{i18n.taskLevel}}：</span>
+                            <erd-select
+                                v-model="selectVal[item.filed].value.projectTaskLevel"
+                                multiple
+                            >
+                                <erd-option
+                                    v-for="option in taskLevel"
+                                    :key="option.value"
+                                    :label="option.label"
+                                    :value="option.value"
+                                ></erd-option>
+                            </erd-select>
+                        </div>
+                        <div class="manage_select_list">
+                            <span>{{i18n.allowChangeTaskState}}：</span>
+                            <erd-select
+                                v-model="selectVal[item.filed].value.calculateStatus"
+                                collapse-tags
+                                multiple
+                            >
+                                <erd-option
+                                    v-for="option in taskState"
+                                    :key="option.value"
+                                    :label="option.displayName"
+                                    :value="option.key"
+                                ></erd-option>
+                            </erd-select>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </li>
+    </ul>
+    <div class="project_change_btn">
+        <erd-button
+            type="primary"
+            @click="confirm"
+            :loading="isSaving"
+            >{{ i18n.confirm }}</erd-button
+        >
+    </div>
+</div>

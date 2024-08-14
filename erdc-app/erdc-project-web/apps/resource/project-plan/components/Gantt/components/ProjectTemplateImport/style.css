@@ -1,0 +1,45 @@
+#ProjectTemplateImport .el-dialog {
+  height: 80%;
+}
+#ProjectTemplateImport .el-dialog .el-dialog__body {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 96.8px);
+}
+#ProjectTemplateImport .baseInfo .contraction-panel__content > div {
+  margin-bottom: 10px;
+}
+#ProjectTemplateImport .baseInfo .contraction-panel__content .el-select,
+#ProjectTemplateImport .baseInfo .contraction-panel__content .ppm-plan-set-selector-container,
+#ProjectTemplateImport .baseInfo .contraction-panel__content .erd-tree-select {
+  width: 100%;
+}
+#ProjectTemplateImport .importTask {
+  height: calc(100% - 182px);
+}
+#ProjectTemplateImport .importTask .panelContent {
+  height: calc(100% - 24px);
+}
+#ProjectTemplateImport .importTask .panelContent .contraction-panel__content {
+  height: 100%;
+}
+#ProjectTemplateImport .importTask .panelContent .contraction-panel__content .taskContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#ProjectTemplateImport .importTask .panelContent .contraction-panel__content .searchInput {
+  margin-bottom: 10px;
+}
+#ProjectTemplateImport .importTask .panelContent .contraction-panel__content .taskTree {
+  height: 100%;
+}
+#ProjectTemplateImport .importTask .panelContent .contraction-panel__content .taskTree .el-tree {
+  height: 100%;
+  overflow: auto;
+}
+#ProjectTemplateImport .importTask .panelContent .contraction-panel__content .taskTree .rootNode {
+  font-family: "Microsoft YaHei";
+  font-size: var(--fontSize);
+  font-weight: bold;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,29 @@
+<div class="h-100p flex flex-column no-top-view-table">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :enable-scroll-load="true"
+        ref="famViewTable"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 科目名称 -->
+            <template v-if="slot === 'column:default:'+className+'#name:content'">
+                <a
+                    href="javascript:void(0)"
+                    @click="onDetail(scope.row)"
+                    >{{scope.row[scope.column.property]}}</a
+                >
+            </template>
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+</div>

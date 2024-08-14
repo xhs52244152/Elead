@@ -1,0 +1,32 @@
+.template_common {
+    height: 100%;
+    // margin: 12px;
+    .form_content {
+        margin: 0;
+    }
+    .template_common_form {
+        .form_content {
+            height: calc(100% - 40px);
+        }
+        .form_content_body {
+            padding: 16px;
+            height: calc(100% - 40px);
+        }
+    }
+}
+.template_edit {
+    // margin: 12px;
+    .template_common_form {
+        height: calc(100% - 18px);
+    }
+}
+
+.ppm-template-create {
+    margin: 12px;
+    .form_create_content {
+        height: 100%;
+        .form_content_body {
+            padding: 0;
+        }
+    }
+}

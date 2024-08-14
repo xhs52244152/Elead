@@ -1,0 +1,56 @@
+.template-info {
+    background: #fff;
+    height: calc(100vh - 58px);
+    background: #fff;
+    .form_title {
+        color: rgba(0, 0, 0, 0.85);
+        letter-spacing: 0;
+        line-height: 28px;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+    .basic-information {
+        height: calc(100% - 54px);
+        padding: 16px;
+        overflow: hidden;
+        overflow-y: auto;
+        .contraction-panel__content {
+            padding-bottom: 0;
+        }
+        .basic-msg .panelContent {
+            margin-bottom: 24px;
+        }
+    }
+    .common-btn {
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid #EBEBEB;
+        padding: 12px 0;
+    }
+}
+.success-create-project {
+    &.el-dialog.no-footer .el-dialog__body {
+        padding: 20px;
+    }
+    .tip {
+        display: flex;
+        p {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .erd-icon-success-solid {
+            margin-right: 4px;
+            font-size: 24px;
+            color: #00a854;
+        }
+    }
+    .btn-list {
+        text-align: center;
+        margin-top: 20px;
+        .el-button + .el-button {
+            margin-left: 2px;
+        }
+    }
+}

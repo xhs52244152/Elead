@@ -1,0 +1,64 @@
+<div class="relative_team">
+    <div class="relative_team_head">
+        <div class="team_head_left">
+            <erd-input
+                v-model="searchVal"
+                :placeholder="i18nMappingObj.searchTips"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+                style="width: 300px"
+                @input="onInput"
+            >
+            </erd-input>
+        </div>
+        <div class="team_head_right">
+            <erd-button
+                type="primary"
+                v-if="treeDetail.status !== 'inactive'"
+                @click="handleAdd"
+                >{{ i18nMappingObj.associate }}</erd-button
+            >
+            <!-- <erd-button @click="handleRemove">{{ i18nMappingObj.remove }}</erd-button> -->
+        </div>
+    </div>
+    <fam-erd-table
+        border
+        :row-config="{isCurrent: true, isHover: true}"
+        :column-config="{resizable: true}"
+        align="left"
+        :height="tableMaxHeight"
+        :data="tableData"
+        :column="column"
+        show-overflow
+        ref="relativeTeam"
+        @checkbox-all="selectAllEvent"
+        @checkbox-change="selectChangeEvent"
+    >
+        <template #column:default:displayName="{data}">
+            <el-button
+                type="text"
+                @click="handleJump(data)"
+                >{{ data.row.displayName }}</el-button
+            >
+        </template>
+        <template #column:default:operation="{ data }">
+            <el-button
+                v-if="data.row.relatedTeam"
+                type="text"
+                @click="handleRemove(data.row)"
+                >{{ i18nMappingObj.remove }}</el-button
+            >
+        </template>
+    </fam-erd-table>
+    <Move-dialog
+        v-if="showMoveDialog"
+        className="erd.cloud.cbb.pbi.entity.HeavyTeam"
+        :visible.sync="showMoveDialog"
+        :title="i18nMappingObj.addAssociatedTeams"
+        :tip-title="i18nMappingObj.addAssociatedReplaceTeams"
+        :oid="oid"
+        :currentSelectTreeData="treeDetail"
+        @submit-success="afterSubmit"
+        :show="false"
+    ></Move-dialog>
+</div>

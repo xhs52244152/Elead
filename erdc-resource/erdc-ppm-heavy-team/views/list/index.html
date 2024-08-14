@@ -1,0 +1,47 @@
+<div class="ppm-heavy-team">
+    <resizable-container :left="left">
+        <template v-slot:left>
+            <system-tree
+                @node-type-click="handleNodeClick"
+                :title="i18nMappingObj.heavyTitle"
+                ref="systemTree"
+                :checkedKey="checkedKey"
+                :className="className"
+                @operate-click="handleOperate"
+            ></system-tree>
+        </template>
+        <template v-slot:right>
+            <system-define-detail
+                :treeDetail="treeDetail"
+                ref="systemProductDetail"
+                :oid="oid"
+                @edit-data="handleEdit"
+                currentMenu="HeavyweightTeam"
+            ></system-define-detail>
+        </template>
+    </resizable-container>
+    <system-dialog-form
+        v-if="showFormDialog"
+        :visible.sync="showFormDialog"
+        :title="formDialogTitle"
+        :className="className"
+        :currentOid="currentOid"
+        ruleCode="heavyTeamCodeType"
+        :currentSelectTreeData="currentSelectTreeData"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        @echo-data="echoData"
+        :oid="oid"
+        :editableAttrs="['parentRef', 'status', 'category', 'identifierNo']"
+        :layoutName="layoutName"
+    ></system-dialog-form>
+    <move-dialog
+        v-if="showMoveDialog"
+        :oid="oid"
+        :currentOid="currentOid"
+        :currentSelectTreeData="currentSelectTreeData"
+        :visible.sync="showMoveDialog"
+        @submit-success="afterSubmit"
+        :className="className"
+    ></move-dialog>
+</div>

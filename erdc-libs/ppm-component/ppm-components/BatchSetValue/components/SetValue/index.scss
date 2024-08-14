@@ -1,0 +1,49 @@
+#batch-set-value {
+    .moduleBox {
+        display: flex;
+        align-items: center;
+    }
+
+    .set_value_item .delete_btn {
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 8px;
+        color: #666;
+    }
+    .update_font_box {
+        min-width: 50px;
+        margin: 0 4px;
+        text-align: center;
+        line-height: 32px;
+    }
+    .effect-box {
+        margin-left: 8px;
+    }
+    .components-select-box {
+        width: 100%;
+        flex: 1;
+        #ComponentWapper-famMemberSelect,
+        .el-date-editor.el-input,
+        .el-input__inner,
+        .el-input-number,
+        .el-select {
+            width: 100%;
+        }
+        .searchInputWapper .el-input__inner {
+            width: 180px;
+        }
+    }
+    .add-field-box {
+        margin-left: 22px;
+        a:hover {
+            color: var(--colorPrimaryLighter);
+        }
+    }
+
+    ul {
+        margin-bottom: 0;
+    }
+}
+.famMemberSelect-popClass-custom.set-value-member {
+    width: 420px !important;
+}

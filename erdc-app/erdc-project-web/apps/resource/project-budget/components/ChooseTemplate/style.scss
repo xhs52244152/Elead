@@ -1,0 +1,16 @@
+.choose-budget-template {
+    .fam-dynamic-form > .el-row--flex .el-col {
+        margin-bottom: var(--bigSpace)!important;
+    }
+    .fam-dynamic-form {
+        .long-custom-form-item {
+            .el-form-item__label {
+                width: 130px!important;
+                padding-right: 8px;
+            }
+        }
+    }
+    .edit-stage-table-toolbar {
+        margin-bottom: var(--bigSpace);
+    }
+}

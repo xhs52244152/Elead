@@ -1,0 +1,51 @@
+<div id="change-business-form">
+    <!-- 项目基本信息 -->
+    <div id="change-project-base-info">
+        <common-form
+            class="m-0"
+            :class-name="className"
+            :business-oid="businessOid"
+            :business-data="businessData"
+            :form-slots="formSlots"
+            :readonly="readonly"
+            :editableAttr="editableAttr"
+            ref="projectBaseInfoForm"
+            layout-name="PROJECT_CHANGE_BASIC_INFO_DETAIL"
+            @fieldChange="onFieldChange"
+            :changeFormData="changeFormData"
+        ></common-form>
+    </div>
+    <!-- 项目信息 -->
+    <project-Info
+        v-if="components['PROJECT_ATTRIBUTE']"
+        v-bind="components['PROJECT_ATTRIBUTE'].props"
+        v-on="components['PROJECT_ATTRIBUTE'].eventMethods || {}"
+        :ref="components['PROJECT_ATTRIBUTE'].ref"
+        :readonly="readonly"
+    />
+    <!-- 计划变更 -->
+    <project-plan
+        v-if="components['TASK']"
+        v-bind="components['TASK'].props"
+        v-on="components['TASK'].eventMethods || {}"
+        :ref="components['TASK'].ref"
+        :readonly="readonly"
+    />
+    <!-- 团队 -->
+    <team-info
+        v-if="components['TEAM']"
+        v-bind="components['TEAM'].props"
+        v-on="components['TEAM'].eventMethods || {}"
+        :ref="components['TEAM'].ref"
+        :readonly="readonly"
+    />
+
+    <!-- 影响数据 -->
+    <effect-data
+        ref="effectData"
+        :draft-infos="draftInfos"
+        :business-data="businessData"
+        :process-step="processStep"
+        :process-infos="processInfos"
+    ></effect-data>
+</div>

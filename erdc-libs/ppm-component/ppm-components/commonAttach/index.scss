@@ -1,0 +1,13 @@
+.ppm-common-attach {
+    height: 100%;
+    width: 100%;
+    .upload-button{
+        // margin-right: 16px;
+    }
+    .common-attach-list{
+        padding: 0;
+        .erd-table-body-container {
+            margin-top: 0px;
+        }
+    }
+}

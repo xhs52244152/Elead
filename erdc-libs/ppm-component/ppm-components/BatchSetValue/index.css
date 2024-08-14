@@ -1,0 +1,29 @@
+.set-value-dialog .el-dialog__body::-webkit-scrollbar {
+  width: 8px;
+  height: auto;
+  border-radius: 8px;
+}
+.set-value-dialog .el-dialog__body::-webkit-scrollbar.horizontal {
+  width: auto;
+  height: 8px;
+}
+.set-value-dialog .el-dialog__body::-webkit-scrollbar-thumb {
+  position: relative;
+  display: block;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #d9d9d9;
+  -webkit-transition: 0.3s background-color;
+  transition: 0.3s background-color;
+}
+.set-value-dialog .el-dialog__body::-webkit-scrollbar-track {
+  width: 12px;
+  height: auto;
+  background-color: transparent;
+}
+.set-value-dialog .el-dialog__body::-webkit-scrollbar-track.horizontal {
+  width: auto;
+  height: 12px;
+}/*# sourceMappingURL=index.css.map */

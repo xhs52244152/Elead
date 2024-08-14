@@ -1,0 +1,16 @@
+.set-state-container .common-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--bigSpace);
+}
+.set-state-container .common-box:last-child {
+  margin-bottom: 0;
+}
+.set-state-container .common-box .label-box {
+  width: 56px;
+  text-align: right;
+  margin-right: var(--normalSpace);
+}
+.set-state-container .common-box .select-box {
+  width: calc(100% - 65px);
+}/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,73 @@
+<div>
+    <erd-ex-dialog
+        v-if="sShowDialog"
+        :title="i18n.changeInfo"
+        :visible.sync="sShowDialog"
+        @close="closeFn"
+        size="large"
+    >
+        <erd-row
+            id="cahnge-info"
+            class="grid-row-content"
+            style="height: 100%; padding-bottom: 30px"
+        >
+            <erd-col
+                v-for="(element, index) in options"
+                :key="index"
+                class="grid-col"
+                style="height: calc(100% - 36px)"
+                :span="12"
+            >
+                <div class="header-title-text">{{element.headerTitle}}</div>
+                <div id="ComponentWapper-erdTable">
+                    <vxe-grid
+                        class="grid-table-content h-100p"
+                        :key="index"
+                        :cell-style="(val) => cellStyle(val, index)"
+                        header-cell-class-name="grid-header-content"
+                        v-bind="element"
+                        :row-class-name="rowClassName"
+                        @scroll="gridScroll"
+                    >
+                        <template #erdQuillEditor="{row}">
+                            <template v-if="row.description"
+                                ><erd-button
+                                    type="primary"
+                                    @click="viewDetails(row)"
+                                    >{{i18n.viewDetails}}</erd-button
+                                >
+                            </template>
+                        </template>
+                        <template #principalName="{row}">
+                            <erd-tag
+                                v-if="row.primarily"
+                                class="m-4"
+                                type="warning"
+                                size="mini"
+                            >
+                                {{i18n.responsible}}
+                            </erd-tag>
+                            <span :class="{'text-bold': row?.children.length > 0}">{{ row.principalName }}</span>
+                        </template>
+                    </vxe-grid>
+                </div>
+            </erd-col>
+        </erd-row>
+    </erd-ex-dialog>
+    <!-- 描述弹窗 -->
+    <erd-ex-dialog
+        :title="i18n.description"
+        v-if="showDescription"
+        :visible.sync="showDescription"
+        @close="closeDescription"
+        :hideFullScreenBtn="true"
+        size="large"
+        custom-class="description-dialog"
+    >
+        <erd-quill-editor
+            v-model="description"
+            :readonly="true"
+        >
+        </erd-quill-editor>
+    </erd-ex-dialog>
+</div>

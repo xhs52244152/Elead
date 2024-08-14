@@ -1,0 +1,75 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.import"
+    :visible.sync="showDialog"
+    size="small"
+>
+    <main>
+        <div class="tips-container pr-2 pl-12 mb-12">
+            <erd-alert
+                :title="i18nMappingObj.importTipsInfo"
+                type="info"
+                show-icon
+                :closable="false"
+                style="width: 100%;"
+            >
+            </erd-alert>
+        </div>
+        <fam-dynamic-form
+            ref="form"
+            :form="formData"
+            :data="formConfig"
+            label-position="right"
+        >
+            <template v-slot:uploadFile="scope">
+                <erd-upload
+                    :on-change="uploadFile"
+                    :on-remove="handleRemove"
+                    :auto-upload="false"
+                    action=""
+                    :file-list="fieList"
+                    :accept="importTypes"
+                    :show-file-list="true"
+                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
+                >
+                    <erd-button
+                        type="primary"
+                        slot="trigger"
+                    >
+                        {{ i18nMappingObj.clickUpload }}
+                    </erd-button>
+                    <div
+                        slot="file"
+                        slot-scope="{file}"
+                        style="margin-right: 24px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
+                    >
+                        <i class="el-icon-document"></i>
+                        <erd-tooltip
+                            :content="file.name"
+                            popper-class="arrow-hide"
+                            placement="top"
+                        >
+                            <span>{{file.name}}</span>
+                        </erd-tooltip>
+                        <label class="el-upload-list__item-status-label"
+                            ><i class="el-icon-upload-success el-icon-circle-check"></i
+                        ></label>
+                        <i
+                            class="el-icon-close"
+                            @click="handleRemove(file)"
+                        ></i>
+                        <i class="el-icon-close-tip">{{i18nMappingObj.pressDeleteToDeleteFile}}</i>
+                    </div>
+                </erd-upload>
+            </template>
+        </fam-dynamic-form>
+    </main>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+            :disabled="confirmDisabled"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="showDialog = false">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

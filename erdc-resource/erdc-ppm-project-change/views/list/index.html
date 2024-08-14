@@ -1,0 +1,97 @@
+<div
+    class="h-100p"
+    style="background-color: #fff"
+>
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :default-table-height="450"
+        :is-adaptive-height="true"
+        :enable-scroll-load="enableScrollLoad"
+        ref="changeList"
+        @action-click="actionClick"
+        @callback="renderTableCallback"
+    >
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-model="groupAttrName"
+                    :default-props="{
+                    'label': 'label',
+                    'value': 'attrName'
+                }"
+                    :label="i18n.group"
+                    :options="groupOptions"
+                    @change="changeGroupData"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <div v-if="slot === 'column:default:operation:content' ">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                    @click="onCommand"
+                ></fam-action-pulldowm>
+            </div>
+            <span
+                v-if="slot === 'column:default:erd.cloud.ppm.change.entity.Change#identifierNo:content'"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="openDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.ppm.change.entity.Change#identifierNo']}}
+            </span>
+        </template>
+    </fam-view-table>
+    <erd-ex-dialog
+        :visible.sync="visible"
+        :title="i18n.createChange"
+        width="60%"
+        :show-close="true"
+        ref="dialogRef"
+    >
+        <div class="ppm-project-change">
+            <span class="change-label">{{i18n.changeType}}</span>
+            <erd-select v-model="changeValue">
+                <erd-option
+                    v-for="option in changeList"
+                    :key="option.identifierNo"
+                    :label="option.name"
+                    :value="option.identifierNo"
+                ></erd-option>
+            </erd-select>
+        </div>
+        <div class="ppm-project-change">
+            <span class="change-label">{{i18n.changeContent}}</span>
+            <erd-ex-select
+                class="change-content-select"
+                v-model="changeContent"
+                :options="changeContentList"
+                multiple
+                tagShowClose
+                :default-props="{
+                    label: 'name',
+                    value: 'identifierNo',
+                    key:'identifierNo'
+                }"
+            >
+            </erd-ex-select>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="handleConfirm"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="handleCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

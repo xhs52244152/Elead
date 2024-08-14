@@ -1,0 +1,27 @@
+.template_common {
+  height: 100%;
+}
+.template_common .form_content {
+  margin: 0;
+}
+.template_common .template_common_form .form_content {
+  height: calc(100% - 40px);
+}
+.template_common .template_common_form .form_content_body {
+  padding: 16px;
+  height: calc(100% - 40px);
+}
+
+.template_edit .template_common_form {
+  height: calc(100% - 18px);
+}
+
+.ppm-template-create {
+  margin: 12px;
+}
+.ppm-template-create .form_create_content {
+  height: 100%;
+}
+.ppm-template-create .form_create_content .form_content_body {
+  padding: 0;
+}/*# sourceMappingURL=style.css.map */

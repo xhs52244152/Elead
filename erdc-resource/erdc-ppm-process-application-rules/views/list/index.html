@@ -1,0 +1,90 @@
+<div
+    id="bpm-application-rules-content"
+    class="bpm-application-rules-content h_100p bg-white"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        :enable-scroll-load="true"
+        :is-adaptive-height="true"
+        :view-table-config="viewTableConfig"
+    >
+        <template #right:toolbar:end="data">
+            <erd-button
+                type="primary"
+                @click="actionClick('create')"
+                ><span class="title_text">{{i18n.create}}</span></erd-button
+            >
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-dropdown
+                trigger="click"
+                @command="value => ( actionClick(value, scope.row) )"
+            >
+                <erd-button type="text"> {{i18n.more}}<i class="el-icon-arrow-down el-icon--right"></i> </erd-button>
+                <erd-dropdown-menu slot="dropdown">
+                    <erd-dropdown-item
+                        v-for="item in operBtns(scope.row)"
+                        :key="item.name"
+                        :command="item.name"
+                        >{{item.label}}</erd-dropdown-item
+                    >
+                </erd-dropdown-menu>
+            </erd-dropdown>
+        </template>
+    </fam-view-table>
+
+    <erd-ex-dialog
+        v-if="visible"
+        :visible.sync="visible"
+        size="small"
+        :title="dialogTitle"
+        @close="handleClose"
+    >
+        <fam-advanced-form
+            v-if="visible"
+            ref="layoutForm"
+            :model.sync="formData"
+            :form-type="formType"
+            :oid="currentRow.oid"
+            :query-layout-params="queryLayoutParams()"
+            :class-name="className"
+            @fieldChange="fieldChange"
+        >
+        </fam-advanced-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="loading"
+                @click="handlerApplicationRules"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="handleClose">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        v-if="ruleConfigVisible"
+        :visible.sync="ruleConfigVisible"
+        size="meduim"
+        :title="i18n.configureRules"
+    >
+        <fam-rule-engine
+            ref="famRuleEngine"
+            :oid="objectTypeOid"
+            :className="className"
+            :isUpdate="isUpdate"
+            :ruleConditionDtoList="ruleConditionDtoList"
+        >
+        </fam-rule-engine>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="formLoading"
+                @click="ruleConfigSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="clearAllConditions">{{i18n.clearConditions}}</erd-button>
+            <erd-button @click="ruleConfigVisible = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

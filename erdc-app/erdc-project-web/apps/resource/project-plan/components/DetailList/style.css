@@ -1,0 +1,17 @@
+.detail-list .ppm-details-content-panel {
+  display: flex;
+  flex-direction: column;
+}
+.detail-list .ppm-details-content-panel .basic-information {
+  padding-bottom: 16px;
+  padding-top: 1px;
+}
+.detail-list .ppm-details-content-panel .detail-plan-info {
+  height: calc(100vh - 270px);
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 16px;
+}
+.detail-list .ppm-details-content-panel .detail-plan-info .fam-dynamic-form > .el-row > .el-col {
+  margin-bottom: 24px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,57 @@
+<div>
+    <component
+        :key="oid"
+        v-if="slots.defaultContent"
+        :is="slots.defaultContent"
+        :process-key="processKey"
+        :process-infos="processInfos"
+        :business-data="businessData"
+        :custom-form-data="customFormData"
+        :process-step="processStep"
+        v-bind="slotsProps.defaultContent"
+        ref="defaultContent"
+    ></component>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="title"
+        class="pl-0 pr-0"
+        v-else
+    >
+        <template v-slot:content>
+            <component
+                v-if="slots.beforeTable"
+                :key="oid"
+                ref="beforeTable"
+                :is="slots.beforeTable"
+                :process-key="processKey"
+                :process-infos="processInfos"
+                :business-data="businessData"
+                :custom-form-data="customFormData"
+                :process-step="processStep"
+                v-bind="slotsProps.beforeTable"
+            ></component>
+            <fam-erd-table
+                :column="tableColumns"
+                :data="businessData"
+                :max-line="5"
+                v-if="showTable"
+            >
+                <template #column:default:identifierNo="{ data }">
+                    <a @click="openDetail(data)">{{ data.row.identifierNo }}</a>
+                </template>
+            </fam-erd-table>
+            <component
+                :key="oid"
+                v-if="slots.afterTable"
+                ref="afterTable"
+                :is="slots.afterTable"
+                :process-key="processKey"
+                :process-infos="processInfos"
+                :business-data="businessData"
+                :custom-form-data="customFormData"
+                :process-step="processStep"
+                v-bind="slotsProps.afterTable"
+            ></component>
+        </template>
+    </erd-contraction-panel>
+</div>

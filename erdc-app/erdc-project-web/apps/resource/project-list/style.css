@@ -1,0 +1,13 @@
+#project_content  #FamViewTable .advanced-table-container .project_lignt {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+#project_content  #FamViewTable .advanced-table-container .project_lignt i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+}

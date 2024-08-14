@@ -1,0 +1,77 @@
+.fam-type-manager-info {
+    height: 100%;
+
+    .fam-type-info__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 16px 8px 16px;
+    }
+
+    .fam-type-info__title {
+        width: 100%;
+        font-size: 24px;
+        color: rgba(0, 0, 0, 0.85);
+        letter-spacing: 0;
+        line-height: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 0;
+
+
+        span.el-tooltip {
+            font-size: 18px;
+            font-weight: 700;
+            // padding-left: 8px;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .fam-type-info__base {
+        .el-tabs {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            .el-tabs__content {
+                flex-grow: 1;
+                > .el-tab-pane {
+                    height: 100%;
+                }
+                .advanced-table-container {
+                    padding: 0 !important;
+                }
+            }
+        }
+        padding-left: 4px;
+        .el-tabs__nav-scroll {
+            padding: 0;
+        }
+        .baseInfo {
+            margin-top: 12px;
+
+            span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: rgba(0, 0, 0, 0.85);
+                letter-spacing: 0;
+                line-height: 22px;
+                font-weight: 400;
+            }
+        }
+
+        .el-tabs__content {
+            padding: 16px;
+
+            .el-tab-pane {
+                padding: 0;
+            }
+        }
+    }
+    .detail-single {
+        padding: 0 16px;
+    }
+}

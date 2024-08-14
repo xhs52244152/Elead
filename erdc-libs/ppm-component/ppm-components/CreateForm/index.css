@@ -1,0 +1,59 @@
+.form_create_content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+}
+.form_create_content .form_content_body {
+  flex-grow: 1;
+  overflow: hidden;
+  overflow-y: auto;
+  background: #fff;
+}
+.form_create_content .form_content_body .el-scrollbar__view {
+  padding: 16px;
+}
+.form_create_content .form_content_body .basic-msg .panelContent {
+  margin-bottom: 24px;
+}
+.form_create_content .form_content_body .basic-msg .set_basic_style.last-line-two-col-no-bottom .el-col:nth-last-child(3) {
+  margin-bottom: 0;
+}
+.form_create_content .ppm-common-btn {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  border-top: 1px solid #ebebeb;
+  padding: 12px 0;
+}
+.form_create_content .form_title {
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.form_create_content .success-create-project.el-dialog.no-footer .el-dialog__body {
+  padding: 20px;
+}
+.form_create_content .success-create-project .tip {
+  display: flex;
+}
+.form_create_content .success-create-project .tip p {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.form_create_content .success-create-project .tip .erd-icon-success-solid {
+  margin-right: 4px;
+  font-size: 24px;
+  color: #00a854;
+}
+.form_create_content .success-create-project .btn-list {
+  text-align: center;
+  margin-top: 20px;
+}
+.form_create_content .success-create-project .btn-list .el-button + .el-button {
+  margin-left: 2px;
+}/*# sourceMappingURL=index.css.map */

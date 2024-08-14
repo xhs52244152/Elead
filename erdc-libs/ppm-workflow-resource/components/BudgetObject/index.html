@@ -1,0 +1,77 @@
+<div>
+    <common-form
+        ref="form"
+        layout-name="BUDGET_PROCESS_DETAIL"
+        :class-name="className"
+        :business-oid="businessProjectOid"
+        :form-slots="formSlots"
+        :readonly="readonly"
+        :business-data="businessData"
+        class="ml-0"
+    ></common-form>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfolds"
+        :title="$t('budgetInformation')"
+        class="mt-16"
+    >
+        <template v-slot:content>
+            <common-card
+                :title="$t('budgetInformation')"
+                show-fullscreen
+                ref="card"
+                class="h-100p"
+                :isHideCardBorder="!isFullscreen"
+                @fullscreenAfter="fullscreenAfter"
+            >
+                <template v-slot:content="scope">
+                    <!--预算列表-->
+                    <project-budget
+                        ref="budgetTableRef"
+                        class="h-100p"
+                        is-process
+                        :is-process-edit="isResubmitNode"
+                        :is-adaptive-height="isFullscreen"
+                        :view-table-height="!isFullscreen ? 250 : null"
+                        :change-table-config="changeTableConfig"
+                        :business-project-oid="businessProjectOid"
+                        :condition-data="conditionData"
+                        :includeRootLinkCodes="rootLinkCodes"
+                        @jumpPage="isFullscreen && toggleFullscreen(false)"
+                        @onLoadListBefore="onLoadListBefore"
+                        @onLoadedData="onLoadedData"
+                        @addRootNodeAfter="addRootNodeAfter"
+                    >
+                        <template
+                            #right:toolbar:first="data"
+                            v-if="isResubmitNode"
+                        >
+                            <erd-button
+                                type="primary"
+                                @click="handleAdd"
+                                >{{ i18n.bpmIncrease }}</erd-button
+                            >
+                            <erd-button @click="handleRemove">{{ i18n.bpmRemove }}</erd-button>
+                        </template>
+                        <template #right:toolbar:end="data">
+                            <!--最大化 按钮-->
+                            <i
+                                v-if="!isFullscreen"
+                                class="erd-iconfont erd-icon-zoom-in cursor-pointer"
+                                @click="toggleFullscreen(!isFullscreen)"
+                            ></i>
+                        </template>
+                    </project-budget>
+                </template>
+            </common-card>
+        </template>
+    </erd-contraction-panel>
+    <!-- 添加科目树 -->
+    <ChooseSubjectTree
+        v-if="addBudgetDialogVisible"
+        :visible.sync="addBudgetDialogVisible"
+        :projectOid="businessProjectOid"
+        :excludeRootLinkCodes="rootLinkCodes"
+        :customFilterTableDataFn="customFilterTableDataFn"
+        @confirm="addSubjectConfirm"
+    ></ChooseSubjectTree>
+</div>

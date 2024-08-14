@@ -1,0 +1,31 @@
+.ppm-parent-child-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.completion_rate{
+    display: flex;
+    align-items: center;
+}
+
+.ppm-related_objects .ppm-related_objects__panel {
+    margin-bottom: var(--largeSpace);
+}
+.ppm-related_objects .ppm-related_objects__panel:first-child {
+    margin-top: 0;
+}
+.ppm-related_objects .ppm-related_objects__panel:last-child {
+    margin-bottom: 0;
+}
+#pane-relatedObjects.el-tab-pane {
+    padding: 0;
+}
+#pane-relatedObjects.el-tab-pane .panelTitle{
+    padding: 0;
+}
+#pane-relatedObjects .ppm-related_objects__panel .fam-view-navbar-component{
+    padding: 0 4px;
+}
+#pane-relatedObjects .ppm-related_objects__panel .advanced-table-container{
+    padding: 0;
+}

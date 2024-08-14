@@ -1,0 +1,8 @@
+{
+ "name": "@erdc-resource/erdc-ppm-work-hour",
+  "version": "3.1.0-rc4",
+  "description": "工时管理",
+  "erdcData": {
+    "widget": false
+  }
+}

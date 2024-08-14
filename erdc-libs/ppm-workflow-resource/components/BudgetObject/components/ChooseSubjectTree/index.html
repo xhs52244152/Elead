@@ -1,0 +1,32 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="innerTitle"
+    @fullscreen="onFullscreen"
+    size="large"
+>
+    <!--预算列表-->
+    <project-budget
+        v-if="dialogVisible"
+        ref="budgetTableRef"
+        class="h-100p"
+        is-process
+        :is-adaptive-height="isFullscreen"
+        :view-table-height="!isFullscreen ? 286 : null"
+        :business-project-oid="projectOid"
+        :excludeRootLinkCodes="excludeRootLinkCodes"
+        :customFilterTableDataFn="customFilterTableDataFn"
+        v-bind="$attrs"
+    >
+    </project-budget>
+
+    <template #footer>
+        <template>
+            <erd-button
+                type="primary"
+                @click="handleConfirm"
+                >{{ $t('confirm') }}</erd-button
+            >
+            <erd-button @click="handleCancel">{{ $t('cancel') }}</erd-button>
+        </template>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,62 @@
+<div class="related-list">
+    <div
+        class="related-list-show"
+        v-for="(it, index) in relatedData"
+        :key="it.businessKey"
+    >
+        <erd-contraction-panel
+            :unfold.sync="panelUnfolds[index]"
+            :title="defaultConfig[it.businessKey]?.title || ''"
+        >
+            <template v-slot:content>
+                <fam-view-table
+                    :view-table-config="viewTableConfig(it)"
+                    :default-table-height="450"
+                    :is-adaptive-height="false"
+                    :ref="defaultConfig[it.businessKey]?.tableKey || ''"
+                    @action-click="(data) => actionClick(data, it)"
+                    :enable-scroll-load="true"
+                >
+                    <template
+                        v-for="slot in slotsNameList"
+                        v-slot:[slot]="{scope}"
+                    >
+                        <div v-if="slot === 'column:default:operation:content'">
+                            <fam-action-pulldowm
+                                :is-operation="true"
+                                :action-config="getActionConfig(scope.row, it)"
+                                :action-data="scope.row"
+                                :args="[vm, scope.row, it]"
+                            ></fam-action-pulldowm>
+                        </div>
+                    </template>
+                </fam-view-table>
+            </template>
+        </erd-contraction-panel>
+    </div>
+    <fam-association-object
+        v-if="showDialog"
+        ref="associationObject"
+        :class-name="dialogClassName"
+        :table-key="tableKey"
+        :visible.sync="showDialog"
+        :url-config="urlConfig"
+        :left-table-columns="leftTableColumns"
+        @after-request="afterRequest"
+        @before-submit="beforeSubmit"
+        :showCount="false"
+        :enableScrollLoad="true"
+    >
+        <template
+            v-if="needSelectProject"
+            #left-search-left
+        >
+            <project-select
+                class="related-project-selector"
+                v-model="selectedProjectOid"
+                :clearable="true"
+                @after-change="refreshLeftTable"
+            ></project-select>
+        </template>
+    </fam-association-object>
+</div>

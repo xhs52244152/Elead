@@ -1,0 +1,43 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="60%"
+>
+    <FamDynamicForm
+        ref="reviewInfo"
+        :form.sync="formData"
+        :data="formConfigs"
+    >
+        <template v-slot:typeComponent="scope">
+            <erd-select
+                style="width: 100%"
+                v-model="formData.type"
+                @change="handleTypesChange"
+            >
+                <erd-option
+                    v-for="item in typeData"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.displayName"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template v-slot:variableComponent="scope">
+            <erd-tree-select
+                style="width: 100%"
+                :props="treeProps"
+                v-model="formData.point"
+                :data="variableData"
+            >
+            </erd-tree-select>
+        </template>
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

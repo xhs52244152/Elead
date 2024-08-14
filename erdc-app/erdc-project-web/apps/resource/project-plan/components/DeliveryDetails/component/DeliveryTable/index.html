@@ -1,0 +1,102 @@
+<div>
+    <!-- <erd-contraction-panel :unfold.sync="unfoldTable"> -->
+    <!-- <template v-slot:content> -->
+    <div class="detail-table">
+        <erd-table
+            ref="erdTable"
+            auto-resize
+            show-overflow
+            :column="columns"
+            :data="tableData"
+            :max-line="5"
+            table-style="embed-table"
+            :column-config="{resizable: false}"
+            :loading="loading"
+        >
+            <!-- 来源 -->
+            <template #column:default:source="{data}">
+                <span>{{ data.row?.source}}</span>
+            </template>
+            <!-- 交付件名称 -->
+            <template #column:default:name="{data}">
+                <a @click="openDetail(data)">{{data.row?.name}}</a>
+            </template>
+            <!--版本-->
+            <template #column:default:version="{data}">
+                <span v-if="data.row.version!=undefined">{{data.row.version}}</span>
+                <span v-else>{{i18nMappingObj.uninvolved}}</span>
+            </template>
+            <!--状态-->
+            <template #column:default:workStatus="{data}">
+                <span v-if="data.row.workStatus!=undefined">{{data.row.workStatus}}</span>
+                <span v-else>{{i18nMappingObj.uninvolved}}</span>
+            </template>
+            <!--主内容-->
+            <template #column:default:mainContent="{data}">
+                <i :class="data.row.mainContent?.displayName"></i>
+                <span>{{data.row.docMainFileName}}</span>
+            </template>
+            <!--交付件模板-->
+            <template #column:default:deliveryTemplate="{data}">
+                <div
+                    v-if="data.row['template']"
+                    class="flex w-100p"
+                >
+                    <erd-tooltip
+                        effect="dark"
+                        placement="top"
+                        popper-class="el-tooltip__arrow-hide"
+                        :content="showTemplateFileName(data.row)"
+                    >
+                        <erd-button
+                            class="truncate w-75p inline-block"
+                            type="text"
+                            @click="templateFileDownload(data.row)"
+                            >{{showTemplateFileName(data.row)}}</erd-button
+                        >
+                    </erd-tooltip>
+                    <erd-button
+                        class="inline-block"
+                        type="text"
+                        @click="templateFilePreview(data.row)"
+                        >{{i18nMappingObj.preview}}</erd-button
+                    >
+                    <erd-button
+                        class="inline-block"
+                        type="text"
+                        v-if="!readonly && isEdit(data.row)"
+                        @click="templateFileRemove(data.row)"
+                        >{{i18nMappingObj.delete}}</erd-button
+                    >
+                </div>
+                <fam-upload
+                    v-if="!data.row['template'] && !readonly && isEdit(data.row)"
+                    auto-upload
+                    class="upload-btn-container"
+                    :show-file-list="false"
+                    :limit="1"
+                    action=""
+                    :on-success="(res, fileObj) => uploadTemplate(fileObj, data)"
+                >
+                    <erd-button type="text"> {{ i18nMappingObj.upload }} </erd-button>
+                </fam-upload>
+            </template>
+            <template #column:default:operation="{data}">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(data.row)"
+                    :action-data="data.row"
+                    @click="onCommand"
+                ></fam-action-pulldowm>
+            </template>
+        </erd-table>
+    </div>
+    <!-- </template> -->
+    <!-- </erd-contraction-panel> -->
+
+    <fam-file-preview ref="filePreview"></fam-file-preview>
+    <fam-file-preview
+        ref="templateFilePreview"
+        static-class-name="erd.cloud.cbb.doc.entity.EtDocument"
+    ></fam-file-preview>
+</div>

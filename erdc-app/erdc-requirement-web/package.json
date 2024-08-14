@@ -1,0 +1,19 @@
+{
+  "name": "@erdc-app/erdc-requirement-web",
+  "description": "需求池",
+  "version": "3.1.0-rc4",
+  "scripts": {
+    "start": "erdc-cli start --root remote",
+    "clean": "erdc-cli clean",
+    "build": "erdc-cli build --groupedDest --fatDist",
+    "pack": "erdc-cli pack"
+  },
+  "appId": "PPM",
+  "i18n": {
+    "zh_cn": "需求池",
+    "en_us": "DemandPool"
+  },
+  "dependencies": {
+    "erdc-cli": "3.1.0-rc5"
+  }
+}

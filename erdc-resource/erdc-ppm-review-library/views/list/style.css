@@ -1,0 +1,15 @@
+.review-library-container {
+  height: 100%;
+  overflow: hidden;
+}
+.review-library-container .library-link-name {
+  color: var(--colorPrimary);
+  cursor: pointer;
+}
+.review-library-container .library-title {
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 28px;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 16px;
+}/*# sourceMappingURL=style.css.map */

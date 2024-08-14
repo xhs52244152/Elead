@@ -1,0 +1,46 @@
+#batch-set-value .moduleBox {
+  display: flex;
+  align-items: center;
+}
+#batch-set-value .set_value_item .delete_btn {
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 8px;
+  color: #666;
+}
+#batch-set-value .update_font_box {
+  min-width: 50px;
+  margin: 0 4px;
+  text-align: center;
+  line-height: 32px;
+}
+#batch-set-value .effect-box {
+  margin-left: 8px;
+}
+#batch-set-value .components-select-box {
+  width: 100%;
+  flex: 1;
+}
+#batch-set-value .components-select-box #ComponentWapper-famMemberSelect,
+#batch-set-value .components-select-box .el-date-editor.el-input,
+#batch-set-value .components-select-box .el-input__inner,
+#batch-set-value .components-select-box .el-input-number,
+#batch-set-value .components-select-box .el-select {
+  width: 100%;
+}
+#batch-set-value .components-select-box .searchInputWapper .el-input__inner {
+  width: 180px;
+}
+#batch-set-value .add-field-box {
+  margin-left: 22px;
+}
+#batch-set-value .add-field-box a:hover {
+  color: var(--colorPrimaryLighter);
+}
+#batch-set-value ul {
+  margin-bottom: 0;
+}
+
+.famMemberSelect-popClass-custom.set-value-member {
+  width: 420px !important;
+}/*# sourceMappingURL=index.css.map */

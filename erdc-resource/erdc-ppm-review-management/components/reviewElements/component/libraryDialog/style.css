@@ -1,0 +1,23 @@
+.library-dialog .library-head {
+  display: flex;
+  justify-content: space-between;
+}
+.library-dialog .library-head .library-code {
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#fam-advanced-form .el-form-item__content .memberCon {
+  word-break: break-all;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}/*# sourceMappingURL=style.css.map */

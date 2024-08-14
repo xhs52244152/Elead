@@ -1,0 +1,61 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="60%"
+    custom-class="library-dialog"
+>
+    <div
+        class="library-head"
+        v-if="layoutName === 'DETAIL'"
+    >
+        <div class="library-code">{{formData.identifierNo}}</div>
+        <erd-button
+            v-if="showEdit"
+            type="primary"
+            @click="handleEdit"
+            class="library-btn"
+            >{{i18nMappingObj.edit}}</erd-button
+        >
+    </div>
+    <fam-advanced-form
+        ref="layoutForm"
+        :model.sync="formData"
+        :form-id="layoutName"
+        :class-name="className"
+        :editableAttr="editableAttrs"
+        :query-layout-params="queryLayoutParams()"
+    >
+    </fam-advanced-form>
+    <Files
+        ref="libraryFiles"
+        class="library-files-list"
+        uploadUrl="/element/content/file/upload"
+        downloadUrl="/element/content/file/download"
+        tableListUrl="/element/content/attachment/list"
+        :class-name="className"
+        :quickBinding="false"
+        :realTimeDelete="false"
+        :showUploadBtn="layoutName !== 'DETAIL'"
+        :showUpload="layoutName !== 'DETAIL'"
+        :businessOid="oid"
+        :operationConfigName="operationConfigName"
+    ></Files>
+    <template
+        #footer
+        v-if="layoutName !== 'DETAIL'"
+    >
+        <erd-button
+            type="primary"
+            :loading="isSaving"
+            @click="handleConfirm(false)"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button
+            v-if="formData.status !== 'RELEASE'"
+            @click="handleDraft(true)"
+            :loading="isSaving"
+            >{{ i18nMappingObj.saveDraft }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

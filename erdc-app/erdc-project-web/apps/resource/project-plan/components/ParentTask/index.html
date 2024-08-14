@@ -1,0 +1,14 @@
+<erd-ex-select
+    v-model="dataValue"
+    filterable
+    remote
+    reserve-keyword
+    :placeholder="i18nMappingObj.pleaseEnterKeyword"
+    :remote-method="searchTaskMethod"
+    :options="parentTaskOptions"
+    :default-props="defaultProps"
+    :disabled="isDisabled"
+    clearable
+    class="w-100p ppm-select-100p"
+>
+</erd-ex-select>

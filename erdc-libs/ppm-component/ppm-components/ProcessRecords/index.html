@@ -1,0 +1,35 @@
+<div style="height: 100%" class="process-records-container">
+    <erd-table
+        auto-resize
+        ref="erdTable"
+        :row-config="{ keyField: 'oid' }"
+        height="100%"
+        :column="tableColumns"
+        style="height: 100%"
+        :data="tableData"
+        :isEmbedTable="tableData.length ? false : true"
+        show-overflow
+        border
+    >
+        <template #column:default:name="{ data }">
+            <span
+                @click="openDetail(data)"
+                class="ppm-link-name"
+                >{{ data.row.name }}</span
+            >
+        </template>
+        <template #column:default:state="{ data }">
+            <bpm-process-status :status="getStateData(data.row.state)"> </bpm-process-status>
+        </template>
+        <!--空数据状态-->
+        <template #empty>
+            <div class="erd_table-empty pt-20 pb-20">
+                <img
+                    :src="emptyImgSrc"
+                    :alt="i18nMappingObj.nodata"
+                />
+                <span>{{i18nMappingObj.nodata}}</span>
+            </div>
+        </template>
+    </erd-table>
+</div>

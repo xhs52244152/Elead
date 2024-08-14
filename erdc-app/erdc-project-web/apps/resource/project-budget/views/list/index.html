@@ -1,0 +1,159 @@
+<div class="h-100p flex flex-column">
+    <fam-advanced-table
+        :view-table-config="viewTableConfig"
+        :enable-scroll-load="false"
+        class="budget-custom-list"
+        ref="famTableRef"
+        :tableMaxHeight="tableMaxHeight"
+        :viewTableHeight="viewTableHeight"
+        :isAdaptiveHeight="isAdaptiveHeight"
+        @handler-error="handlerError"
+    >
+        <template #right:toolbar:first>
+            <div
+                class="mt-10"
+                v-if="showBaselineSelect"
+            >
+                <!-- 基线 -->
+                <baseline-select
+                    :class-name="budgetClassName"
+                    @change="changeBaseline"
+                ></baseline-select>
+            </div>
+            <slot name="right:toolbar:first"></slot>
+        </template>
+        <!-- 表头插槽 -->
+        <template
+            v-for="attrName in headerSlotNames"
+            v-slot:[`column:header:${attrName}`]="{data}"
+        >
+            <span class="header-tag default-style">{{formatHeaderTag(attrName)}}</span>{{data.item?.title}}
+        </template>
+        <!-- 内容插槽 -->
+        <template
+            v-for="slotName in slotsNameList"
+            v-slot:[slotName]="{scope}"
+        >
+            <!-- 行内操作 -->
+            <div v-if="slotName === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+            <!-- 科目编码 的插槽 -->
+            <template v-else-if="slotName === `column:default:${subjectClassName}#identifierNo:content`">
+                <a
+                    href="javascript:void(0)"
+                    @click="onSubjectDetail(scope.row, scope.column.property)"
+                    >{{scope.row[scope.column.property]}}</a
+                >
+            </template>
+            <!-- 每个阶段 预算、支出字段 的插槽 -->
+            <template
+                v-else-if="slotName.includes(mixin_prefixConfig.budget) || slotName.includes(mixin_prefixConfig.expenses)"
+            >
+                <!-- 按阶段模式 && 支持详细计划 && 为叶子节点时 -->
+                <a
+                    v-if="isToStage && isSupportDetail && !mixin_haveChild(scope.row)"
+                    href="javascript:void(0)"
+                    @click="onAmountDetail(scope.row, scope.column.property)"
+                    >{{mixin_formatAmountUnit(scope.row[scope.column.property] || 0)}}</a
+                >
+                <!-- 其它 -->
+                <span v-else>{{mixin_formatAmountUnit(scope.row[scope.column.property] || 0)}}</span>
+            </template>
+            <!-- 总成本(总预算) 的插槽 -->
+            <template v-else-if="slotName === `column:default:${budgetClassName}#totalBudget:content`">
+                <span>{{mixin_formatAmountUnit(calcTotalBudget(scope.row))}}</span>
+            </template>
+            <!-- 总支出 的插槽 -->
+            <template v-else-if="slotName === `column:default:${budgetClassName}#totalExpenses:content`">
+                <span>{{mixin_formatAmountUnit(calcTotalExpenses(scope.row))}}</span>
+            </template>
+            <!-- 总支出占比 的插槽 -->
+            <template v-else-if="slotName === `column:default:${budgetClassName}#expensesRate:content`">
+                <span>{{calcExpensesRate(scope.row)}}</span>
+                <!-- 已超标 的图标 -->
+                <span
+                    v-if="scope.row['_EXPENSES_RATE_TYPE'] === 'exceed'"
+                    class="expenses-rate-tag exceed"
+                >
+                    {{i18n['exceed']}}
+                </span>
+            </template>
+            <!-- 每个阶段 剩余字段 的插槽 -->
+            <template v-else-if="slotName.includes(mixin_prefixConfig.surplus)">
+                <span>{{mixin_formatAmountUnit(mixin_calcSurplus(scope.row, scope.column.property))}}</span>
+            </template>
+            <template v-else>
+                <span>{{scope.row[scope.column.property]}}</span>
+            </template>
+        </template>
+        <!-- 单元格字段编辑时的插槽 -->
+        <template
+            v-for="slot in slotsField"
+            #[`column:edit:${slot.prop}`]="{data}"
+        >
+            <!-- 预算、支出字段的编辑插槽 -->
+            <template
+                v-if="slot.prop.includes(mixin_prefixConfig.budget) || slot.prop.includes(mixin_prefixConfig.expenses)"
+            >
+                <td-input-number
+                    v-model="data.row[data.column.property]"
+                    :unitLabel="useUnit?.label"
+                    @change="onAmountChange(data.row, data.column.property, $event)"
+                ></td-input-number>
+            </template>
+        </template>
+        <template #right:toolbar:end>
+            <slot name="right:toolbar:end"></slot>
+        </template>
+    </fam-advanced-table>
+    <!-- 创建/编辑 预算弹窗 -->
+    <choose-template
+        v-if="templateDialogVisible"
+        :visible.sync="templateDialogVisible"
+        :canClose="canClose"
+        :budgetInfo="budgetInfo"
+        @success="updatedDataAfter(true)"
+    ></choose-template>
+    <!-- 选择科目弹窗 -->
+    <choose-subject-dialog
+        v-if="chooseSubject.visible"
+        :visible.sync="chooseSubject.visible"
+        :relationOid="budgetOid"
+        :parentSubjectOid="parentSubjectOid"
+        :findParentConfig="findParentConfig"
+        @success="addSubjectSuccess"
+    ></choose-subject-dialog>
+    <!-- 按阶段编辑详细金额 弹窗 -->
+    <amount-detail
+        v-if="mixin_amountDetailDialog.visible"
+        :visible.sync="mixin_amountDetailDialog.visible"
+        :title="mixin_amountDetailDialog.title"
+        :useUnit="useUnit"
+        :budgetInfo="budgetInfo"
+        :readonly="mixin_amountDetailDialog.readonly"
+        :isBudget="mixin_amountDetailDialog.isBudget"
+        :budgetLinkOid="mixin_amountDetailDialog.budgetLinkOid"
+        :subjectInfo="mixin_amountDetailDialog.subjectInfo"
+        :stageInfo="mixin_amountDetailDialog.stageInfo"
+        :amountTypeOIdBudget="mixin_amountTypeOIdBudget"
+        :amountTypeOIdExpenses="mixin_amountTypeOIdExpenses"
+        @success="updatedDataAfter(true)"
+    ></amount-detail>
+    <!-- 设置状态 -->
+    <common-set-state
+        v-if="showSetStateDialog"
+        :title="i18n.setStatus"
+        :current-row="editStatusData"
+        :class-name="budgetClassName"
+        :show-set-state-dialog.sync="showSetStateDialog"
+        :exclude-options="['IN_APPROVAL']"
+        @confirm="setStateConfirm"
+        @cancel="setStateCancel"
+    ></common-set-state>
+</div>

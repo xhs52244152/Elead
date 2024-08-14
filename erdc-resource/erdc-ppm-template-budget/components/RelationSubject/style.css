@@ -1,0 +1,10 @@
+.relation-subject-table .td-input-number,.relation-subject-table .td-input-number .el-input,.relation-subject-table .td-input-number .el-input input {
+    height: 22px!important;
+    line-height: 22px!important;
+}
+.relation-subject-table .td-input-number .el-input-number__decrease,.relation-subject-table .td-input-number .el-input-number__increase {
+    height: 20px!important;
+}
+.relation-subject-table .text-align-right {
+    text-align: right;
+}

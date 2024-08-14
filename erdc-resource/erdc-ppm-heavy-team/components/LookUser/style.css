@@ -1,0 +1,15 @@
+.group-user-info .user-info-title {
+  display: flex;
+  align-items: center;
+}
+.group-user-info .user-info-title .title-label {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+}
+.group-user-info .user-info-title .title-name {
+  width: calc(100% - 146px);
+  margin-left: 20px;
+  display: inline-block;
+  overflow: hidden;
+}/*# sourceMappingURL=style.css.map */

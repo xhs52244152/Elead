@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/erdc-ppm-review-management",
+  "version": "3.1.0-rc4",
+  "description": "评审管理",
+  "erdcData": {
+    "widget": false
+  }
+}

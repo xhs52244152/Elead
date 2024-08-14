@@ -1,0 +1,132 @@
+.ppm-gantt {
+    height: 100%;
+    #ppm-gantt-container {
+        overflow: auto;
+        background: white;
+        padding: var(--largeSpace);
+
+        .fam-advanced-group {
+            margin-bottom: 16px;
+            margin-top: 48px;
+            &.fam-advanced-group-panel-hidden {
+                margin-top: 32px;
+            }
+        }
+    }
+
+    .top-opt-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: var(--largeSpace);
+
+        &>.el-form {
+            margin: 0 0 var(--bigSpace);
+        }
+
+        & .el-button+.el-button-group {
+            margin-left: var(--normalSpace);
+        }
+
+        .top-opt-container__right {
+            margin-left: auto;
+            &>.el-button {
+                margin-left: var(--normalSpace);
+            }
+        }
+
+        .el-button-group>.el-button:first-child:last-child {
+            border-radius: var(--borderRadius);
+        }
+        .create-dropdown-btn{
+            float: left; 
+            margin-right: -1px;
+            .create-task-btn{
+                border: none;
+                height: auto;
+            }
+        }
+        .top-opt-container__left{
+            &>div:first-of-type{
+                .el-button{
+                    background: var(--buttonBgColor);
+                    border: var(--buttonBorder);
+                    border-radius: var(--borderRadius);
+                    box-sizing: var(--buttonBoxSizing);
+                    color: var(--buttonFontColor);
+                    font-size: var(--buttonFontSize);
+                    font-weight: 400;
+                    height: var(--buttonHeight);
+                    min-width: var(--buttonMinWidth);
+                    padding: 0 var(--buttonPaddingLeft) 0 var(--buttonPaddingRight);
+                    vertical-align: middle;
+                    &:hover,
+                    &:focus{
+                        background: var(--buttonBg__hover);
+                        border-color: var(--buttonBorderColor__hover);
+                        color: var(--buttonColor__hover);
+                        
+                    }
+                    &:active{
+                        background: var(--buttonBg__active);
+                        border-color: var(--buttonBorderColor__active);
+                        color: var(--buttonColor__active);
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .ppm-gantt-planset-container .fam-form-item-width-value,
+    .ppm-gantt-planset-container .fam-form-item-width-value .el-form-item__content {
+        background: unset;
+    }
+
+    .ppm-gantt-planset-container {
+        .fam-advanced-filter-btn {
+            position: relative;
+            padding: 4px 12px;
+            line-height: 24px;
+            left: 4px;
+
+            &::before {
+                content: "";
+                position: absolute;
+                color: #bebebe;
+                background-color: #bebebe;
+                width: 1px;
+                height: 20px;
+                top: 6px;
+                left: -1px;
+            }
+        }
+
+        .fam-advanced-filter-active {
+            border-color: var(--tagDefaultLightBorderColor);
+            background-color: var(--tagDefaultLightBackgroundColor);
+            color: var(--tagDefaultLightColor);
+        }
+    }
+}
+
+.ppm-gantt-menu-container {
+    padding: 0;
+    min-width: 100px;
+    ul {
+        margin: 0;
+        width: 100px;
+
+        li.el-dropdown-menu__item.is-disabled {
+            pointer-events: unset;
+        }
+    }
+}
+
+.fam-main__right-content:has(.ppm-gantt) {
+    overflow: hidden !important;
+}
+.upload-deliverable-dialog {
+    .el-dialog__body {
+        height: 400px;
+    }
+}

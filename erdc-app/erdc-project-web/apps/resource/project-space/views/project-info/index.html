@@ -1,0 +1,40 @@
+<div
+    id="info_content"
+    class="ppm-layout-content"
+    v-fam-fs
+>
+    <div class="ppm-project_info_header">
+        <div class="info_header">
+            <span
+                class="ppm-project_info_header_title"
+                :title="projectName"
+                >{{projectName}}; {{identifierNo}}</span
+            >
+            <div class="opt-container">
+                <fam-action-pulldowm
+                    :action-config="getActionConfig(infoData)"
+                    :action-data="infoData"
+                    :args="[vm, infoData, false]"
+                    :is-operation="true"
+                    :default-btn-config="defaultBtnConfig"
+                ></fam-action-pulldowm>
+            </div>
+        </div>
+        <info-list
+            v-if="!showBasicInfo"
+            :infoData="infoListData"
+        ></info-list>
+    </div>
+
+    <content-info
+        v-if="!showBasicInfo"
+        @info-data="getInfoData"
+        ref="contentInfo"
+    ></content-info>
+    <!-- 模板详情 -->
+    <info-detail
+        class="template-detail"
+        v-if="showBasicInfo"
+        :oid="oid"
+    ></info-detail>
+</div>

@@ -1,0 +1,40 @@
+<fam-view-table
+    ref="famViewTable"
+    :view-table-config="viewTableConfig"
+    :default-table-height="450"
+    @callback="fnCallback"
+>
+    <template
+        v-for="slot in slotsNameList"
+        v-slot:[slot]="{ scope }"
+    >
+        <div v-if="!!scope.row.whetherAdd">
+            <template v-if="slot=='column:default:operation:content'">
+                <erd-button
+                    v-if="!scope.row.isDefault"
+                    type="text"
+                    @click="hanlderCancel(scope.row)"
+                >
+                    {{i18nMappingObj.comfirm}}</erd-button
+                >
+                <erd-button
+                    v-if="!scope.row.isDefault"
+                    type="text"
+                    @click="handlerSaveApplication(scope.row)"
+                >
+                    {{i18nMappingObj.cancel}}</erd-button
+                >
+            </template>
+        </div>
+        <div v-else>
+            <template v-if="slot=='column:default:operation:content'">
+                <erd-button
+                    type="text"
+                    @click="handlerDelete(scope.row)"
+                    >{{i18nMappingObj.deleteAssociation}}</erd-button
+                >
+            </template>
+            <span>{{getValueMeth(scope.row,slot)}}</span>
+        </div>
+    </template>
+</fam-view-table>

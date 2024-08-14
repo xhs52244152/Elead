@@ -1,0 +1,62 @@
+<div
+    id="risk-table-container"
+    :style="resourceCode === 'riskLibraryList' ? 'padding: var(--bigSpace)' : ''"
+>
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :default-table-height="450"
+        :is-adaptive-height="true"
+        :enable-scroll-load="enableScrollLoad"
+        ref="riskList"
+        @callback="renderTableCallback"
+        @action-click="actionClick"
+    >
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-model="groupAttrName"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="changeGroupData"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.ppm.risk.entity.Risk#name:content'"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="openDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.ppm.risk.entity.Risk#name']}}
+            </span>
+            <div
+                v-if="slot === 'column:default:erd.cloud.ppm.risk.entity.Risk#planInfo.completionRate:content' && !scope.row.isGroupRow"
+            >
+                <div class="completionRate-box">
+                    <svg-circle :rate="getCompletionRate(scope.row)"></svg-circle>
+                    <div>{{ getCompletionRate(scope.row, '%')}}</div>
+                </div>
+            </div>
+            <div v-if="slot === 'column:default:operation:content' && !scope.row.isGroupRow">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    @click="onCommand"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+</div>

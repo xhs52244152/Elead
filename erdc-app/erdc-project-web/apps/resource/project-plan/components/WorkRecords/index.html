@@ -1,0 +1,99 @@
+<div id="work-records-container">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfoldA"
+        title="工时信息"
+    >
+        <template v-slot:content>
+            <erd-row class="up_box">
+                <erd-col
+                    :span="6"
+                    class="time_box"
+                >
+                    <div>
+                        <span>预计工时</span>
+                        <span>3小时</span>
+                    </div>
+                    <div>
+                        <span>剩余工时</span>
+                        <span>2小时</span>
+                    </div>
+                </erd-col>
+                <erd-col
+                    :span="6"
+                    class="time_box"
+                >
+                    <div>
+                        <span>工时登记者</span>
+                        <span>李四(1234)</span>
+                    </div>
+                    <div>
+                        <span>已登记工时</span>
+                        <span>2小时</span>
+                    </div>
+                </erd-col>
+                <erd-col
+                    :span="6"
+                    class="time_box"
+                >
+                    <div>
+                        <span>预估偏差</span>
+                        <span>1小时</span>
+                    </div>
+                    <div>
+                        <span>工时进度</span>
+                        <span>45%</span>
+                    </div>
+                </erd-col>
+            </erd-row>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        title="成员工时详情"
+    >
+        <template v-slot:content>
+            <div class="down_box">
+                <erd-button @click="typeChange">登记工时</erd-button>
+                <div class="deng_box">
+                    <div>
+                        <erd-select
+                            v-model="memberValue"
+                            placeholder="请选择"
+                            prefix-icon="vxe-icon-user-fill"
+                        >
+                            <erd-option
+                                v-for="list in typeList"
+                                :value="list.value"
+                                :label="list.name"
+                                :key="list.id"
+                            ></erd-option>
+                        </erd-select>
+                        <span>登记总计1小时</span>
+                    </div>
+                    <div>
+                        <span>剩余工时2小时</span>
+                    </div>
+                </div>
+                <ul>
+                    <li class="main_box">
+                        <div>
+                            <div class="main_box_up">
+                                <span>登记：</span><span>2023-03-10-12：00开始，实际投入0.5小时</span>
+                            </div>
+                            <div><span>描述：</span><span>记录用户完成该任务的详细内容</span></div>
+                        </div>
+                        <div>
+                            <erd-button>编辑</erd-button>
+                            <erd-button>删除</erd-button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </template>
+    </erd-contraction-panel>
+    <Registered_working
+        v-if="showFlag"
+        :visible="showFlag"
+        @updateWorkVisible="updateWorkVisible"
+    ></Registered_working>
+</div>

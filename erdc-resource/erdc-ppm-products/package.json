@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/erdc-ppm-products",
+  "version": "3.1.0-rc4",
+  "description": "产品信息",
+  "erdcData": {
+    "widget": false
+  }
+}

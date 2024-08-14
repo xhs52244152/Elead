@@ -1,0 +1,12 @@
+.ppm-process-work-hour {
+  margin: 0 var(--largeSpace);
+}
+.ppm-process-work-hour .ContractionPanel .panelTitle {
+  font-size: var(--fontSize);
+}
+.ppm-process-work-hour .process-base-info .el-tooltip .fam-dynamic-form__label--labelText {
+  color: var(--colorTextExplain) !important;
+}
+.ppm-process-work-hour .table-container {
+  margin-top: var(--largeSpace);
+}/*# sourceMappingURL=index.css.map */

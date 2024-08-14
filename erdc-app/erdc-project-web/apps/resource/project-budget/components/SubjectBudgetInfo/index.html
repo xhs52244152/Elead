@@ -1,0 +1,107 @@
+<div class="subject-budget-info-wrap">
+    <!-- 折叠面板：基本信息 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold1"
+        :title="i18n['basicInfo']"
+    >
+        <erd-form
+            :model="formData"
+            label-width="37.5%"
+        >
+            <!-- display: flex;flex-wrap: wrap; 防止内容过长导致栅格布局错乱 -->
+            <erd-row style="display: flex; flex-wrap: wrap">
+                <template v-for="item in formColumns">
+                    <erd-col
+                        :key="item.field"
+                        :span="item.col"
+                    >
+                        <erd-form-item
+                            :label="item.label"
+                            :label-width="item.labelWidth"
+                        >
+                            <!-- 总预算、总支出 -->
+                            <span v-if="['totalBudgetValue', 'totalExpensesValue'].includes(item.field)"
+                                >{{mixin_formatAmountUnit(formData[item.field])}}</span
+                            >
+                            <span v-else>{{formData[item.field]}}</span>
+                        </erd-form-item>
+                    </erd-col>
+                </template>
+            </erd-row>
+        </erd-form>
+    </erd-contraction-panel>
+    <!-- 折叠面板：阶段/日期 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold2"
+        :title="i18n['detailInfo']"
+    >
+        <erd-table
+            border
+            :row-config="{isCurrent: true, isHover: true}"
+            :edit-config="editConfig"
+            :column-config="{resizable: true}"
+            align="left"
+            :data="tableData"
+            :column="tableColumns"
+            show-overflow
+            ref="stageTableRef"
+        >
+            <!-- 单元格字段编辑时的插槽 -->
+            <template
+                v-for="slotName in slotsNameEdit"
+                #[`column:edit:${slotName}`]="{data}"
+            >
+                <!-- 预算、支出字段的编辑插槽 -->
+                <template
+                    v-if="slotName.includes(mixin_prefixConfig.budget) || slotName.includes(mixin_prefixConfig.expenses)"
+                >
+                    <td-input-number
+                        v-model="data.row[data.column.property]"
+                        :unitLabel="useUnit?.label"
+                        @change="onAmountChange(data.row, data.column.property, $event)"
+                    ></td-input-number>
+                </template>
+            </template>
+            <!-- 内容插槽 -->
+            <template
+                v-for="slotName in slotsNameList"
+                #[`column:default:${slotName}`]="{data}"
+            >
+                <!-- 每个阶段 预算、支出字段 的插槽 -->
+                <template
+                    v-if="slotName.includes(mixin_prefixConfig.budget) || slotName.includes(mixin_prefixConfig.expenses)"
+                >
+                    <!-- 按阶段模式 && 支持详细计划 && 为叶子节点时 -->
+                    <a
+                        v-if="isToStage && isSupportDetail && !mixin_haveChild(data.row)"
+                        href="javascript:void(0)"
+                        @click="onAmountDetail(data.row, data.column.property)"
+                        >{{mixin_formatAmountUnit(data.row[data.column.property] || 0)}}</a
+                    >
+                    <!-- 其它 -->
+                    <span v-else>{{mixin_formatAmountUnit(data.row[data.column.property] || 0)}}</span>
+                </template>
+                <!-- 每个阶段 剩余字段 的插槽 -->
+                <template v-else-if="slotName.includes(mixin_prefixConfig.surplus)">
+                    <span>{{mixin_formatAmountUnit(mixin_calcSurplus(data.row, data.column.property))}}</span>
+                </template>
+            </template>
+        </erd-table>
+    </erd-contraction-panel>
+    <!-- 按阶段编辑详细金额 弹窗 -->
+    <amount-detail
+        v-if="mixin_amountDetailDialog.visible"
+        :visible.sync="mixin_amountDetailDialog.visible"
+        :title="mixin_amountDetailDialog.title"
+        :useUnit="useUnit"
+        :budgetInfo="budgetInfo"
+        :readonly="mixin_amountDetailDialog.readonly"
+        :isBudget="mixin_amountDetailDialog.isBudget"
+        :budgetLinkOid="mixin_amountDetailDialog.budgetLinkOid"
+        :subjectInfo="mixin_amountDetailDialog.subjectInfo"
+        :stageInfo="mixin_amountDetailDialog.stageInfo"
+        :amountTypeOIdBudget="mixin_amountTypeOIdBudget"
+        :amountTypeOIdExpenses="mixin_amountTypeOIdExpenses"
+        @success="updatedDataAfter(true)"
+    ></amount-detail>
+</div>

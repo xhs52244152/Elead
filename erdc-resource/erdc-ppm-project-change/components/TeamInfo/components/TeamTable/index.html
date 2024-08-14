@@ -1,0 +1,30 @@
+<fam-erd-table
+    ref="famErdTable"
+    :column-config="{ resizable: true }"
+    :data="teamTableData"
+    v-bind="{...tableConfig, ...$attrs}"
+    @checkbox-all="selectChangeEvent"
+    @checkbox-change="selectChangeEvent"
+>
+    <template #column:default:principalTarget="{data}">
+        <span> {{ filterType(data.row?.principalTarget) }} </span>
+    </template>
+    <template #column:default:principalName="{data}">
+        <erd-tag
+            v-if="data.row.primarily"
+            class="m-4"
+            type="warning"
+            size="mini"
+        >
+            {{i18n.responsible}}
+        </erd-tag>
+        <span :class="{'text-bold': data.row?.children.length > 0}">{{ data.row.principalName }}</span>
+    </template>
+
+    <template v-slot:column:default:operation="{data}">
+        <slot
+            name="column:default:operation"
+            :data="{ row: data.row }"
+        ></slot>
+    </template>
+</fam-erd-table>

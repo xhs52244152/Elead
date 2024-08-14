@@ -1,0 +1,24 @@
+<div class="info_data_tab detail_project_demo">
+    <erd-tabs
+        type="card"
+        v-model="activeTab"
+        class="ppm-erd-tab-container"
+    >
+        <template v-for="(tab, index) in tabsConfig">
+            <erd-tab-pane
+                v-if="!tab.hide"
+                :key="tab.name"
+                :label="tab.displayName"
+                :name="tab.name"
+                :lazy="index > 0"
+            >
+                <component
+                    :is="tab.name"
+                    v-bind="tab.props"
+                    v-on="tab.listeners"
+                    :ref="tab.name"
+                ></component>
+            </erd-tab-pane>
+        </template>
+    </erd-tabs>
+</div>

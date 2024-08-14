@@ -1,0 +1,48 @@
+<div class="h-100p flex flex-column">
+    <div id="project_content">
+        <fam-view-table
+            :view-table-config="viewTableConfig"
+            :is-adaptive-height="true"
+            @callback="fnCallback"
+            class="view_table"
+            ref="famViewTable"
+        >
+            <template #right:viewNavbar:end>
+                <div class="project_nav_right">
+                    <erd-form
+                        inline
+                        class="ppm-label-form"
+                    >
+                        <simple-select
+                            v-model="groupName"
+                            :options="groupOptions"
+                            @change="handleGroup"
+                        >
+                        </simple-select>
+                    </erd-form>
+                </div>
+            </template>
+            <template
+                v-for="slot in slotsNameList"
+                v-slot:[slot]="{scope}"
+            >
+                <span
+                    v-if="slot === 'column:default:erd.cloud.cbb.doc.entity.EtDocument#name:content'"
+                    :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                    @click="handleDetail(scope.row)"
+                >
+                    {{scope.row['erd.cloud.cbb.doc.entity.EtDocument#name'] || '-' }}
+                </span>
+                <div v-if="slot === 'column:default:operation:content' && !scope.row.isGroupRow">
+                    <fam-action-pulldowm
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :action-data="scope.row"
+                        :args="[vm, scope.row, true]"
+                    ></fam-action-pulldowm>
+                </div>
+            </template>
+        </fam-view-table>
+    </div>
+    <fam-file-preview ref="filePreview"></fam-file-preview>
+</div>

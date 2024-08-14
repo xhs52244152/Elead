@@ -1,0 +1,9 @@
+.stage-amount-detail .td-input, .stage-amount-detail .td-input input {
+  height: 22px !important;
+  line-height: 22px !important;
+}
+
+.stage-amount-detail .text-align-right {
+  text-align: right;
+}
+/*# sourceMappingURL=style.css.map */

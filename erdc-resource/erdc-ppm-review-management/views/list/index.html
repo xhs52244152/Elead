@@ -1,0 +1,58 @@
+<div
+    id="review-management-container"
+    :style="routeName === 'reviewList' ? 'padding: var(--bigSpace)' : ''"
+>
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :default-table-height="450"
+        :is-adaptive-height="true"
+        :enable-scroll-load="enableScrollLoad"
+        @action-click="actionClick"
+        ref="managementList"
+        @callback="renderTableCallback"
+    >
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-model="groupAttrName"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="refresh"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in getSlotsName(slotsField)"
+            v-slot:[slot]="{scope}"
+        >
+            <span
+                v-if="slot === `column:default:${groupNameField}:content`"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="handleDetail(scope.row)"
+            >
+                {{scope.row[groupNameField]}}
+            </span>
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+    <management-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :className="className"
+        :oid="productLineRefOid"
+    ></management-dialog>
+</div>

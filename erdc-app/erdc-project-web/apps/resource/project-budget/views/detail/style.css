@@ -1,0 +1,39 @@
+.budget-info-page .title-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 var(--famNormalSpace);
+}
+
+.budget-info-page .budget-info-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  overflow-y: auto;
+}
+
+.budget-info-page .tab-wrap > .el-tabs__header {
+  background-color: var(--colorFullBg);
+}
+
+.budget-info-page .tab-wrap > .el-tabs__content {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: var(--largeSpace);
+}
+
+.budget-info-page .info-page-footer {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: var(--largeSpace);
+  border-top: 1px solid #ebebeb;
+}
+/*# sourceMappingURL=style.css.map */

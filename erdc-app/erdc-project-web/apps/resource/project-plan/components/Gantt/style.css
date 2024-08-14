@@ -1,0 +1,112 @@
+.ppm-gantt {
+  height: 100%;
+}
+.ppm-gantt #ppm-gantt-container {
+  overflow: auto;
+  background: white;
+  padding: var(--largeSpace);
+}
+.ppm-gantt #ppm-gantt-container .fam-advanced-group {
+  margin-bottom: 16px;
+  margin-top: 48px;
+}
+.ppm-gantt #ppm-gantt-container .fam-advanced-group.fam-advanced-group-panel-hidden {
+  margin-top: 32px;
+}
+.ppm-gantt .top-opt-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: var(--largeSpace);
+}
+.ppm-gantt .top-opt-container > .el-form {
+  margin: 0 0 var(--bigSpace);
+}
+.ppm-gantt .top-opt-container .el-button + .el-button-group {
+  margin-left: var(--normalSpace);
+}
+.ppm-gantt .top-opt-container .top-opt-container__right {
+  margin-left: auto;
+}
+.ppm-gantt .top-opt-container .top-opt-container__right > .el-button {
+  margin-left: var(--normalSpace);
+}
+.ppm-gantt .top-opt-container .el-button-group > .el-button:first-child:last-child {
+  border-radius: var(--borderRadius);
+}
+.ppm-gantt .top-opt-container .create-dropdown-btn {
+  float: left;
+  margin-right: -1px;
+}
+.ppm-gantt .top-opt-container .create-dropdown-btn .create-task-btn {
+  border: none;
+  height: auto;
+}
+.ppm-gantt .top-opt-container .top-opt-container__left > div:first-of-type .el-button {
+  background: var(--buttonBgColor);
+  border: var(--buttonBorder);
+  border-radius: var(--borderRadius);
+  box-sizing: var(--buttonBoxSizing);
+  color: var(--buttonFontColor);
+  font-size: var(--buttonFontSize);
+  font-weight: 400;
+  height: var(--buttonHeight);
+  min-width: var(--buttonMinWidth);
+  padding: 0 var(--buttonPaddingLeft) 0 var(--buttonPaddingRight);
+  vertical-align: middle;
+}
+.ppm-gantt .top-opt-container .top-opt-container__left > div:first-of-type .el-button:hover, .ppm-gantt .top-opt-container .top-opt-container__left > div:first-of-type .el-button:focus {
+  background: var(--buttonBg__hover);
+  border-color: var(--buttonBorderColor__hover);
+  color: var(--buttonColor__hover);
+}
+.ppm-gantt .top-opt-container .top-opt-container__left > div:first-of-type .el-button:active {
+  background: var(--buttonBg__active);
+  border-color: var(--buttonBorderColor__active);
+  color: var(--buttonColor__active);
+  outline: none;
+}
+.ppm-gantt .ppm-gantt-planset-container .fam-form-item-width-value,
+.ppm-gantt .ppm-gantt-planset-container .fam-form-item-width-value .el-form-item__content {
+  background: unset;
+}
+.ppm-gantt .ppm-gantt-planset-container .fam-advanced-filter-btn {
+  position: relative;
+  padding: 4px 12px;
+  line-height: 24px;
+  left: 4px;
+}
+.ppm-gantt .ppm-gantt-planset-container .fam-advanced-filter-btn::before {
+  content: "";
+  position: absolute;
+  color: #bebebe;
+  background-color: #bebebe;
+  width: 1px;
+  height: 20px;
+  top: 6px;
+  left: -1px;
+}
+.ppm-gantt .ppm-gantt-planset-container .fam-advanced-filter-active {
+  border-color: var(--tagDefaultLightBorderColor);
+  background-color: var(--tagDefaultLightBackgroundColor);
+  color: var(--tagDefaultLightColor);
+}
+
+.ppm-gantt-menu-container {
+  padding: 0;
+  min-width: 100px;
+}
+.ppm-gantt-menu-container ul {
+  margin: 0;
+  width: 100px;
+}
+.ppm-gantt-menu-container ul li.el-dropdown-menu__item.is-disabled {
+  pointer-events: unset;
+}
+
+.fam-main__right-content:has(.ppm-gantt) {
+  overflow: hidden !important;
+}
+
+.upload-deliverable-dialog .el-dialog__body {
+  height: 400px;
+}/*# sourceMappingURL=style.css.map */

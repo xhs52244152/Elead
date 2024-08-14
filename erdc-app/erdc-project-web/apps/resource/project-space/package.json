@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/project-space",
+  "version": "3.1.0-rc4",
+  "erdcData": {},
+  "appId": "plat",
+  "description": "项目空间模块",
+  "dependencies": {}
+}

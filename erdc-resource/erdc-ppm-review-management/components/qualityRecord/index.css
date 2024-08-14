@@ -1,0 +1,7 @@
+.review-tree-container {
+  /* height: 300px; */
+}
+
+.review-tree-container .fam-view-navbar-component {
+  display: none;
+}

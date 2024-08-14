@@ -1,0 +1,33 @@
+<div class="w-100p require-project">
+    <fam-view-table
+        v-if="oid"
+        class="ppm-table-hide-view"
+        ref="table"
+        @action-click="actionClick"
+        :view-table-config="viewTableConfig"
+    >
+        <template
+            v-for="slot in getSlotsName(slotsField)"
+            v-slot:[slot]="{scope}"
+        >
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    @click="onCommand"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+
+    <!-- 选择项目面板 -->
+    <fam-object-select-dialog
+        ref="objectSelectDialog"
+        title="选择项目"
+        :visible.sync="selectProjectConfig.visible"
+        :className="className"
+        :extendParams="extendParams"
+    >
+    </fam-object-select-dialog>
+</div>

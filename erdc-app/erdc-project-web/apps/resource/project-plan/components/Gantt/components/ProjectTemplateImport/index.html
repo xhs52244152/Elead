@@ -1,0 +1,117 @@
+<div>
+    <erd-ex-dialog
+        title="弹窗"
+        :visible.sync="projectTemplateImportShow"
+        id="ProjectTemplateImport"
+        size="small"
+    >
+        <template #title> {{ i18nMappingObj.projectTemplateImport }} </template>
+        <template>
+            <erd-contraction-panel
+                :unfold.sync="baseUnfold"
+                :title="i18nMappingObj.baseInfo"
+                tips=""
+                class="baseInfo"
+            >
+                <template v-slot:content>
+                    <fam-dynamic-form
+                        ref="baseInfoForm"
+                        :form.sync="form"
+                        :data="formConfig"
+                    >
+                        <!-- 项目模板 -->
+                        <template v-slot:projectTemplate="scope">
+                            <erd-select
+                                v-model="form.projectOid"
+                                :placeholder="i18nMappingObj.pleaseSelectProjectTemplate"
+                                @change="val=>projectTemplateChange(val)"
+                            >
+                                <erd-option
+                                    v-for="option in projectTemplateOpts"
+                                    :key="option.oid"
+                                    :label="option.name"
+                                    :value="option.oid"
+                                    :disabled="option.disabled"
+                                ></erd-option>
+                            </erd-select>
+                        </template>
+                        <!-- 计划集 -->
+                        <template v-slot:planSet="scope">
+                            <plan-set-select
+                                ref="planSet"
+                                v-model="form.planSet"
+                                select-only
+                                :placeholder="i18nMappingObj.selectPlanset"
+                                :project-oid="form.projectTemplate"
+                                :class="['ppm-plan-set-selector-container', 'select-box', {
+                                    'fam-form-item-width-value': form.planSet !== ''
+                                }]"
+                                @change="planSetChange(val)"
+                            >
+                            </plan-set-select>
+                        </template>
+                        <!-- 所属父任务 -->
+                        <template v-slot:parentTask="scope">
+                            <erd-tree-select
+                                v-model="form.parentId"
+                                :load="loadParentTask"
+                                node-key="id"
+                                :props="parentTaskTreeProps"
+                                show-node-context
+                                lazy
+                                clearable
+                                :placeholder="i18nMappingObj.pleaseSelectParentTask"
+                                @change="parentTaskChange"
+                            >
+                            </erd-tree-select>
+                        </template>
+                    </fam-dynamic-form>
+                </template>
+            </erd-contraction-panel>
+            <erd-contraction-panel
+                :unfold.sync="chooselUnfold"
+                :title="i18nMappingObj.selectImportTask"
+                tips=""
+                class="importTask"
+            >
+                <template v-slot:content>
+                    <div class="taskContent">
+                        <!-- 搜索框 -->
+                        <div class="searchInput">
+                            <erd-input
+                                v-model="taskName"
+                                :placeholder="i18nMappingObj.pleaseEnterSearch"
+                                suffix-icon="erd-iconfont erd-icon-search"
+                                clearable
+                                @input="onKeywordChange"
+                            />
+                        </div>
+                        <!-- 树状任务展示 -->
+                        <div class="taskTree">
+                            <erd-ex-tree
+                                ref="tree"
+                                :props="treeProps"
+                                :load="loadTaskNode"
+                                node-key="id"
+                                lazy
+                                show-checkbox
+                            >
+                                <template slot-scope="{ node, data }">
+                                    <span :class="{'rootNode':!data.isLeaf}"> {{data.name}} </span>
+                                </template>
+                            </erd-ex-tree>
+                        </div>
+                    </div>
+                </template>
+            </erd-contraction-panel>
+        </template>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="submit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,224 @@
+<div id="delivery-container">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :default-table-height="defaultTableHeight"
+        :is-adaptive-height="true"
+        :enable-scroll-load="enableScrollLoad"
+        ref="deliverList"
+        @action-click="actionClick"
+        @callback="renderTableCallback"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{ scope }"
+        >
+            <template v-if="slot=='column:default:operation:content'">
+                <div v-if="!scope.row.oid || scope.row.isEdit">
+                    <erd-button
+                        type="text"
+                        @click="saveData(scope.row, scope)"
+                        >{{i18nMappingObj.confirm}}</erd-button
+                    >
+                    <erd-button
+                        type="text"
+                        @click="cancelSaveData(scope.row, scope)"
+                        >{{i18nMappingObj.cancel}}</erd-button
+                    >
+                </div>
+                <div v-else>
+                    <fam-action-pulldowm
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :action-data="scope.row"
+                        @click="onCommand"
+                    ></fam-action-pulldowm>
+                </div>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.common.entity.Delivery#name:content'">
+                <div>
+                    <erd-input
+                        v-if="!scope.row.oid || scope.row.isEdit"
+                        v-model="scope.row['erd.cloud.ppm.common.entity.Delivery#name']"
+                        autofocus
+                        maxlength="64"
+                        show-word-limit
+                    />
+                    <span v-else> {{ scope.row['erd.cloud.ppm.common.entity.Delivery#name'] }} </span>
+                </div>
+            </template>
+            <template v-if="slot=='column:content:erd.cloud.ppm.common.entity.Delivery#name:content'">
+                <div class="expand-wrapper">
+                    <delivery-table
+                        :ref="`deliveryTable-${scope.row.oid}`"
+                        :deliverableTableData="scope.row.deliverableTableData"
+                        :editDeliveryData="scope.row"
+                        :poid="poid"
+                        :loading="loadings[scope.row.oid]"
+                        @deleteDeliverySuccess="deleteDeliverySuccess"
+                        @refresh-data="refreshDeliverTableData"
+                        @flow-refresh-data="refreshTable"
+                        v-on="$listeners"
+                    ></delivery-table>
+                </div>
+            </template>
+            <template v-if="slot == 'column:default:erd.cloud.ppm.common.entity.Delivery#templateReference:content'">
+                <erd-button
+                    v-if="!scope.row.oid || scope.row.isEdit"
+                    type="text"
+                    @click="handlerAddDelivery(scope.row, 'radio')"
+                    >{{ scope.row['erd.cloud.ppm.common.entity.Delivery#templateReference'] ||
+                    i18nMappingObj.pleaseSelect}}</erd-button
+                >
+                <span v-else> {{ scope.row['erd.cloud.ppm.common.entity.Delivery#templateReference'] }} </span>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.common.entity.Delivery#auditingFlag:content'">
+                <erd-select
+                    v-model="scope.row['erd.cloud.ppm.common.entity.Delivery#auditingFlag']"
+                    v-if="scope.row.isEdit || !scope.row.oid"
+                    style="width: 100%"
+                >
+                    <erd-option
+                        v-for="option in audOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                    ></erd-option>
+                </erd-select>
+                <span v-else> {{scope.row['erd.cloud.ppm.common.entity.Delivery#auditingFlag']}} </span>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.common.entity.Delivery#template:content'">
+                <template v-if="scope.row.isEdit || !scope.row.oid">
+                    <fam-upload
+                        auto-upload
+                        class="upload-btn-container"
+                        :show-file-list="false"
+                        :limit="1"
+                        action=""
+                        :on-success="(res, fileObj) => uploadTemplate(fileObj, scope)"
+                    >
+                        <erd-button type="text">
+                            {{ scope.row['erd.cloud.ppm.common.entity.Delivery#template'] ? i18nMappingObj.update :
+                            i18nMappingObj.upload }}
+                        </erd-button>
+                    </fam-upload>
+                    <erd-button
+                        type="text"
+                        v-if="scope.row['erd.cloud.ppm.common.entity.Delivery#template']"
+                        @click="removeFile(scope.row)"
+                        >{{i18nMappingObj.delete}}</erd-button
+                    >
+                </template>
+                <template v-else>
+                    <div class="flex">
+                        <erd-tooltip
+                            class="item"
+                            effect="dark"
+                            placement="top"
+                            popper-class="el-tooltip__arrow-hide"
+                            :content="showTemplateFileName(scope.row)"
+                        >
+                            <erd-button
+                                class="btn-box"
+                                type="text"
+                                v-if="scope.row['erd.cloud.ppm.common.entity.Delivery#template']"
+                                @click="fileDownload(scope.row)"
+                                >{{showTemplateFileName(scope.row)}}</erd-button
+                            >
+                        </erd-tooltip>
+                        <i
+                            v-if="scope.row['erd.cloud.ppm.common.entity.Delivery#template']"
+                            @click="filePreview(scope.row)"
+                            class="erd-iconfont erd-icon-visible cursor-pointer text-12 ml-2"
+                            style="display: block; line-height: 19px"
+                        ></i>
+                    </div>
+                </template>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.common.entity.Delivery#objectRef:content'">
+                <div>
+                    <span> {{ scope.row['erd.cloud.ppm.common.entity.Delivery#objectRef'] }} </span>
+                </div>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.common.entity.Delivery#lifecycleStatus.status:content'">
+                <erd-select
+                    v-model="scope.row['erd.cloud.ppm.common.entity.Delivery#lifecycleStatus.status']"
+                    v-if="scope.row.isEdit"
+                    style="width: 100%"
+                >
+                    <erd-option
+                        v-for="option in statusOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                    ></erd-option>
+                </erd-select>
+                <span v-else> {{scope.row['erd.cloud.ppm.common.entity.Delivery#lifecycleStatus.status']}} </span>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.common.entity.Delivery#typeRef:content'">
+                <dict
+                    v-if="scope.row.isEdit || !scope.row.oid"
+                    :item-name="typeDictName"
+                    v-model="scope.row['erd.cloud.ppm.common.entity.Delivery#typeRef']"
+                ></dict>
+                <span v-else> {{getTypeDisplayName(scope.row['erd.cloud.ppm.common.entity.Delivery#typeRef'])}} </span>
+            </template>
+            <!-- <span v-if="slot !== 'column:default:erd.cloud.ppm.common.entity.Delivery#name:content'"
+                        >{{getValueMeth(scope.row, slot)}}</span
+                    > -->
+        </template>
+    </fam-view-table>
+    <erd-ex-dialog
+        :visible.sync="showTableList"
+        :title="title"
+        :show-close="true"
+        width="1200px"
+    >
+        <upload-table
+            v-if="showTableList"
+            :title="title"
+            ref="uploadTable"
+            :oid="taskOid"
+            :relationProjectInfos="relationProjectInfos"
+            v-bind="$attrs"
+            @updateTableVisible="updateTableVisible"
+        ></upload-table>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="bindingDeliverables"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="createDeliveryCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :visible.sync="showAddList"
+        :title="title"
+        :show-close="true"
+        custom-class="transfer-table-dialog"
+        size="large"
+    >
+        <add-deliverables
+            v-if="showAddList"
+            ref="addDeliver"
+            :select-type="selectType"
+            :selected-data="selectedData"
+            v-bind="$attrs"
+        ></add-deliverables>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="addDeliver"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="showAddList = false">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <fam-file-preview
+        ref="filePreview"
+        static-class-name="erd.cloud.cbb.doc.entity.EtDocument"
+    ></fam-file-preview>
+</div>

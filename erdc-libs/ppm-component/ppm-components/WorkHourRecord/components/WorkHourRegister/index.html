@@ -1,0 +1,53 @@
+<div>
+    <erd-ex-dialog
+        :title="i18nMappingObj.registerHour"
+        :visible.sync="visible"
+        size="small"
+        @closed="onClosed"
+    >
+        <div>
+            <div class="text-xl font-bold pb-8">{{ caption }}</div>
+            <fam-dynamic-form
+                class="ppm-work-hour-register-form"
+                :key="formKey"
+                ref="form"
+                :form="formData"
+                :data="formConfig"
+                label-width="120px"
+                label-position="right"
+            >
+                <template #workHourAppend="scope">
+                    <erd-input
+                        v-model="formData.workHour"
+                        type="number"
+                        min="0.1"
+                        max="24" 
+                        step="0.1"
+                        class="ppm-append-btn"
+                        @blur="onBlur"
+                        >
+                        <template #append>{{ i18nMappingObj.hour }}</template>
+                    </erd-input>
+                </template>
+            </fam-dynamic-form>
+        </div>
+        <div
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-checkbox
+                v-if="!isUpdate"
+                class="position-absolute"
+                style="left: 16px; bottom: 18px"
+                v-model="addNext"
+                >{{ i18nMappingObj.registerNext }}</erd-checkbox
+            >
+            <erd-button
+                type="primary"
+                @click="onConfirm"
+                >{{ i18nMappingObj.confirm }}</erd-button
+            >
+            <erd-button @click="onCancel">{{ i18nMappingObj.cancel }}</erd-button>
+        </div>
+    </erd-ex-dialog>
+</div>

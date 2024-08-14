@@ -1,0 +1,68 @@
+<div class="budget-info-page flex flex-column grow-1">
+    <div class="title-wrap bg-normal">
+        <fam-page-title
+            :title="title"
+            staticTitle
+        ></fam-page-title>
+        <!-- 操作按钮集 -->
+        <fam-action-pulldowm
+            v-if="type === 'detail'"
+            :is-operation="true"
+            :action-config="getActionConfig(subjectInfo)"
+            :default-btn-config="{type: 'primary'}"
+            :action-data="subjectInfo"
+            :args="[vm, subjectInfo, true]"
+        ></fam-action-pulldowm>
+    </div>
+    <div class="budget-info-container grow-1">
+        <erd-tabs
+            v-model="activeName"
+            class="tab-wrap h-100p bg-white flex flex-column"
+        >
+            <template v-for="(item, index) in tabsData">
+                <erd-tab-pane
+                    :key="item.activeName"
+                    class="bg-white h-100p"
+                    style="padding: 0"
+                    :label="item.name"
+                    :name="item.activeName"
+                    :lazy="true"
+                >
+                    <erd-scrollbar
+                        class="h-100p"
+                        wrapper-class="h-100p"
+                        view-class="h-100p"
+                    >
+                        <!-- 科目预算信息 -->
+                        <subject-budget-info
+                            v-if="item.activeName === 'detail'"
+                            :isEdit="isEdit"
+                            :resData="resData"
+                            @refresh="initData"
+                            @initFooter="initFooter(item.activeName, $event)"
+                        ></subject-budget-info>
+                        <!-- 流程记录 -->
+                        <process-records v-if="item.activeName === 'processRecords'"></process-records>
+                    </erd-scrollbar>
+                </erd-tab-pane>
+            </template>
+        </erd-tabs>
+    </div>
+    <div
+        v-if="footerOp[activeName]?.show"
+        class="flex bg-white info-page-footer"
+    >
+        <erd-button
+            v-if="footerOp[activeName]?.showSave"
+            type="primary"
+            :loading="saveLoading"
+            @click="saveClick"
+            >{{ i18n.save }}
+        </erd-button>
+        <erd-button
+            v-if="footerOp[activeName]?.showClose"
+            @click="closeClick"
+            >{{ i18n.close }}</erd-button
+        >
+    </div>
+</div>

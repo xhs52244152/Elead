@@ -1,0 +1,70 @@
+<div class="w-100p h-100p">
+    <fam-view-table
+        ref="deliverREDtable"
+        :enable-scroll-load="enableScrollLoad"
+        :is-adaptive-height="false"
+        :default-table-height="450"
+        :view-table-config="viewTableConfig"
+        @callback="fnCallback"
+    >
+        <template
+            v-for="slot in getSlotsName(customSlotField)"
+            v-slot:[slot]="{scope}"
+        >
+            <template v-if="slot==='column:header:erd.cloud.ppm.review.entity.WfDeliveryList#conclusion:content'">
+                <span
+                    ><span
+                        v-if="submitReviewFlag"
+                        style="color: red"
+                        >*</span
+                    >{{i18nMappingObj.conclute}}</span
+                >
+            </template>
+            <template v-if="slot === 'column:default:operation:content'">
+                <div v-if="!reviewActionFlag && !currentClickNode">
+                    <div v-if="getScalableFlag(scope.row)">
+                        <erd-button
+                            type="text"
+                            v-if="getCroppedFlag(scope.row)"
+                            @click="recoverItem(scope.row)"
+                            >{{i18nMappingObj.recoverItem}}</erd-button
+                        >
+                        <erd-button
+                            type="text"
+                            v-else
+                            @click="cutItem(scope.row)"
+                            >{{i18nMappingObj.cutItem}}</erd-button
+                        >
+                    </div>
+                </div>
+            </template>
+            <template v-if="slot=='column:default:erd.cloud.ppm.review.entity.WfDeliveryList#conclusion:content'">
+                <erd-select
+                    v-model="scope.row['erd.cloud.ppm.review.entity.WfDeliveryList#conclusion']"
+                    v-if="reviewActionFlag && taskInfosRealtime.isCandidateUser"
+                    @change="handleStateChange(scope.row)"
+                    style="width: 100%"
+                >
+                    <erd-option
+                        v-for="option in reviewOptions"
+                        :key="option.value"
+                        :label="option.name"
+                        :value="option.value"
+                    ></erd-option>
+                </erd-select>
+                <span v-else> {{scope.row['erd.cloud.ppm.review.entity.WfDeliveryList#conclusion']}} </span>
+            </template>
+        </template>
+    </fam-view-table>
+    <library-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :title="formDialogTitle"
+        :layoutName="layoutName"
+        :formData="formData"
+        :className="dialogName"
+        :oid="oid"
+        :viewReview="viewReview && nodeProcess !== 'Submittals'"
+        :query-layout-params="queryLayoutParams()"
+    ></library-dialog>
+</div>

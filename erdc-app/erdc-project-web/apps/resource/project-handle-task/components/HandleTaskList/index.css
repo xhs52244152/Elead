@@ -1,0 +1,45 @@
+.handle-task-container{
+    height: 100%;
+}
+.handle-task-container .fam-view-table-component{
+    background-color: #fff;
+}
+.handle-task-container .select-group-box{
+    width: 160px;
+}
+.handle-task-container .select-group-box .el-input__prefix{
+    top: 7px;
+    color: #000;
+    padding-left: 6px;
+    font-weight: bold;
+}
+.handle-task-container .select-group-box .el-input__inner{
+    padding-left: 50px;
+}
+
+.handle-task-container .description-content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.handle-task-container .description-content p {
+    margin-bottom: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.hide-handle-task-navbar #FamViewNavbar {
+    display: none;
+}
+.hide-handle-task-navbar .advanced-table-container {
+    padding: 0 !important;
+}
+
+.handle-task-body:has(>.hide-handle-task-navbar) {
+    padding: 0 !important;
+}
+
+.hide-handle-task-navbar .el-pagination {
+    margin-bottom: 0 !important;
+}

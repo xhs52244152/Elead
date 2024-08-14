@@ -1,0 +1,221 @@
+<div class="project_milestone flex flex-column">
+    <div class="milestone_view">
+        <!-- 计划集 -->
+        <erd-form class="ppm-label-form">
+            <component-width-label
+                ref="milestoneSetSelect"
+                is-render="plan-set-select"
+                v-model="currentPlanSet"
+                :item-label="i18n.plan"
+                :project-oid="oid"
+                :selectOnly="true"
+                :removeable="false"
+                :clearable="false"
+                :showAllPlanSet="true"
+                :callback="handleSelect"
+                :class="['ppm-plan-set-selector-container', {
+                    'fam-form-item-width-value': currentPlanSet !== ''
+                }]"
+                style="width: 160px"
+            >
+            </component-width-label>
+        </erd-form>
+        <div class="milestone_view_head">
+            <h1>{{i18n.milestoneView}}</h1>
+            <div class="milestone_head_select">
+                <div class="milestone_light_tip">
+                    <span v-for="item in lightArr"> <i :style="{background: item.color}"></i>{{item.name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="stageList.length">
+            <ul
+                class="milestone_view_stage"
+                v-for="(i, ind) in stageList"
+                :key="ind"
+            >
+                <erd-contraction-panel
+                    :unfold.sync="panelUnfold[ind]"
+                    :title="i.collectName"
+                >
+                    <template v-slot:content>
+                        <div
+                            class="milestone_view_panel"
+                            :style="{height: i.dtoList.length ? '60px' : '10px'}"
+                        >
+                            <template v-if="Array.isArray(i.dtoList) && i.dtoList.length">
+                                <li
+                                    v-for="(item, idx) in i.dtoList"
+                                    :key="idx"
+                                    :style="{background: item.color, border: borderColor(item.color),  width: stageWidth(i.dtoList)}"
+                                >
+                                    <span
+                                        class="stage_name"
+                                        :title="item.name"
+                                        :style="{color: item.color ? '#fff' : '#000'}"
+                                        >{{item.name}}</span
+                                    >
+                                    <template v-for="(it, index) in item.milestoneData">
+                                        <div
+                                            slot="reference"
+                                            :class="['point_list_show', {even: index%2 === 0}]"
+                                            :style="{left: stageWidth(item?.milestoneData || [], index), width: stageWidth(item?.milestoneData || [])}"
+                                        >
+                                            <div
+                                                class="point_name"
+                                                :title="it.name"
+                                                :style="{left: stageLeft(idx, index, 'name')}"
+                                            >
+                                                {{it.name}}
+                                            </div>
+                                            <!-- <div
+                                                class="point_circle"
+                                                :style="{background: it.color, left: stageLeft(idx, index, 'circle')}"
+                                            ></div>
+                                            <div
+                                                class="point_line"
+                                                :style="{background: it.possessionStage ? it.color : 'none', border: stageBorder(it), left: stageLeft(idx, index, 'line')}"
+                                            ></div> -->
+                                            <template>
+                                                <erd-popover
+                                                    placement="top"
+                                                    trigger="hover"
+                                                    :disabled="Array.isArray(it.attr) && !it.attr.length"
+                                                    popper-class="milestone_tip_content"
+                                                >
+                                                    <ul class="milestone_tip">
+                                                        <li v-for="(i,index) in it.attr">
+                                                            <span class="tip_label">{{i.label}}：</span>
+                                                            <span class="tip_value">{{i.value}}</span>
+                                                        </li>
+                                                    </ul>
+                                                    <div
+                                                        slot="reference"
+                                                        :style="{left: stageLeft(idx, index, 'block')}"
+                                                        class="point_block"
+                                                    >
+                                                        <erd-icon
+                                                            :style="{color: it.color}"
+                                                            class="milestone_location"
+                                                            icon="ppm-location"
+                                                        ></erd-icon>
+                                                    </div>
+                                                </erd-popover>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </li>
+                            </template>
+                            <fam-empty
+                                v-else
+                                style="height: 60px; margin-top: -70px; scale: 0.8"
+                                :description="i18n.noData"
+                            ></fam-empty>
+                        </div>
+                    </template>
+                </erd-contraction-panel>
+                <!-- <li class="collect_name">{{i.collectName}}</li> -->
+            </ul>
+        </div>
+
+        <fam-empty
+            v-else
+            class="milestone_no_data"
+            :description="i18n.noData"
+        ></fam-empty>
+    </div>
+    <div class="milestone_list flex flex-column grow-1">
+        <div class="list_head">
+            <h1>{{i18n.milestoneList}}</h1>
+        </div>
+        <div class="grow-1">
+            <fam-view-table
+                ref="milestoneList"
+                :view-table-config="viewTableConfig"
+                :enable-scroll-load="true"
+                @action-click="actionClick"
+                style="min-height: 260px"
+            >
+                <template #right:toolbar:first>
+                    <div class="mt-10">
+                        <!-- 基线 -->
+                        <baseline-select
+                            :class-name="milestoneClassName"
+                            @change="changeBaseline"
+                        ></baseline-select>
+                    </div>
+                </template>
+                <template
+                    v-for="slot in slotsNameList"
+                    v-slot:[slot]="{scope}"
+                >
+                    <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+                    <span
+                        v-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#name:content'"
+                        :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                        @click="lookDetail(scope.row)"
+                    >
+                        {{scope.row['erd.cloud.ppm.plan.entity.Task#name']}}
+                    </span>
+                    <div
+                        class="milestone_lignt"
+                        v-else-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#taskColor:content'"
+                    >
+                        <i :style="{background: scope.row['erd.cloud.ppm.plan.entity.Task#taskColor'] || 'none'}"></i>
+                        <span
+                            v-if="getTaskColor(scope.row.attrRawList)?.value"
+                            class="task-warning-label"
+                            :style="{ color: getTaskColor(scope.row.attrRawList)?.displayName }"
+                        >
+                            {{getTaskColor(scope.row.attrRawList)?.value}}
+                        </span>
+                        <span
+                            class="mr-3"
+                            title="交付物"
+                            ><i
+                                class="erd-iconfont erd-icon-batching"
+                                style="margin-right: 4px"
+                            ></i>
+                            {{getTaskColor(scope.row.attrRawList)?.label}}
+                        </span>
+                        <div
+                            class="mr-3 upload-deliverable-btn"
+                            title="上传交付物"
+                            :class="{'events-none': scope.row.collectChangeTask}"
+                            @click="uploadDeliverable({ UID: scope.row?.oid, row: scope.row })"
+                        >
+                            <i class="erd-iconfont erd-icon-upload"></i>
+                        </div>
+                    </div>
+                    <div v-else-if="slot === 'column:default:operation:content'">
+                        <fam-action-pulldowm
+                            :is-operation="true"
+                            :action-config="getActionConfig(scope.row)"
+                            :action-data="scope.row"
+                            :args="[vm, scope.row, true]"
+                        ></fam-action-pulldowm>
+                    </div>
+                </template>
+            </fam-view-table>
+        </div>
+    </div>
+
+    <!-- 上传交付件 弹窗 -->
+    <erd-ex-dialog
+        :visible.sync="uploadDeliverableVisible"
+        :title="'交付物'"
+        size="large"
+        custom-class="upload-deliverable-dialog"
+        @fullscreen="onDeliveryFullscreen"
+        @closed="onDeliverableClosed"
+    >
+        <delivery-detail
+            v-if="uploadDeliverableVisible"
+            ref="deliveryDetailRef"
+            :poid="currentTask.UID"
+            :currentName="currentName"
+            :isAddContainerRef="true"
+        ></delivery-detail>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,56 @@
+<div
+    id="info_edit"
+    class="ppm-project-form"
+    v-fam-fs
+>
+    <div class="info_edit_detail">
+        <h1>{{i18nMappingObj.editProject}}</h1>
+        <div class="info_data_tab">
+            <erd-tabs
+                type="card"
+                @tab-click="handleClick(activeTab)"
+                v-model="activeTab"
+            >
+                <erd-tab-pane
+                    :label="i18nMappingObj.infoDetail"
+                    name="infoDetail"
+                >
+                    <!-- <info-detail
+                        ref="infoDedail"
+                        :oid="oid"
+                        :is-edit="true"
+                    ></info-detail> -->
+                    <common-edit-form
+                        @echo-data="echoData"
+                        :oid="oid"
+                        :formSlotData="formData"
+                        :configParameter="configParameter"
+                        @before-submit="beforeSubmit"
+                        @after-submit="afterSubmit"
+                        :editable-attr="editableAttr"
+                        @fieldsChange="fieldsChange"
+                    >
+                        <!-- <template v-slot:test="scope">
+                            <erd-input
+                                v-model="formData.test"
+                                autofocus
+                            />
+                        </template> -->
+                    </common-edit-form>
+                </erd-tab-pane>
+                <erd-tab-pane
+                    class="related_object"
+                    style="height: calc(100% - 50px)"
+                    :label="i18nMappingObj.relatedObjects"
+                    name="relatedObjects"
+                    lazy
+                >
+                    <related-objects
+                        ref="relatedObjects"
+                        :oid="oid"
+                    ></related-objects>
+                </erd-tab-pane>
+            </erd-tabs>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="80%"
+    custom-class="quality-dialog"
+>
+    <div
+        class="quality-head"
+        v-if="layoutName === 'DETAIL'"
+    >
+        <div class="quality-name">{{formData.name}}</div>
+        <erd-button
+            type="primary"
+            @click="handleEdit"
+            >{{i18nMappingObj.edit}}</erd-button
+        >
+    </div>
+    <fam-advanced-form
+        ref="layoutForm"
+        :model.sync="formData"
+        :form-id="layoutName"
+        :class-name="className"
+        :schema-mapper="schemaMapper"
+        :editableAttr="editableAttrs"
+        :query-layout-params="queryLayoutParams()"
+    >
+    </fam-advanced-form>
+    <Files
+        ref="deliverFiles"
+        class="library-files-list"
+        downloadUrl="/element/content/file/download"
+        uploadUrl="/element/content/file/upload"
+        tableListUrl="/element/content/attachment/list"
+        :showUploadBtn="layoutName !== 'DETAIL'"
+        :class-name="className"
+        :businessOid="oid"
+        :quickBinding="false"
+        :realTimeDelete="false"
+        :operationConfigName="operationConfigName"
+    ></Files>
+    <template
+        #footer
+        v-if="layoutName !== 'DETAIL'"
+    >
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            :loading="isSaving"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

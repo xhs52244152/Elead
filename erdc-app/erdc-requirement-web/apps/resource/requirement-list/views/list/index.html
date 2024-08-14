@@ -1,0 +1,87 @@
+<div
+    id="require-table-container"
+    :style="routeName ? 'padding: var(--bigSpace)' : ''"
+>
+    <fam-view-table
+        v-if="isReady"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        ref="table"
+        :key="layout"
+        @callback="renderTableCallback"
+        @action-click="actionClick"
+        :enable-scroll-load="enableScrollLoad"
+        :class="[`ppm-require-viewtable-${this.layout}`]"
+    >
+        <template #right:toolbar:first>
+            <!-- 基线 -->
+            <baseline-select
+                v-if="sceneName === 'projectRequirement'"
+                :className="className"
+                @change="changeBaseline"
+            ></baseline-select>
+        </template>
+        <template #right:viewNavbar:end>
+            <div
+                v-if="layout === 'tree'"
+                class="ppm-require-table-title"
+            >
+                {{ i18nMappingObj.requirementPool }}
+            </div>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-if="rowKey === 'oid'"
+                    v-model="layout"
+                    style="margin-right: 24px"
+                    :label="i18nMappingObj.layout"
+                    :options="layoutOptions"
+                    @change="refresh"
+                >
+                </simple-select>
+                <simple-select
+                    v-if="layout === 'list'"
+                    v-model="group"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="refresh"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.ppm.require.entity.Requirement#name:content'"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="openDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.ppm.require.entity.Requirement#name']}}
+            </span>
+            <div
+                v-if="slot === 'column:default:erd.cloud.ppm.require.entity.Requirement#planInfo.completionRate:content' && !scope.row.isGroupRow"
+            >
+                <div class="completionRate-box">
+                    <svg-circle :rate="getCompletionRate(scope.row)"></svg-circle>
+                    <div>{{ getCompletionRate(scope.row, '%')}}</div>
+                </div>
+            </div>
+            <div v-if="slot === 'column:default:operation:content' && !scope.row.isGroupRow">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-view-table>
+</div>

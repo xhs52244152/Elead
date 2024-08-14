@@ -1,0 +1,41 @@
+<div class="h_100p ppm-work-hour-list-container">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        :enable-scroll-load="enableScrollLoad"
+        ref="table"
+        @callback="renderTableCallback"
+    >
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <!-- 分组 -->
+                <simple-select
+                    v-model="group"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="refresh"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.ppm.require.entity.Requirement#name:content'"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="openDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.ppm.require.entity.Requirement#name']}}
+            </span>
+        </template>
+    </fam-view-table>
+</div>

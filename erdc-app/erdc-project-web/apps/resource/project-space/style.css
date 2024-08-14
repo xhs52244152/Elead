@@ -1,0 +1,33 @@
+#project_content {
+  flex-grow: 1;
+  padding: 12px;
+}
+#project_content .view_table {
+  background: #fff;
+  height: 100%;
+}
+#project_content .view_table .project_nav_right {
+  display: flex;
+}
+#project_content .view_table .project_nav_right .nav_right_layout {
+  width: 100px;
+  margin-right: 10px;
+}
+#project_content .view_table .project_nav_right .nav_right_group {
+  width: 180px;
+  margin-right: 12px;
+}
+#project_content .view_table .project_nav_right .nav_right_group .el-input__inner {
+  padding-left: 50px;
+}
+#project_content .view_table .project_nav_right .nav_right_group .el-input__prefix {
+  top: 6px;
+  color: #000;
+}
+#project_content .view_table .completion_rate {
+  display: flex;
+  align-items: center;
+}
+#project_content .view_table .completion_rate .completion_rate_num {
+  margin-left: 6px;
+}/*# sourceMappingURL=style.css.map */

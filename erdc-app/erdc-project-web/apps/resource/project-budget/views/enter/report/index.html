@@ -1,0 +1,40 @@
+<div>
+    <erd-row>
+        <erd-col
+            :span="8"
+            style="padding-right: var(--largeSpace); height: 240px"
+        >
+            <!-- 预实对比 -->
+            <account-compare
+                ref="accountCompareRef"
+                :budgetInfo="budgetInfo"
+                :budgetDisplayInfo="budgetDisplayInfo"
+                :can-loading="canLoading"
+            ></account-compare>
+        </erd-col>
+        <erd-col
+            :span="8"
+            style="padding-right: var(--largeSpace); height: 240px"
+        >
+            <!-- 总预算执行 -->
+            <total-expenses
+                ref="totalExpensesRef"
+                :budgetInfo="budgetInfo"
+                :budgetDisplayInfo="budgetDisplayInfo"
+                :can-loading="canLoading"
+            ></total-expenses>
+        </erd-col>
+        <erd-col
+            :span="8"
+            style="height: 240px"
+        >
+            <!-- 各科目费用支出 -->
+            <expenses-detail
+                ref="expensesDetailRef"
+                :budgetInfo="budgetInfo"
+                :budgetDisplayInfo="budgetDisplayInfo"
+                :can-loading="canLoading"
+            ></expenses-detail>
+        </erd-col>
+    </erd-row>
+</div>

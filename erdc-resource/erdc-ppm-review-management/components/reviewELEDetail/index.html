@@ -1,0 +1,54 @@
+<div class="detail-review-container">
+    <div class="up_container">
+        <div class="left_title">
+            <div class="left_box_flat">
+                <!-- 领域 -->
+                <h4 class="mr-8 left_box_title">{{ i18n.area }}</h4>
+            </div>
+            <div class="left_box_flat">
+                <!-- 通过率（%） -->
+                <h4 class="ml-8">{{ i18n.passingRate }}</h4>
+            </div>
+        </div>
+        <div class="flat_con">
+            <div
+                class="up_content"
+                v-for="(item,index) in areaData"
+                :key="index"
+            >
+                <div class="up_con_box">
+                    <div class="left_box">
+                        <h4 class="ml-8">{{item.statisticsQuota}}</h4>
+                    </div>
+                    <div class="text_box"><span class="ml-8">{{item.passRate}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="down_container">
+        <div class="left_title">
+            <div class="left_box_flat">
+                <!-- 类别 -->
+                <h4 class="mr-8 left_box_title">{{ i18n.category }}</h4>
+            </div>
+            <div class="left_box_flat">
+                <!-- 通过率（%） -->
+                <h4 class="ml-8">{{ i18n.passingRate }}</h4>
+            </div>
+        </div>
+        <div class="flat_con">
+            <div
+                class="down_content"
+                v-for="(item,index) in typeData"
+                :key="index"
+            >
+                <div class="up_con_box">
+                    <div class="left_box">
+                        <h4 class="ml-8">{{item.statisticsQuota}}</h4>
+                    </div>
+                    <div class="text_box"><span class="ml-8">{{item.passRate}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

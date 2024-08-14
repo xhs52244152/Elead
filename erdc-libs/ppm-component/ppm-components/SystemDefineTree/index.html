@@ -1,0 +1,122 @@
+<div
+    id="systemDefineTree"
+    ref="systemDefineTree"
+>
+    <div class="attrDefine tree-management">
+        <div
+            class="tree-header"
+            ref="header"
+        >
+            <div class="tree-title">{{title}}</div>
+            <div class="search">
+                <erd-input
+                    class="search-val"
+                    @input="search"
+                    v-model.trim="searchValue"
+                    :placeholder="i18nMappingObj.searchKeyword"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                >
+                </erd-input>
+                <slot name="search-right">
+                    <erd-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="i18nMappingObj.create"
+                        placement="top"
+                    >
+                        <erd-button
+                            icon="el-icon-plus"
+                            type="fill-icon"
+                            @click="handleCreate"
+                        ></erd-button>
+                    </erd-tooltip>
+                </slot>
+            </div>
+        </div>
+        <erd-scrollbar :style="{ height: treeHeight }">
+            <erd-ex-tree
+                :data="treeData"
+                :props="defaultProps"
+                class="tree"
+                @node-click="onCheck"
+                :filter-node-method="filterSearch"
+                :expand-on-click-node="false"
+                :highlight-current="true"
+                node-key="key"
+                :default-expanded-keys="defaultExpandedKeys"
+                :default-checked-keys="defaultCheckedKeys"
+                ref="tree"
+            >
+                <template v-slot="scope">
+                    <div
+                        class="tree-content"
+                        @mouseenter="mouseenter(scope)"
+                        @mouseleave="mouseleave(scope)"
+                    >
+                        <div class="tree-text">{{scope.node.label}}</div>
+                        <div
+                            class="tree-operation"
+                            v-show="scope.data.show"
+                            @click.stop
+                        >
+                            <erd-button
+                                type="icon"
+                                icon="erd-iconfont erd-icon-add-document fontSize18"
+                                size="mini"
+                                class="drag"
+                                @click="handleClick({ methodsName: 'handleCreate'}, scope.data)"
+                            >
+                            </erd-button>
+
+                            <erd-button
+                                type="icon"
+                                icon="erd-iconfont erd-icon-edit3 fontSize18"
+                                size="mini"
+                                v-if="scope.data.status !=='inactive'"
+                                class="drag"
+                                @click="handleClick({ methodsName: 'handleEdit'}, scope.data)"
+                            >
+                            </erd-button>
+                            <erd-button
+                                v-if="moreOption"
+                                type="icon"
+                                icon="erd-iconfont erd-icon-delete2 fontSize18"
+                                size="mini"
+                                class="drag"
+                                @click="handleClick({ methodsName: 'handleDelete'}, scope.data)"
+                            >
+                            </erd-button>
+
+                            <erd-dropdown
+                                v-else="!moreOption"
+                                style="margin-left: 8px"
+                                trigger="hover"
+                                @command="(type)=>(handleCommand(type, scope.data))"
+                            >
+                                <erd-button
+                                    type="icon"
+                                    icon="erd-iconfont erd-icon-more"
+                                    size="mini"
+                                    class="drag"
+                                >
+                                </erd-button>
+                                <erd-dropdown-menu slot="dropdown">
+                                    <erd-dropdown-item command="handleMove">移动</erd-dropdown-item>
+                                    <erd-dropdown-item
+                                        v-if="scope.data.status === 'draft'"
+                                        command="handleDelete"
+                                        >删除</erd-dropdown-item
+                                    >
+                                    <erd-dropdown-item command="handleEfficacy"
+                                        >{{scope.data.status !== 'release' ? '发布': '失效'}}</erd-dropdown-item
+                                    >
+                                </erd-dropdown-menu>
+                            </erd-dropdown>
+                        </div>
+                    </div>
+                </template>
+            </erd-ex-tree>
+        </erd-scrollbar>
+    </div>
+</div>

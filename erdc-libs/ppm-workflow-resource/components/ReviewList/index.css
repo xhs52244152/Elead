@@ -1,0 +1,15 @@
+.ppm-process-review .ContractionPanel .panelTitle {
+  font-size: var(--fontSize);
+}
+.ppm-process-review .process-base-info .el-tooltip .fam-dynamic-form__label--labelText {
+  color: var(--colorTextExplain) !important;
+}
+.ppm-process-review #FamViewTable .advanced-table-container {
+  padding: 0;
+}
+.ppm-process-review .el-tab-pane {
+  padding: 0;
+}
+.ppm-process-review .table-container {
+  margin: calc(var(--bigSpace) * 2) 0;
+}/*# sourceMappingURL=index.css.map */

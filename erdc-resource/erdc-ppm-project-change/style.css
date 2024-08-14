@@ -1,0 +1,99 @@
+#change-business-form {
+  padding-left: var(--superSpace);
+}
+#change-business-form .task,
+#change-business-form .requirement,
+#change-business-form .issue,
+#change-business-form .risk,
+#change-business-form .discreteTask {
+  margin-top: calc(var(--bigSpace) * 2);
+}
+#change-business-form .task .el-tabs__content .el-tab-pane,
+#change-business-form .requirement .el-tabs__content .el-tab-pane,
+#change-business-form .issue .el-tabs__content .el-tab-pane,
+#change-business-form .risk .el-tabs__content .el-tab-pane,
+#change-business-form .discreteTask .el-tabs__content .el-tab-pane {
+  padding: 0;
+  padding-top: var(--tabsItemContentPadding);
+}
+
+#project-plan {
+  margin-top: calc(var(--bigSpace) * 2);
+}
+#project-plan .project-plan-table {
+  padding: 0;
+}
+#project-plan .project-plan-table .advanced-table-container {
+  padding: 0;
+}
+
+.el-dialog__wrapper .ppm-gantt .ppm-gantt-planset-container {
+  justify-content: space-between;
+}
+.el-dialog__wrapper .ppm-gantt #ppm-gantt-container {
+  padding: var(--largeSpace) 0;
+}
+
+.ppm-project-change {
+  display: flex;
+  align-items: center;
+}
+.ppm-project-change .change-label {
+  margin-right: var(--bigSpace);
+}
+.ppm-project-change .change-value {
+  width: calc(100% - 68px);
+}
+.ppm-project-change .el-select--medium {
+  width: calc(100% - 68px);
+}
+.ppm-project-change .change-content-select {
+  width: calc(100% - 68px);
+  padding-top: 4px;
+}
+
+#cahnge-info .header-title-text {
+  height: var(--tableRowHeight);
+  line-height: var(--tableRowHeight);
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-left: 1px solid #e8eaec;
+  border-top: 1px solid #e8eaec;
+}
+#cahnge-info #ComponentWapper-erdTable {
+  height: 100%;
+}
+#cahnge-info #ComponentWapper-erdTable .vxe-table {
+  height: 100%;
+}
+#cahnge-info #ComponentWapper-erdTable .vxe-table .vxe-table--render-wrapper {
+  height: 100%;
+}
+#cahnge-info #ComponentWapper-erdTable .vxe-table .vxe-table--render-wrapper .vxe-table--main-wrapper {
+  height: 100%;
+}
+#cahnge-info #ComponentWapper-erdTable .vxe-table .vxe-table--render-wrapper .vxe-table--main-wrapper .vxe-table--body-wrapper {
+  min-height: 280px;
+  height: calc(100% - var(--tableRowHeight)) !important;
+}
+
+.description-dialog .el-dialog__body {
+  min-height: 200px;
+}
+.description-dialog .el-dialog__body .quill-editor-static-text img {
+  width: 100%;
+}
+
+.ppm-add-role .team-search-btn {
+  display: none !important;
+}
+
+.basic-msg .ContractionPanel {
+  padding-bottom: calc(var(--superSpace) * 2) !important;
+}
+
+.effect-data-container #FamViewTable .advanced-table-container {
+  padding: 0;
+}/*# sourceMappingURL=style.css.map */

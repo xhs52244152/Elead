@@ -1,0 +1,35 @@
+.role_team .role_team_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+.role_team .role_team_head .team_head_right .refreshBtn {
+  min-width: 32px;
+}
+.role_team .team-responsible {
+  padding: 2px;
+  font-size: 12px;
+  line-height: 30px;
+  color: rgb(255, 187, 150);
+  border: 1px solid rgb(255, 187, 150);
+  border-radius: 2px;
+  margin-right: 12px;
+}
+
+.erd_alert_tip {
+  width: 568px !important;
+}
+
+.move_body li {
+  line-height: 32px;
+}
+.move_body li .move_label {
+  margin-right: 8px;
+}
+.move_body li .erd-tree-select {
+  width: calc(100% - 42px);
+}
+.move_body li:first-child {
+  margin-bottom: 12px;
+}/*# sourceMappingURL=style.css.map */

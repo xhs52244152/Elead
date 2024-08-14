@@ -1,0 +1,60 @@
+<div class="project-baseline-relation-object">
+    <erd-tabs
+        v-model="activeName"
+        lazy
+    >
+        <erd-tab-pane
+            v-for="item in tabsData"
+            :key="item.activeName"
+            :label="item.name"
+            :name="item.activeName"
+            :lazy="true"
+        >
+            <template v-if="item.activeName !== 'budget'">
+                <fam-view-table
+                    v-if="item.activeName === activeName"
+                    :style="`height: ${tableHeight}px`"
+                    :view-table-config="viewTableConfig"
+                    :default-table-height="450"
+                    :is-adaptive-height="true"
+                    ref="relationTable"
+                    :enable-scroll-load="true"
+                >
+                    <template #column:default:erd.cloud.ppm.project.entity.Project#name:content="{scope}">
+                        <a @click="openDetail(scope.row)"
+                            >{{ scope.row['erd.cloud.ppm.project.entity.Project#name'] }}</a
+                        >
+                    </template>
+                    <template
+                        v-for="slot in slotsNameList"
+                        v-slot:[slot]="{scope}"
+                    >
+                        <span
+                            v-if="slot === getSlotName('name')"
+                            :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                            @click="openDetail(scope.row)"
+                        >
+                            {{ scope.row[relationClassName + '#name'] }}
+                        </span>
+                        <span
+                            class="flex align-items-center"
+                            v-if="slot === getSlotName('completionRate') || slot === getSlotName('planInfo.completionRate')"
+                        >
+                            <svg-circle :rate="getCompletionRate(scope.row)"></svg-circle>
+                            <span class="ml-8">{{ getCompletionRate(scope.row, '%') }}</span>
+                        </span>
+                    </template>
+                </fam-view-table>
+            </template>
+            <template v-else>
+                <budget-list
+                    :baselined="true"
+                    :isProcess="true"
+                    :masterRef="masterRef"
+                    :view-table-height="tableHeight"
+                    :table-max-height="tableHeight"
+                ></budget-list>
+            </template>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

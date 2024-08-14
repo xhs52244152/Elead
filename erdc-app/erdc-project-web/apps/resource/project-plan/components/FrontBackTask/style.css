@@ -1,0 +1,11 @@
+.ppm-parent-child-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.front-back-task-container {
+    /* margin-bottom: 50px; */
+}
+.front-back-task-container .fam-view-navbar-component{
+    display: none;
+}

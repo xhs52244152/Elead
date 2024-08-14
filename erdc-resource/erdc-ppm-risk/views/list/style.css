@@ -1,0 +1,32 @@
+#risk-table-container {
+  height: 100%;
+}
+#risk-table-container .adaptive-height {
+  background-color: #fff;
+}
+#risk-table-container .adaptive-height .advanced-table-container {
+  padding: 0 16px;
+}
+#risk-table-container .select-group-box {
+  width: 160px;
+}
+#risk-table-container .select-group-box .el-input__prefix {
+  top: 7px;
+  color: #000;
+  padding-left: 6px;
+  font-weight: bold;
+}
+#risk-table-container .select-group-box .el-input__inner {
+  width: 107px;
+}
+#risk-table-container .completionRate-box {
+  display: flex;
+  align-items: center;
+}
+#risk-table-container .completionRate-box div {
+  margin-left: 4px;
+}
+
+.el-scrollbar__view .risk-table-container {
+  padding: 0;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,83 @@
+<div
+    class="copy-info"
+    v-fam-fs
+>
+    <erd-scrollbar class="basic-information">
+        <h1 class="form_title">{{i18nMappingObj.copyProject}}</h1>
+        <erd-contraction-panel
+            class="basic-msg"
+            :unfold.sync="panelUnfold"
+            :title="i18nMappingObj.baseInfo"
+        >
+            <template v-slot:content>
+                <FamDynamicForm
+                    ref="basicInfo"
+                    :form.sync="formData"
+                    :data="formConfigs"
+                    :editableAttr="editableAttr"
+                >
+                </FamDynamicForm>
+            </template>
+        </erd-contraction-panel>
+        <fam-advanced-form
+            ref="infoForm"
+            :model.sync="detailFormData"
+            :form-id="formId"
+            :oid="oid"
+            :model-mapper="modelMapper"
+            @fieldChange="fieldChange"
+            :class-name="className"
+            :schema-mapper="schemaMapper"
+            :query-layout-params="queryLayoutParams()"
+        >
+            <template v-slot:copy-relation-module="scope">
+                <erd-checkbox-group
+                    v-model="checkedModule"
+                    @change="handleCheckedModule"
+                >
+                    <erd-checkbox
+                        v-for="it in moduleArr"
+                        :label="it"
+                        :key="it"
+                        @change="handleCheckedModule(it, $event)"
+                        >{{it}}</erd-checkbox
+                    >
+                </erd-checkbox-group>
+            </template>
+        </fam-advanced-form>
+    </erd-scrollbar>
+    <div class="common-btn">
+        <erd-button
+            type="primary"
+            :loading="isSaving"
+            @click="handleConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button
+            :loading="isSaving"
+            @click="saveDraft"
+            >{{ i18nMappingObj.saveDraft }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.close }}</erd-button>
+    </div>
+    <erd-ex-dialog
+        :visible.sync="visible"
+        :title="i18nMappingObj.tip"
+        size="mini"
+        :show-close="false"
+        custom-class="success-create-project"
+    >
+        <div class="tip">
+            <erd-icon icon="success-solid"></erd-icon>
+            <div class="tip-right">
+                <p>{{i18nMappingObj.copySuccess}}</p>
+                <span>{{i18nMappingObj.doSome}}</span>
+            </div>
+        </div>
+        <div class="btn-list">
+            <erd-button @click="handleClick('back')">{{i18nMappingObj.backList}}</erd-button>
+            <erd-button @click="handleClick('look')">{{i18nMappingObj.lookDetail}}</erd-button>
+            <!-- <erd-button @click="handleClick('create')">{{i18nMappingObj.continueCreating}}</erd-button> -->
+        </div>
+    </erd-ex-dialog>
+</div>

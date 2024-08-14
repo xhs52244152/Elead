@@ -1,0 +1,26 @@
+.erd_alert_tip {
+  width: 568px !important;
+}
+
+.move_body {
+  margin-bottom: 0;
+}
+.move_body li {
+  display: flex;
+  line-height: 32px;
+}
+.move_body li .move_label {
+  text-align: right;
+  width: 40px;
+  margin-right: 8px;
+}
+.move_body li .erd-tree-select {
+  width: calc(100% - 36px);
+}
+.move_body li:first-child {
+  margin-bottom: 12px;
+}
+
+.move_relative_team li .erd-tree-select {
+  width: calc(100% - 64px);
+}/*# sourceMappingURL=style.css.map */

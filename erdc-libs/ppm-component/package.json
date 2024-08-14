@@ -1,0 +1,6 @@
+{
+  "name": "@erdc-libs/ppm-component",
+  "version": "3.1.0-rc4",
+  "description": "ppm组件",
+  "dependencies": {}
+}

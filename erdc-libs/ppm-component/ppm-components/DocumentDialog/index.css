@@ -1,0 +1,23 @@
+.document-dialog-container {
+  width: 800px;
+}
+
+.ppm-doc-container .ppm-doc-panelUnfold {
+  padding-bottom: 0px;
+}
+.ppm-doc-container .doc-header-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--dialogPadding);
+  align-items: center;
+}
+.ppm-doc-container .doc-header-container .doc-header-title {
+  font-size: var(--fontSize);
+  font-weight: 700;
+}
+.ppm-doc-container .tabs-container {
+  margin: 14px -16px -16px -16px;
+}
+.ppm-doc-container .el-icon-close-tip {
+  display: none !important;
+}/*# sourceMappingURL=index.css.map */

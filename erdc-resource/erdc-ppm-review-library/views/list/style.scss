@@ -1,0 +1,16 @@
+.review-library-container {
+    height: 100%;
+    overflow: hidden;
+    .library-link-name {
+        color: var(--colorPrimary);
+        cursor: pointer;
+    }
+    .library-title {
+        color: rgba(0, 0, 0, 0.85);
+        line-height: 28px;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 16px;
+        
+    }
+}

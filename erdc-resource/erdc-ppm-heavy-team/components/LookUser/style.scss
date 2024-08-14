@@ -1,0 +1,17 @@
+.group-user-info {
+    .user-info-title {
+        display: flex;
+        align-items: center;
+        .title-label {
+            display: inline-block;
+            width: 120px;
+            text-align: right;
+        }
+        .title-name {
+            width: calc(100% - 146px);
+            margin-left: 20px;
+            display: inline-block;
+            overflow: hidden;
+        }
+    }
+}

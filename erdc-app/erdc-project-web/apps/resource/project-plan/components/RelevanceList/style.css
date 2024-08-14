@@ -1,0 +1,22 @@
+#task-relevance-container .fam-view-navbar-component {
+  display: none;
+}
+
+#ppm-related_objects .panelLeft {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  opacity: 0.85;
+  color: #000;
+}
+#ppm-related_objects .advanced-table-container {
+  padding: 0 !important;
+}
+
+.ppm-related_task.ContractionPanel {
+  margin-bottom: var(--superSpace);
+}
+.ppm-related_task .contraction-panel__content {
+  padding-bottom: 0;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,6 @@
+{
+  "name": "@erdc-libs/ppm-https",
+  "version": "3.1.0-rc4",
+  "description": "通用接口方法",
+  "dependencies": {}
+}

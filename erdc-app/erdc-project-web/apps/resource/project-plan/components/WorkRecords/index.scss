@@ -1,0 +1,44 @@
+#work-records-container {
+    .up_box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        .time_box {
+            width: 880px;
+            height: 32px;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding: 0 90px;
+            font-size: 14px;
+            & > div > span {
+                margin-left: 10px;
+            }
+        }
+    }
+    .down_box {
+        width: 100%;
+        font-size: 14px;
+        & > button {
+            float: right;
+            margin-bottom: 8px;
+        }
+        .deng_box {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding-left: 25px;
+        }
+        .main_box {
+            padding: 10px 0 20px 25px;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            .main_box_up {
+                padding: 8px 0;
+            }
+        }
+    }
+}

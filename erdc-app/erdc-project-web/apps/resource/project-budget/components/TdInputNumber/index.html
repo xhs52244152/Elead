@@ -1,0 +1,12 @@
+<div style="display: flex; align-items: center; justify-content: right">
+    <erd-input-number
+        v-model="value"
+        :min="0"
+        :max="9999999999.99"
+        :step="1"
+        :controls="false"
+        @change="change"
+    >
+    </erd-input-number>
+    <div style="white-space: nowrap">{{unitLabel || ''}}</div>
+</div>

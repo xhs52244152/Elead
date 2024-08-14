@@ -1,0 +1,20 @@
+<div class="w-100p h-100p">
+    <fam-view-table
+        ref="reviewtable"
+        :enable-scroll-load="enableScrollLoad"
+        :default-table-height="defaultTableHeight"
+        :is-adaptive-height="false"
+        :view-table-config="viewTableConfig"
+    >
+    </fam-view-table>
+    <library-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :title="formDialogTitle"
+        :formData="formData"
+        :viewReview="viewReview && nodeProcess !== 'Submittals'"
+        :className="className"
+        :oid="oid"
+        :query-layout-params="queryLayoutParams()"
+    ></library-dialog>
+</div>

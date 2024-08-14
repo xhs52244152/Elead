@@ -1,0 +1,56 @@
+.copy-info {
+  background: #fff;
+}
+.copy-info .form_title {
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.copy-info .basic-information {
+  height: calc(100% - 56px);
+  padding: 16px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.copy-info .basic-information .contraction-panel__content {
+  padding-bottom: 0;
+}
+.copy-info .basic-information .basic-msg .panelContent {
+  margin-bottom: 24px;
+}
+.copy-info .common-btn {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #EBEBEB;
+  padding: 12px 0;
+}
+.copy-info .common-btn .el-button + .el-button {
+  margin-left: 2px;
+}
+
+.success-create-project.el-dialog.no-footer .el-dialog__body {
+  padding: 20px;
+}
+.success-create-project .tip {
+  display: flex;
+}
+.success-create-project .tip p {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.success-create-project .tip .erd-icon-success-solid {
+  margin-right: 4px;
+  font-size: 24px;
+  color: #00a854;
+}
+.success-create-project .btn-list {
+  text-align: center;
+  margin-top: 20px;
+}
+.success-create-project .btn-list .el-button + .el-button {
+  margin-left: 2px;
+}/*# sourceMappingURL=style.css.map */

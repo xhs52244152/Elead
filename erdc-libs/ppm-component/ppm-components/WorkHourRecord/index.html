@@ -1,0 +1,44 @@
+<div>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfolds.baseInfo"
+        :title="i18nMappingObj.workHourInfo"
+    >
+        <template v-slot:content>
+            <fam-dynamic-form
+                ref="form"
+                readonly
+                :form="baseInfoData"
+                :data="baseInfoFormConfig"
+                label-position="right"
+            >
+            </fam-dynamic-form>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfolds.memberInfo"
+        :title="i18nMappingObj.memberWorkHourInfo"
+    >
+        <template v-slot:content>
+            <fam-view-table
+                ref="table"
+                :view-table-config="viewTableConfig"
+                class="ppm-workhour-history-list"
+                :is-adaptive-height="true"
+            >
+                <template
+                    v-for="slot in slotsNameList"
+                    v-slot:[slot]="{scope}"
+                >
+                    <div v-if="slot === 'column:default:operation:content'">
+                        <fam-action-pulldowm
+                            :is-operation="true"
+                            :action-config="getActionConfig(scope.row)"
+                            :action-data="scope.row"
+                            :args="[vm, scope.row]"
+                        ></fam-action-pulldowm>
+                    </div>
+                </template>
+            </fam-view-table>
+        </template>
+    </erd-contraction-panel>
+</div>

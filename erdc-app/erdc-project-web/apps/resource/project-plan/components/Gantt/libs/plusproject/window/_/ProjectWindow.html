@@ -1,0 +1,26 @@
+﻿<table style="">            
+    <tr>
+        <td style="width:90px">项目名称：</td>
+        <td style="width:130px"><mini-textbox ref="name" width="100%"></mini-textbox></td>
+        <td style="width:90px;padding-left:10px">项目状态：</td>
+        <td style="width:130px"><mini-combobox ref="status" width="100%" config="{data: PlusProject.ProjectStatus}"></mini-combobox></td>
+    </tr>
+    <tr>
+        <td >开始日期：</td>
+        <td ><mini-datepicker ref="startDate" width="100%"></mini-datepicker></td>
+        <td style="padding-left:10px">当前日期：</td>
+        <td style=""><mini-datepicker ref="currentDate" width="100%"></mini-datepicker></td>
+    </tr>
+    <tr>
+        <td>完成日期：</td>
+        <td><mini-datepicker ref="finishDate" width="100%" enabled="false"></mini-datepicker></td>
+        <td style="padding-left:10px">状态日期：</td>
+        <td><mini-datepicker ref="statusDate" width="100%" ></mini-datepicker></td>
+    </tr>
+    <tr>
+        <td>日程排定方法：</td>
+        <td><mini-combobox ref="schedule" width="100%" config="{data: PlusProject.ScheduleType}" enabled="false"></mini-combobox></td>
+        <td style="padding-left:10px">项目日历：</td>
+        <td><mini-combobox ref="calendar" width="100%" valueField="UID" textField="Name"></mini-combobox></td>
+    </tr>          
+</table> 

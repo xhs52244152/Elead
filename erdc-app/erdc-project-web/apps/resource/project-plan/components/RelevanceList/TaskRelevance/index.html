@@ -1,0 +1,78 @@
+<div id="task-relevance-container">
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        :default-table-height="100"
+        :is-adaptive-height="false"
+        @action-click="actionClick"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{ scope }"
+        >
+            <div v-if="!!scope.row.whetherAdd">
+                <template v-if="slot=='column:default:operation:content'">
+                    <erd-button
+                        type="text"
+                        @click="handlerSaveApplication(scope.row,scope)"
+                    >
+                        {{i18nMappingObj.save}}</erd-button
+                    >
+                    <erd-button
+                        type="text"
+                        @click="hanlderCancel(scope.row,scope)"
+                    >
+                        {{i18nMappingObj.cancel}}</erd-button
+                    >
+                </template>
+                <template v-if="slot=='column:default:erd.cloud.ppm.plan.entity.Task#name:content'">
+                    <erd-select
+                        style="width: 100%"
+                        v-model="scope.row['erd.cloud.ppm.plan.entity.Task#name']"
+                        filterable
+                        remote
+                        reserve-keyword
+                        :placeholder="i18nMappingObj.pleaseEnterKeyword"
+                        :remote-method="remoteMethod"
+                    >
+                        <erd-option
+                            v-for="item in taskOptions"
+                            :key="item.oid"
+                            :label="item.name"
+                            :value="item.oid"
+                        >
+                        </erd-option>
+                    </erd-select>
+                </template>
+            </div>
+            <div v-else>
+                <template v-if="slot=='column:default:operation:content'">
+                    <fam-action-pulldowm
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :action-data="scope.row"
+                        @click="onCommand"
+                    ></fam-action-pulldowm>
+                </template>
+                <a
+                    v-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#name:content'"
+                    @click="openDetail(scope.row)"
+                >
+                    {{getValueMeth(scope.row,slot)}}
+                </a>
+                <span v-else>{{getValueMeth(scope.row,slot)}}</span>
+            </div>
+        </template>
+    </fam-view-table>
+
+    <add-task-relate-dialog
+        v-if="taskDialogVisible"
+        :visible.sync="taskDialogVisible"
+        :task-oid="poid"
+        :link-oid="rowLinkOid"
+        :link-project-name="rowProjectName"
+        @after-submit="afterTaskRelateChange"
+        v-bind="$attrs"
+    >
+    </add-task-relate-dialog>
+</div>

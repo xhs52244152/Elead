@@ -1,0 +1,141 @@
+.project_dashboard {
+    height: 100%;
+    background: #fff;
+    padding: 16px;
+    overflow: auto;
+    .project_report {
+        .project_report_list {
+            display: flex;
+            align-items: center;
+            height: calc(100% - 20px);
+            .report_list_percentage {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                width: 100%;
+                margin: 0;
+                li {
+                    width: 15%;
+                    // height: 110px;
+                    position: relative;
+                    text-align: center;
+                    .report_list_name {
+                        font-size: 1.1rem;
+                        font-weight: 700;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                    }
+                    .state_val {
+                        margin-top: 20%;
+                        font-size: 30px;
+                        font-weight: 700;
+                    }
+                    .state_label {
+                        position: absolute;
+                        width: 100%;
+                        bottom: 0;
+                    }
+                    .report_list_val {
+                        position: absolute;
+                        top: 16%;
+                        left: 16%;
+                        font-size: 1.7rem;
+                        font-weight: 700;
+                    }
+                    .state_label {
+                        bottom: 0;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    .dashboard_title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .dashboard_title_name {
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .dashboard_data {
+            width: 220px;
+            .el-range-separator {
+                line-height: 26px;
+            }
+            i.el-input__icon {
+                line-height: 26px !important;
+            }
+        }
+    }
+    .report_echart_title {
+        font-weight: 700;
+    }
+    .task_report {
+        height: auto;
+        .task_report_echart {
+            display: flex;
+            justify-content: space-between;
+            .report_echart {
+                width: 32.8%;
+            }
+        }
+        .ppm-plan-set-selector-container {
+            .el-form-item__content {
+                background: unset;
+            }
+        }
+        #FamAdvancedTable {
+            margin-top: 10px;
+            .advanced-table-container {
+                padding: 0;
+            }
+            .el-form-item--medium {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .requirement_report {
+        .requirement_report_list {
+            display: flex;
+            justify-content: space-between;
+            .requirement_echart {
+                width: 32.8%;
+            }
+        }
+    }
+    .common_chart_container {
+        display: flex;
+        justify-content: space-between;
+        .common_chart_item {
+            width: 32.8%;
+        }
+    }
+    .col-item {
+        border: 1px solid var(--colorBorder);
+        border-radius: 8px;
+        background-color: #fff;
+        .x_title {
+            padding: 0 12px;
+            height: 40px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 40px;
+            border-bottom: 1px solid var(--colorBorder);
+        }
+    }
+    .vue-grid-item {
+        transform: translate3d(0px, 0px, 0px) !important;
+        width: 100% !important;
+    }
+    .task_report_list #FamAdvancedTable {
+        margin-top: 0;
+    }
+}
+
+.object-common-space {
+    height: calc(100vh - 40px) !important;
+}

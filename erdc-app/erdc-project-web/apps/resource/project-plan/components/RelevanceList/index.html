@@ -1,0 +1,27 @@
+<div
+    class="ppm-related_objects"
+    id="ppm-related_objects"
+>
+    <slot name="content:before"></slot>
+
+    <template v-for="(panel, index) in panelList">
+        <erd-contraction-panel
+            class="ppm-related_task"
+            :unfold.sync="panelUnfold"
+            :title="i18nMappingObj.task"
+        >
+            <template v-slot:content>
+                <component
+                    :is="panel.name"
+                    v-bind="panel.props"
+                    v-on="panel.listeners"
+                    :containerRefOid="containerRefOid"
+                ></component>
+            </template>
+        </erd-contraction-panel>
+    </template>
+
+    <common-related :relatedData="relatedData" :idKey="idKey"></common-related>
+
+    <slot name="content:after"></slot>
+</div>

@@ -1,0 +1,165 @@
+<erd-ex-dialog
+    v-if="showDialog"
+    :title="title"
+    :visible.sync="showDialog"
+    @close="cancel"
+    class="document-dialog-container"
+>
+    <main class="ppm-doc-container">
+        <erd-contraction-panel
+            :unfold.sync="panelUnfold"
+            :title="i18nMappingObj.basicInfo"
+            class="ppm-doc-panelUnfold"
+            v-if="!isDetail"
+        >
+            <template v-slot:content>
+                <fam-dynamic-form
+                    ref="docDynamicForm"
+                    :form.sync="form"
+                    :data="formConfig"
+                >
+                    <template v-slot:uploadComponent="scope">
+                        <fam-upload
+                            class="upload-demo"
+                            ref="myUpload"
+                            :limit="limit"
+                            :on-remove="removeFile"
+                            :auto-upload="true"
+                            :file-list="fileList"
+                            :on-preview="onPreview"
+                            :need-content-id="needContentId"
+                            :class-name="documentClassName"
+                            :on-success="onSuccess"
+                        >
+                            <erd-button
+                                type="default"
+                                slot="trigger"
+                            >
+                                {{ i18nMappingObj.clickUpload }}
+                            </erd-button>
+                        </fam-upload>
+                    </template>
+                    <template v-slot:selectFolder="scope">
+                        <erd-tree-select
+                            style="width: 100%"
+                            class="select-box"
+                            v-model="form.folderRef"
+                            :data="folderOptions"
+                            :props="folderProps"
+                            default-expand-all
+                        ></erd-tree-select>
+                    </template>
+                </fam-dynamic-form>
+            </template>
+        </erd-contraction-panel>
+        <div
+            class="doc-header-container"
+            v-if="isDetail"
+        >
+            <div class="doc-header-title ppm-essipsis-inline-name mr-8">{{ form.name }}</div>
+            <fam-action-button
+                v-if="Object.keys(form).length && showEditBtn"
+                class="toolbar-action-button top-opt-container__left ml-8"
+                :action-data="form"
+                :action-config="getActionConfig()"
+                :args="[vm, form]"
+                @click="actionClick"
+            ></fam-action-button>
+        </div>
+        <fam-dynamic-form
+            ref="docDynamicForm"
+            :form.sync="form"
+            :data="formConfig"
+            v-if="isDetail"
+        >
+            <template v-slot:uploadComponent="scope">
+                <fam-upload
+                    :file-list="fileList"
+                    :on-preview="onPreview"
+                    readonly
+                >
+                </fam-upload>
+                <i
+                    class="erd-iconfont erd-icon-visible cursor-pointer text-12"
+                    @click="previewFile(scope.data)"
+                ></i>
+            </template>
+            <template v-slot:selectFolder="scope">
+                <erd-tree-select
+                    v-if="!isDetail"
+                    style="width: 100%"
+                    class="select-box"
+                    v-model="form.folderRef"
+                    :data="folderOptions"
+                    :props="folderProps"
+                    default-expand-all
+                ></erd-tree-select>
+                <span>{{currentFolder?.displayName || ''}}</span>
+            </template>
+        </fam-dynamic-form>
+        <erd-tabs
+            v-model="activeName"
+            class="tabs-container"
+        >
+            <erd-tab-pane
+                :label="item.label"
+                v-for="item of tabs"
+                :key="item.activeName"
+                :name="item.activeName"
+                :lazy="true"
+            >
+                <component
+                    :ref="item.activeName"
+                    style="width: 100%; padding: 0"
+                    :style="item.activeName === 'Attach' ? tableHeight : ''"
+                    v-if="activeName === item.activeName"
+                    :is="item.activeName"
+                    :extends-props="extendsProps"
+                    v-model="form[item.activeName]"
+                    :custom-data-fun="attachDataFunc"
+                    :columns="attachColumns"
+                    :oid="form.oid"
+                    :show-search-input="!isDetail"
+                    :show-table-btn="false"
+                    :attach-type="docType"
+                    v-bind="$attrs"
+                    :class-name="className"
+                    :operation-config-name="operationConfigName"
+                    v-on="$listeners"
+                    :show-custom-footer-slot="true"
+                    @after-request="afterRequest"
+                >
+                    <template
+                        v-slot:empty
+                        v-if="!isDetail"
+                    >
+                        <span
+                            >{{ i18nMappingObj.noDataTips }}<a @click="uploadAttachClick"
+                                >{{ i18nMappingObj.clickUpload }}</a
+                            ></span
+                        >
+                    </template>
+                    <template v-slot:table-attach-btn>
+                        <div class="flex justify-end">
+                            <erd-button @click="uploadAttachClick">{{ i18nMappingObj.clickUpload }}</erd-button>
+                            <erd-button @click="batchDelete">{{ i18nMappingObj.delete }}</erd-button>
+                        </div>
+                    </template>
+                </component>
+            </erd-tab-pane>
+        </erd-tabs>
+    </main>
+    <template
+        #footer
+        v-if="!isDetail"
+    >
+        <erd-button
+            type="primary"
+            @click="confirm"
+            :disabled="editBtnDisabled"
+            :loading="isLoading"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

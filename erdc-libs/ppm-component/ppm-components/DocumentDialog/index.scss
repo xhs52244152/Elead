@@ -1,0 +1,24 @@
+.document-dialog-container{
+    width: 800px;
+}
+.ppm-doc-container{
+    .ppm-doc-panelUnfold{
+        padding-bottom: 0px;
+    }
+    .doc-header-container{
+        display: flex; 
+        justify-content: space-between; 
+        margin-bottom: var(--dialogPadding); 
+        align-items: center;
+        .doc-header-title{
+            font-size: var(--fontSize);
+            font-weight: 700;
+        }
+    }
+    .tabs-container{
+        margin: 14px -16px -16px -16px;
+    }
+    .el-icon-close-tip{
+        display: none !important;
+    }
+}

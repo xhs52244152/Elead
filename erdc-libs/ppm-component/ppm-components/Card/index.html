@@ -1,0 +1,78 @@
+<div
+    class="common-card-panel"
+    :class="dynamicClass"
+>
+    <!-- 卡片头部 -->
+    <div class="card-header">
+        <slot name="header">
+            <!-- 头部主区域 -->
+            <div class="header-main ellipsis">
+                <slot name="headerMain">
+                    <!-- 头部标题 -->
+                    <div class="header-title ellipsis">
+                        <slot name="headerTitle">
+                            <erd-show-tooltip
+                                :content="title"
+                                placement="top-start"
+                            >
+                                <div class="ellipsis">{{title}}</div>
+                            </erd-show-tooltip>
+                        </slot>
+                    </div>
+                    <!-- 头部内容 -->
+                    <div class="header-content">
+                        <slot name="headerContent"> </slot>
+                    </div>
+                </slot>
+            </div>
+            <!-- 头部工具栏 -->
+            <div class="header-tools">
+                <slot name="headerTools">
+                    <!-- 分割线 -->
+                    <div
+                        v-if="showDivider"
+                        class="item-icon"
+                    >
+                        <erd-divider
+                            class="tool-divider"
+                            direction="vertical"
+                        ></erd-divider>
+                    </div>
+                    <!-- 最大化 or 最小化 -->
+                    <div
+                        v-if="showFullscreen"
+                        class="item-icon"
+                    >
+                        <erd-icon
+                            :icon="showZoomIn ? 'zoom-in': 'zoom-out'"
+                            class="cursor-pointer color-placeholder"
+                            @click="handleFullscreen(showZoomIn)"
+                        ></erd-icon>
+                    </div>
+                    <!-- 更多 -->
+                    <div
+                        v-if="showMore"
+                        class="item-icon"
+                    >
+                        <erd-popover
+                            v-bind="morePopover"
+                            :popper-class="`card-more-popover ${morePopover?.['popper-class'] || ''}`"
+                        >
+                            <!-- 点击更多后的展示内容，需要自定义实现 -->
+                            <slot name="headerMore"></slot>
+                            <erd-icon
+                                slot="reference"
+                                icon="more"
+                                class="cursor-pointer color-placeholder"
+                            ></erd-icon>
+                        </erd-popover>
+                    </div>
+                </slot>
+            </div>
+        </slot>
+    </div>
+    <!-- 卡片内容 -->
+    <div class="card-content">
+        <slot name="content"> </slot>
+    </div>
+</div>

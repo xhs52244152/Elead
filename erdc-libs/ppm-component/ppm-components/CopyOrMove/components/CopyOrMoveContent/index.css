@@ -1,0 +1,15 @@
+.move-or-copy-container .common-box {
+  margin-bottom: 12px;
+}
+.move-or-copy-container .common-box .select-box {
+  width: 100%;
+}
+.move-or-copy-container .common-box .select-box > .el-select {
+  width: 100%;
+}
+.move-or-copy-container .common-box:last-child {
+  margin-bottom: 0;
+}
+.move-or-copy-container .radio-box {
+  line-height: 32px;
+}/*# sourceMappingURL=index.css.map */

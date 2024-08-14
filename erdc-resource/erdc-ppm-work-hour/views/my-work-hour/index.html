@@ -1,0 +1,26 @@
+<div class="h_100p ppm-my-work-hour-container">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        :enable-scroll-load="enableScrollLoad"
+        ref="table"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.ppm.timesheet.entity.TimesheetGroup#name:content'"
+                :class="{'ppm-link-name': true, 'ppm-essipsis-inline-name': true}"
+                @click="openDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.ppm.timesheet.entity.TimesheetGroup#name']}}
+            </span>
+            <span v-if="slot === 'column:default:erd.cloud.ppm.timesheet.entity.TimesheetGroup#several:content'">
+                {{ getWeekDisplayName(scope.row) }}
+            </span>
+            <span v-if="slot === 'column:default:submitter:content'"> {{ getUserDisplayName(scope.row) }} </span>
+        </template>
+    </fam-view-table>
+</div>

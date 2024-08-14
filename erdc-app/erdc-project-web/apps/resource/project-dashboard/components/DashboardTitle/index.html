@@ -1,0 +1,20 @@
+<div class="dashboard_title">
+    <span class="dashboard_title_name" :title="titleName">{{titleName}}</span>
+    <erd-date-picker
+        v-if="showDataTime"
+        class="dashboard_data"
+        v-model="value2"
+        type="daterange"
+        align="right"
+        size="mini"
+        value-format="yyyy-MM-dd"
+        range-separator="-"
+        :start-placeholder="i18n.startDate"
+        :end-placeholder="i18n.endDate"
+        @change="handleChange"
+    >
+    </erd-date-picker>
+    <div v-if="$slots.default">
+        <slot></slot>
+    </div>
+</div>

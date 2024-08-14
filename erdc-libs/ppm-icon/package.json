@@ -1,0 +1,21 @@
+{
+  "name": "@erdc-libs/ppm-icon",
+  "version": "3.1.0-rc4",
+  "description": "PPM 图标库",
+  "erdcData": {
+    "icons": [
+      {
+        "key": "ppm-icon",
+        "displayName": "PPM 图标",
+        "styleHref": "lib/erd-iconfont.css",
+        "definitionUrl": "lib/erd-iconfont.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node ./build.js"
+  },
+  "dependencies": {
+    "@erdcloud/erdcloud-icon": "~1.3.0"
+  }
+}

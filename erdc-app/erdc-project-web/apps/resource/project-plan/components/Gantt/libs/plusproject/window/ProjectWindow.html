@@ -1,0 +1,37 @@
+﻿<table style="">            
+    <tr>
+        <td style="width:90px">项目名称：</td>
+        <td style="width:130px"><mini-textbox name="Name" ref="name" width="100%" v-model="data.Name"></mini-textbox></td>
+        <td style="width:90px;padding-left:10px">项目状态：</td>
+        <td style="width:130px"><mini-combobox name="Status" ref="status" v-model:value="data.Status" _@change="onStatusChange" width="100%" config="{data: PlusProject.ProjectStatus}"></mini-combobox></td>
+    </tr>
+    <tr _v-show="data.Status==2">
+        <td >开始日期：</td>
+        <td ><mini-datepicker name="StartDate" ref="startDate" width="100%" v-model="data.StartDate"></mini-datepicker></td>
+        <td style="padding-left:10px">当前日期：</td>
+        <td style=""><mini-datepicker name="CurrentDate" ref="currentDate" width="100%" v-model:value="data.CurrentDate"></mini-datepicker></td>
+    </tr>
+    <tr>
+        <td>完成日期：</td>
+        <td><mini-datepicker name="FinishDate" ref="finishDate" width="100%" enabled="false" v-model:value="data.FinishDate"></mini-datepicker></td>
+        <td style="padding-left:10px">状态日期：</td>
+        <td><mini-datepicker name="StatusDate" ref="statusDate" width="100%" v-model:value="data.StatusDate" :viewDate="data.StartDate"></mini-datepicker></td>
+    </tr>
+    <tr>
+        <td>日程排定方法：</td>
+        <td><mini-combobox ref="schedule" width="100%" config="{data: PlusProject.ScheduleType}" enabled="false" value="start"></mini-combobox></td>
+        <td style="padding-left:10px">项目日历：</td>
+        <td><mini-combobox name="CalendarUID" ref="calendar" width="100%" valueField="UID" textField="Name"
+            v-model:value="data.CalendarUID" :data="project.data.Calendars" _v-show="refs.status.getValue()==2"
+        ></mini-combobox></td>
+    </tr>
+    <tr>
+        <td>关键任务<br />宽延时间：</td>
+        <td><mini-spinner width="100%" v-model:value="data.CriticalSlackLimit"></mini-spinner></td>
+        <td style="padding-left:10px">多关键路径：</td>
+        <td>
+            <mini-checkbox ref="multipleCriticalPaths" v-model:checked="data.MultipleCriticalPaths" config="{text: ''}"></mini-checkbox>
+        </td>
+    </tr>
+    
+</table>

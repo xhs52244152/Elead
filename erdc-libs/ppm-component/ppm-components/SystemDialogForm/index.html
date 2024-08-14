@@ -1,0 +1,32 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="1200px"
+>
+    <fam-advanced-form
+        ref="layoutForm"
+        :model.sync="formData"
+        :form-id="layoutName"
+        :class-name="className"
+        :schema-mapper="schemaMapper"
+        :editableAttr="editableAttrs"
+        :query-layout-params="queryLayoutParams()"
+    >
+    </fam-advanced-form>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            :loading="isSaving"
+            >{{ i18nMappingObj.publish }}</erd-button
+        >
+
+        <erd-button
+            v-if="formData.status !== 'release'"
+            @click="handleDraft(true)"
+            :loading="isSaving"
+            >{{ formData.status === 'inactive' ? i18nMappingObj.save : i18nMappingObj.saveDraft }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

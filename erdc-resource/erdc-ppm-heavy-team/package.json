@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/erdc-ppm-heavy-team",
+  "version": "3.1.0-rc4",
+  "description": "重量级团队",
+  "erdcData": {
+    "widget": false
+  }
+}

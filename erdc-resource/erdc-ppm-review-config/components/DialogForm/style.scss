@@ -1,0 +1,18 @@
+
+.erd_alert_tip {
+    width: 568px !important;
+}
+.move_body {
+    li {
+        line-height: 32px; 
+        .move_label {
+            margin-right: 8px;
+        }
+        .erd-tree-select {
+            width: calc(100% - 42px)
+        }
+    }
+    li:first-child {
+        margin-bottom: 12px;
+    }
+}

@@ -1,0 +1,44 @@
+<div class="ppm-product-info">
+    <resizable-container :left="left">
+        <template v-slot:left>
+            <system-tree
+                @node-type-click="handleNodeClick"
+                :title="i18nMappingObj.configTitle"
+                @operate-click="handleOperate"
+                :className="className"
+                treeUrl="/element/reviewCategory/listTree"
+                :moreOption="true"
+                ref="reviewConfigTree"
+            ></system-tree>
+        </template>
+        <template v-slot:right>
+            <system-define-detail
+                v-if="treeDetail"
+                :treeDetail="treeDetail"
+                :showTab="showTab"
+                ref="reviewConfigDetail"
+                @edit-data="handleEdit"
+                :tabList="tabList"
+                :tabListData="tabListData"
+                :resettingActiveTab="true"
+                currentMenu="reviewConfig"
+            ></system-define-detail>
+        </template>
+    </resizable-container>
+
+    <dialog-form
+        v-if="showFormDialog"
+        :visible.sync="showFormDialog"
+        :title="formDialogTitle"
+        :ruleCode="ruleCode"
+        :className="formClassName"
+        :currentSelectTreeData="currentSelectTreeData"
+        :currentReviewType="currentReviewType"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        @echo-data="echoData"
+        :oid="oid"
+        :currentOid="currentOid"
+        :layoutName="layoutName"
+    ></dialog-form>
+</div>

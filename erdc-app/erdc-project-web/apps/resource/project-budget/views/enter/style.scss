@@ -1,0 +1,37 @@
+.project-budget-wrap{
+    .el-tabs {
+        .el-tabs__content {
+            height: 100%;
+            .el-tab-pane {
+                height: calc(100% + var(--bigSpace));
+                padding: 0;
+                overflow-y: auto;
+                .budget-acounting-detail-card {
+                    flex: 1;
+                }
+                /* 滚动条轨道样式 */
+                &::-webkit-scrollbar {
+                    width: 8px;
+                }
+                /* 滚动条滑块样式 */
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 8px;
+                    background-color: rgba(144, 147, 153, 0.3);
+                    box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+                }
+                &::-webkit-scrollbar-thumb:hover {
+                    background-color: rgba(144, 147, 153, 0.5);
+                }
+            }
+        }
+    }
+}
+
+// 注：该样式必须独立无上下文，因为卡片最大化后是挪到body下的
+.budget-acounting-detail-card {
+    .check-budget-info {
+        .vxe-table--body-wrapper,.vxe-table--fixed-left-wrapper,.vxe-table--fixed-right-wrapper {
+            min-height: 180px!important; // 常规主题时，可显示5条数据
+        }
+    }
+}

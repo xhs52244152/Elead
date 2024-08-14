@@ -1,0 +1,34 @@
+<div>
+    <fam-advanced-table
+        :view-table-config="tableConfig"
+        ref="famAdvancedTable"
+        is-adaptive-height
+    >
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            ></slot>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <div v-if="slot === 'column:default:templateInfo.tmplEnabled:content'">
+                <!-- <span>{{JSON.stringify(scope.row.attrRawList)}}</span> -->
+                <span>{{getState(scope.row) ? '生效' : '失效'}}</span>
+            </div>
+            <div v-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                ></fam-action-pulldowm>
+            </div>
+        </template>
+    </fam-advanced-table>
+</div>

@@ -1,0 +1,12 @@
+.bpm-application-rules-content {
+    .left-menubar-container {
+        padding-left: 4px;
+    }
+}
+
+.fam-dynamic-form {
+    .el-form-item__label {
+        width: calc(var(--famWidthLabelHeight) * 3) !important;
+        margin-right: var(--commonPageMargin);
+    }
+}

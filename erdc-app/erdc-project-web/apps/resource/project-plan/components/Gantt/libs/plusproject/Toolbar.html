@@ -1,0 +1,54 @@
+﻿<mini-toolbar style="border-bottom:0;">      
+
+    <mini-button ref="undo" iconCls="icon-undo" @click="execUndo" ></mini-button>
+    <mini-button ref="redo" iconCls="icon-redo" @click="execRedo" ></mini-button>
+    <span class="separator"></span>
+            
+    <mini-splitbutton plain="true" iconCls="icon-save" ref="save" @click="saveProject" text="保存"
+        config="{
+            menu: [
+                { iconCls: 'icon-save', text: '保存项目', onclick: saveProject.bind(this) },
+                { iconCls: 'icon-gantt-app-move', text: '另存为项目模板', onclick: saveAsTemplate.bind(this) }
+            ]}"
+    ></mini-splitbutton>       
+
+    <mini-splitbutton plain="true" iconCls="icon-open" @click="showProjectListWindow" text="打开"
+        config="{
+            menu: [
+                { _iconCls: 'icon-open', text: '打开项目列表', onclick: showProjectListWindow.bind(this) },
+                { _iconCls: 'icon-open', text: '打开项目模板', onclick: showProjectTemplateWindow.bind(this) },
+                { _iconCls: 'icon-open', text: '打开任务模板', onclick: showTaskTemplateWindow.bind(this) }
+            ]}"
+    ></mini-splitbutton> 
+            
+    <mini-splitbutton plain="true" iconCls="icon-new" @click="showNewProjectWindow" text="新建"
+        config="{menu: [
+            {iconCls:'icon-new', text: '新建空白项目', onclick: showNewProjectWindow.bind(this)},
+            {iconCls:'icon-gantt-app-add',text: '从项目模板新建', onclick: showNewFromTemplateWindow.bind(this)}] }"
+    ></mini-splitbutton>
+
+    <span class="separator"></span>
+    <mini-button plain="true" iconCls="icon-add" @click ="onAddTask">增加</mini-button>
+    <mini-button plain="true" iconCls="icon-edit" @click="onEditTask">修改</mini-button>
+    <mini-button plain="true" iconCls="icon-remove" @click="onRemoveTask">删除</mini-button>
+    <span class="separator"></span>
+    <mini-button plain="true" iconCls="icon-upgrade" @click="onUpgradeTask">升级</mini-button>
+    <mini-button plain="true" iconCls="icon-downgrade" @click="onDowngradeTask">降级</mini-button>     
+    <span class="separator"></span>
+    <mini-button plain="true" iconCls="icon-node" @click="showProjectWindow" >项目</mini-button>                          
+    <mini-button plain="true" iconCls="icon-calendar" @click="showCalendarWindow" >日历</mini-button>
+    <mini-button plain="true" iconCls="icon-user" @click="showResourcesWindow" >资源</mini-button>
+    <span class="separator"></span>
+    <mini-button plain="true" iconCls="icon-app-move" @click="showMoveProjectWindow" >移动</mini-button>                                
+    <span class="separator"></span>
+    <mini-button plain="true" iconCls="icon-upload" @click="showImportProjectWindow" >导入</mini-button>                                
+    <mini-button plain="true" iconCls="icon-download" @click="showExportProjectWindow" >导出</mini-button>
+    <span class="separator"></span>
+    <mini-button plain="true" iconCls="icon-print" @click="showPrintProjectWindow" >打印</mini-button>
+    <span class="separator"></span>           
+    <mini-button plain="true" iconCls="icon-gantt-debug" @click="trackProject" >调试项目</mini-button>    
+   
+    <div style="float:right;">        
+        <a href="http://www.plusgantt.com/aboutus" target="_blank"><img style="width:100px;height:22px;" src="../scripts/plusproject/images/logo.gif"/></a>
+    </div>
+</mini-toolbar>

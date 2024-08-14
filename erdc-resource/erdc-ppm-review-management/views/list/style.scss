@@ -1,0 +1,20 @@
+#review-management-container {
+    height: 100%;
+    .adaptive-height {
+        background-color: #fff;
+        .advanced-table-container {
+            padding: 0 16px;
+        }
+    }
+
+    .completionRate-box {
+        display: flex;
+        align-items: center;
+        div {
+            margin-left: 4px;
+        }
+    }
+}
+.el-scrollbar__view .review-management-container {
+    padding: 0;
+}

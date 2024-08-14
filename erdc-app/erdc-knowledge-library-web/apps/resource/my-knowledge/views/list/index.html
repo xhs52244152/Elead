@@ -1,0 +1,49 @@
+<div class="h-100p">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :default-table-height="450"
+        :is-adaptive-height="!isProcess"
+        :enable-scroll-load="enableScrollLoad"
+        ref="myKnowledgeTable"
+        @callback="renderTableCallback"
+    >
+        <template #right:viewNavbar:end>
+            <erd-form
+                inline
+                class="ppm-label-form"
+            >
+                <simple-select
+                    v-model="groupAttrName"
+                    :default-props="{
+                        'label': 'label',
+                        'value': 'attrName'
+                    }"
+                    :options="groupOptions"
+                    @change="changeGroupData"
+                >
+                </simple-select>
+            </erd-form>
+        </template>
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === `column:default:${nameField}:content`"
+                :class="{'ppm-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="openDocument(scope.row)"
+            >
+                {{scope.row[nameField]}}
+            </span>
+            <div v-if="slot === 'column:default:operation:content' && !scope.row.isGroupRow">
+                <fam-action-pulldown
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, 'myKnowledgeTable']"
+                ></fam-action-pulldown>
+            </div>
+        </template>
+    </fam-view-table>
+</div>

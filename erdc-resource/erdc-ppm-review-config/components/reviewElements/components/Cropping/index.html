@@ -1,0 +1,27 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="600px"
+>
+    <div class="review-cut">
+        <div class="review-cut-label">是否可裁剪</div>
+        <erd-radio
+            v-model="value"
+            :label="true"
+            >是</erd-radio
+        >
+        <erd-radio
+            v-model="value"
+            :label="false"
+            >否</erd-radio
+        >
+    </div>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

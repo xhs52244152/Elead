@@ -1,0 +1,7 @@
+.review-detail-container .el-tab-pane{
+    /* padding: 16px 0; */
+}
+
+.review-detail-container #FamViewTable .advanced-table-container {
+    padding: 0;
+}

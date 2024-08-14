@@ -1,0 +1,146 @@
+<div>
+    <fam-advanced-table
+        class="ppm-workhour-table mb-8"
+        ref="table"
+        :view-table-config="viewTableConfig"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <div
+                v-if="slot.search('column:header:') === 0"
+                class="flex flex-column align-items-center ppm-workhour-table-header-cell"
+            >
+                <span>{{ scope.item.weekDay }}</span>
+                <span>{{ scope.item.date }}</span>
+            </div>
+
+            <div v-else-if="slot === 'column:default:operation:content'">
+                <fam-action-pulldowm
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row, true]"
+                    @click="function (menu) { onRowMenuClick(menu, scope) }"
+                ></fam-action-pulldowm>
+            </div>
+
+            <div
+                v-else-if="slot.search('column:default:') === 0"
+                @click="onShowTimeEnterPanel($event, scope.row, scope.column)"
+                :class="['cursor-pointer', {
+                    'vxe-body--column col--dirty': isDirty(scope.row, scope.column)
+                }]"
+                :title="readonly? i18nMappingObj.workReadonlyTitle: ''"
+            >
+                <span
+                    class="flex"
+                    v-html="getTimeDisplayName(scope)"
+                ></span>
+                <erd-link
+                    class="erd-iconfont erd-icon-edit"
+                    :disabled="readonly"
+                    :underline="false"
+                ></erd-link>
+            </div>
+
+            <div v-else-if="slot.search('column:footer:') === 0">
+                <span
+                    class="flex"
+                    v-html="getFooterDisplayName(scope)"
+                ></span>
+            </div>
+        </template>
+    </fam-advanced-table>
+    <erd-popover
+        ref="form"
+        v-model="timeEnterPanelVisible"
+        :append-to-body="false"
+        trigger="manual"
+        placement="bottom-start"
+        popper-class="ppm-time-enter-panel vxe-select-option--wrapper vxe-table--ignore-clear"
+        :class="{'ppm-work-hour-table-popover': readonly}"
+    >
+        <div
+            class="p-16"
+            v-if="!readonly"
+        >
+            <fam-dynamic-form
+                ref="form"
+                :key="formInstanceKey"
+                :form="formData"
+                :data="formConfig"
+                label-width="90px"
+                label-position="right"
+            >
+                <template #workHourAppend="scope">
+                    <erd-input
+                        v-model="formData.dataHour"
+                        type="number"
+                        min="0.1"
+                        max="24"
+                        step="0.1"
+                        class="ppm-append-btn"
+                        onkeypress="if(event.keyCode == 13) return false;"
+                        @blur="onBlur"
+                    >
+                        <template #append>{{ i18nMappingObj.hour }}</template>
+                    </erd-input>
+                </template>
+            </fam-dynamic-form>
+            <div
+                class="text-center mt-12"
+                v-if="!readonly"
+            >
+                <erd-button
+                    type="primary"
+                    @click="changeValue()"
+                    :loading="singleSaving"
+                    >{{ i18nMappingObj.confirm }}</erd-button
+                >
+                <erd-button @click="closeTimeEnterPanel()">{{ i18nMappingObj.cancel }}</erd-button>
+            </div>
+        </div>
+        <div
+            v-else
+            class="detail-time-info"
+        >
+            <div class="flex justify-between">
+                <div class="detail-hour-info">{{formData.dataHour}}小时</div>
+                <i
+                    class="text-18 el-icon-close cursor-pointer detail-close"
+                    @click="closeTimeEnterPanel()"
+                ></i>
+            </div>
+            <span class="text-12 detail-desc-info">{{formData.dataDesc}}</span>
+        </div>
+        <span
+            slot="reference"
+            :style="{ position: 'fixed', left: panelX + 'px', top: panelY + 'px' }"
+        ></span>
+    </erd-popover>
+    <fam-association-object
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :left-table-columns="leftTableColumns"
+        @before-submit="beforeDialogConfirm"
+        :url-config="urlConfig"
+        v-bind="dialogConfig.props"
+        v-on="dialogConfig.listeners"
+        :showCount="false"
+        :enableScrollLoad="this.workHourClassName !== 'erd.cloud.ppm.timesheet.entity.DepartmentTimesheet'"
+    >
+        <template
+            #left-search-left
+            v-if="this.workHourClassName === 'erd.cloud.ppm.timesheet.entity.TaskTimesheet'"
+        >
+            <project-select
+                class="related-project-selector"
+                style="margin-right: var(--bigSpace)"
+                v-model="selectedProjectOid"
+                @after-change="refreshLeftTable"
+            ></project-select>
+        </template>
+    </fam-association-object>
+</div>

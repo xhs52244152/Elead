@@ -1,0 +1,61 @@
+<div class="detail-list">
+    <div
+        class="ppm-details-content-panel"
+        v-if="isDetail"
+    >
+        <erd-scrollbar class="detail-plan-info">
+            <fam-advanced-form
+                ref="initForm"
+                :model.sync="formData"
+                form-id="DETAIL"
+                class-name="erd.cloud.ppm.plan.entity.Task"
+                :query-layout-params="queryLayoutParams"
+                :readonly="readonly"
+            >
+            </fam-advanced-form>
+        </erd-scrollbar>
+    </div>
+    <div v-else>
+        <common-edit-form
+            ref="editForm"
+            :oid="oid"
+            :formSlotData="formData"
+            :configParameter="configParameter"
+            :schema-mapper="schemaMapper"
+            @echo-data="echoData"
+            @before-submit="beforeSubmit"
+            @after-submit="afterSubmit"
+            @fieldsChange="fieldsChange"
+        >
+            <template #res-assignments="scoped">
+                <project-assignments-select
+                    v-model="resAssignments"
+                    @change="onAssignmentsChange"
+                ></project-assignments-select>
+            </template>
+            <template #collect-ref="scoped">
+                <plan-set-select
+                    v-model="collectId"
+                    disabled
+                    :project-oid="projectOid"
+                    class="w-100p"
+                ></plan-set-select>
+            </template>
+            <template #parent-ref="scoped">
+                <erd-ex-select
+                    v-model="parentTask"
+                    filterable
+                    remote
+                    reserve-keyword
+                    :placeholder="i18nMappingObj.pleaseEnterKeyword"
+                    :remote-method="searchTaskMethod"
+                    :options="parentTaskOptions"
+                    :default-props="defaultProps"
+                    clearable
+                    class="w-100p ppm-select-100p"
+                >
+                </erd-ex-select>
+            </template>
+        </common-edit-form>
+    </div>
+</div>

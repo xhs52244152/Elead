@@ -1,0 +1,254 @@
+.project_milestone {
+    height: 100%;
+    background: #fff;
+    padding: 16px;
+    overflow: auto;
+    .events-none {
+        pointer-events: none;
+        /* 禁用鼠标事件 */
+        opacity: 0.5;
+        /* 设置半透明度，给用户视觉上的提示 */
+        cursor: not-allowed;
+        /* 更改鼠标指针为不可点击状态 */
+    }
+    .milestone_view {
+        // height: 300px;
+        // overflow-y: auto;
+        .ppm-label-form .el-form-item .el-form-item__content {
+            line-height: 30px !important;
+        }
+        .milestone_view_head {
+            .milestone_head_select {
+                display: flex;
+                justify-content: space-between;
+            }
+            .ppm-plan-set-selector-container {
+                .el-form-item__content {
+                    background: unset;
+                }
+            }
+            h1 {
+                font-size: var(--fontSizeLarge);
+                word-break: break-all;
+                font-weight: bold;
+                color: var(--colorTextNormal);
+            }
+            .milestone_light_tip {
+                display: flex;
+                height: 30px;
+                align-items: center;
+                span {
+                    display: flex;
+                    align-items: center;
+                    font-size: 12px;
+                    margin: 0 4px;
+                    i {
+                        display: inline-block;
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        margin-right: 4px;
+                    }
+                }
+            }
+        }
+        
+        .milestone_view_stage {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 2.4em;
+            // padding-top: 90px;
+            // height: 260px;
+            .stage_name {
+                width: 100%;
+                display: inline-block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            li {
+                position: relative;
+                height: 30px;
+                line-height: 28px;
+                text-align: center;
+                font-size: 12px;
+                border-right: 1px solid #fff;
+                color: #fff;
+                .point_list_show {
+                    position: absolute;
+                    top: 0;
+                    .point_name {
+                        position: relative;
+                        left: -20px;
+                        top: 56px;
+                        text-align: left;
+                        // padding-left: 10px;
+                        // width: 50px;
+                        color: var(--colorTextNormal);
+                        text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap
+
+                    }
+                    .point_circle {
+                        position: absolute;
+                        top: 24px;
+                        background: #C9CED5;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        z-index: 1;
+                    }
+                    .point_line {
+                        position: absolute;
+                        top: 24px;
+                        background: #C9CED5;
+                        width: 2px;
+                        height: 50px;
+                        left: 3px;
+                    }
+                    .point_block {
+                        position: absolute;
+                        top: 28px;
+                        // background: #C9CED5;
+                        // width: 10px;
+                        // height: 10px;
+                        left: -1px;
+                        transform: rotateZ(180deg);
+                        font-size: 24px;
+                        .erd-iconfont {
+                            width: 0;
+                        }
+                    }
+                }
+                .even {
+                    .point_circle {
+                        top: -4px;
+                    }
+                    .point_line {
+                        top: -50px;
+                    }
+                    .point_name {
+                        top: -56px;
+                    }
+                    .point_block {
+                        
+                        top: -26px;
+                        transform: rotateZ(0deg);
+                    }
+
+                }
+            }
+            li.collect_name {
+                width: 100%;
+                text-align: left;
+                font-weight: 700;
+                color: var(--colorTextNormal);
+            }
+            .ContractionPanel {
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+                .panelTitle {
+                    height: 20px;
+                }
+                .panelContent {
+                    width: 100%;
+                    .contraction-panel__content {
+                        display: flex;
+                        flex-wrap: wrap;
+                    }
+                }
+                .milestone_view_panel {
+                    display: flex;
+                    // flex-wrap: wrap;
+                    width: 100%;
+                    margin-top: 60px;
+                }
+            }
+        }
+        .milestone_no_data {
+            height: 200px;
+        }
+    }
+    .milestone_list {
+        margin-top: 30px;
+        .list_head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            h1 {
+                font-size: var(--fontSizeLarge);
+                word-break: break-all;
+                font-weight: bold;
+                color: var(--colorTextNormal);
+                margin: 0;
+            }
+        }
+        #FamViewTable {
+            padding-top: 18px;
+            .advanced-table-container {
+                padding: 0;
+                .milestone_lignt {
+                    display: inline-block;
+                    width: 100%;
+                    i {
+                        display: inline-block;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        margin-right: 4px;
+                    }
+                    i.erd-icon-upload {
+                        width: 10px;
+                        height: 16px;
+                    }
+                    .upload-deliverable-btn {
+                        background-color: var(--buttonFontColor);
+                        border-color: var(--buttonFontColor);
+                        cursor: pointer;
+                        display: inline-flex;
+                        padding: 2px 4px;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 4px;
+                        color: #fff;
+                        scale: .8;
+                    }
+                    .upload-deliverable-btn:hover {
+                        background-color: var(--colorPrimaryLighter);
+                        border-color: var(--colorPrimaryLighter);
+                    }
+                }
+                .task-warning-label{
+                    margin-right: 4px;
+                }
+            }
+        }
+    }
+}
+
+.milestone_tip_content {
+    padding: 10px;
+    .milestone_tip {
+        margin: 0;
+        li {
+            margin: 4px;
+            font-size: 12px;
+           .tip_label {
+                width: 100px;
+                display: inline-block;
+                text-align: right;
+                margin-right: 4px;
+           }
+           .tip_value {
+
+           }
+        }
+    }
+}
+
+.upload-deliverable-dialog .el-dialog__body {
+    height: 400px;
+}

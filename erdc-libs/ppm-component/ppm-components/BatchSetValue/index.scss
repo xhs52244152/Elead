@@ -1,0 +1,35 @@
+.set-value-dialog {
+    .el-dialog__body {
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: auto;
+            border-radius: 8px;
+            &.horizontal {
+                width: auto;
+                height: 8px;
+            }
+        }
+
+        &::-webkit-scrollbar-thumb {
+            position: relative;
+            display: block;
+            width: 0;
+            height: 0;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: #d9d9d9;
+            -webkit-transition: 0.3s background-color;
+            transition: 0.3s background-color;
+        }
+
+        &::-webkit-scrollbar-track {
+            width: 12px;
+            height: auto;
+            background-color: transparent;
+            &.horizontal {
+                width: auto;
+                height: 12px;
+            }
+        }
+    }
+}

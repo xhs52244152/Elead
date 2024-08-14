@@ -1,0 +1,163 @@
+#info_create {
+    .info_create_detail {
+        background: #fff;
+        height: 100%;
+        margin: 10px;
+        padding: 10px;
+        h1 {
+            font-weight: 700;
+        }
+    }
+}
+
+#info_edit {
+    .info_edit_detail {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: #fff;
+        overflow: hidden;
+        h1 {
+            margin: 0;
+            padding: 16px;
+            color: rgba(0, 0, 0, 0.85);
+            letter-spacing: 0;
+            line-height: 28px;
+            font-weight: 700;
+            font-size: 18px;
+            background-color: var(--colorFullBg);
+        }
+        .info_data_tab {
+            flex-grow: 1;
+            .el-tabs {
+                height: 100%;
+                .el-tabs__header{
+                    background-color: var(--colorFullBg);
+                }
+                .el-tabs__content {
+                    // padding: 10px;
+                    height: 100%;
+                }
+            }
+            .el-tab-pane {
+                padding: 0;
+                height: 100%;
+                .common-btn {
+                    text-align: center;
+                    bottom: 0px;
+                }
+            }
+            .related_object {
+                height: calc(100% - 40px);
+                overflow-y: auto;
+                .contraction-panel__content {
+                    padding: 0;
+                }
+            }
+            .advanced-table-container {
+                padding: 0;
+                .fam-advanced-table-component {
+                    padding: 0 16px;
+                }
+            }
+        }
+    }
+}
+
+#info_content {
+    // height: calc(100vh - 102px) !important;
+    background: #fff;
+    .el-tab-pane {
+        overflow: auto;
+        height: calc(100vh - 264px);
+        padding-bottom: var(--largeSpace);
+    }
+    .ppm-project_info_header {
+        background-color: var(--colorFullBg);
+        .info_header {
+            display: flex;
+            padding: 16px;
+            align-items: center;
+            .ppm-project_info_header_title {
+                color: rgba(0, 0, 0, 0.85);
+                letter-spacing: 0;
+                line-height: 28px;
+                font-weight: 700;
+                font-size: 18px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+    }
+    .detail_project_demo {
+       .el-tabs__header{
+            background-color: var(--colorFullBg);
+        } 
+    }
+    .template-detail {
+        padding: 0 16px 0 16px;
+        margin-bottom: 0;
+    }
+    .opt-container {
+        text-align: right;
+        flex: 1 1 0%;
+        min-width: fit-content;
+    }
+
+    .info_content_head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 10px;
+    }
+    .template-info {
+        padding: 0 16px;
+    }
+
+    .basic-information {
+        .fam-dynamic-form {
+            & > .el-row {
+                & > .el-col {
+                    margin-bottom: 24px;
+                }
+            }
+        }
+    }
+    #pane-workHourRecord{
+        .advanced-table-container{
+            padding: 0;
+            .viewtable-body-container{
+                .vxe-table--empty-block{
+                    height: 36px;
+                    max-height: 36px;
+                }
+            }
+        }
+    }
+}
+.success-create-project {
+    &.el-dialog.no-footer .el-dialog__body {
+        padding: 20px;
+    }
+    .tip {
+        display: flex;
+        p {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 0px;
+        }
+        .erd-icon-success-solid {
+            margin-right: 4px;
+            font-size: 24px;
+            color: #00a854;
+        }
+    }
+    .btn-list {
+        text-align: center;
+        margin-top: 20px;
+        .el-button + .el-button {
+            margin-left: 2px;
+        }
+    }
+}

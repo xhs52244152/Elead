@@ -1,0 +1,143 @@
+#info_create .info_create_detail {
+  background: #fff;
+  height: 100%;
+  margin: 10px;
+  padding: 10px;
+}
+#info_create .info_create_detail h1 {
+  font-weight: 700;
+}
+
+#info_edit .info_edit_detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+#info_edit .info_edit_detail h1 {
+  margin: 0;
+  padding: 16px;
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  background-color: var(--colorFullBg);
+}
+#info_edit .info_edit_detail .info_data_tab {
+  flex-grow: 1;
+}
+#info_edit .info_edit_detail .info_data_tab .el-tabs {
+  height: 100%;
+}
+#info_edit .info_edit_detail .info_data_tab .el-tabs .el-tabs__header {
+  background-color: var(--colorFullBg);
+}
+#info_edit .info_edit_detail .info_data_tab .el-tabs .el-tabs__content {
+  height: 100%;
+}
+#info_edit .info_edit_detail .info_data_tab .el-tab-pane {
+  padding: 0;
+  height: 100%;
+}
+#info_edit .info_edit_detail .info_data_tab .el-tab-pane .common-btn {
+  text-align: center;
+  bottom: 0px;
+}
+#info_edit .info_edit_detail .info_data_tab .related_object {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+}
+#info_edit .info_edit_detail .info_data_tab .related_object .contraction-panel__content {
+  padding: 0;
+}
+#info_edit .info_edit_detail .info_data_tab .advanced-table-container {
+  padding: 0;
+}
+#info_edit .info_edit_detail .info_data_tab .advanced-table-container .fam-advanced-table-component {
+  padding: 0 16px;
+}
+
+#info_content {
+  background: #fff;
+}
+#info_content .el-tab-pane {
+  overflow: auto;
+  height: calc(100vh - 264px);
+  padding-bottom: var(--largeSpace);
+}
+#info_content .ppm-project_info_header {
+  background-color: var(--colorFullBg);
+}
+#info_content .ppm-project_info_header .info_header {
+  display: flex;
+  padding: 16px;
+  align-items: center;
+}
+#info_content .ppm-project_info_header .info_header .ppm-project_info_header_title {
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#info_content .detail_project_demo .el-tabs__header {
+  background-color: var(--colorFullBg);
+}
+#info_content .template-detail {
+  padding: 0 16px 0 16px;
+  margin-bottom: 0;
+}
+#info_content .opt-container {
+  text-align: right;
+  flex: 1 1 0%;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+#info_content .info_content_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 10px;
+}
+#info_content .template-info {
+  padding: 0 16px;
+}
+#info_content .basic-information .fam-dynamic-form > .el-row > .el-col {
+  margin-bottom: 24px;
+}
+#info_content #pane-workHourRecord .advanced-table-container {
+  padding: 0;
+}
+#info_content #pane-workHourRecord .advanced-table-container .viewtable-body-container .vxe-table--empty-block {
+  height: 36px;
+  max-height: 36px;
+}
+
+.success-create-project.el-dialog.no-footer .el-dialog__body {
+  padding: 20px;
+}
+.success-create-project .tip {
+  display: flex;
+}
+.success-create-project .tip p {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+.success-create-project .tip .erd-icon-success-solid {
+  margin-right: 4px;
+  font-size: 24px;
+  color: #00a854;
+}
+.success-create-project .btn-list {
+  text-align: center;
+  margin-top: 20px;
+}
+.success-create-project .btn-list .el-button + .el-button {
+  margin-left: 2px;
+}/*# sourceMappingURL=style.css.map */

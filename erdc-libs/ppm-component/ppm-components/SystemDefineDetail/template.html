@@ -1,0 +1,80 @@
+<div class="fam-type-manager-info flex flex-column">
+    <div class="fam-type-info__header">
+        <div class="fam-type-info__title">
+            <!-- <i :class="isIcon"></i> -->
+            <erd-tooltip
+                placement="top"
+                popper-class="fam-tooltip-max-width"
+            >
+                <span slot="content">{{ moduleTitle }}</span>
+                <span>{{ moduleTitle }}</span>
+            </erd-tooltip>
+            <!-- <erd-button
+                v-if="!showTab"
+                plain
+                class="info-edit"
+                @click="handleEdit(treeDetail)"
+                >编辑</erd-button
+            > -->
+        </div>
+    </div>
+    <template>
+        <div
+            v-if="showTab"
+            class="fam-type-info__base grow-1"
+        >
+            <erd-tabs
+                v-model="initActiveTab.name"
+                @tab-click="activeChange"
+            >
+                <template v-for="item in tabLists">
+                    <erd-tab-pane
+                        v-if="item.isShow"
+                        :label="item.displayName || i18nMappingObj[item.name]"
+                        :name="item.name"
+                        :key="item.name"
+                    >
+                        <slot
+                            name="custom"
+                            :data="{item, activeTab: initActiveTab}"
+                        >
+                            <template v-if="initActiveTab.name === item.name">
+                                <component
+                                    v-for="value in item.components"
+                                    :key="value.name"
+                                    :ref="value.refName"
+                                    :detailUrl="value.detailUrl"
+                                    :className="value.className"
+                                    :is="value.detail"
+                                    :moduleTitle="moduleTitle"
+                                    :oid="typeOid"
+                                    :treeDetail="treeDetail"
+                                    @edit-data="handleEdit"
+                                    :has-modify="hasModify"
+                                    @set-app-name="setAppName"
+                                    @submit="onSubmit"
+                                ></component>
+                            </template>
+                        </slot>
+                    </erd-tab-pane>
+                </template>
+            </erd-tabs>
+        </div>
+        <div
+            v-else
+            class="detail-single"
+        >
+            <type-manage-basic-info
+                ref="basicInformation"
+                :oid="typeOid"
+                :treeDetail="treeDetail"
+                :form-id="layoutName"
+                :tabListData="tabListData"
+                detailUrl="/element/attr"
+                @edit-data="handleEdit"
+                :class-name="className"
+            >
+            </type-manage-basic-info>
+        </div>
+    </template>
+</div>

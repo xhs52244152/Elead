@@ -1,0 +1,103 @@
+.baseline-info-compare .baseline-info-compare-tabs {
+  height: calc(100% - var(--largeSpace) - var(--buttonHeight));
+}
+.baseline-info-compare .baseline-info-compare-tabs .info-compare-container {
+  padding: 0px;
+}
+.baseline-info-compare .baseline-info-compare-tabs .info-compare-container .reverse-table .vxe-table {
+  height: 100%;
+}
+.baseline-info-compare .baseline-info-compare-tabs .relation-object-panel {
+  height: 100%;
+}
+.baseline-info-compare .baseline-info-compare-tabs .el-tabs__content {
+  height: calc(100% - var(--tabsItemHeaderTabHeight));
+}
+.baseline-info-compare .relation-object-operate {
+  height: 28px;
+  line-height: 28px;
+}
+.baseline-info-compare .relation-object-operate .relation-fuzzy-search {
+  float: left;
+}
+.baseline-info-compare .relation-object-operate .table-control-icon {
+  float: right;
+  min-width: 32px;
+}
+.baseline-info-compare .info-compare-relation-object {
+  position: relative;
+}
+.baseline-info-compare .info-compare-relation-object .el-tabs__content .el-tab-pane {
+  height: 100%;
+  padding: var(--largeSpace) 0 0 0;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content {
+  height: calc(100% - 40px);
+  border-right: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content > .grid-col:last-child {
+  border-right: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .vxe-table--main-wrapper {
+  border-left: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .vxe-table--fixed-wrapper .vxe-table--fixed-left-wrapper {
+  height: 100% !important;
+  border-left: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .vxe-table--fixed-wrapper .fixed-left--wrapper {
+  height: 100% !important;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .vxe-table--fixed-wrapper .vxe-table--fixed-left-wrapper .grid-header-content {
+  border-top: 1px solid #e8eaec;
+  border-right: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .vxe-table--fixed-wrapper .vxe-table--fixed-left-wrapper .vxe-body--column {
+  border-right: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .header-title-text {
+  height: 36px;
+  line-height: 36px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-left: 1px solid #e8eaec;
+  border-top: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content {
+  width: 100%;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content .vxe-table {
+  height: calc(100% - 0px);
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content .vxe-table .vxe-table--render-wrapper {
+  height: 100%;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content .vxe-table .vxe-table--render-wrapper .vxe-table--main-wrapper {
+  height: 100%;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content .vxe-table .vxe-table--render-wrapper .vxe-table--main-wrapper .vxe-table--body-wrapper {
+  height: calc(100% - 36px) !important;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content.grid-table-overflow .vxe-table--body-wrapper {
+  overflow: hidden;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content.grid-table-overflow .vxe-table--fixed-left-wrapper {
+  height: 100% !important;
+  border-bottom: 1px solid #e8eaec;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content .vxe-table.is--empty {
+  border-right: none;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-table-content .relation-object-row-hide {
+  display: none !important;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-header-content {
+  background-color: #f8f8f8 !important;
+}
+.baseline-info-compare .info-compare-relation-object .grid-row-content .grid-header-content .vxe-cell--title {
+  font-weight: 700 !important;
+  color: #333 !important;
+}/*# sourceMappingURL=index.css.map */

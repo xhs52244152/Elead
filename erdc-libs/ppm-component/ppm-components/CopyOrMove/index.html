@@ -1,0 +1,23 @@
+<erd-ex-dialog
+    :title="i18nMappingObj[type]"
+    :visible.sync="showDialog"
+    @close="editCopyOrMoveCancel"
+    width="700px"
+>
+    <CopyOrMoveContent
+        v-bind="$attrs"
+        :type="type"
+        :use-plan-set="usePlanSet"
+        ref="copyOrMove"
+        v-if="showDialog"
+    >
+    </CopyOrMoveContent>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="editCopyOrMoveConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="editCopyOrMoveCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,319 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4358075 */
+  src: url('iconfont.woff2?t=1715940528111') format('woff2'),
+       url('iconfont.woff?t=1715940528111') format('woff'),
+       url('iconfont.ttf?t=1715940528111') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-a-bianzu8:before {
+  content: "\e6f2";
+}
+
+.icon-heavyweight-team:before {
+  content: "\e600";
+}
+
+.icon-info:before {
+  content: "\e601";
+}
+
+.icon-peizhiguanli:before {
+  content: "\e6f0";
+}
+
+.icon-yaosuku:before {
+  content: "\e6f1";
+}
+
+.icon-caijian:before {
+  content: "\e6ef";
+}
+
+.icon-dingwei:before {
+  content: "\e6ee";
+}
+
+.icon-gongshizu:before {
+  content: "\e6ed";
+}
+
+.icon-caiwu:before {
+  content: "\e6ea";
+}
+
+.icon-gongshifenzuguanlian:before {
+  content: "\e6ec";
+}
+
+.icon-juecemoxing:before {
+  content: "\e6e9";
+}
+
+.icon-caozuojilu:before {
+  content: "\e6cf";
+}
+
+.icon-liuchengpingshenyaosu:before {
+  content: "\e6df";
+}
+
+.icon-jihuaji:before {
+  content: "\e6eb";
+}
+
+.icon-pingshenjielun:before {
+  content: "\e6e8";
+}
+
+.icon-zhanlvemubiao:before {
+  content: "\e6e7";
+}
+
+.icon-juecemoxingzhibiaoyaosuguanlian:before {
+  content: "\e6de";
+}
+
+.icon-zhanlvemubiaoguanlianguanxi:before {
+  content: "\e6e6";
+}
+
+.icon-qianzhirenwuguanlian:before {
+  content: "\e6e5";
+}
+
+.icon-pingshendanduixianghebaogaoguanxi:before {
+  content: "\e6dd";
+}
+
+.icon-zhanlve:before {
+  content: "\e6e3";
+}
+
+.icon-jihuajiegou:before {
+  content: "\e6e4";
+}
+
+.icon-xiangmutian:before {
+  content: "\e6e2";
+}
+
+.icon-pingshendanguanlianguanxi:before {
+  content: "\e6e0";
+}
+
+.icon-zhibiao:before {
+  content: "\e6e1";
+}
+
+.icon-xuqiusuoshuduixiang:before {
+  content: "\e6dc";
+}
+
+.icon-liuchengzhiliangmubiao:before {
+  content: "\e6d4";
+}
+
+.icon-pingshendanduixianghepingshendianguanxi:before {
+  content: "\e6da";
+}
+
+.icon-xiangmushuju:before {
+  content: "\e6d7";
+}
+
+.icon-xiangmuzuhe:before {
+  content: "\e6db";
+}
+
+.icon-zhibiaoyaosu:before {
+  content: "\e6d9";
+}
+
+.icon-zhibiaoyaosuguanlianguanxi:before {
+  content: "\e6d8";
+}
+
+.icon-xuqiujiegou:before {
+  content: "\e6d6";
+}
+
+.icon-xiangmuqun:before {
+  content: "\e6d5";
+}
+
+.icon-pingshenduixiang:before {
+  content: "\e6d3";
+}
+
+.icon-xiangmutianpingfenjilu:before {
+  content: "\e6d0";
+}
+
+.icon-yewuduixiangguanlian:before {
+  content: "\e6d1";
+}
+
+.icon-baobiao:before {
+  content: "\e6d2";
+}
+
+.icon-project:before {
+  content: "\668e";
+}
+
+.icon-create-document:before {
+  content: "\668f";
+}
+
+.icon-workhours:before {
+  content: "\6690";
+}
+
+.icon-create-folder:before {
+  content: "\6691";
+}
+
+.icon-baseline:before {
+  content: "\6692";
+}
+
+.icon-change:before {
+  content: "\6693";
+}
+
+.icon-create-task:before {
+  content: "\6694";
+}
+
+.icon-risk:before {
+  content: "\6695";
+}
+
+.icon-phase:before {
+  content: "\667d";
+}
+
+.icon-group:before {
+  content: "\667e";
+}
+
+.icon-sub-project:before {
+  content: "\667f";
+}
+
+.icon-plan:before {
+  content: "\6680";
+}
+
+.icon-initiate-process:before {
+  content: "\6681";
+}
+
+.icon-calendar:before {
+  content: "\6682";
+}
+
+.icon-in-force:before {
+  content: "\6683";
+}
+
+.icon-issue:before {
+  content: "\6684";
+}
+
+.icon-layer:before {
+  content: "\6685";
+}
+
+.icon-supervised-task:before {
+  content: "\6686";
+}
+
+.icon-task:before {
+  content: "\6687";
+}
+
+.icon-key-task:before {
+  content: "\6688";
+}
+
+.icon-activity:before {
+  content: "\6689";
+}
+
+.icon-create-supervised-task:before {
+  content: "\668a";
+}
+
+.icon-milestone:before {
+  content: "\668b";
+}
+
+.icon-access:before {
+  content: "\668c";
+}
+
+.icon-related-task:before {
+  content: "\668d";
+}
+
+.icon-set-baseline:before {
+  content: "\6673";
+}
+
+.icon-requirement:before {
+  content: "\6674";
+}
+
+.icon-team-role:before {
+  content: "\6672";
+}
+
+.icon-pre-and-post-task:before {
+  content: "\6671";
+}
+
+.icon-process-record:before {
+  content: "\6675";
+}
+
+.icon-user:before {
+  content: "\6676";
+}
+
+.icon-grouping:before {
+  content: "\666f";
+}
+
+.icon-regular-document:before {
+  content: "\6670";
+}
+
+.icon-deliverables:before {
+  content: "\6678";
+}
+
+.icon-folder:before {
+  content: "\6679";
+}
+
+.icon-project-config:before {
+  content: "\667a";
+}
+
+.icon-deliverable-file:before {
+  content: "\667b";
+}
+
+.icon-approve:before {
+  content: "\667c";
+}
+

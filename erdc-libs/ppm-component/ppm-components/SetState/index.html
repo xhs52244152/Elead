@@ -1,0 +1,39 @@
+<div>
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="showSetStateDialog"
+        size="small"
+        @close="cancel"
+    >
+        <div class="set-state-container">
+            <div class="common-box">
+                <span class="label-box">{{ i18nMappingObj.currentState }}</span>
+                <span class="select-box">{{ currentState }}</span>
+            </div>
+            <div class="common-box">
+                <span class="label-box">{{ i18nMappingObj.setState }}</span>
+                <erd-select
+                    v-model="state"
+                    class="select-box"
+                >
+                    <erd-option
+                        :disabled="item.disabled"
+                        v-for="item in stateOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    >
+                    </erd-option>
+                </erd-select>
+            </div>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="confirm"
+                >{{ i18nMappingObj.confirm }}</erd-button
+            >
+            <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

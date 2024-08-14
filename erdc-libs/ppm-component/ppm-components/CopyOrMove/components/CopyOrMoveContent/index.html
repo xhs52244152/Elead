@@ -1,0 +1,156 @@
+<div class="move-or-copy-container">
+    <fam-dynamic-form
+        ref="baseInfoForm"
+        :form.sync="form"
+        :data="formConfig"
+        class="common-box"
+    >
+        <!-- 需求移动所属项目 -->
+        <template v-slot:moveProject="scope">
+            <erd-select
+                v-if="!requirementDisabled"
+                class="select-box"
+                multiple
+                v-model="form.fromProjOid"
+                :placeholder="i18n.pleaseEnterKeyword"
+                @change="handleProjectChange"
+            >
+                <erd-option
+                    v-for="item in bindProjectData"
+                    :key="item.oid"
+                    :label="item.name"
+                    :value="item.oid"
+                >
+                </erd-option>
+            </erd-select>
+            <div v-else>{{bindProjectData[0].name}}</div>
+        </template>
+        <!-- 所属项目 -->
+        <template v-slot:belongProject="scope">
+            <erd-select
+                class="select-box"
+                v-model="form.projectOid"
+                filterable
+                remote
+                :placeholder="i18n.pleaseEnterKeyword"
+                :disabled="projectDisabled"
+                reserve-keyword
+                :remote-method="remoteMethod"
+                @change="onProjectChange"
+            >
+                <erd-option
+                    v-for="item in form.projOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </erd-option>
+            </erd-select>
+        </template>
+        <!-- 计划集 -->
+        <template v-slot:planSet="scope">
+            <plan-set-select
+                ref="planSet"
+                v-model="form.currentPlanSet"
+                select-only
+                :project-oid="projectOid"
+                :class="['ppm-plan-set-selector-container', 'select-box', {
+                'fam-form-item-width-value': form.currentPlanSet !== ''
+            }]"
+            >
+            </plan-set-select>
+        </template>
+        <!-- 所属父任务/父需求 -->
+        <template v-slot:parentTask="scope">
+            <erd-ex-select
+                v-if="parentConfig.isList"
+                v-model="form.parentInfo"
+                filterable
+                remote
+                reserve-keyword
+                placeholder="请输入关键词"
+                :remote-method="searchProjMethod"
+                :loading="listConfig.loading"
+                :options="listConfig.options"
+                :default-props="listConfig.defaultProps"
+                clearable
+                class="select-box"
+            >
+            </erd-ex-select>
+            <erd-tree-select
+                v-else
+                class="select-box"
+                v-model="form.parentInfo"
+                :load="loadParentTask"
+                :props="parentTaskTreeProps"
+                lazy
+                filterable
+                clearable
+            ></erd-tree-select>
+        </template>
+        <!-- 状态 -->
+        <template v-slot:state="scope">
+            <erd-radio-group
+                v-model="form.stateValue"
+                @change="stateChange"
+            >
+                <erd-radio :label="1">{{ i18nMappingObj.keepOriginalState }}</erd-radio>
+                <erd-radio
+                    :label="2"
+                    v-if="type === 'copy'"
+                    >{{ i18nMappingObj.reselectStatus }}</erd-radio
+                >
+                <erd-radio
+                    :label="3"
+                    v-else
+                    >{{ isIssue || isRisk ? i18nMappingObj.defaultPendingSubmittStatus : i18nMappingObj.defaultPlanningStatus }}</erd-radio
+                >
+            </erd-radio-group>
+        </template>
+        <!-- 设置新状态 -->
+        <template v-slot:newState="scope">
+            <erd-select
+                v-model="form.newState"
+                filterable
+                class="select-box"
+            >
+                <erd-option
+                    v-for="item in form.stateData"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </erd-option>
+            </erd-select>
+        </template>
+        <!-- 关联 -->
+        <template v-slot:relation="scope">
+            <!-- <erd-radio-group v-model="form.relation">
+                <erd-radio :label="true">{{ i18n.yes }}</erd-radio>
+                <erd-radio :label="false">{{ i18n.no }}</erd-radio>
+            </erd-radio-group> -->
+            <erd-checkbox
+                v-model="form.relation"
+            >
+                {{i18nMappingObj.require}}
+            </erd-checkbox>
+        </template>
+        <!-- 交付物 -->
+        <template v-slot:deliverable="scope">
+            <erd-radio-group v-model="form.delivery">
+                <erd-radio :label="true">{{ i18n.yes }}</erd-radio>
+                <erd-radio :label="false">{{ i18n.no }}</erd-radio>
+            </erd-radio-group>
+        </template>
+        <!-- 创建人 -->
+        <template v-slot:creater="scope">
+            <erd-radio-group
+                v-model="form.createValue"
+                @change="creatorChange"
+            >
+                <erd-radio :label="1">{{ i18nMappingObj.retainOriginalCreator }}</erd-radio>
+                <erd-radio :label="2">{{ userInfo.displayName }}</erd-radio>
+            </erd-radio-group>
+        </template>
+    </fam-dynamic-form>
+</div>

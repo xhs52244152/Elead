@@ -1,0 +1,4 @@
+packages:
+  - 'erdc-resource/*'
+  - 'erdc-libs/*'
+  - 'erdc-app/*'

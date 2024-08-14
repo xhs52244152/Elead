@@ -1,0 +1,31 @@
+#plan_edit {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  background-color: #fff;
+  overflow: hidden;
+}
+#plan_edit .DetailList .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+#plan_edit .plan-form-tabs {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+#plan_edit .plan-form-tabs .el-tabs {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+#plan_edit .plan-form-tabs .el-tabs .el-tabs__content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#plan_edit .plan-form-tabs .el-tabs .el-tabs__content #pane-DeliveryDetail {
+  flex-grow: 1;
+}
+#plan_edit .plan-form-tabs .el-tabs .el-tabs__content #pane-DeliveryDetail .el-pagination {
+  margin-bottom: 0;
+}/*# sourceMappingURL=index.css.map */

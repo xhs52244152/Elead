@@ -1,0 +1,44 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="60%"
+    custom-class="library-dialog"
+>
+    <div class="library-head">
+        <div class="library-code">{{formIdentifierNo}}</div>
+    </div>
+    <fam-advanced-form
+        ref="reviewInfo"
+        :model.sync="dvaData"
+        :form-id="formId"
+        :class-name="className"
+        :schema-mapper="schemaMapper"
+        :query-layout-params="queryLayoutParams()"
+    >
+        <template #responsibility-member="scope">
+            <erd-tooltip placement="top">
+                <span slot="content">{{memberTitle}}</span>
+                <div class="memberCon">{{memberTitle}}</div>
+            </erd-tooltip>
+        </template>
+        <template #review-member="scope">
+            <erd-tooltip placement="top">
+                <span slot="content">{{reviewTitle}}</span>
+                <div class="memberCon">{{reviewTitle}}</div>
+            </erd-tooltip>
+        </template>
+    </fam-advanced-form>
+    <Files
+        ref="libraryFiles"
+        class="library-files-list"
+        tableListUrl="/ppm/content/attachment/list"
+        :class-name="className"
+        :showUpload="!viewReview"
+        :quickBinding="true"
+        :realTimeDelete="true"
+        :businessOid="oid"
+        :showUploadBtn="showUpload"
+        :operationConfigName="operationConfigName"
+    >
+    </Files>
+</erd-ex-dialog>

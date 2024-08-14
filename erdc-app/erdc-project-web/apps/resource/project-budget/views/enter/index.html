@@ -1,0 +1,62 @@
+<div class="project-budget-wrap h-100p">
+    <erd-tabs
+        v-model="activeName"
+        class="h-100p flex flex-column"
+    >
+        <!-- 预算编制 -->
+        <erd-tab-pane
+            :label="i18n['budgetPreparation']"
+            name="budgetInfo"
+            lazy
+        >
+            <budget-info
+                :activeName="activeName"
+                @getBudgetInfo="getBudgetInfo"
+                @isBaselineData="isBaselineData"
+                isAdaptiveHeight
+                class="bg-white"
+                style="padding: var(--tabsItemContentPadding)"
+            ></budget-info>
+        </erd-tab-pane>
+        <!-- 核算信息 -->
+        <erd-tab-pane
+            v-if="showCheckInfo"
+            :label="i18n['accountingInfo']"
+            name="checkInfo"
+            lazy
+        >
+            <div class="h-100p flex flex-column">
+                <!-- 报表 -->
+                <report
+                    ref="reportRef"
+                    :budgetInfo="budgetInfo"
+                    :budgetDisplayInfo="budgetDisplayInfo"
+                    :isVisible="activeName === 'checkInfo'"
+                    :can-loading="!isFull"
+                    style="margin: var(--tabsItemContentPadding) 0"
+                ></report>
+                <!-- 科目核算详情 -->
+                <common-card
+                    ref="cardRef"
+                    show-fullscreen
+                    :title="i18n['subjectAccountingDetail']"
+                    class="h-100p budget-acounting-detail-card"
+                    style="border: 0"
+                    @fullscreenAfter="fullscreenAfter"
+                >
+                    <!-- 卡片内容 -->
+                    <template v-slot:content="scope">
+                        <budget-info
+                            :activeName="activeName"
+                            :isAdaptiveHeight="isFull"
+                            class="bg-white check-budget-info"
+                            @getBudgetInfo="getBudgetInfo"
+                            @updatedData="refreshReport"
+                            @jumpPage="$refs['cardRef']?.handleFullscreen(false)"
+                        ></budget-info>
+                    </template>
+                </common-card>
+            </div>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

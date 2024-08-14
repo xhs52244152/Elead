@@ -1,0 +1,177 @@
+﻿<div ref="tabs" class="mini-tabs" activeIndex="0" @activechanged="onTabChanged" style="border:0;width:100%;height:100%;" bodyStyle="padding:0;">
+    <div name="base" title="常规" bodyStyle="padding:5px;">
+        <table style="font-size:12px;">
+            <tr>
+                <td style="width:80px;">任务名称：</td>
+                <td style="width:220px;"><mini-textbox ref="name" width="150"></mini-textbox></td>
+                <td>部门：</td>
+                <td><mini-combobox ref="department" @change="onDepartmentChange" valueField="UID" textField="Name" width="150"></mini-combobox></td>
+            </tr>
+            <tr>
+                <td>完成百分比：</td>
+                <td><mini-spinner ref="percentComplete" minValue="0" maxValue="100" width="150"></mini-spinner></td>
+                <td style="width:80px;">负责人：</td>
+                <td><mini-combobox ref="principal" width="150" valueField="UID" textField="Name" multiSelect="true" showCheckIcon="true"></mini-combobox></td>                
+            </tr>
+            <tr>
+                <td>工期：</td>
+                <td><mini-spinner ref="duration" decimalPlaces="1" @change="onDurationChange" minValue="0" maxValue="10000" width="150"></mini-spinner></td>
+                <td style="display:none">工时：</td>
+                <td style="display:none"><mini-spinner ref="work" @change="onWorkChange" minValue="0" maxValue="100000" width="150"></mini-spinner></td>
+            </tr>
+        </table>        
+        <br />
+        <fieldset style="padding:0;width:auto;border:#92a5c7 1px solid">
+            <legend>日期</legend>
+            <div style="padding:5px;">
+                <span style="display:inline-block;width:75px;">开始日期：</span>
+                <mini-datepicker ref="start" @change="onStartChange" width="150"></mini-datepicker>
+                <span style="margin-left:60px;display:inline-block;width:75px;">完成日期：</span>
+                <mini-datepicker ref="finish" @change="onFinishChange" width="150"></mini-datepicker>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset ref="fs_actualdate" style="padding:0;width:auto;border:#92a5c7 1px solid">
+            <legend>实际日期</legend>
+            <div style="padding:5px;">
+                <span>开始日期：</span>
+                <mini-datepicker ref="actualStart" width="150"></mini-datepicker>
+                <span style="margin-left:60px;">完成日期：</span>
+                <mini-datepicker ref="actualFinish" width="150"></mini-datepicker>
+            </div>
+        </fieldset>
+        <!--<mini-checkbox ref="showInCalendar">在日程表上显示</mini-checkbox><br />-->
+        <mini-checkbox ref="hideBar">隐藏条形图</mini-checkbox><br />
+        <mini-checkbox ref="rollup" visible="false">总成型任务</mini-checkbox>
+    </div>
+    <div name="pre" title="前置任务">
+        <div class="mini-panel" showHeader="false" showToolbar="true" style="width:100%;height:100%;" borderStyle="border:0" bodyStyle="padding:0;">
+            <div property="toolbar" class="mini-toolbar twin_linkbar" style="border:0;">
+                <mini-button @click="onAddLink" style="margin-right:5px;">增加</mini-button>
+                <mini-button @click="onRemoveLink">删除</mini-button>
+            </div>
+            <mini-datagrid ref="predecessorLink" style="width:100%;height:100%;" borderStyle="border:0;"
+                allowCellEdit="true" allowCellSelect="true" showFooter="false" showPager="false"
+                @drawcell="onPredecessorLinkDrawCell"
+                @cellbeginedit="onPredecessorLinkCellBeginEdit"
+                @cellcommitedit="onPredecessorLinkCellCommitEdit"
+            >
+                <columns>
+                    <column field="PredecessorID" editor="textbox">标识</column>
+                    <column field="PredecessorName" width="200">任务名称</column>
+                    <column field="Type" editor="{type: 'combobox', valueField: 'ID', textField: 'Name'}">类型</column>
+                    <column field="LinkLag" editor="{type: 'spinner', minValue: -1000, maxValue: 1000, decimalPlaces: 1}">延隔时间</column>
+                </columns>
+            </mini-datagrid>
+        </div>
+    </div>
+    <div name="res" title="资源" >
+        <div class="mini-panel" showHeader="false" showToolbar="true" style="width:100%;height:100%;" borderStyle="border:0"  bodyStyle="padding:0;">
+            <div property="toolbar" class="mini-toolbar twin_resbar" style="border:0;">
+                <mini-button @click="onAddRes" style="margin-right:5px;">增加</mini-button>
+                <mini-button @click="onRemoveRes">删除</mini-button>
+            </div>
+            <mini-datagrid ref="assignments" style="width:100%;height:100%;" borderStyle="border:0;"
+                allowCellEdit="true" allowCellSelect="true" showFooter="false" showPager="false"
+                @drawcell="onAssignmentsDrawCell"
+                @cellbeginedit="onAssignmentsCellBeginEdit"
+                @cellcommitedit="onAssignmentsCellCommitEdit"
+                @cellendedit="onAssignmentsCellEndEdit"
+            >
+                <columns>
+                    <column field="ResourceUID" width="150" editor="{type: 'combobox', editable:true, valueField: 'UID', textField: 'Name'}">资源名称</column>
+                    <column field="Units" width="80" editor="{type: 'spinner', minValue: 0, maxValue: 999999999}">分配单位</column>
+                    <column field="Cost" width="80" editor="{type: 'spinner', minValue: 0, maxValue: 999999999}">成本</column>
+                    <column field="Work" width="80" editor="{type: 'spinner', minValue: 0, maxValue: 999999999}">工时</column>
+                    <column field="Config" width="100"></column>
+                </columns>
+            </mini-datagrid>
+        </div>
+    </div>
+    <div name="adv" title="高级" bodyStyle="padding:5px;">
+        <fieldset style="padding:0;width:auto;border:#fff 1px solid;">
+            <legend>任务限制</legend>
+            <div style="padding:0 5px;">
+                <div style="border-bottom:solid 1px #aaa;margin-bottom:5px;padding-bottom:5px;">                    
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:50%">                            
+                                <span style="width:80px;display:inline-block;">最后期限：</span>
+                                <mini-datepicker ref="deadline" width="150"></mini-datepicker>
+                            </td>
+                            <td style="width:50%">
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="border-bottom:solid 1px #aaa;margin-bottom:5px;padding-bottom:5px;">                                       
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:50%">                            
+                                <span style="width:80px;display:inline-block;">限制类型：</span>
+                                <mini-combobox ref="constraintType" valueField="ID" textField="Name" width="150"></mini-combobox>
+                            </td>
+                            <td style="width:50%">
+                                <span style="width:80px;display:inline-block;">限制日期：</span>
+                                <mini-datepicker ref="constraintDate" width="150"></mini-datepicker>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mini-checkbox ref="fixedDate" visible="false" @change="onFixedDateChange" text="固定日期（限摘要任务）" disabled></mini-checkbox>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>                
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:50%">
+                            <span style="width:80px;display:inline-block;">任务类型：</span>
+                            <mini-combobox ref="taskType" @change="onTaskTypeChange" width="150" valueField="id" textField="name"></mini-combobox>
+                        </td>
+                        <td style="width:50%">
+                            <mini-checkbox ref="effortDriven" width="150">投入比导向</mini-checkbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <span style="width:80px;display:inline-block;">日历：</span>
+                            <mini-combobox ref="calendar" @change="onTaskCalendarChange" width="150" valueField="UID" textField="Name"></mini-combobox>
+                        </td>
+                        <td >
+                            <mini-checkbox ref="ignoreResourceCalendar" >排定日程时忽略资源日历</mini-checkbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="width:80px;display:inline-block;">WBS：</span>
+                            <mini-textbox ref="wbs" width="150"></mini-textbox>    
+                        </td>
+                        <td>
+                            <mini-checkbox ref="milestone" text="标记为里程碑" visible="false"></mini-checkbox>
+                        </td>
+                    </tr>
+                    <tr style="display:none;">
+                        <td>
+                            <span style="width:80px;display:inline-block;">挣值方法：</span>
+                            <mini-combobox ref="earnedValueMethod" width="150"></mini-combobox>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <td>
+                            
+                        </td>
+                    </tr>-->
+                </table>          
+            </div>
+        </fieldset>
+    </div>
+    <div name="notes" title="备注" bodyStyle="padding:5px;">
+        <mini-textarea ref="notes" style="width:100%;height:100%"></mini-textarea>
+    </div>
+    <div name="diy" title="自定义Tab" bodyStyle="padding:5px;">
+        <mini-datepicker ref="date1"></mini-datepicker>
+    </div>
+</div>

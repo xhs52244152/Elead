@@ -1,0 +1,44 @@
+<div>
+    <erd-ex-dialog
+        :visible.sync="dialogVisible"
+        :title="title"
+        size="small"
+        v-on="$listeners"
+    >
+        <fam-dynamic-form
+            ref="form"
+            :form="formData"
+            :data="formConfig"
+            label-width="120px"
+            label-position="right"
+        >
+            <template #projectSelect>
+                <object-select
+                    ref="projectSelect"
+                    class="ppm-object-select-w100"
+                    v-model="formData.project"
+                    type="selector"
+                    @change="projectChange"
+                ></object-select>
+            </template>
+            <template #taskSelect>
+                <object-select
+                    ref="taskSelect"
+                    class="ppm-object-select-w100"
+                    v-model="formData.task"
+                    :request-data="taskRequestData"
+                    type="selector"
+                    @before-search="beforeTaskSearch"
+                ></object-select>
+            </template>
+            <template #durationInput>
+                <erd-input-number v-model="formData.duration"></erd-input-number>
+                <span style="margin: -7px 0 0 var(--normalSpace);">{{ i18n.day }}</span>
+            </template>
+        </fam-dynamic-form>
+        <template #footer>
+            <erd-button type="primary" @click="onConfirm">{{ i18n.confirm }}</erd-button>
+            <erd-button @click="onCancel">{{ i18n.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

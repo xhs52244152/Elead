@@ -1,0 +1,34 @@
+<!-- <erd-table-select 
+    v-model="selectObj"
+    :style="styleCss"
+    :table-data="tableData" 
+    :columns="columns"
+    :keyword.sync="searchKey"
+    :table-loading="loading"
+    height="216px"
+    :rowKey="'oid'"
+    clearable
+    fixed
+    @open="handleSearch"
+    @keyword-clear="handleSearch"
+    @keyword-input="handleSearch"
+    v-bind="$attrs"
+></erd-table-select> -->
+
+<!-- placeholder="请输入关键词" -->
+<erd-select
+    v-model="innerValue"
+    filterable
+    reserve-keyword
+    :loading="loading"
+    v-bind="$attrs"
+>
+    <erd-option
+        v-for="item in tableData"
+        :key="item.oid"
+        :label="item.label"
+        :value="item.oid"
+        :disabled="item.disabled"
+    >
+    </erd-option>
+</erd-select>

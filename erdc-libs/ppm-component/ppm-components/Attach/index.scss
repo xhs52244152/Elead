@@ -1,0 +1,25 @@
+.attach-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px;
+    .el-upload-list {
+        display: none;
+    }
+    .upload_btn_list {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .erd-table-body-container {
+        position: relative;
+        flex-grow: 1;
+        margin-top: 16px;
+        .attach_table {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .upload_fail {
+        color: red;
+    }
+}

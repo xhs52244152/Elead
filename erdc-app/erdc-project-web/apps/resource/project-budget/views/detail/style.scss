@@ -1,0 +1,26 @@
+.budget-info-page {
+    .title-wrap {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 var(--famNormalSpace);
+    }
+    .budget-info-container {
+        flex: 1;
+        overflow-y: auto;
+    }
+    .tab-wrap {
+        > .el-tabs__header {
+            background-color: var(--colorFullBg);
+        }
+        > .el-tabs__content{
+            flex-grow: 1;
+            padding: var(--largeSpace);
+        }
+    }
+    .info-page-footer {
+        align-items: center;
+        justify-content: center;
+        padding: var(--largeSpace);
+        border-top: 1px solid #ebebeb;
+    }
+}

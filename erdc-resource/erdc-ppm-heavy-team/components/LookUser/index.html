@@ -1,0 +1,35 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="dialogVisibleUser"
+    width="80%"
+    custom-class="group-user-info"
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfoldGroup"
+        :title="i18nMappingObj.groupInfo"
+    >
+        <template v-slot:content>
+            <div class="user-info-title">
+                <span class="title-label">群组</span>
+                <span class="title-name">{{currentOperRole?.principalName || ''}}</span>
+            </div>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfoldUser"
+        :title="i18nMappingObj.userInfo"
+    >
+        <template v-slot:content>
+            <fam-erd-table
+                border
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :data="tableData"
+                :column="column"
+                show-overflow
+                ref="erdTable2"
+            ></fam-erd-table>
+        </template>
+    </erd-contraction-panel>
+</erd-ex-dialog>

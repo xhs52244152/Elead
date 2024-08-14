@@ -1,0 +1,7 @@
+.review-cut {
+  display: flex;
+  align-items: center;
+}
+.review-cut .review-cut-label {
+  margin-right: 12px;
+}/*# sourceMappingURL=style.css.map */

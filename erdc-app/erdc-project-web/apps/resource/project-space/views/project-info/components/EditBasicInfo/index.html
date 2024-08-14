@@ -1,0 +1,18 @@
+<div class="basic-msg">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18nMappingObj.baseInfo"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="form"
+                :class="{set_basic_style: !showTemplate}"
+                :form.sync="formData"
+                :data="formConfigs"
+                :readonly="readonly"
+                :editable-attr="editableAttr"
+            >
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

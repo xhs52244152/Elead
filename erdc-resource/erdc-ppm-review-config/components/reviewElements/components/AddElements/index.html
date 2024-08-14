@@ -1,0 +1,47 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="innerVisible"
+    width="80%"
+    custom-class="add-elements"
+>
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :view-table-height="viewTableHeight"
+        ref="libraryList"
+        @action-click="actionClick"
+        :enable-scroll-load="true"
+    >
+        <template
+            v-for="slot in slotsNameList"
+            v-slot:[slot]="{scope}"
+        >
+            <!-- 在视图表格里如果使用ppm-essipsis-inline-name类名，必须用span标签，才会显示tooltip -->
+            <span
+                v-if="slot === 'column:default:erd.cloud.cbb.review.entity.ReviewElement#content:content'"
+                :class="{'library-link-name': !scope.row.isGroupRow, 'ppm-essipsis-inline-name': true}"
+                @click="handleDetail(scope.row)"
+            >
+                {{scope.row['erd.cloud.cbb.review.entity.ReviewElement#content']}}
+            </span>
+        </template>
+    </fam-view-table>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleConfirm"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="handleCancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+    <library-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        title="查看评审要素"
+        :editableAttrs="[]"
+        :showEdit="false"
+        :className="className"
+        @echo-data="echoData"
+        :oid="reviewId"
+        layoutName="DETAIL"
+    ></library-dialog>
+</erd-ex-dialog>

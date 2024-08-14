@@ -1,0 +1,58 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    :title="title"
+    size="small"
+    @closed="onClosed"
+>
+    <div>
+        <fam-dynamic-form
+            :key="formKey"
+            ref="form"
+            :form="formData"
+            :data="formConfig"
+            label-width="120px"
+            label-position="right"
+        >
+            <template #projectSelect="scope">
+                <object-select
+                    class="ppm-add-front-task-select"
+                    v-model="formData.projectOid"
+                    type="selector"
+                    @change="onProjectChange"
+                ></object-select>
+            </template>
+            <template #planSetSelect="scope">
+                <plan-set-select
+                    ref="planSet"
+                    v-model="formData.collectId"
+                    select-only
+                    :placeholder="i18nMappingObj.selectPlanset"
+                    :project-oid="formData.projectOid"
+                    :class="['ppm-plan-set-selector-container', 'select-box', 'w_100p',{
+                    'fam-form-item-width-value': formData.collectId !== ''
+                }]"
+                ></plan-set-select>
+            </template>
+            <template #taskSelect="scope">
+                <object-select
+                    ref="taskSelect"
+                    class="ppm-object-select-w100"
+                    v-model="formData.taskOids"
+                    :request-data="taskRequestData"
+                    multiple
+                    type="selector"
+                    @before-search="beforeTaskSearch"
+                ></object-select>
+            </template>
+        </fam-dynamic-form>
+    </div>
+    <div slot="footer">
+        <erd-button
+            type="primary"
+            @click="onConfirm(false)"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="onConfirm(true)">{{ i18nMappingObj.continueAdd }}</erd-button>
+        <erd-button @click="close">{{ i18nMappingObj.cancel }}</erd-button>
+    </div>
+</erd-ex-dialog>

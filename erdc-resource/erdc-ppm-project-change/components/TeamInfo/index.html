@@ -1,0 +1,97 @@
+<div style="margin-top: calc(var(--bigSpace) * 2)">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfolds"
+        :title="$t('teamInfo')"
+    >
+        <template v-slot:header-right>
+            <fam-action-button
+                v-if="!readonly"
+                :action-data="selectData"
+                :action-config="basicActionConfig"
+                :args="args"
+                @click="actionClick"
+            ></fam-action-button>
+            <erd-button
+                v-if="panelUnfolds && readonly"
+                type="primary"
+                @click="changeInfo"
+                >{{ i18n.changeInfo }}</erd-button
+            >
+        </template>
+        <template v-slot:content>
+            <team-table
+                ref="teamTable"
+                :table-data="tableData"
+                :max-line="5"
+                :readonly="readonly"
+            >
+                <template #column:default:operation="{data}">
+                    <div>
+                        <erd-dropdown
+                            trigger="click"
+                            @command="(type) => handleCommand(type, data.row)"
+                        >
+                            <span class="erd-dropdown-link">
+                                <a> {{i18n.operation}} </a><i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <erd-dropdown-menu slot="dropdown">
+                                <erd-dropdown-item
+                                    command="setResponsible"
+                                    v-if="data.row.principalTarget === 'USER' && data.row.action !== 'DELETE' && !data.row.primarily"
+                                    >{{ $t('setResponsible') }}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    command="cancelResponsible"
+                                    v-if="data.row.principalTarget === 'USER' && data.row.action !== 'DELETE' && data.row.primarily"
+                                    >{{ $t('cancelResponsible') }}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    command="addMember"
+                                    v-if="data.row.principalTarget === 'ROLE' && data.row.action !== 'DELETE'"
+                                    >{{ $t('addMember') }}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    command="cancelDelete"
+                                    v-if="data.row.action === 'DELETE'"
+                                    >{{ $t('cancelDelete') }}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    command="deleteItem"
+                                    v-else
+                                    >{{ $t('delete') }}</erd-dropdown-item
+                                >
+                            </erd-dropdown-menu>
+                        </erd-dropdown>
+                    </div>
+                </template>
+            </team-table>
+        </template>
+    </erd-contraction-panel>
+    <!-- 添加按钮弹框 -->
+    <add-role
+        ref="addRole"
+        :visible.sync="addRoleVisible"
+        v-if="addRoleVisible"
+        v-bind="addRoleConfig"
+        @confirm="addRoleConfirm"
+    ></add-role>
+    <!-- 添加成员弹框 -->
+    <open-create-team
+        v-if="teamDialogVisible"
+        ref="createTeam"
+        :visible.sync="teamDialogVisible"
+        type="addMember"
+        :team-oid="containerTeamRef"
+        :role-refer="roleRef"
+        :query-params="queryParams"
+        :title="dialogTitle"
+        :current-row="currentRow"
+        :current-role-data="currentRole"
+        :path-to-current-role="pathToCurrentRole"
+        :is-replacement="false"
+        :app-name="appName"
+        :show-participant-type="showParticipantType"
+        :customSubmit="customSubmit"
+    >
+    </open-create-team>
+</div>

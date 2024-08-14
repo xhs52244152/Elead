@@ -1,0 +1,39 @@
+<div class="quality_target">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :default-table-height="tableMaxHeight"
+        ref="qualityTreeTable"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldowm
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row, true]"
+            ></fam-action-pulldowm>
+        </template>
+    </fam-view-table>
+    <cropping-dialog
+        v-if="showCroppDialog"
+        :className="className"
+        :visible.sync="showCroppDialog"
+        :title="i18nMappingObj.batchSetCropping"
+        :oid="oid"
+        :selectList="selectList"
+        :currentSelectTreeData="treeDetail"
+        @submit-success="afterSubmit"
+    ></cropping-dialog>
+    <dialog-form
+        v-if="showFormDialog"
+        :visible.sync="showFormDialog"
+        :title="formDialogTitle"
+        :className="className"
+        :currentSelectTreeData="treeDetail"
+        @before-submit="beforeSubmit"
+        @after-submit="afterSubmit"
+        @echo-data="echoData"
+        @edit="edit"
+        :oid="oid"
+        :layoutName="layoutName"
+    ></dialog-form>
+</div>

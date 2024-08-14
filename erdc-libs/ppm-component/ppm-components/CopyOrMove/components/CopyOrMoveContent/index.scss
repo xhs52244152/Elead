@@ -1,0 +1,22 @@
+.move-or-copy-container{
+    .common-box{
+        margin-bottom: 12px;
+        // .el-form-item__label{
+        //     width: 70px;
+        //     text-align: right;
+        //     margin-right: 8px;
+        // }
+        .select-box{
+            width: 100%;
+            &>.el-select {
+                width: 100%;
+            }
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .radio-box{
+        line-height: 32px;
+    }
+}

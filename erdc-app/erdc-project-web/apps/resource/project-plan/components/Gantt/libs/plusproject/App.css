@@ -1,0 +1,98 @@
+﻿.icon-gantt-calendar{
+	background:url(images/calendar.png) no-repeat;
+}
+.icon-gantt-baseline{
+	background:url(images/baseline.png) no-repeat;
+}
+.icon-gantt-grid{
+	background:url(images/grid.png) no-repeat;
+}
+.icon-gantt-info{
+	background:url(images/info.png) no-repeat;
+}
+.icon-gantt-notes{
+	background:url(images/notes.png) no-repeat;
+}
+.icon-gantt-table{
+	background:url(images/table.png) no-repeat;
+}
+.icon-gantt-timescale{
+	background:url(images/timescale.png) no-repeat;
+}
+.icon-gantt-assign{
+	background:url(images/assign.png) no-repeat;
+}
+.icon-gantt-barstyle{
+	background:url(images/barstyle.png) no-repeat;
+}
+.icon-gantt-progressline{
+	background:url(images/progressline.png) no-repeat;
+}
+
+.icon-gantt-createbaseline{
+	background:url(images/baseline_create.png) no-repeat;
+}
+
+.icon-gantt-clearbaseline{
+	background:url(images/baseline_clear.png) no-repeat;
+}
+
+.icon-gantt-app
+{
+    background:url(images/application.png) no-repeat;
+}
+.icon-gantt-app-copy
+{
+    background:url(images/application_double.png) no-repeat;
+}
+.icon-gantt-app-add
+{
+    background:url(images/application_add.png) no-repeat;
+}
+.icon-gantt-app-delete
+{
+    background:url(images/application_delete.png) no-repeat;
+}
+.icon-gantt-app-move{
+	background:url(images/application_go.png) no-repeat;
+}
+.icon-gantt-debug{
+	background:url(images/debugger.png) no-repeat;
+}
+
+.icon-gantt-fullproject{
+	background:url(images/arrow_ew.png) no-repeat;
+}
+
+.icon-gantt-tick{
+	background:url(images/tick.png) no-repeat;
+}
+
+.statuscolumn
+{
+    display:table;
+}
+.statuscolumn > .mini-supergrid-headercell-inner
+{
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+}
+
+.baseline-item
+{
+    font-weight:bold;
+}
+
+.fieldset
+{
+    border:solid 1px #aaa;
+}      
+    
+.mini-grid-header-filtered
+{
+    font-style:italic;
+    text-decoration:underline;
+}
+
+

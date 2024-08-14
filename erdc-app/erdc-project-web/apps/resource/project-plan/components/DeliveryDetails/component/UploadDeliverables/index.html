@@ -1,0 +1,60 @@
+<div id="upload-deliverable-contanier">
+    <div class="flex justify-between">
+        <div>
+            <erd-input
+                style="min-width: 200px"
+                :placeholder="i18nMappingObj.pleaseEnter"
+                suffix-icon="erd-iconfont erd-icon-search"
+                v-model="searchKey"
+                clearable
+                @keyup.enter.native="searchData"
+                @clear="searchData"
+            >
+            </erd-input>
+        </div>
+        <div style="display: flex; margin-bottom: 10px">
+            <erd-button
+                @click="addNode"
+                >{{ i18nMappingObj.createDoc }}</erd-button
+            >
+            <erd-button
+                @click="batchRemoveDeliver"
+                >{{ i18nMappingObj.remove }}</erd-button
+            >
+        </div>
+    </div>
+    <div class="detail-table">
+        <erd-table
+            border
+            ref="erdTable"
+            auto-resize
+            show-overflow
+            height="300"
+            :column="columns"
+            :data="tableData"
+            @checkbox-change="checkBoxChange"
+            @checkbox-all="checkBoxSelectAll"
+            :column-config="{resizable: true}"
+        >
+            <!-- 文档分类 -->
+            <template #column:default:source="{data}">
+                <span>{{ data.row?.fileType}}</span>
+            </template>
+            <!-- 所属文件夹 -->
+            <template #column:default:deliveryName="{data}">
+                <span>{{data.row?.folder}}</span>
+            </template>
+            <!--主文件-->
+            <template #column:default:mainFile="{data}">
+                <span>{{data.row?.mainFile}}</span>
+            </template>
+            <template #column:default:operation="{data}">
+                <erd-button
+                    type="text"
+                    @click="removeDeliver(data.row)"
+                    >{{ i18nMappingObj.remove }}</erd-button
+                >
+            </template>
+        </erd-table>
+    </div>
+</div>

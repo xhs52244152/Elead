@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <title>甘特图</title>
+        <meta
+            http-equiv="Content-Type"
+            content="text/html;charset=utf-8"
+        />
+        <link
+            type="text/css"
+            rel="stylesheet"
+            href="/erdc-thirdparty/platform/@erdcloud/erdcloud-ui/lib/erdcloud-ui.theme.css?ver=__VERSION__"
+        />
+        <link
+            type="text/css"
+            rel="stylesheet"
+            href="/erdc-libs/ppm-icon/lib/erd-iconfont.css?ver=__VERSION__"
+        />
+    </head>
+
+    <body style="width: 100%; height: 100%; margin: 0">
+        <div
+            id="ppm-gantt-content"
+            style="width: 100%; height: 100%"
+            :class="{ 'ppm-gantt-content-readOnly': readOnly }"
+        ></div>
+
+        <script type="text/javascript">
+            // iframe.js
+            let src = ELMP.resource('project-plan/components/Gantt/iframe.js') + '?ver=__VERSION__';
+            let $script = document.createElement('script');
+            $script.setAttribute('type', 'text/javascript');
+            $script.setAttribute('src', src);
+            document.body.appendChild($script);
+
+            // iframe.css
+            let href = ELMP.resource('project-plan/components/Gantt/iframe.css') + '?ver=__VERSION__';
+            let $link = document.createElement('link');
+            $link.setAttribute('type', 'text/css');
+            $link.setAttribute('rel', 'stylesheet');
+            $link.setAttribute('href', href);
+            document.head.appendChild($link);
+        </script>
+
+        <!-- 隐藏的按钮，用于在iframe外层触发甘特图失去焦点事件 -->
+        <button
+            id="ppm-gantt-set-blur"
+            style="display: none"
+        ></button>
+    </body>
+</html>

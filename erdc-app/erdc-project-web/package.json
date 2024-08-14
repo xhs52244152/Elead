@@ -1,0 +1,27 @@
+{
+  "name": "@erdc-app/erdc-project-web",
+  "description": "项目管理",
+  "version": "3.1.0-rc4",
+  "erdcData": {
+    "init": {
+      "path": "/erdc-libs/ppm-app/registerPage.js",
+      "deps": [
+        "erdc-bizadmin-web"
+      ]
+    }
+  },
+  "appId": "PPM",
+  "i18n": {
+    "zh_cn": "项目管理",
+    "en_us": "ProjectManagement"
+  },
+  "scripts": {
+    "start": "erdc-cli start --root remote",
+    "clean": "erdc-cli clean",
+    "build": "erdc-cli build --groupedDest --fatDist",
+    "pack": "erdc-cli pack"
+  },
+  "dependencies": {
+    "erdc-cli": "3.1.0-rc5"
+  }
+}

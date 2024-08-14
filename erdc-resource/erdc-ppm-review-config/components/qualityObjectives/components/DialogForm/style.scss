@@ -1,0 +1,21 @@
+
+.quality-dialog {
+    .quality-head {
+        display: flex;
+        justify-content: space-between;
+        .quality-name {
+            color: rgba(0, 0, 0, 0.85);
+            letter-spacing: 0;
+            line-height: 28px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 16px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+    .el-dialog__body {
+        padding: var(--dialogPadding) !important;
+    }
+}

@@ -1,0 +1,40 @@
+.project_change_manage {
+    height: 100%;
+    background: #fff;
+    padding: 16px;
+    .project_change_manage_list {
+        margin-bottom: 12px;
+        height: calc(100% - 42px);
+        border-bottom: 1px solid #ebebeb;
+        overflow: auto;
+        .manage_list_content {
+            display: flex;
+            width: 100%;
+            min-height: 40px;
+            line-height: 40px;
+            .content_left {
+                width: 150px;
+                text-align: right;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-wrap: nowrap;
+                margin-right: 20px;
+            }
+            .content_right {
+                width: calc(100% - 170px);
+                div {
+                    font-size: var(--fontSize);
+                }
+                .manage_select {
+                    display: flex;
+                    .manage_select_list {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+    .project_change_btn {
+        text-align: center;
+    }
+}

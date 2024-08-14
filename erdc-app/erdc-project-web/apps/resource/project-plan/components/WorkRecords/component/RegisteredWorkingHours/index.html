@@ -1,0 +1,107 @@
+<div>
+    <erd-ex-dialog :title="title" :visible.sync="visible" append-to-body width="800px">
+     <div id="titleBox">
+        <p><span>整机三维模型设计；</span><span>WBS202303001</span></p>
+     </div>
+     <div id="two_hour" class="nav_div width_margin">
+        <ul>
+            <li>
+                <p >预估工时</p>
+                <p>
+                    <span style="font-size: 22px;">3</span>
+                    <span>小时</span>
+                </p>
+            </li>
+            <li>
+                <p>剩余工时</p>
+                <p>
+                    <span style="font-size: 22px;">2</span>
+                    <span>小时</span>
+                </p>
+
+            </li>
+        </ul>
+     </div>
+
+        <erd-form ref="form">
+        <div class="nav_div_form form_box">
+        <erd-row :gutter="8" style="margin-bottom: 12px;">
+            <erd-col :span="3">
+                <label class="el-form-item__label i18n-form__label--right">
+                    <span>开始时间</span>
+                </label>
+            </erd-col>
+            <erd-col :span="9">
+            <erd-date-picker v-model="innerData.startTime"
+            type="date"
+          placeholder="选择日期"
+          format="yyyy 年 MM 月 dd 日"
+          value-format="yyyy-MM-dd">
+            </erd-date-picker>
+            </erd-col>
+        </erd-row>
+        <erd-row :gutter="8">
+            <erd-col :span="3">
+                <label class="el-form-item__label i18n-form__label--right">
+                    <span>登记时长</span>
+                </label>
+            </erd-col>
+            <erd-col :span="15">
+                <erd-form-item style="width:100%">
+                    <erd-input v-model="innerData.register_hours" placeholder="请输入数字">
+                        <template #suffix>
+                            <span>小时</span>
+                        </template>
+                    </erd-input>
+                </erd-form-item>
+
+            </erd-col>
+        </erd-row>
+        <erd-row :gutter="8">
+            <erd-col :span="3">
+                <label class="el-form-item__label i18n-form__label--right">
+                    <span>剩余工时</span>
+                </label>
+            </erd-col>
+            <erd-col :span="15">
+                <erd-form-item style="width:100%">
+                    <erd-input v-model="innerData.left_hours" placeholder="请输入数字" >
+                        <template #suffix>
+                            <span>小时</span>
+                        </template>
+                    </erd-input>
+                </erd-form-item>
+
+            </erd-col>
+        </erd-row>
+        <erd-row
+        :gutter="8">
+        <erd-col :span="3">
+        <label class="el-form-item__label i18n-form__label--right">
+            <span>描述</span>
+        </label>
+        </erd-col>
+        <erd-col :span="15">
+        <erd-form-item>
+            <erd-input type="textarea" v-model="innerData.describtion" show-word-limit
+                placeholder="请输入工作内容">
+            </erd-input>
+        </erd-form-item>
+        </erd-col>
+        </erd-row>
+        </div>
+        </erd-form>
+
+    <span slot="footer" class="dialog-footer">
+        <div class="primaryIdBox">
+            <span v-if="!primaryId">
+                <span><erd-checkbox  value="1" v-model="nextFlag"></erd-checkbox></span>
+                <span>继续登记下一个</span>
+            </span>
+        </div>
+
+        <erd-button type="primary" >确定</erd-button>
+        <erd-button @click="onCancel">取消</erd-button>
+    </span>
+    </erd-ex-dialog>
+</div>

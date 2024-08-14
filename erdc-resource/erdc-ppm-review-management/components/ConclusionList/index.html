@@ -1,0 +1,57 @@
+<div>
+    <div class="w-100p h-100p">
+        <erd-contraction-panel
+            :unfold.sync="panelUnfold"
+            :title="trialTitle"
+        >
+            <template v-slot:content>
+                <fam-view-table
+                    v-if="conclusionTableFlag"
+                    ref="reviewYutable"
+                    :default-table-height="450"
+                    :is-adaptive-height="false"
+                    :view-table-config="viewTableConfig"
+                >
+                    <template
+                        v-for="slot in getSlotsName(slotsField)"
+                        v-slot:[slot]="{scope}"
+                    >
+                        <div v-if="slot === 'column:default:operation:content'">
+                            <erd-button
+                                type="text"
+                                @click="removeItem([scope.row])"
+                            ></erd-button>
+                        </div>
+                    </template>
+                </fam-view-table>
+
+                <div
+                    v-if="conclusionFlag"
+                    style="margin-left: -118px; margin-top: 10px"
+                >
+                    <FamDynamicForm
+                        ref="reviewInfo"
+                        :form.sync="formData"
+                        :data="formConfigs"
+                        @field:change="onFieldChange"
+                    >
+                        <template v-slot:typeComponent="scope">
+                            <erd-select
+                                style="width: 100%"
+                                v-model="formData.conclusion"
+                                @change="onFieldChange"
+                            >
+                                <erd-option
+                                    v-for="item in reviewDataList"
+                                    :key="item.code"
+                                    :value="item.identifierNo"
+                                    :label="item.displayName"
+                                ></erd-option>
+                            </erd-select>
+                        </template>
+                    </FamDynamicForm>
+                </div>
+            </template>
+        </erd-contraction-panel>
+    </div>
+</div>

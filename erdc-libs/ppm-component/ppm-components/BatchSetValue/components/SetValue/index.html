@@ -1,0 +1,62 @@
+<div
+    id="batch-set-value"
+    v-cloak
+>
+    <erd-row
+        v-for="item in tableData"
+        :key="item.attrName"
+    >
+        <erd-col
+            :span="24"
+            class="flex align-items-center mb-lg"
+        >
+            <i
+                style="color: #666"
+                class="erd-iconfont erd-icon-forbidden text-16 cursor-pointer mr-normal"
+                @click="deleteFiled(item)"
+            >
+            </i>
+            <erd-select
+                v-model="item.attrName"
+                @change="changeField($event, item)"
+            >
+                <erd-option
+                    v-for="option in optionInfo[item.attrName]"
+                    :key="option.oid"
+                    :label="option.label"
+                    :value="option.value"
+                    :disabled="option.disabled"
+                ></erd-option>
+            </erd-select>
+            <div class="mr-sm ml-sm">{{i18n.modifyTo}}</div>
+            <component
+                class="set-value-comp flex-1 w-100p"
+                data-type="string"
+                :is="showComponent(componentInfo[item.attrName])"
+                clearable
+                v-model="item.value"
+                :custom-schema="customSchema"
+                :disabled-tree-data="disabledTreeData"
+                v-bind="additionalConfiguration(componentInfo[item.attrName])"
+                @input="fieldChange(item, ...arguments)"
+                @blur="item.value=item.value.trim()"
+                @change="fieldChange(item, ...arguments)"
+            ></component>
+        </erd-col>
+    </erd-row>
+
+    <span
+        class="color-primary cursor-pointer ml-18"
+        @click="addField"
+        >+ {{i18n.addField}}</span
+    >
+
+    <FamTableColSet
+        :visible.sync="visible"
+        :title="i18n['fieldSet']"
+        :columns-list="columnsList"
+        :default-columns="defaultColumns"
+        valueKey="attrName"
+        @onsubmit="fnColSettingSubmit"
+    ></FamTableColSet>
+</div>

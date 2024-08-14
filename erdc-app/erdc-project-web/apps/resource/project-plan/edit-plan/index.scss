@@ -1,0 +1,31 @@
+#plan_edit {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    background-color: #fff;
+    overflow: hidden;
+    .DetailList .el-tabs__content .el-tab-pane {
+        padding: 0;
+    }
+    .plan-form-tabs {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        .el-tabs {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            .el-tabs__content {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                #pane-DeliveryDetail {
+                    flex-grow: 1;
+                    .el-pagination {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

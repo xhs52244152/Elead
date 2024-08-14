@@ -1,0 +1,19 @@
+<div class="review-tree-container w-100p">
+    <fam-view-table
+        ref="reviewtable"
+        :default-table-height="defaultTableHeight"
+        :is-adaptive-height="false"
+        :view-table-config="viewTableConfig"
+    >
+    </fam-view-table>
+    <library-dialog
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        :title="formDialogTitle"
+        :formData="formData"
+        :className="className"
+        :oid="oid"
+        :viewReview="viewReview && nodeProcess !== 'Submittals'"
+        :query-layout-params="queryLayoutParams()"
+    ></library-dialog>
+</div>

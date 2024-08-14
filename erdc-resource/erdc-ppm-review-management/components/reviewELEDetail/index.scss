@@ -1,0 +1,83 @@
+.detail-review-container {
+    .up_container {
+        display: flex;
+        .up_content {
+            width: 100%;
+        }
+        .left_title {
+            width: 180px;
+            .left_box_flat {
+                background: var(--tableHeaderBgColor);
+                height: var(--tableRowHeight);
+                line-height: var(--tableRowHeight);
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: flex-end;
+                border: 1px solid #e8eaec;
+            }
+        }
+        .flat_con {
+            display: flex;
+            flex-wrap: nowrap;
+            width: calc(100% - 180px);
+        }
+        .left_box {
+            height: var(--tableRowHeight);
+            line-height: var(--tableRowHeight);
+            min-width: 246px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            border: 1px solid #e8eaec;
+            font-weight: 700;
+            background: var(--tableHeaderBgColor);
+        }
+        .text_box {
+            border: 1px solid #e8eaec;
+            height: var(--tableRowHeight);
+            line-height: var(--tableRowHeight);
+        }
+    }
+    .down_container {
+        display: flex;
+        margin-top: var(--bigSpace);
+        .down_content {
+            width: 100%;
+        }
+        .left_title {
+            width: 180px;
+            .left_box_flat {
+                background: var(--tableHeaderBgColor);
+                height: var(--tableRowHeight);
+                line-height: var(--tableRowHeight);
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: flex-end;
+                border: 1px solid #e8eaec;
+            }
+        }
+        .flat_con {
+            display: flex;
+            width: calc(100% - 180px);
+        }
+        .left_box {
+            height: var(--tableRowHeight);
+            line-height: var(--tableRowHeight);
+            min-width: 246px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            border: 1px solid #e8eaec;
+            font-weight: bold;
+            background: var(--tableHeaderBgColor);
+        }
+        .text_box {
+            border: 1px solid #e8eaec;
+            height: var(--tableRowHeight);
+            line-height: var(--tableRowHeight);
+        }
+    }
+    h3 {
+        margin-bottom: 0;
+    }
+}

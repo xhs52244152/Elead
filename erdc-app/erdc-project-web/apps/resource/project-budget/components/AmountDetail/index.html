@@ -1,0 +1,126 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="dialogTitle"
+    custom-class="stage-amount-detail"
+    size="large"
+>
+    <!-- 折叠面板：基本信息 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold1"
+        :title="i18n['basicInfo']"
+    >
+        <erd-form
+            :model="formData"
+            label-width="37.5%"
+        >
+            <!-- display: flex;flex-wrap: wrap; 防止内容过长导致栅格布局错乱 -->
+            <erd-row style="display: flex; flex-wrap: wrap">
+                <template v-for="item in formColumns">
+                    <erd-col
+                        :key="item.field"
+                        :span="item.col"
+                    >
+                        <erd-form-item :label="item.label">
+                            <!-- 合计预算金额 -->
+                            <span v-if="['totalBudgetValue'].includes(item.field)"
+                                >{{formatAmountUnit(formData[item.field])}}</span
+                            >
+                            <!-- 合计支出金额 -->
+                            <span v-else-if="['totalExpensesValue'].includes(item.field)"
+                                >{{formatAmountUnit(formData[item.field])}}</span
+                            >
+                            <span v-else>{{formData[item.field]}}</span>
+                        </erd-form-item>
+                    </erd-col>
+                </template>
+            </erd-row>
+        </erd-form>
+    </erd-contraction-panel>
+    <!-- 折叠面板：任务列表 -->
+    <erd-contraction-panel
+        :unfold.sync="unfold2"
+        :title="i18n['taskList']"
+    >
+        <fam-advanced-table
+            :view-table-config="viewTableConfig"
+            :enable-scroll-load="false"
+            ref="famTableRef"
+        >
+            <!-- 内容插槽 -->
+            <template
+                v-for="slotName in slotsNameList"
+                v-slot:[slotName]="{scope}"
+            >
+                <!-- 任务编码 -->
+                <template v-if="slotName === `column:default:${taskClassName}#identifierNo:content`">
+                    <a
+                        href="javascript:void(0)"
+                        @click="onTaskDetail(scope.row)"
+                        >{{scope.row[scope.column.property]}}</a
+                    >
+                </template>
+                <!-- 预算金额 -->
+                <template v-if="slotName === `column:default:${prefixConfig.budget}${amountClassName}#value:content`">
+                    {{getRowDisplay(scope.row, scope.column.property)}}
+                </template>
+                <!-- 支出金额 -->
+                <template
+                    v-else-if="slotName === `column:default:${prefixConfig.expenses}${amountClassName}#value:content`"
+                >
+                    {{getRowDisplay(scope.row, scope.column.property)}}
+                </template>
+                <!-- 行内操作 -->
+                <div v-else-if="slotName === 'column:default:operation:content'">
+                    <fam-action-pulldowm
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :action-data="scope.row"
+                        :args="[vm, scope.row, true]"
+                    ></fam-action-pulldowm>
+                </div>
+            </template>
+            <!-- 单元格字段编辑时的插槽 -->
+            <template
+                v-for="prop in slotsEditField"
+                #[`column:edit:${prop}`]="{data}"
+            >
+                <!-- 预算、支出金额 字段的编辑插槽 -->
+                <template v-if="prop.includes(`${amountClassName}#value`)">
+                    <td-input-number
+                        v-model="data.row[data.column.property]"
+                        :unitLabel="useUnit?.label"
+                        @change="onAmountChange(data.row, data.column.property, $event)"
+                    ></td-input-number>
+                </template>
+                <!-- 预算、支出描述 字段的编辑插槽 -->
+                <template v-if="prop.includes(`${amountClassName}#description`)">
+                    <erd-input
+                        v-model="data.row[data.column.property]"
+                        class="td-input"
+                        :maxlength="300"
+                        @change="onCellChange(data.row, data.column.property)"
+                    >
+                    </erd-input>
+                </template>
+            </template>
+        </fam-advanced-table>
+    </erd-contraction-panel>
+    <!-- 底部按钮 -->
+    <template #footer>
+        <template v-if="!readonly">
+            <erd-button
+                type="primary"
+                @click="handleSave"
+                :loading="isSaving"
+                >{{ i18n.save }}</erd-button
+            >
+            <erd-button @click="handleCancel">{{ i18n.cancel }}</erd-button>
+        </template>
+    </template>
+    <choose-task
+        v-if="chooseTaskDialog.visible"
+        :visible.sync="chooseTaskDialog.visible"
+        @confirm="handleChooseTask"
+    >
+    </choose-task>
+</erd-ex-dialog>

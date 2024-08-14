@@ -1,0 +1,76 @@
+<div class="budget-template-edit-wrap h-100p flex flex-column">
+    <div class="budget-template-header">
+        <fam-page-title
+            :title="title"
+            staticTitle
+            show-back-button
+            @back="goBack"
+        ></fam-page-title>
+        <!-- 操作按钮集 -->
+        <fam-action-pulldowm
+            v-if="type === 'detail'"
+            :is-operation="true"
+            :action-config="getActionConfig(formData)"
+            :default-btn-config="{type: 'primary'}"
+            :action-data="formData"
+            :args="[vm, formData, true]"
+        ></fam-action-pulldowm>
+    </div>
+    <div class="budget-template-container">
+        <erd-tabs
+            v-model="activeName"
+            class="h-100p flex flex-column"
+            :class="{'single-tab-container': tabs.length <= 1}"
+        >
+            <template v-for="(item, index) in tabs">
+                <erd-tab-pane
+                    :key="item.activeName"
+                    class="bg-white h-100p"
+                    style="padding: 0"
+                    :label="item.name"
+                    :name="item.activeName"
+                    :lazy="true"
+                >
+                    <!-- 详情信息 -->
+                    <fam-advanced-form
+                        v-if="item.activeName === 'detail'"
+                        ref="form"
+                        :model.sync="formData"
+                        :form-id="formId"
+                        :class-name="className"
+                        :query-layout-params="queryLayoutParams()"
+                    ></fam-advanced-form>
+                    <!-- 关联科目 -->
+                    <relation-subject
+                        v-if="item.activeName === 'subject'"
+                        :relationOid="oid"
+                        :readonly="type === 'detail'"
+                    ></relation-subject>
+                </erd-tab-pane>
+            </template>
+        </erd-tabs>
+    </div>
+    <div
+        class="budget-template-footer"
+        v-if="type !== 'detail' && activeName === 'detail'"
+    >
+        <template>
+            <!-- 发布 -->
+            <erd-button
+                type="primary"
+                @click="handleConfirm()"
+                :loading="isSaving"
+                >{{ i18n.publish }}</erd-button
+            >
+            <!-- 保存草稿 -->
+            <erd-button
+                v-if="isCreate || isDraft"
+                @click="handleConfirm(true)"
+                :loading="isSavingDraft"
+                >{{ i18n.saveDraft }}</erd-button
+            >
+            <!-- 取消 -->
+            <erd-button @click="goBack">{{ i18n.close }}</erd-button>
+        </template>
+    </div>
+</div>

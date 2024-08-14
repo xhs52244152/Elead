@@ -1,0 +1,301 @@
+#ppm-gantt-content .mini-supergrid-headercell-inner {
+    color: var(--tableHeaderColor) !important;
+    font-weight: var(--tableHeaderFontWeight);
+    background: var(--tableHeaderBgColor);
+    font-size: 12px;
+}
+
+#ppm-gantt-content .mini-ganttview-headercell {
+    background: var(--tableHeaderBgColor);
+    border-color: var(--colorSplit);
+    color: var(--tableHeaderColor) !important;
+    font-weight: var(--tableHeaderFontWeight);
+}
+
+#ppm-gantt-content .mini-gantt-offday {
+    background: var(--tableHeaderBgColor);
+}
+
+#ppm-gantt-content .mini-supergrid-headercell,
+#ppm-gantt-content .mini-supergrid-cell {
+    border-right: 1px solid var(--colorSplit);
+    border-bottom: 1px solid var(--colorSplit);
+}
+
+#ppm-gantt-content .mini-supergrid-header {
+    border-bottom: 1px solid var(--colorSplit);
+}
+
+#ppm-gantt-content .mini-splitter-pane1,
+#ppm-gantt-content .mini-splitter-pane2,
+#ppm-gantt-content .mini-splitter-border,
+#ppm-gantt-content .mini-gantt .mini-supergrid-cell,
+#ppm-gantt-content .mini-gantt-row,
+#ppm-gantt-content .mini-gantt-column {
+    border-color: var(--colorSplit);
+}
+
+.ppm-gantt-center-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#ppm-gantt-content .mini-supergrid-rowselected .mini-supergrid-cell,
+#ppm-gantt-content .mini-supergrid .mini-supergrid-cellselected {
+    /* 注：用透明度的背景色，则该区域不能有其它背景色（否则多个背景色重叠会导致颜色不对），因此此处不能设置背景色 */
+    background: none!important;
+}
+#ppm-gantt-content .mini-supergrid-rowselected,
+#ppm-gantt-content .mini-supergrid-row:hover,
+#ppm-gantt-content .mini-supergrid-row-hover,
+#ppm-gantt-content .mini-gantt-row.mini-gantt-rowselected,
+#ppm-gantt-content .mini-gantt-row:hover,
+#ppm-gantt-content .mini-gantt-row.hover {
+    /* 注：用透明度的背景色，则该区域不能有其它背景色（否则多个背景色重叠会导致颜色不对） */
+    background: rgba(173, 193, 205, 0.16)!important;
+}
+
+#ppm-gantt-content .mini-supergrid .mini-supergrid-cellselected {
+    border-color: var(--colorSplit) !important;
+}
+
+#ppm-gantt-content .mini-supergrid-cell-inner,
+#ppm-gantt-content .mini-supergrid-headercell-inner {
+    color: rgba(0,0,0, .85);
+}
+
+#ppm-gantt-content .mini-gantt-taskstatus {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+#ppm-gantt-content .mini-listbox-view {
+    max-height: 200px;
+}
+#ppm-gantt-content .ppm-gantt-status-cell {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: var(--buttonFontColor);
+}
+
+#ppm-gantt-content .mini-gantt-summary-cell {
+    font-weight: normal;
+}
+
+/* 固定列 */
+#ppm-gantt-content .mini-supergrid-lockedcells {
+    -webkit-box-shadow: 4px 3px 4px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 3px 4px 0 rgba(0, 0, 0, 0.12);
+}
+#ppm-gantt-content .mini-supergrid .mini-supergrid-frozencell-last {
+    border-right: none !important;
+}
+#ppm-gantt-content .mini-supergrid-headercell.mini-supergrid-frozencell-last {
+    -webkit-box-shadow: 4px 3px 4px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 0px 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+
+/* 条形图 */
+#ppm-gantt-content .mini-gantt-critical:not(.mini-gantt-summary):not(.mini-gantt-milestone) {
+    background: #f97a81;
+    border-color: #cf1322;
+}
+
+#ppm-gantt-content .mini-gantt-summary {
+    background: #bfbfbf;
+}
+#ppm-gantt-content .mini-gantt-summary-left {
+    width: 0;
+    height: 0;
+    border-top: 12px solid #bfbfbf;
+    border-right: 10px solid transparent;
+    background: transparent;
+}
+#ppm-gantt-content .mini-gantt-summary-right {
+    width: 0;
+    height: 0;
+    border-top: 12px solid #bfbfbf;
+    border-left: 10px solid transparent;
+    background: transparent;
+}
+
+#ppm-gantt-content .ppm-gantt-opt-cell,
+#ppm-gantt-content .ppm-gantt-icon-cell {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#ppm-gantt-content .ppm-gantt-opt .mini-supergrid-cell-inner{
+    padding: 0;
+}
+
+#ppm-gantt-content .ppm-gantt-opt-cell>.erd-iconfont {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ABAEBA;
+    width: 100%;
+    height: 100%;
+}
+
+#ppm-gantt-content .ppm-gantt-icon-cell>.erd-iconfont {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#ppm-gantt-content .mini-supergrid-row:hover .ppm-gantt-opt-cell>.erd-iconfont {
+    color: var(--buttonFontColor);
+}
+
+.ppm-gantt-link-cell {
+    color: var(--buttonFontColor);
+    cursor: pointer;
+}
+
+.ppm-gantt-planSet-cell>span {
+    display: inline-block;
+    width: var(--normalSpace);
+    height: var(--normalSpace);
+    border-radius: 50%;
+}
+
+.ppm-gantt-ellipsis-span {
+    display: inline-block;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.mini-supertree-nodetext,
+.mini-supergrid-cell-inner,
+.mini-supergrid-headercell-inner {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: noWrap;
+}
+
+.ppm-gantt-content-readOnly .mini-gantt-line {
+    cursor: auto;
+}
+
+/* 行保存按钮 */
+.mini-supergrid-rowbtns {
+    position: absolute;
+    text-align: center;
+    z-index: 101;
+    left: 92px;
+}
+.mini-supergrid-rowbtns>span {
+    color: var(--buttonFontColor);
+    cursor: pointer;
+}
+
+/* 修改状态角标 */
+#ppm-gantt-content .mini-supergrid-cell-dirtytip {
+    border: 3px solid transparent;
+    border-top-color: var(--colorSuccess);
+    border-right-color: var(--colorSuccess);
+    top: 0;
+    right: 0;
+    background: none;
+    width: 0;
+    height: 0;
+}
+
+.mr-3 {
+    margin-right: 3px;
+}
+
+/* 里程碑亮灯颜色 */
+#ppm-gantt-content .mini-supergrid-cell-inner .progress{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+#ppm-gantt-content .mini-supergrid-cell-inner .progress i{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+#ppm-gantt-content .mini-supergrid-cell-inner .light {
+    border-radius: 50%;
+}
+#ppm-gantt-content .mini-ganttview-bars .mini-gantt-item{
+    background: #68a1ff;
+    border: 1px solid #164da7;
+    border-radius: 3px;
+}
+#ppm-gantt-content .mini-ganttview-bars .mini-gantt-item.hover{
+    opacity: .5;
+}
+#ppm-gantt-content .mini-ganttview-bars .mini-gantt-item .mini-gantt-percentcomplete-text{
+    color: #fff;
+    position: absolute;
+    width: 30px;
+    left: 50%;
+    margin-left: -10px;
+    top: -5px;
+    z-index: 101;
+}
+#ppm-gantt-content .mini-ganttview-bars .mini-gantt-item .mini-gantt-percentcomplete{
+    height: auto!important;
+    background: #164da7;
+    margin-top: 0!important;
+    border-radius: 0 3px 3px 0;
+    top: 0;
+    bottom: 0;
+}
+#ppm-gantt-content .mini-gantt-item.mini-gantt-critical .mini-gantt-percentcomplete{
+    background: #cf1322;
+}
+#ppm-gantt-content .mini-ganttview-bars .mini-gantt-item .mini-gantt-percentcomplete:hover{
+
+}
+
+
+/* 延期情况 */
+#ppm-gantt-content .mini-supergrid-cell-inner .task-warning-label{
+    margin-right: 4px;
+}
+
+/* 上传交付物 */
+#ppm-gantt-content .mini-supergrid-cell-inner .upload-deliverable-btn{
+    background-color: var(--colorPrimary);
+    border-color: var(--colorPrimary);
+    cursor: pointer;
+    display: inline-flex;
+    padding: 2px 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #fff;
+}
+#ppm-gantt-content .mini-supergrid-cell-inner .upload-deliverable-btn:hover{
+    background-color: var(--colorPrimaryLighter);
+    border-color: var(--colorPrimaryLighter);
+}
+#ppm-gantt-content .events-none {
+    pointer-events: none;
+    /* 禁用鼠标事件 */
+    opacity: 0.5;
+    /* 设置半透明度，给用户视觉上的提示 */
+    cursor: not-allowed;
+    /* 更改鼠标指针为不可点击状态 */
+}

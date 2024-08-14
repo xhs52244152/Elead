@@ -1,0 +1,25 @@
+.ppm-process-review {
+    // margin: 0 var(--largeSpace);
+    .ContractionPanel {
+        .panelTitle {
+            font-size: var(--fontSize);
+        }
+    }
+    .process-base-info {
+        .el-tooltip {
+            .fam-dynamic-form__label--labelText {
+                color: var(--colorTextExplain) !important;
+            }
+        }
+    }
+    #FamViewTable .advanced-table-container {
+        padding: 0;
+    }
+    .el-tab-pane{
+        padding: 0;
+    }
+
+    .table-container {
+        margin: calc(var(--bigSpace) * 2) 0;
+    }
+}

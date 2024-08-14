@@ -1,0 +1,97 @@
+#task-table-container {
+    height: 100%;
+}
+.el-scrollbar__view #task-table-container {
+    padding: 0;
+    background-color: var(--colorBg);
+}
+
+#task-table-container .plan-set-table .vxe-cell--tree-node {
+    padding-left: 0 !important;
+}
+#task-table-container .plan-set-table .row--level-2 .vxe-cell--tree-node {
+    padding-left: 12px !important;
+}
+#task-table-container .adaptive-height{
+    background-color: #fff;
+}
+
+#task-table-container .select-group-box {
+    width: 160px;
+}
+#task-table-container .select-group-box .el-input__prefix{
+    top: 7px;
+    color: #000;
+    padding-left: 6px;
+    font-weight: bold;
+}
+#task-table-container .select-group-box .el-input__inner{
+    padding-left: 50px;
+}
+#task-table-container .completionRate-box{
+    display: flex;
+    align-items: center;
+}
+#task-table-container .completionRate-box div{
+    margin-left: 4px;
+}
+
+#task-table-container .vxe-cell:has(>.vxe-cell--tree-node .ppm-task-more-btn) {
+    width: 100% !important;
+}
+
+#task-table-container .vxe-tree-cell:has(>.ppm-task-more-btn) {
+    text-align: center;
+}
+
+#task-table-container #ComponentWapper-erdTable .vxe-table--fixed-left-wrapper .vxe-table--body-wrapper {
+    overflow: hidden;
+}
+#task-table-container  #FamViewTable .milestone_lignt {
+    display: inline-block;
+    width: 100%;
+}
+
+#task-table-container #FamViewTable .milestone_lignt i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+#task-table-container #FamViewTable .milestone_lignt i.erd-icon-upload {
+    width: 10px;
+    height: 16px;
+}
+
+#task-table-container #FamViewTable .task-warning-label{
+    margin-right: 4px;
+}
+#task-table-container #FamViewTable .milestone_lignt .upload-deliverable-btn {
+    background-color: var(--buttonFontColor);
+    border-color: var(--buttonFontColor);
+    cursor: pointer;
+    display: inline-flex;
+    padding: 2px 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #fff;
+    scale: .8;
+}
+#task-table-container #FamViewTable .milestone_lignt .upload-deliverable-btn:hover {
+    background-color: var(--colorPrimaryLighter);
+    border-color: var(--colorPrimaryLighter);
+}
+
+.upload-deliverable-dialog .el-dialog__body {
+    height: 400px;
+}
+#task-table-container .events-none {
+    pointer-events: none;
+    /* 禁用鼠标事件 */
+    opacity: 0.5;
+    /* 设置半透明度，给用户视觉上的提示 */
+    cursor: not-allowed;
+    /* 更改鼠标指针为不可点击状态 */
+}

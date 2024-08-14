@@ -1,0 +1,144 @@
+<div class="ppm-deliver-add-context">
+    <div class="transferTable">
+        <erd-ex-transfer
+            ref="erdExTransfer"
+            class="ppm-deliver-add-transfer"
+            :allColumnsList="allColumnsList"
+            :valueKey="showLabelKey"
+            leftWidth="50%"
+            rightWidth="50%"
+            :rightTableConfig="rightTableColumns"
+            leftShowFormat="table"
+            rightShowFormat="table"
+            :leftTitle="i18nMappingObj.optionalObject"
+            :rightTitle="i18nMappingObj.selectedObject"
+        >
+            <template slot="left-main-content">
+                <div class="setting-middle-item-box-search">
+                    <div class="ppm-deliver-add-condition-container">
+                        <erd-form class="ppm-deliver-add-left-form">
+                            <component-width-label
+                                is-render="erd-ex-select"
+                                :label="i18nMappingObj.source"
+                                v-model="source"
+                                :removeable="false"
+                                :clearable="false"
+                                :options="sourceOptions"
+                                class="ppm-deliver-source"
+                            >
+                            </component-width-label>
+                            <!--<component-width-label
+                                is-render="erd-ex-select"
+                                :label="i18nMappingObj.type"
+                                v-model="className"
+                                :removeable="false"
+                                :clearable="false"
+                                :options="classOptions"
+                                class="ppm-deliver-type"
+                            >
+                            </component-width-label>-->
+                            <component-width-label
+                                is-render="erd-tree-select"
+                                :label="i18nMappingObj.type"
+                                node-key="key"
+                                :props="{
+                                    value: 'key',
+                                    label: 'label'
+                                }"
+                                v-model="className"
+                                :removeable="false"
+                                :clearable="false"
+                                :data="classOptions"
+                                class="ppm-deliver-type"
+                            >
+                            </component-width-label>
+                            <fam-basic-filter
+                                :main-model-type="className"
+                                :max-number="1"
+                                @condition-change="onConditionChange"
+                            >
+                            </fam-basic-filter>
+                        </erd-form>
+                    </div>
+                </div>
+                <div class="setting-middle-item-box-select el-scrollbar">
+                    <fam-advanced-table
+                        class="left-table"
+                        v-if="source"
+                        isAdaptiveHeight
+                        enableScrollLoad
+                        :view-table-config="viewTableConfig"
+                        show-overflow="tooltip"
+                        v-loading="tableLoading"
+                        ref="leftTable"
+                        tooltip-effect="dark"
+                        style="width: 100%"
+                        @table-data="onLeftTableDataChange"
+                    >
+                        <template
+                            v-for="slot in slotsNameList"
+                            v-slot:[slot]="{ scope }"
+                        >
+                            <template v-if="slot=='column:default:erd.cloud.cbb.doc.entity.EtDocument#identifierNo:content'">
+                                {{ scope.row['identifierNo'] }}
+                            </template>
+                            <template v-if="slot=='column:default:erd.cloud.cbb.doc.entity.EtDocument#name:content'">
+                                {{ scope.row['name'] }}
+                            </template>
+                            <template v-if="slot=='column:default:erd.cloud.cbb.doc.entity.EtDocument#version:content'">
+                                {{ scope.row['version'] }}
+                            </template>
+                            <template v-if="slot=='column:default:erd.cloud.cbb.doc.entity.EtDocument#lifecycleStatus.status:content'">
+                                {{ scope.row['lifecycleStatus.status'] }}
+                            </template>
+                            <template v-if="slot=='column:default:erd.cloud.cbb.doc.entity.EtDocument#containerRef:content'">
+                                {{ scope.row['containerRef'] }}
+                            </template>
+                        </template>
+                    </fam-advanced-table>
+                </div>
+            </template>
+
+            <template slot="right-search">
+                <erd-input
+                    :placeholder="i18nMappingObj.pleaseEnterSearch"
+                    v-model="searchRightKey"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                ></erd-input>
+            </template>
+
+            <template slot="right-content">
+                <erd-table
+                    ref="rightTable"
+                    auto-size
+                    height="auto"
+                    :stripe="false"
+                    show-overflow="tooltip"
+                    tooltip-effect="dark"
+                    :row-config="{ keyField: 'oid' }"
+                    :column="rightTableColumns"
+                    table-style="embed-transfer-table"
+                    style="width: 100%"
+                    :data="rightTableVisibleData"
+                >
+                    <template #operation="data">
+                        <i
+                            class="el-icon-close el-icon-hover-class cursor-pointer"
+                            style="font-size: 15px; margin-left: 8px"
+                            @click="onRightClear(data.data.row)"
+                        ></i>
+                    </template>
+                </erd-table>
+            </template>
+
+            <template slot="right-title-sub">
+                <erd-button
+                    type="text"
+                    @click="onAllDelete"
+                    >{{i18nMappingObj.deleteAll}}</erd-button
+                >
+            </template>
+        </erd-ex-transfer>
+    </div>
+</div>

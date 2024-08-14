@@ -1,0 +1,120 @@
+<div class="front-back-task-container">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfoldA"
+        :title="i18nMappingObj.predecessors"
+    >
+        <template v-slot:content>
+            <fam-view-table
+                :view-table-config="viewTableConfig"
+                :default-table-height="450"
+                ref="frontBackList"
+                @action-click="actionClick"
+                class="ppm-viewtable-pd-0"
+                :is-adaptive-height="false"
+            >
+                <template
+                    v-for="slot in slotsNameList"
+                    v-slot:[slot]="{ scope }"
+                >
+                    <div v-if="!!scope.row.whetherAdd">
+                        <template v-if="slot=='column:default:operation:content'">
+                            <erd-button
+                                v-if="!scope.row.isDefault"
+                                type="text"
+                                @click="handlerSaveApplication(scope.row, scope)"
+                            >
+                                {{i18nMappingObj.comfirm}}</erd-button
+                            >
+                            <erd-button
+                                v-if="scope.row.isDefault"
+                                type="text"
+                                @click="dialogConfirm(scope.row, scope)"
+                                >{{i18nMappingObj.save}}</erd-button
+                            >
+                            <erd-button
+                                type="text"
+                                @click="hanlderCancel(scope.row, scope)"
+                                >{{i18nMappingObj.cancel}}</erd-button
+                            >
+                        </template>
+                        <template v-if="slot=='column:default:erd.cloud.ppm.plan.entity.Task#name:content'">
+                            <erd-select
+                                style="width: 100%"
+                                v-model="scope.row[scope.column.property]"
+                                filterable
+                                remote
+                                reserve-keyword
+                                :placeholder="i18nMappingObj.pleaseEnterKeyword"
+                                :remote-method="remoteMethod"
+                                :disabled="scope.row.isEdit"
+                            >
+                                <erd-option
+                                    v-for="item in nameOptions"
+                                    :key="item.oid"
+                                    :label="item.name"
+                                    :value="item.oid"
+                                >
+                                </erd-option>
+                            </erd-select>
+                        </template>
+                        <template v-if="slot=='column:default:erd.cloud.ppm.plan.entity.PredecessorLink#type:content'">
+                            <dict
+                                item-name="PredecessorType"
+                                v-model="scope.row['erd.cloud.ppm.plan.entity.PredecessorLink#type']"
+                            ></dict>
+                        </template>
+                        <template v-if="slot=='column:default:erd.cloud.ppm.plan.entity.PredecessorLink#delay:content'">
+                            <erd-input-number
+                                style="width: 100%"
+                                v-model="scope.row[scope.column.property]"
+                                controls-position="right"
+                                :placeholder="i18nMappingObj.pleaseSelect"
+                                size="small"
+                            >
+                            </erd-input-number>
+                        </template>
+                    </div>
+                    <div v-else>
+                        <template v-if="slot=='column:default:operation:content'">
+                            <fam-action-pulldowm
+                                :is-operation="true"
+                                :action-config="getActionConfig(scope.row)"
+                                :action-data="scope.row"
+                                @click="onCommand"
+                            ></fam-action-pulldowm>
+                        </template>
+                        <a
+                            v-else-if="slot === 'column:default:erd.cloud.ppm.plan.entity.Task#name:content'"
+                            @click="openDetail(scope.row)"
+                        >
+                            {{scope.row[scope.column.property]}}
+                        </a>
+                        <span v-else>{{scope.row[scope.column.property]}}</span>
+                    </div>
+                </template>
+            </fam-view-table>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18nMappingObj.postTask"
+    >
+        <template v-slot:content>
+            <fam-view-table
+                :view-table-config="viewHouZTableConfig"
+                :default-table-height="450"
+                ref="frontHouBackList"
+                class="ppm-viewtable-pd-0"
+                :is-adaptive-height="false"
+            >
+            </fam-view-table>
+        </template>
+    </erd-contraction-panel>
+
+    <!-- 添加前置任务弹窗 -->
+    <add-front-back-task
+        ref="addTask"
+        :task-oid="planOid"
+        @updated="refreshTable"
+    ></add-front-back-task>
+</div>

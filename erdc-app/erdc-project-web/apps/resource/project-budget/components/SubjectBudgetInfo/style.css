@@ -1,0 +1,7 @@
+/* 隐藏单元格的编辑图标 */
+.subject-budget-info-wrap .vxe-table .erd_table-editIcon:after {
+  display: none;
+}
+.subject-budget-info-wrap .text-align-right {
+    text-align: right;
+}
