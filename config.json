@@ -1,0 +1,18 @@
+{
+    "username": "erdcadmin",
+    "password": "Elead@fam",
+    "hosts": [
+        {
+            "url": "http://it.sermatec-cloud.com:30187",
+            "username": "erdcadmin",
+            "password": "Pw!123456",
+            "label": "prod"
+        },
+        {
+            "url": "http://it.sermatec-cloud.com:32163",
+            "username": "erdcadmin",
+            "password": "Pw!123456",
+            "label": "uat"
+        }
+    ]
+}
