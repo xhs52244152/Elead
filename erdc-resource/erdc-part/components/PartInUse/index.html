@@ -1,0 +1,12 @@
+<InUse
+    ref="table"
+    :view-table-config="viewTableConfig"
+    :class-name="innerClassName"
+    :vm="vm"
+    :oid="oid"
+>
+    <template #column:default:viewName:content="{scope}">
+        <span v-if="scope.row?.['viewName']">{{scope.row['viewName']}}</span>
+        <span v-else>---</span>
+    </template>
+</InUse>

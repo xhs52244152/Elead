@@ -1,0 +1,60 @@
+define([], function () {
+    return {
+        i18n: {
+            '基本信息': { CN: '基本信息', EN: 'Basic information' },
+            '类型属性设置': { CN: '类型属性设置', EN: 'Type attribute setting' },
+            '分类属性设置': { CN: '分类属性设置', EN: 'Category attribute setting' },
+            'BOM属性设置': { CN: 'BOM属性设置', EN: 'BOM attribute setting' },
+            '确定': { CN: '确定', EN: 'Confirm' },
+            '取消': { CN: '取消', EN: 'Cancel' },
+            '导入': { CN: '导入', EN: 'Import' },
+            '导出': { CN: '导出', EN: 'Export' },
+            '导入前提示': {
+                CN: '请按格式填写模板，若没有模板先下载。',
+                EN: 'Please fill in the template in the format. If there is no template, download it first.'
+            },
+            '导入前提示1': {
+                CN: '请先选择导入的类型，再上传文件。请按格式填写模板，若没有模板先下载。',
+                EN: 'Select the type to import and then upload the file. Please fill in the template in the format. If there is no template, download it first.'
+            },
+            '空模板下载': { CN: '空模板下载', EN: 'Empty template download' },
+            '空模板': { CN: '空模板', EN: 'Empty template' },
+            '上传文件': { CN: '上传文件', EN: 'Upload file' },
+            '点击上传': { CN: '点击上传', EN: 'Click to upload' },
+            '可选字段': { CN: '可选字段', EN: 'Optional field' },
+            '已选字段': { CN: '已选字段', EN: 'Selected field' },
+            '全部删除': { CN: '全部删除', EN: 'Delete all' },
+            '全选': { CN: '全选', EN: 'Select all' },
+            '请输入搜索内容': { CN: '请输入搜索内容', EN: 'Please enter your search' },
+            '类型': { CN: '类型', EN: 'Type' },
+            '模板': { CN: '模板', EN: 'Template' },
+            '分类': { CN: '分类', EN: 'Sort' },
+            '视图': { CN: '视图', EN: 'View' },
+            '名称': { CN: '名称', EN: 'Name' },
+            '编码': { CN: '编码', EN: 'Encoding' },
+            '导入类型': { CN: '导入类型', EN: 'Import type' },
+            '移除': { CN: '移除', EN: 'Remove' },
+            '请选择类型': { CN: '请选择类型', EN: 'Please select a type' },
+            '请选择视图': { CN: '请选择视图', EN: 'Please select view' },
+            '可选类型属性不能为空': { CN: '可选类型属性不能为空', EN: 'Optional type properties cannot be empty' },
+            '可选分类属性不能为空': { CN: '可选分类属性不能为空', EN: 'The optional category attribute cannot be empty' },
+            '默认导出模板不能为空': { CN: '默认导出模板不能为空', EN: 'By default, the exported template cannot be empty' },
+            '下载文件': { CN: '下载文件', EN: 'Download file' },
+            '导出成功': { CN: '${name}导出成功', EN: '${name} is successfully exported' },
+            '请您下载文件，或者前往': { CN: '请您下载文件，或者前往', EN: 'Please download the file, or go to the' },
+            '下载': { CN: '下载', EN: 'to download' },
+            '“工作台>我的导入导出”': { CN: '“工作台>我的导入导出”', EN: '"Workbench > My Import and Export"' },
+            '导出失败': { CN: '${name}导出失败', EN: 'Exporting an ${name} fails' },
+            '请前往“工作台>我的导入导出”查看失败原因': { CN: '请前往“工作台>我的导入导出”查看失败原因', EN: 'Choose Workbench > My Import/Export to check the failure cause' },
+            '前往我的导入导出': { CN: '前往我的导入导出', EN: 'Go to My Import/Export' },
+            '请上传文件': { CN: '请上传文件', EN: 'Please upload file' },
+            '请选择导入类型': { CN: '请选择导入类型', EN: 'Please select an import type' },
+            '导入成功标题': { CN: '导入成功', EN: 'Import successfully' },
+            '导入成功内容': { CN: '${name}导入成功', EN: '${name} import success' },
+            '文件导入校验失败': { CN: '文件导入校验失败', EN: 'File import verification failed' },
+            '文件上传成功': { CN: '文件上传成功', EN: 'File uploaded successfully' },
+            '可以前往': { CN: '可以前往', EN: 'you can go to' },
+            '查看状态': { CN: '查看状态', EN: 'view status' }
+        }
+    };
+});

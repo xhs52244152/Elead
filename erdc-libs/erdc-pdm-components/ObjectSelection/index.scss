@@ -1,0 +1,14 @@
+.object-selection-content {
+    display: flex;
+    flex-direction: column;
+
+    .content_top {
+        height: 400px;
+    }
+
+    .content_bot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

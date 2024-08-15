@@ -1,0 +1,43 @@
+<erd-contraction-panel
+    :unfold.sync="unfold"
+    :title="i18n['评审对象']"
+    v-cloak
+>
+    <template
+        v-if="unfold && !hideOper"
+        #header-right
+    >
+        <erd-button @click="addReviewObjectClick">{{i18n['增加']}}</erd-button>
+        <erd-button
+            v-if="!hideCollect"
+            @click="collectReviewObjectClick"
+            >{{i18n['收集相关对象']}}</erd-button
+        >
+        <erd-button @click="removeReviewObjectClick">{{i18n['移除']}}</erd-button>
+    </template>
+    <template #content>
+        <ReviewObjectList
+            ref="reviewObjectListRef"
+            :hide-collect="hideCollect"
+            :hide-oper="true"
+            :column="column"
+            :table-data="tableData"
+            @add-review-object="addReviewObject"
+            @remove-review-object="removeReviewObject"
+            @collect-review-object="collectReviewObject"
+        >
+            <template v-slot:column:default:identifierNo="slotProps">
+                <fam-icon
+                    :value="getObjectIcon(slotProps.data)"
+                    class="inline-block"
+                ></fam-icon>
+                <span
+                    style="color: var(--colorPrimary); cursor: pointer"
+                    @click="viewDetails(slotProps.data)"
+                >
+                    {{ formatterDisplayName(slotProps.data) }}
+                </span>
+            </template>
+        </ReviewObjectList>
+    </template>
+</erd-contraction-panel>

@@ -1,0 +1,4 @@
+/* 批注后字体模糊问题处理 */
+#app-cad-view-root-div .ant-scroll-number-only {
+    backface-visibility: visible;
+}

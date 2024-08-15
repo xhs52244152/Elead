@@ -1,0 +1,59 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    :title="i18n.dialogTitle"
+    custom-class="create-view-version-form-dialog"
+    width="600px"
+    @close="handleClose"
+>
+    <erd-form
+        class="m-lg"
+        :model="formData"
+        label-position="right"
+        label-width="15%"
+        ref="viewFormRef"
+        :validate-on-rule-change="false"
+    >
+        <erd-form-item :label="i18n?.caption">
+            <erd-row>
+                <erd-col :span="24">
+                    <span class="text-14">{{formData.caption}}</span>
+                </erd-col>
+            </erd-row>
+        </erd-form-item>
+        <erd-form-item :label="i18n?.lifecycleStatus">
+            <erd-row>
+                <erd-col :span="24">
+                    <span class="text-14">{{formData.lifecycle.displayName}}</span>
+                </erd-col>
+            </erd-row>
+        </erd-form-item>
+        <erd-form-item :label="i18n?.context">
+            <erd-row>
+                <erd-col :span="24">
+                    <span class="text-14">{{formData.context.displayName}}</span>
+                </erd-col>
+            </erd-row>
+        </erd-form-item>
+        <erd-form-item :label="i18n?.newView">
+            <erd-row class="w-100p">
+                <erd-col :span="24">
+                    <erd-ex-select
+                        v-model="formData.view"
+                        filterable
+                        :options="viewOptions"
+                        @change="handleViewChange"
+                    >
+                    </erd-ex-select>
+                </erd-col>
+            </erd-row>
+        </erd-form-item>
+    </erd-form>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleCreate()"
+            >{{i18n.save}}</erd-button
+        >
+        <erd-button @click="handleClose()">{{i18n.close}}</erd-button>
+    </template>
+</erd-ex-dialog>

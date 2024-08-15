@@ -1,0 +1,395 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4358129 */
+  src: url('iconfont.woff2?t=1703571368647') format('woff2'),
+       url('iconfont.woff?t=1703571368647') format('woff'),
+       url('iconfont.ttf?t=1703571368647') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-edit-relation:before {
+  content: "\56f1";
+}
+
+.icon-memo:before {
+  content: "\56f0";
+}
+
+.icon-insert-existing:before {
+  content: "\56ca";
+}
+
+.icon-component-ref:before {
+  content: "\56ef";
+}
+
+.icon-insert-new:before {
+  content: "\56ed";
+}
+
+.icon-meeting-minutes:before {
+  content: "\56ec";
+}
+
+.icon-component-config:before {
+  content: "\56ee";
+}
+
+.icon-create-change-notification:before {
+  content: "\56eb";
+}
+
+.icon-view-validity:before {
+  content: "\56dc";
+}
+
+.icon-e-component:before {
+  content: "\56ea";
+}
+
+.icon-create-change-request:before {
+  content: "\56d3";
+}
+
+.icon-part-description:before {
+  content: "\56dd";
+}
+
+.icon-document-structure-relationship:before {
+  content: "\56e9";
+}
+
+.icon-specific-substitution-relationship:before {
+  content: "\56e8";
+}
+
+.icon-component-config-spec:before {
+  content: "\56df";
+}
+
+.icon-validity-settings:before {
+  content: "\56e6";
+}
+
+.icon-outline-design:before {
+  content: "\56e1";
+}
+
+.icon-model-representation-relationship:before {
+  content: "\56e7";
+}
+
+.icon-collect-model-backups:before {
+  content: "\56e4";
+}
+
+.icon-view-all:before {
+  content: "\56e5";
+}
+
+.icon-modify-record:before {
+  content: "\56e3";
+}
+
+.icon-collect-part:before {
+  content: "\56e2";
+}
+
+.icon-collect-relevant-object:before {
+  content: "\56de";
+}
+
+.icon-workshop-object:before {
+  content: "\56e0";
+}
+
+.icon-structural-components:before {
+  content: "\56db";
+}
+
+.icon-diagram-file-description:before {
+  content: "\56da";
+}
+
+.icon-image-config-spec:before {
+  content: "\56d7";
+}
+
+.icon-open-cad:before {
+  content: "\56d6";
+}
+
+.icon-software:before {
+  content: "\56d8";
+}
+
+.icon-document-dependencies:before {
+  content: "\56d5";
+}
+
+.icon-analysis:before {
+  content: "\56d4";
+}
+
+.icon-plus:before {
+  content: "\56d9";
+}
+
+.icon-drawing-reference:before {
+  content: "\56d2";
+}
+
+.icon-replace-parts:before {
+  content: "\56d1";
+}
+
+.icon-requirement-document:before {
+  content: "\56d0";
+}
+
+.icon-merge-baseline:before {
+  content: "\56cd";
+}
+
+.icon-document-main-object:before {
+  content: "\56cf";
+}
+
+.icon-model-reference:before {
+  content: "\56cb";
+}
+
+.icon-collect-model:before {
+  content: "\56cc";
+}
+
+.icon-collect-document:before {
+  content: "\56ce";
+}
+
+.icon-material:before {
+  content: "\560b";
+}
+
+.icon-edit-property:before {
+  content: "\56b8";
+}
+
+.icon-product:before {
+  content: "\56b9";
+}
+
+.icon-change-task:before {
+  content: "\56ba";
+}
+
+.icon-change-request:before {
+  content: "\56bb";
+}
+
+.icon-change:before {
+  content: "\56bc";
+}
+
+.icon-compare:before {
+  content: "\56bd";
+}
+
+.icon-edit-bom:before {
+  content: "\56be";
+}
+
+.icon-online-editing:before {
+  content: "\56a5";
+}
+
+.icon-component-parts:before {
+  content: "\56a6";
+}
+
+.icon-office-document:before {
+  content: "\56a7";
+}
+
+.icon-online-preview:before {
+  content: "\56a8";
+}
+
+.icon-create-publishing-process:before {
+  content: "\56a9";
+}
+
+.icon-baseline:before {
+  content: "\56aa";
+}
+
+.icon-attachment:before {
+  content: "\56ab";
+}
+
+.icon-regular-part:before {
+  content: "\56ac";
+}
+
+.icon-add-filter:before {
+  content: "\56ad";
+}
+
+.icon-replace-owner:before {
+  content: "\56ae";
+}
+
+.icon-variant-part:before {
+  content: "\56af";
+}
+
+.icon-bom:before {
+  content: "\56b0";
+}
+
+.icon-save-workshop:before {
+  content: "\56b1";
+}
+
+.icon-set-status:before {
+  content: "\56b2";
+}
+
+.icon-regular-document:before {
+  content: "\56b3";
+}
+
+.icon-initiate-changes:before {
+  content: "\56b4";
+}
+
+.icon-replace:before {
+  content: "\56b5";
+}
+
+.icon-standard-library:before {
+  content: "\56b6";
+}
+
+.icon-clear-condition:before {
+  content: "\56b7";
+}
+
+.icon-main-file:before {
+  content: "\5691";
+}
+
+.icon-issue-report:before {
+  content: "\5692";
+}
+
+.icon-part-main-data:before {
+  content: "\5693";
+}
+
+.icon-content-compare:before {
+  content: "\5694";
+}
+
+.icon-mcad:before {
+  content: "\5695";
+}
+
+.icon-related:before {
+  content: "\5696";
+}
+
+.icon-change-notice:before {
+  content: "\5689";
+}
+
+.icon-zip:before {
+  content: "\5697";
+}
+
+.icon-partial-replace:before {
+  content: "\5698";
+}
+
+.icon-folder:before {
+  content: "\5699";
+}
+
+.icon-finished-part:before {
+  content: "\569a";
+}
+
+.icon-view-image:before {
+  content: "\569b";
+}
+
+.icon-global-replace:before {
+  content: "\569c";
+}
+
+.icon-configurable-parts:before {
+  content: "\569d";
+}
+
+.icon-merge:before {
+  content: "\569e";
+}
+
+.icon-amend:before {
+  content: "\569f";
+}
+
+.icon-pdf:before {
+  content: "\56a0";
+}
+
+.icon-ecad:before {
+  content: "\56a1";
+}
+
+.icon-create-issue-report:before {
+  content: "\56a2";
+}
+
+.icon-structural-comparison:before {
+  content: "\56a3";
+}
+
+.icon-lifecycle-redistribution:before {
+  content: "\56a4";
+}
+
+.icon-component-sync:before {
+  content: "\568d";
+}
+
+.icon-e-bom:before {
+  content: "\568c";
+}
+
+.icon-view-management:before {
+  content: "\568e";
+}
+
+.icon-image:before {
+  content: "\568f";
+}
+
+.icon-cad:before {
+  content: "\568a";
+}
+
+.icon-m-bom:before {
+  content: "\5690";
+}
+
+.icon-create-view-version:before {
+  content: "\568b";
+}
+

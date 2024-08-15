@@ -1,0 +1,190 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    width="1200px"
+    :append-to-body="true"
+    :title="i18n.move"
+    @closed="handleDialogClosed"
+>
+    <div
+        ref="header"
+        class="mb-xl flex justify-between"
+        v-if="isBatchEdit"
+    >
+        <div class="w-240 grow-0">
+            <erd-input
+                class="w-100p"
+                :placeholder="i18n.pleaseEnter"
+                clearable
+                v-model="searchName"
+            >
+            </erd-input>
+        </div>
+        <erd-button @click="handleBatchEdit"> {{i18n.batchEdit}} </erd-button>
+    </div>
+    <vxe-table
+        border
+        class="baseline-vxe-table"
+        max-height="400"
+        :data="filteredTableData"
+        header-cell-class-name="baseline-operate-table-header-cell"
+        show-overflow="title"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+        :edit-config="{...editConfig, icon: 'erd-iconfont erd-icon-edit'}"
+    >
+        <vxe-column
+            v-if="isBatchEdit"
+            type="checkbox"
+            width="40"
+            title=""
+            align="center"
+        ></vxe-column>
+        <vxe-column
+            type="seq"
+            width="48"
+            title=" "
+            align="center"
+        ></vxe-column>
+        <vxe-column
+            field="name"
+            :title="i18n.name"
+        ></vxe-column>
+        <vxe-column
+            field="code"
+            :title="i18n.code"
+        ></vxe-column>
+        <vxe-colgroup :title="i18n.context">
+            <vxe-column
+                field="context"
+                :title="i18n.before"
+            ></vxe-column>
+            <vxe-column
+                field="newContext"
+                :title="i18n.after"
+                :edit-render="{}"
+            >
+                <template #default="{ row }">
+                    <span
+                        :class="{'color-disabled': !getContextConfig(row.newContext)?.label}"
+                        :title="getContextConfig(row.newContext)?.label"
+                        >{{getContextConfig(row.newContext)?.label || i18n.pleaseSelect}}</span
+                    >
+                </template>
+                <template #edit="{ row }">
+                    <erd-ex-select
+                        size="small"
+                        popper-class="vxe-table--ignore-clear"
+                        class="w-100p baseline-select-container"
+                        filterable
+                        v-model="row.newContext"
+                        :options="contextOptions"
+                        @change="handleSingleContextChange(row)"
+                    >
+                    </erd-ex-select>
+                </template>
+            </vxe-column>
+        </vxe-colgroup>
+        <vxe-colgroup :title="i18n.folder">
+            <vxe-column
+                field="folder"
+                :title="i18n.before"
+            ></vxe-column>
+            <vxe-column
+                field="newFolder"
+                :title="i18n.after"
+                :edit-render="{}"
+            >
+                <template #default="{ row }">
+                    <span
+                        :class="{'color-disabled': !row.newFolder?.displayName}"
+                        :title="row.newFolder?.displayName"
+                        >{{row.newFolder?.displayName || i18n.pleaseSelect}}</span
+                    >
+                </template>
+                <template #edit="{ row }">
+                    <erd-tree-select
+                        popper-class="vxe-table--ignore-clear"
+                        class="w-100p baseline-select-container"
+                        v-model="row.newFolder"
+                        :data="folderTree"
+                        node-key="oid"
+                        filterable
+                        :props="{
+                            label: 'displayName',
+                            children: 'childList',
+                        }"
+                        clearable
+                        default-expand-all
+                        @change="handleSingleFolderChange(row)"
+                    >
+                    </erd-tree-select>
+                </template>
+            </vxe-column>
+        </vxe-colgroup>
+    </vxe-table>
+    <erd-ex-dialog
+        width="600px"
+        :visible.sync="visibleForBatchEdit"
+        :append-to-body="true"
+        :title="i18n.batchEdit"
+    >
+        <erd-form
+            :model="batchEditFormData"
+            label-position="right"
+            label-width="12.5%"
+        >
+            <erd-form-item :label="i18n.context">
+                <template #label>
+                    <span class="color-normal">{{i18n.context}}</span>
+                </template>
+                <erd-ex-select
+                    size="small"
+                    class="w-100p baseline-select-container"
+                    filterable
+                    v-model="batchEditFormData.context"
+                    :options="contextOptions"
+                    @change="handleContextChange(batchEditFormData.context)"
+                >
+                </erd-ex-select>
+            </erd-form-item>
+            <erd-form-item
+                :label="i18n.folder"
+                class="mb-0"
+            >
+                <template #label>
+                    <span class="color-normal">{{i18n.folder}}</span>
+                </template>
+                <erd-tree-select
+                    class="w-100p baseline-select-container"
+                    v-model="batchEditFormData.folder"
+                    :data="folderTree"
+                    node-key="oid"
+                    filterable
+                    :props="{
+                        label: 'displayName',
+                        children: 'childList',
+                    }"
+                    clearable
+                    :default-expanded-keys="folderExpandKeys"
+                >
+                </erd-tree-select>
+            </erd-form-item>
+        </erd-form>
+        <template slot="footer">
+            <erd-button
+                type="primary"
+                @click="saveBatchEditData"
+                >{{i18n.done}}</erd-button
+            >
+            <erd-button @click="visibleForBatchEdit = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <template slot="footer">
+        <erd-button
+            type="primary"
+            @click="handleMove"
+            >{{i18n.done}}</erd-button
+        >
+        <erd-button @click="visible = false">{{i18n.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

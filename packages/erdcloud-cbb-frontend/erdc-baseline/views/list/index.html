@@ -1,0 +1,84 @@
+<div
+    id="baseline-list"
+    class="h-100p"
+    v-cloak
+>
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        @callback="fnCallback"
+        class="bg-white"
+        ref="famViewTable"
+        :enable-scroll-load="true"
+    >
+        <template
+            slot="column:default:operation:content"
+            slot-scope="{scope}"
+        >
+            <fam-action-pulldown
+                :is-operation="true"
+                :ref="'famActionPulldown' + scope.rowIndex"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row, true]"
+                :default-btn-config="defaultBtnConfig"
+            ></fam-action-pulldown>
+        </template>
+        <template
+            slot="column:default:name:content"
+            slot-scope="{scope}"
+        >
+            <erd-button
+                type="text"
+                @click="fnEditTable(scope.row)"
+            >
+                {{ i18n.edit }}
+            </erd-button>
+        </template>
+        <template
+            :slot="`column:default:${baselineClassName}#persistableRef:content`"
+            slot-scope="{scope}"
+        >
+            <span>{{showPersistableRef(scope.row)}}</span>
+        </template>
+        <template v-slot:[slotName.identifierNo]="{ scope }">
+            <a
+                href="javascript:;"
+                :disabled="!scope.row.accessToView"
+                @click="handleView(scope.row)"
+            >
+                {{ getIdentifierNo(scope.row)}}
+            </a>
+        </template>
+    </fam-view-table>
+
+    <baseline-delete
+        ref="deleteDialog"
+        @success="reloadTable"
+    ></baseline-delete>
+    <baseline-rename
+        ref="renameDialog"
+        @success="reloadTable"
+    ></baseline-rename>
+    <revise-operate
+        ref="reviseDialog"
+        @success="reloadTable"
+    ></revise-operate>
+    <change-owner
+        ref="changeOwnerDialog"
+        @success="reloadTable"
+    ></change-owner>
+    <change-lifecycle
+        ref="changeLifecycleDialog"
+        @success="reloadTable"
+    ></change-lifecycle>
+    <refuse-tips ref="refuseTipsDialog"></refuse-tips>
+    <baseline-move
+        ref="moveDialog"
+        @success="reloadTable"
+    ></baseline-move>
+    <save-as
+        ref="saveAsDialog"
+        @success="reloadTable"
+    ></save-as>
+</div>

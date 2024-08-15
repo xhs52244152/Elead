@@ -1,0 +1,22 @@
+{
+  "name": "erdcloud-pdm-frontend",
+  "version": "3.1.0-rc4",
+  "scripts": {
+    "serve": "npx erdc-cli serve --proxy http://192.168.11.199/",
+    "build": "npx erdc-cli build --log",
+    "build:publish": "npx erdc-cli build --publish",
+    "lint": "npx eslint --ext .js .",
+    "lint:fix": "npx eslint --ext .js --fix .",
+    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.ddns.e-lead.cn:fontend/erdc-pdm.git"
+  },
+  "devDependencies": {
+    "erdc-cli": "~3.1.0-rc4",
+    "eslint": "^8.57.0",
+    "pnpm": "^8.15.6",
+    "prettier": "^3.2.5"
+  }
+}

@@ -1,0 +1,38 @@
+<div
+    id="workspace-relation-object"
+    class="work-relation-object bg-white h-100p pdm-table-hide-padding"
+    v-cloak
+>
+    <FamViewTable
+        v-if="checkpointRef"
+        v-loading="tableLoading"
+        ref="famViewTable"
+        :is-adaptive-height="true"
+        :view-table-config="viewTableConfig"
+        @handler-data="handlerData"
+    >
+        <template v-slot:[slotName.iterationInfoState]="{ scope }">
+            <span>
+                <span v-if="scope.row?.[iterationInfoState]">{{scope.row?.[iterationInfoState]}}</span>
+                <span v-else>--</span>
+            </span>
+            <span>;</span>
+            <span>
+                <span v-if="scope.row?.['fileStatus']">{{getFileStatus(scope.row?.['fileStatus'])}}</span>
+                <span v-else>--</span>
+            </span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[self, scope.row, {
+                inTable: true,
+                isBatch: false,
+            }]"
+            >
+            </FamActionPulldown>
+        </template>
+    </FamViewTable>
+</div>

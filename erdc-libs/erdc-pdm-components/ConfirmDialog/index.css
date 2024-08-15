@@ -1,0 +1,41 @@
+.delete-confirm-dialog .el-dialog__body {
+  padding: 20px;
+}
+.delete-confirm-dialog .el-dialog__footer {
+  border-top: none;
+  padding-top: 0px;
+  padding-bottom: 20px;
+}
+.delete-confirm-dialog .message-content .content-tip {
+  position: relative;
+}
+.delete-confirm-dialog .message-content .content-tip .el-icon-status {
+  position: absolute;
+  font-size: 24px !important;
+}
+.delete-confirm-dialog .message-content .content-tip p {
+  padding-left: 32px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  margin-bottom: 0px;
+}
+.delete-confirm-dialog .message-content .content-des {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 18px;
+}
+.delete-confirm-dialog .message-content .content-des_content {
+  margin: 12px 0px 12px;
+}
+.delete-confirm-dialog .message-content .content-des_no-content {
+  margin: 8px 0px 0px;
+  padding-left: 32px;
+}
+.delete-confirm-dialog .message-content .content-body .el-radio-group {
+  display: grid;
+  row-gap: 12px;
+}
+.delete-confirm-dialog .message-content .content-body .el-radio-group .el-radio__label {
+  padding-left: 8px !important;
+}/*# sourceMappingURL=index.css.map */

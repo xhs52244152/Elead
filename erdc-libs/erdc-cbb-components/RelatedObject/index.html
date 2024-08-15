@@ -1,0 +1,70 @@
+<!-- 增加对象 -->
+<FamAssociationObject
+    v-cloak
+    :visible.sync="innerVisible"
+    :class-name="className"
+    :table-key="tableKey"
+    :left-table-columns="innerLeftTableColumns"
+    :url-config="innerUrlConfig"
+    :title="innerTitle"
+    @after-request="afterRequest"
+    v-bind="$attrs"
+    v-on="_.omit($listeners, 'after-request')"
+    ref="famAssociationObjectRef"
+>
+    <template
+        #left-search-left
+        v-if="!defaultView"
+    >
+        <slot name="left-search-left">
+            <div class="flex justify-around">
+                <erd-select
+                    v-model="className"
+                    @change="viewTypeChange"
+                >
+                    <erd-option
+                        v-for="item in viewTypes"
+                        :key="item.className"
+                        :label="item.label"
+                        :value="item.className"
+                    >
+                    </erd-option>
+                </erd-select>
+                <erd-select
+                    v-model="typeOid"
+                    style="margin-right: 8px"
+                >
+                    <erd-option
+                        v-for="item in childTypes"
+                        :key="item.typeOid"
+                        :label="item.displayName"
+                        :value="item.typeOid"
+                    >
+                    </erd-option>
+                </erd-select>
+            </div>
+        </slot>
+    </template>
+    <template #column:default:icon="{data}">
+        <FamIcon
+            :value="getIcon(data.row)"
+            class="text-16"
+        ></FamIcon>
+    </template>
+    <template
+        v-for="(slot, slotName) in $slots"
+        v-slot:[slotName]
+    >
+        <slot :name="slotName"> </slot>
+    </template>
+    <template
+        v-for="(slot, slotName) in $scopedSlots"
+        v-slot:[slotName]="slotProps"
+    >
+        <slot
+            :name="slotName"
+            v-bind="slotProps"
+        >
+        </slot>
+    </template>
+</FamAssociationObject>

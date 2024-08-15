@@ -1,0 +1,19 @@
+#change-manage-list {
+    .change-type {
+        .el-form-item {
+            margin-bottom: 0;
+            margin-right: 0;
+        }
+        .fam-form-item-width-label .el-input .el-input__inner {
+            width: 80px;
+        }
+        .el-form-item__content > div{
+            height:26px !important;
+        }
+        
+    }
+    //顶部对齐
+    .left-header-contaienr{
+        align-items:flex-start !important;
+    }
+}

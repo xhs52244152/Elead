@@ -1,0 +1,27 @@
+<div v-if="innerVisible">
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="title"
+        :width="width"
+        custom-class="DialogCollectObjects"
+        @close="close"
+    >
+        <CollectObjects
+            ref="collectObjectsRef"
+            :class-name="getModuleClassName"
+            :table-data="tableData"
+        ></CollectObjects>
+
+        <span
+            slot="footer"
+            class="border-0"
+        >
+            <el-button
+                type="primary"
+                @click="confirm"
+                >{{i18n.confirm}}</el-button
+            >
+            <el-button @click="cancel">{{i18n.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

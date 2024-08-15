@@ -1,0 +1,25 @@
+<div id="pdm_AffectedObjects">
+    <div class="pb-xl">
+        <AffectedObjectList
+            v-bind="$attrs"
+            class="affect-margin"
+            :is-folded="isFolded"
+            :title="title"
+            :prob-oid="oid"
+            :is-details-entry="true"
+        ></AffectedObjectList>
+        <ImpactAnalysis
+            v-bind="$attrs"
+            :is-details-entry="true"
+            :container-ref="containerRef"
+            v-if="isShowAnalysis"
+        ></ImpactAnalysis>
+        <ProductObject
+            v-bind="$attrs"
+            type="product"
+            title="产生的对象"
+            v-if="isShowGenerated"
+            :is-details-entry="true"
+        ></ProductObject>
+    </div>
+</div>

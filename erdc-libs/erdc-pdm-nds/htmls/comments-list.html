@@ -1,0 +1,123 @@
+<div id="comments-list-container">
+    <!-- 一条主评论 -->
+    <div
+        class="item"
+        v-for="(item, index) of getRenderData"
+        :key="item.oid"
+    >
+        <div class="group main">
+            <!-- 主评论人员的信息 -->
+            <div class="group-left">
+                <img
+                    :src="item.commentUser.avatar"
+                    alt=""
+                />
+            </div>
+            <div class="group-right">
+                <div class="user-info">
+                    <div class="name">
+                        <!-- <span style="font-size: 14px; color: #5e5ef5;">{{ Number(index) + 1 }}L &nbsp;</span> -->
+                        <!-- 批注人名字 -->
+                        <p v-cloak>{{item.commentUser.name}}</p>
+                        <div class="oper">
+                            <!-- 回复 -->
+                            <i
+                                class="el-icon-chat-square"
+                                :title="i18n['回复']"
+                                @click="openReplyBox(item)"
+                            >
+                                {{i18n['回复']}}
+                            </i>
+                            <!-- 删除 -->
+                            <i
+                                class="el-icon-delete"
+                                :title="i18n['删除']"
+                                @click="removeComment(item)"
+                            >
+                                {{i18n['删除']}}
+                            </i>
+                        </div>
+                    </div>
+                    <!-- 批注时间 -->
+                    <div
+                        class="time"
+                        v-cloak
+                    >
+                        {{ item.commentTime }}
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- 主评论的内容 -->
+                    <p v-cloak>{{item.commentContent.text | decodeText}}</p>
+                    <!-- 有批注图片才插入图片元素 -->
+                    <a
+                        v-if="item.commentImage"
+                        @click="activeTagByUUID(item)"
+                        :title="i18n['在模型中查看批注']"
+                        href="javascript:void(0);"
+                        class="content-img"
+                    >
+                        <img
+                            :src="item.commentImage"
+                            @error="handleErrorImg"
+                            alt=""
+                        />
+                        <el-tag
+                            class="content-img-tag"
+                            effect="dark"
+                            >{{item | getTagType}}
+                        </el-tag>
+                    </a>
+                    <!-- 对当前主评论的回复 -->
+                    <template v-if="!_.isEmpty(item.replayComments)">
+                        <div
+                            v-for="replyItem of item.replayComments"
+                            :key="replyItem.oid"
+                            class="group reply"
+                            style="padding-left: 5px; margin: 5px 0; border-left: 3px solid #ccc"
+                        >
+                            <div class="group-left">
+                                <img
+                                    :src="replyItem.commentUser.avatar"
+                                    alt=""
+                                />
+                            </div>
+                            <div class="group-right reply">
+                                <div class="user-info">
+                                    <div class="name">
+                                        <p v-cloak>{{replyItem.commentUser.name}}</p>
+                                        <!-- 删除 -->
+                                        <div class="oper">
+                                            <i
+                                                class="el-icon-delete"
+                                                :title="i18n['删除']"
+                                                @click="removeComment(replyItem, true)"
+                                            >
+                                                {{i18n['删除']}}
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="time">{{replyItem.replayTime}}</div>
+                                </div>
+                                <div class="content">
+                                    <p>
+                                        <!-- @的人员默认从主评论里面找，即getRenderData的子项 -->
+                                        <span class="call">{{item.commentUser.name | formatReplyCall}}</span>
+                                        <span class="word-wrap normal-white-space">{{replyItem.replayContent}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- 对当前主评论的回复输入框 -->
+                    <div
+                        class="reply-content"
+                        v-show="!!item._isOpenReplyInput"
+                    >
+                        <comments-textarea @handle-submit="getReplyComments"></comments-textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

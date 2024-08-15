@@ -1,0 +1,49 @@
+<div
+    id="workspace-list"
+    class="h-100p"
+    v-cloak
+>
+    <FamViewTable
+        class="bg-white"
+        ref="famViewTable"
+        :is-adaptive-height="true"
+        :view-table-config="viewTableConfig"
+        @callback="renderTableCallback"
+        :enable-scroll-load="true"
+    >
+        <template #right:viewNavbar:end>
+            <SimpleSelect
+                v-model="group"
+                :default-props="{
+                    'label': 'label',
+                    'value': 'attrName'
+                }"
+                :label="i18n.group"
+                :options="groupOptions"
+                @change="refresh"
+            >
+            </SimpleSelect>
+        </template>
+        <template #column:default:erd.cloud.pdm.workspace.entity.EpmWorkspace#name:content="{ scope }">
+            <span
+                :class="{'color-primary cursor-pointer': !scope.row.isGroupRow,'font-bold':scope?.row?.oid==mainWorkSpaceOid}"
+                @click="handleNoClick(scope.row)"
+            >
+                {{scope.row['erd.cloud.pdm.workspace.entity.EpmWorkspace#name']}}
+            </span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                v-if="!scope.row.isGroupRow"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row, {
+                    inTable: true,
+                    isBatch: false,
+                }]"
+            >
+            </FamActionPulldown>
+        </template>
+    </FamViewTable>
+</div>

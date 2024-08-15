@@ -1,0 +1,79 @@
+<div
+    id="MainContentSource"
+    class="w-100p"
+    v-cloak
+>
+    <erd-contraction-panel
+        v-if="!hideCollapse"
+        :unfold.sync="panelUnfold"
+        :title="i18n['主要内容源']"
+    >
+        <template v-slot:content>
+            <div v-if="panelUnfold">
+                <FamDynamicForm
+                    ref="mainSourceForm"
+                    :form.sync="form"
+                    :data="formConfigs"
+                    :readonly="readonly"
+                >
+                    <template #main-content="scope">
+                        <MainContent
+                            v-bind="scope"
+                            :class-name="className"
+                            :outer-file-list="showFileList"
+                            :readonly="readonly"
+                            :vm="vm"
+                            :before-remove="beforeRemove"
+                            :on-success="onSuccess"
+                            :before-upload="beforeUpload"
+                            :isEpm="isEpm"
+                        >
+                        </MainContent>
+                    </template>
+                    <template
+                        v-for="(slot, slotName) in $scopedSlots"
+                        v-slot:[slotName]="slotProps"
+                    >
+                        <slot
+                            :name="slotName"
+                            v-bind="slotProps"
+                        >
+                        </slot>
+                    </template>
+                </FamDynamicForm>
+            </div>
+        </template>
+    </erd-contraction-panel>
+    <FamDynamicForm
+        v-else
+        ref="mainSourceForm"
+        :form.sync="form"
+        :data="formConfigs"
+        :readonly="readonly"
+    >
+        <template #main-content="scope">
+            <MainContent
+                v-bind="scope"
+                :class-name="className"
+                :outer-file-list="showFileList"
+                :readonly="readonly"
+                :vm="vm"
+                :before-remove="beforeRemove"
+                :on-success="onSuccess"
+                :before-upload="beforeUpload"
+                :isEpm="isEpm"
+            >
+            </MainContent>
+        </template>
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            >
+            </slot>
+        </template>
+    </FamDynamicForm>
+</div>

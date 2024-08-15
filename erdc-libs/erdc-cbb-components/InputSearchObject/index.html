@@ -1,0 +1,95 @@
+<div
+    id="input-search-object"
+    v-cloak
+>
+    <erd-popover
+        popper-class="vxe-table--ignore-clear"
+        placement="bottom"
+        width="400"
+        trigger="click"
+        v-model="dataValue"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
+        <slot name="content">
+            <!-- 默认内容 -->
+            <div class="h-200 overflow-auto p-10">
+                <div
+                    class="flex flex-column align-items-center color-disabled align-self-center position-absolute top-50p left-50p"
+                    style="transform: translate(-50%, -50%)"
+                    v-if="objectList.length == 0"
+                >
+                    <img
+                        :src="emptyImgSrc"
+                        :alt="i18n?.['暂无数据']"
+                    />
+                    <br />
+                    <span>{{i18n?.['暂无数据']}}</span>
+                </div>
+                <ul v-else>
+                    <li
+                        v-for="(item,index) in objectList"
+                        :key="index"
+                        @click.stop="handleChooseData(item)"
+                        :class="
+                    ['flex' ,'align-items-center', 'object-item' ,'h-32', 'color-normal', 
+                    'text-14' ,'truncate',item.accessToView?'cursor-pointer':'cursor-not-allowed']"
+                    >
+                        <span class="text-18 mr-sm">
+                            <FamIcon
+                                :value="getIcon(item)"
+                                class="text-16"
+                            ></FamIcon>
+                        </span>
+                        <span>{{item.identifierNo}},</span>
+                        <span>{{item.version}},</span>
+                        <span>{{item['lifecycleStatus.status']['displayName']}},</span>
+                        <span>{{item.name}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex justify-between align-items-center mt-normal mb-normal">
+                <erd-pagination
+                    :current-page="currentPage"
+                    :page-sizes="pageConfig.sizes"
+                    :page-size="pageSize"
+                    :layout="pageConfig.layout"
+                    :total="total"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                >
+                </erd-pagination>
+                <div>
+                    <span
+                        type="primary"
+                        class="mr-sm color-primary text-14 cursor-pointer"
+                        @click.stop="handleChooseObject"
+                        v-if="editRow&&editRow.isNew"
+                        >{{i18n?.['插入更多']}}</span
+                    >
+                    <span
+                        type="primary"
+                        class="color-primary text-14 cursor-pointer"
+                        @click.stop="handleClose()"
+                        >{{i18n?.['关闭']}}</span
+                    >
+                </div>
+            </div>
+            <erd-input
+                slot="reference"
+                @focus="handlefocus"
+                @input="handleRemoteMethod()"
+                v-model="keyword"
+                :placeholder="i18n?.['请输入名称或编码']"
+            >
+                <erd-button
+                    slot="append"
+                    @click.stop="handleChooseObject"
+                    v-if="editRow&&editRow.isNew"
+                >
+                    <erd-icon icon="filter-condition"></erd-icon>
+                </erd-button>
+            </erd-input>
+        </slot>
+    </erd-popover>
+</div>

@@ -1,0 +1,15 @@
+<div class="basic-work-space">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18n.convention"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="formData"
+                :data="formConfigs"
+            >
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

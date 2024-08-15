@@ -1,0 +1,84 @@
+<div
+    class="w-100p"
+    v-if="!readonly"
+    v-cloak
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="title"
+    >
+        <template v-slot:header-right>
+            <div
+                v-if="!readonly"
+                v-show="panelUnfold"
+                class="btn-group flex"
+            >
+                <template v-if="!isDetailsEntry">
+                    <FamActionButton
+                        class="mr-normal"
+                        v-if="!probOid"
+                        :is-operation="false"
+                        :action-config="buttonActionConfig"
+                        :is-default-btn-type="true"
+                        @click="actionClick"
+                    >
+                    </FamActionButton>
+                    <FamActionPulldown
+                        class="action-pulldown"
+                        :is-operation="true"
+                        :action-data="selectedData"
+                        :args="[vm, selectedData]"
+                        :action-config="actionConfig"
+                        :default-btn-config="defaultBtnConfig"
+                    ></FamActionPulldown>
+                </template>
+                <template v-else="isDetailsEntry">
+                    <erd-button
+                        type="fill-icon"
+                        icon="el-icon-refresh"
+                        @click="getProductTable(oid)"
+                    ></erd-button>
+                </template>
+            </div>
+        </template>
+        <template v-slot:content>
+            <FamErdTable
+                ref="erdTable"
+                :column="columns"
+                :data="tableData"
+                :maxLine="10"
+                border
+                show-overflow
+                auto-resize
+                @checkbox-change="checkboxChange"
+                @checkbox-all="checkboxAll"
+            >
+                <template #column:default:icon="{data}">
+                    <FamIcon
+                        :value="getIcon(data.row)"
+                        class="text-16"
+                    ></FamIcon>
+                </template>
+                <template #column:default:identifierNo="{data}">
+                    <a
+                        href="javascript:;"
+                        @click="handleGoDetail(data.row)"
+                        >{{data.row.identifierNo}}</a
+                    >
+                </template>
+            </FamErdTable>
+            <RelatedObject
+                v-if="showDialog"
+                ref="assRef"
+                :visible.sync="showDialog"
+                @after-request="afterRequest"
+                @submit="submit"
+                :is-unfixed-source="true"
+                :leftTitle="leftTitle"
+                :left-table-columns="tableColumns"
+                :view-types-list="viewTypes"
+            >
+            </RelatedObject>
+        </template>
+    </erd-contraction-panel>
+</div>

@@ -1,0 +1,37 @@
+.lifecyle-step {
+  padding: 9px 12px 0px;
+}
+.lifecyle-step .el-step.is-vertical .el-step__head {
+  width: 12px;
+}
+.lifecyle-step .el-step.is-vertical .el-step__line {
+  left: 6px;
+  background: #D9D9D9;
+}
+.lifecyle-step .el-step.is-vertical .el-step__main {
+  padding-left: 4px;
+}
+.lifecyle-step .el-step.is-vertical .el-step__title {
+  line-height: 32px;
+  padding-bottom: 0px;
+  font-size: 14px;
+  position: relative;
+  top: -10px;
+}
+.lifecyle-step .el-step__icon {
+  width: 14px;
+  height: 14px;
+  background: #D9D9D9;
+}
+.lifecyle-step .el-step__icon.is-text {
+  top: -2px;
+}
+.lifecyle-step .el-step__icon-inner {
+  display: none;
+}
+.lifecyle-step .el-steps .el-step__head.is-process .el-step__icon {
+  background: #567FFD;
+}
+.lifecyle-step .el-step__title.is-process {
+  color: #567FFD;
+}/*# sourceMappingURL=index.css.map */

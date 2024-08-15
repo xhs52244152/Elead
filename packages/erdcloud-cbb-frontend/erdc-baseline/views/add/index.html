@@ -1,0 +1,158 @@
+<div class="baseline-add-container h-100p p-lg flex-column flex">
+    <div class="plr-xl">
+        <FormPageTitle
+            v-bind="pageTitle"
+            class="pb-lg"
+        />
+    </div>
+    <erd-scrollbar
+        class="bg-white p-xl grow-1"
+        v-fam-fs="{ marginBottom: 140 }"
+    >
+        <erd-form
+            :model="formData"
+            label-position="right"
+            label-width="12.5%"
+            :rules="rules"
+            ref="baseFormRef"
+            :validate-on-rule-change="false"
+        >
+            <erd-form-item :label="i18n.addToBaseline">
+                <erd-row>
+                    <erd-col
+                        :span="24"
+                        class="block"
+                    >
+                        <erd-radio-group v-model="formData.baselineMode">
+                            <erd-radio label="1">{{i18n.existedBaselineOpt}}</erd-radio>
+                            <erd-radio label="2">{{i18n.newBaselineOpt}}</erd-radio>
+                        </erd-radio-group>
+                    </erd-col>
+                </erd-row>
+            </erd-form-item>
+            <erd-form-item
+                :label="i18n.selectBaseline"
+                v-if="!isCreateBaselineMode"
+                prop="baseline"
+            >
+                <erd-row>
+                    <erd-col
+                        :span="24"
+                        class="flex"
+                    >
+                        <erd-ex-select
+                            filterable
+                            remote
+                            :placeholder="i18n.selectTip"
+                            :remote-method="handleBaselineSearch"
+                            :loading="loadingBaselineList"
+                            v-model="formData.baseline"
+                        >
+                            <erd-option
+                                v-for="item in baselineOptions"
+                                :key="item.oid"
+                                :label="item.identifierNo + ' ' + item.name"
+                                :value="item.oid"
+                            >
+                            </erd-option>
+                        </erd-ex-select>
+                    </erd-col>
+                </erd-row>
+            </erd-form-item>
+        </erd-form>
+        <baseline-form
+            v-if="isCreateBaselineMode"
+            ref="baselineFormRef"
+            :pid="pid"
+            view-type="CREATE"
+        >
+        </baseline-form>
+        <erd-contraction-panel
+            :unfold.sync="panelUnfold"
+            :title="i18n.baselineObject"
+            class="mt-2xl"
+        >
+            <template v-slot:header-right>
+                <div
+                    class="btn-group font-0"
+                    v-show="panelUnfold"
+                >
+                    <erd-button @click="handleRelateObjectAdd">{{i18n.add}}</erd-button>
+                    <erd-button @click="handleRelateObjectGather">{{i18n.gatherRelateObject}}</erd-button>
+                    <erd-button @click="handleSelectedRelateObjectRemove">{{i18n.remove}}</erd-button>
+                </div>
+            </template>
+            <template v-slot:content>
+                <erd-table
+                    border
+                    :data="baselineList"
+                    :column="columns"
+                    ref="erdTable"
+                    show-overflow
+                    auto-resize
+                    isEmbedTable
+                    :row-config="{isCurrent: true, isHover: true}"
+                    @checkbox-all="handleSelectionAll"
+                    @checkbox-change="handleSelectionChange"
+                >
+                    <template #column:default:operation="{data}">
+                        <erd-button
+                            @click="handleRelateObjectRemove(data)"
+                            type="text"
+                            >{{i18n.remove}}</erd-button
+                        >
+                    </template>
+                </erd-table>
+            </template>
+        </erd-contraction-panel>
+    </erd-scrollbar>
+    <div class="form-content_bot flex ptb-lg items-center position-relative justify-center bg-white">
+        <erd-button
+            type="primary"
+            v-loading="loading"
+            @click="!loading && handleConfirmBtnClick()"
+        >
+            {{i18n.done}}
+        </erd-button>
+        <erd-button @click="handleClose"> {{i18n.cancel}} </erd-button>
+    </div>
+
+    <!-- 增加对象 -->
+    <RelatedObject
+        v-if="objectForm.visible"
+        :visible.sync="objectForm.visible"
+        :url-config="objectForm.urlConfig"
+        :excluded="objectForm.excluded"
+        :view-types-list="viewTypesList"
+        @submit="handleAssociationDone"
+    ></RelatedObject>
+
+    <!-- 收集相关对象 -->
+    <erd-ex-dialog
+        size="large"
+        :title="collectForm.title"
+        :visible.sync="collectForm.visible"
+        @close="collectForm.tableData = []"
+    >
+        <CollectObjects
+            ref="collectObjectsRef"
+            v-if="collectForm.visible"
+            :table-data="collectForm.tableData"
+            :class-name="collectForm.className"
+        ></CollectObjects>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="!collectForm.loading && collectObjectClick()"
+                >{{ i18n['confirm'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'collectForm' })">{{ i18n['cancel'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 是否替换 -->
+    <version-replace-dialog
+        ref="versionReplaceDialogRef"
+        @confirm="handleReplaceSubmit"
+    ></version-replace-dialog>
+</div>

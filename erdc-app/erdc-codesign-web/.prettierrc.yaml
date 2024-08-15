@@ -1,0 +1,19 @@
+# Reference to https://prettier.io/docs/en/options.html
+
+semi: true
+singleQuote: true
+jsxSingleQuote: false
+bracketSpacing: true
+bracketSameLine: false
+singleAttributePerLine: true
+trailingComma: none
+printWidth: 120
+tabWidth: 4
+
+overrides:
+  - files: '**/*.html'
+    options:
+      singleQuote: false
+      parser: 'html'
+      singleAttributePerLine: true
+      printWidth: 120

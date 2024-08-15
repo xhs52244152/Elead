@@ -1,0 +1,66 @@
+<div
+    id="replace-management"
+    v-cloak
+>
+    <erd-contraction-panel
+        :title="i18n['全局替代管理']"
+        :unfold.sync="globalBaseInfoUnfold"
+    >
+        <div style="height: 300px">
+            <fam-view-table
+                ref="globalTable"
+                :view-table-config="globalViewTableConfig"
+                show-overflow
+            >
+                <template v-slot:[slotName.replacementType]="{ scope }"> {{i18n['全局替代部件']}} </template>
+                <template v-slot:[slotName.isTwoWay]="{ scope }">
+                    <erd-checkbox
+                        v-model="scope.row.isTwoWay"
+                        @change="val=>{handleChangeIsDB(scope.row)}"
+                        :disabled="scope.row.disabled"
+                    ></erd-checkbox>
+                </template>
+            </fam-view-table>
+        </div>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="localBaseInfoUnfold"
+        :title="i18n['局部指定替代管理']"
+    >
+        <div style="height: 300px">
+            <fam-view-table
+                ref="localTable"
+                :view-table-config="localViewTableConfig"
+                show-overflow
+                is-adaptive-height
+            >
+                <template v-slot:[slotName.localReplacementType]="{ scope }">
+                    <span>{{i18n['局部指定替代部件']}}</span>
+                </template>
+                <template v-slot:[slotName.parentPart]="{ scope }">
+                    <span>{{scope.row.parentPart}}</span>
+                </template>
+            </fam-view-table>
+        </div>
+    </erd-contraction-panel>
+    <FamAssociationObject
+        v-if="visible"
+        :visible.sync="visible"
+        @after-request="handleAfterRequest"
+        :left-table-columns="associationColumns"
+        @submit="handleAssociationSubmit"
+        :url-config="urlConfig"
+        :className="className"
+        :tableKey="tableKey"
+    >
+        <template #left-search-left>
+            <erd-ex-select
+                v-model="type"
+                :options="options"
+                @change="handleChangeType"
+                class="mr-normal"
+            >
+            </erd-ex-select>
+        </template>
+    </FamAssociationObject>
+</div>

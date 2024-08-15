@@ -1,0 +1,12 @@
+.info-compare-route .el-page-header__content {
+  color: #333;
+  font-weight: 700;
+}
+
+.info-compare-route .el-page-header .el-page-header__left {
+  color: var(--colorPrimary);
+}
+
+.info-compare-drop .checkboxLists {
+  max-height: 260px;
+}

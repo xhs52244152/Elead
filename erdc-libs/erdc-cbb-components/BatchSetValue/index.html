@@ -1,0 +1,24 @@
+<erd-ex-dialog
+    :title="i18n.batchEdit"
+    :visible.sync="innerVisible"
+    v-on="$listeners"
+    width="600px"
+>
+    <SetValue
+        :class-name="className"
+        :container-ref="innerContainerRef"
+        v-bind="$attrs"
+        ref="setValueRef"
+        v-if="innerVisible"
+    >
+    </SetValue>
+    <template #footer>
+        <erd-button
+            type="primary"
+            v-loading="loading"
+            @click="!loading && batchChangeAttrClick()"
+            >{{ i18n.confirm }}
+        </erd-button>
+        <erd-button @click="innerVisible = false;">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

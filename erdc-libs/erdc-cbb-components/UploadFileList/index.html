@@ -1,0 +1,160 @@
+<div
+    id="upload-file-list"
+    class="w-100p"
+    v-cloak
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18n['附件']"
+    >
+        <template v-slot:header-right>
+            <div
+                v-if="!readonly && panelUnfold"
+                class="btn-group"
+            >
+                <!-- 自定义上传 -->
+                <!-- <fam-upload
+                    ref="myUpload"
+                    class="inline-block"
+                    :show-file-list="false"
+                    :on-success="onSuccess"
+                    :action="innerUploadAttachUrl"
+                    :http-request="httpRequest"
+                    :chunk-upload="chunkUpload"
+                    :multipart-upload-actions="multipartUploadActions"
+                    multiple
+                >
+                    <erd-button v-if="isAttachmentBtn">{{i18n['上传附件']}}</erd-button>
+                </fam-upload> -->
+                <!-- 适配平台上传 -->
+                <fam-upload
+                    ref="myUpload"
+                    class="inline-block"
+                    :show-file-list="false"
+                    :on-success="onSuccess"
+                    multiple
+                    :class-name="className"
+                >
+                    <erd-button v-if="isAttachmentBtn">{{i18n['上传附件']}}</erd-button>
+                </fam-upload>
+                <erd-button
+                    v-if="isUrlBtn"
+                    @click="uploadUrl"
+                    >{{i18n['添加URL']}}</erd-button
+                >
+            </div>
+        </template>
+        <template v-slot:content>
+            <erd-table
+                ref="erdTable"
+                :column="innerColumns"
+                :data="showData"
+                :maxLine="10"
+                :edit-config="readonly ? {} : {trigger: 'click', mode: 'cell', beforeEditMethod: beforeEditMethod}"
+                border
+                show-overflow
+                auto-resize
+            >
+                <!-- 图标 -->
+                <template #column:default:icon="{data}">
+                    <i :class="data.row.standardIconStr"></i>
+                </template>
+                <!-- 名称 -->
+                <template #column:default:name="{data}">
+                    <template>
+                        <a
+                            v-if="data.row.source == urlType"
+                            class="color-primary"
+                            :href="data.row.urlLocation"
+                            target="_blank"
+                            >{{data.row.name}}</a
+                        >
+                        <span v-else>{{data.row.name}}</span>
+                    </template>
+                </template>
+                <!-- 名称-编辑 -->
+                <template #column:edit:name="{data}">
+                    <template v-if="!readonly && data.row.source == urlType">
+                        <erd-input
+                            @change="handleEditUrlFile(data.row)"
+                            v-model="data.row.name"
+                            :maxlength="100"
+                        ></erd-input>
+                    </template>
+                </template>
+                <!-- 类型 -->
+                <template #column:default:type="{data}">
+                    <span v-if="data.row.role === 'PRIMARY'">{{i18n['主要内容源']}}</span>
+                    <span v-else>{{i18n['附件']}}</span>
+                </template>
+                <!-- url -->
+                <template #column:default:urlLocation="{data}">
+                    <template>
+                        <span>{{data.row.urlLocation}}</span>
+                    </template>
+                </template>
+                <!-- url-编辑 -->
+                <template #column:edit:urlLocation="{data}">
+                    <template v-if="!readonly">
+                        <erd-input
+                            v-if="data.row.source == urlType"
+                            @change="handleEditUrlFile(data.row)"
+                            v-model="data.row.urlLocation"
+                            :maxlength="200"
+                        ></erd-input>
+                    </template>
+                </template>
+                <!-- 文件大小 -->
+                <template #column:default:size="{data}">
+                    <div>{{data.row.size}}</div>
+                </template>
+                <!-- 创建时间 -->
+                <template #column:default:createTime="{data}">
+                    <div>{{data.row.createTime}}</div>
+                </template>
+                <!-- 更新时间 -->
+                <template #column:default:updateTime="{data}">
+                    <div>{{data.row.updateTime}}</div>
+                </template>
+                <template #column:default:description="{data}">
+                    <span>{{data.row.description}}</span>
+                </template>
+                <template #column:edit:description="{data}">
+                    <erd-input
+                        class="h-30-textarea"
+                        rows="1"
+                        :maxlength="200"
+                        show-word-limit
+                        @change="handleEditUrlFile(data.row)"
+                        v-model="data.row.description"
+                    ></erd-input>
+                </template>
+                <!--操作-->
+                <template #column:default:operation="{data}">
+                    <fam-action-pulldown
+                        :is-operation="true"
+                        :action-config="getActionConfig(data.row)"
+                        :action-data="data.row"
+                        :extend-disabled-validate="extendDisabledValidate(data.row)"
+                        @click="onCommand"
+                    ></fam-action-pulldown>
+                </template>
+            </erd-table>
+        </template>
+    </erd-contraction-panel>
+    <FamFilePreview
+        app-name="PDM"
+        ref="filePreview"
+        @close="previewClose"
+        @done="handleUpdate"
+    >
+        <template #footer="scope">
+            <erd-button
+                v-if="scope.isViewMode && scope.type === 'onlyoffice'"
+                type="text"
+                @click="switchToEdit"
+                >{{i18n['编辑']}}</erd-button
+            >
+        </template>
+    </FamFilePreview>
+</div>

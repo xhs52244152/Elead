@@ -1,0 +1,95 @@
+<div v-if="innerVisible">
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="title"
+        :width="width"
+        custom-class="DialogConfirm"
+        @close="close"
+    >
+        <div>
+            <div
+                class="flex"
+                style="align-items: center"
+            >
+                <i class="el-icon-warning text-24 mr-normal"></i>
+                <span class="text-16 font-bold">{{confirmTitle}}</span>
+            </div>
+            <div :class="[type === 'delete' ? 'ml-32' : 'ml-0' ]">
+                <span class="block font-12 mtb-lg">{{tips}}</span>
+                <template v-if="type === 'delete'">
+                    <erd-radio-group v-model="deleteType">
+                        <erd-radio
+                            class="block mt-lg"
+                            v-for="(option, index) in options"
+                            :key="index"
+                            :label="option.value"
+                            :disabled="option.disabled"
+                        >
+                            {{ option.label }}
+                        </erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-else-if="type === 'reversion'">
+                    <FamErdTable
+                        border
+                        :maxLine="10"
+                        :column="columns"
+                        :data="reversionData"
+                        ref="erdTable"
+                    >
+                        <template #column:header:rename="{data}">
+                            <span
+                                ><i
+                                    class="erd-iconfont erd-icon-edit"
+                                    style="margin-right: 4px"
+                                ></i
+                                >{{i18n.rename}}</span
+                            >
+                        </template>
+                        <template #column:default:rename="{data}">
+                            <erd-input
+                                :placeholder="i18n.enter"
+                                v-model="data.row.rename"
+                            >
+                            </erd-input>
+                        </template>
+                        <template #column:header:owner="{data}">
+                            <span
+                                ><i
+                                    class="erd-iconfont erd-icon-edit"
+                                    style="margin-right: 4px"
+                                ></i
+                                >{{i18n.owner}}</span
+                            >
+                        </template>
+                        <template #column:default:owner="{data}">
+                            <FamParticipantSelect
+                                fixed-height
+                                clearable
+                                searchScop="all"
+                                popper-class="vxe-table--ignore-clear"
+                                :default-value="defaultMember"
+                                :isgetdisable="false"
+                                :query-params="queryParams"
+                                :query-scope="queryScope"
+                                :show-type="['USER']"
+                                @change="(...args)=>(fnMemberSelect(...args, data.row))"
+                            ></FamParticipantSelect>
+                        </template>
+                    </FamErdTable>
+                </template>
+            </div>
+        </div>
+        <span
+            slot="footer"
+            class="border-0"
+        >
+            <el-button
+                type="primary"
+                @click="confirm"
+                >{{i18n.confirm}}</el-button
+            >
+            <el-button @click="cancel">{{i18n.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

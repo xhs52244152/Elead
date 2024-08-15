@@ -1,0 +1,28 @@
+<div
+    id="bom-view"
+    class="h-100p pdm-table-hide-padding"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        :is-adaptive-height="true"
+        :view-table-config="viewTableConfig"
+        :enable-scroll-load="true"
+    >
+        <template
+            :slot="`column:default:${bomViewClassName}#version:content`"
+            slot-scope="{scope}"
+        >
+            <span>{{scope.row['erd.cloud.pdm.part.entity.EtPartBomView#versionInfo.versionId']}}</span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[self, scope.row, '', '', 'PART_BOM_VIEW_LIST_OPERATE']"
+            >
+            </fam-action-pulldown>
+        </template>
+    </fam-view-table>
+</div>

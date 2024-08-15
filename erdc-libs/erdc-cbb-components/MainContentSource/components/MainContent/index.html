@@ -1,0 +1,46 @@
+<div
+    id="MainContent"
+    v-cloak
+>
+    <span v-if="readonly && !fileList.length">--</span>
+    <!-- 自定义上传 -->
+    <!-- <FamUpload
+        v-else
+        ref="famUpload"
+        :readonly="readonly"
+        :file-list="fileList"
+        :before-remove="beforeRemove"
+        :on-success="onSuccess"
+        :on-preview="onPreview"
+        :before-upload="beforeUpload"
+        :action="innerUploadAttachUrl"
+        :http-request="httpRequest"
+    ></FamUpload> -->
+    <!-- 使用平台的上传做的适配 -->
+    <FamUpload
+        v-else
+        ref="famUpload"
+        :readonly="readonly"
+        :file-list="fileList"
+        :before-remove="beforeRemove"
+        :on-success="onSuccess"
+        :on-preview="onPreview"
+        :before-upload="beforeUpload"
+        :class-name="className"
+    ></FamUpload>
+    <FamFilePreview
+        app-name="PDM"
+        ref="mainFilePreview"
+        @close="previewClose"
+        @done="handleUpdate"
+    >
+        <template #footer="scope">
+            <erd-button
+                v-if="scope.isViewMode && scope.type === 'onlyoffice'"
+                type="text"
+                @click="switchToEdit"
+                >{{i18n['编辑']}}</erd-button
+            >
+        </template>
+    </FamFilePreview>
+</div>

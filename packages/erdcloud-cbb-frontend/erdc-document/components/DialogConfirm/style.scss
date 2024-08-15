@@ -1,0 +1,17 @@
+.DialogConfirm {
+    .el-dialog__body {
+        padding: 16px;
+        padding-bottom: 0;
+        .el-radio-group {
+            .el-radio {
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+    .el-dialog__footer {
+        border-top: none;
+        padding: 16px;
+    }
+}

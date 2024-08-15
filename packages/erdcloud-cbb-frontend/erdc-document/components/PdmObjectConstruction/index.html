@@ -1,0 +1,48 @@
+<div
+    id="pdm_object_construction"
+    class="h-100p overflow-hidden flex flex-column"
+>
+    <object-construction
+        ref="ObjectConstruction"
+        :vm="vm"
+        :need-bom-view="false"
+        :class-name="getClassName"
+        :link-attr-name="getLinkAttrName"
+        :custom-tabs-config="tabsConfig"
+        :left-title="leftTitle"
+        :set-tabs="setTabs"
+        @info-change="updateInfo"
+    >
+        <!-- 自定义操作 -->
+        <template #ConstructionOperation="scope">
+            <PdmConstructionOperation
+                :info="info"
+                :className="getClassName"
+                :root-data="scope.data.rootData"
+                :vm="scope.vm"
+                @refresh="refresh"
+                @refreshNode="refreshNode"
+                @appendToNode="scope.defaultMethds.appendToNode"
+                @removeNode="scope.defaultMethds.removeNode"
+            ></PdmConstructionOperation>
+        </template>
+        <!-- 自定义标题（右侧） -->
+        <template #right-title="scope">
+            <FormPageTitle
+                class="ptrl-xl pb-sm"
+                :isShowPulldown="false"
+                :title="rightTitle"
+                :is-show-tag="true"
+                :tag-name="tagName"
+                :static-title="true"
+            >
+                <template #icon>
+                    <FamIcon
+                        :value="icon"
+                        class="mr-sm"
+                    ></FamIcon>
+                </template>
+            </FormPageTitle>
+        </template>
+    </object-construction>
+</div>

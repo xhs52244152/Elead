@@ -1,0 +1,39 @@
+<!--
+ * @Author: wyl
+ * @Date: 2021-11-10 11:59:15
+ * @Description: 
+ * @LastEditTime: 2022-03-18 09:53:03
+-->
+<!-- 评论批注 -->
+<div id="comment-textarea-container">
+    <div class="comment-area-box">
+        <erd-input
+            class="textarea-beautify"
+            type="textarea"
+            :placeholder="i18n?.['写下你的评论']"
+            maxlength="100"
+            show-word-limit
+            @keydown.enter.native="keyDown"
+            v-model="comments.content"
+            @input.native="comments.content = $event.target.value"
+        >
+        </erd-input>
+        <div class="oper-box">
+            <p>{{i18n?.['发表']}}</p>
+            <div>
+                <erd-button
+                    size="mini"
+                    type="primary"
+                    @click="yes()"
+                    style="border: transparent"
+                    >{{i18n?.['确定']}}</erd-button
+                >
+                <erd-button
+                    size="mini"
+                    @click="cancel()"
+                    >{{i18n?.['取消']}}</erd-button
+                >
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<div
+    id="collect-objects"
+    v-loading="loading"
+    v-cloak
+>
+    <div class="flex justify-between align-items-center">
+        <erd-input
+            clearable
+            v-model="searchKey"
+            @change="searchKeyChange"
+            style="width: 260px"
+            :placeholder="i18n['请输入']"
+        ></erd-input>
+        <div class="flex align-items-center">
+            <erd-button
+                type="primary"
+                v-if="buttonInfo"
+                :disabled="buttonInfo.COLLECT_OBJECT_DISABLED"
+                @click="!loading && buttonInfo.onclick(buttonInfo)"
+                >{{ buttonInfo?.label || '' }}</erd-button
+            >
+            <erd-pulldown right>
+                <span class="erd-dropdown-link">{{i18n['操作']}}</span>
+                <template #pulldown>
+                    <erd-pulldown-menu>
+                        <erd-pulldown-menu-item
+                            v-for="(item, index) in pulldownList"
+                            :key="index"
+                            :disabled="item.COLLECT_OBJECT_DISABLED"
+                            @click="!loading && item.onclick(item)"
+                        >
+                            {{ item.label }}
+                        </erd-pulldown-menu-item>
+                    </erd-pulldown-menu>
+                </template>
+            </erd-pulldown>
+        </div>
+    </div>
+    <FamErdTable
+        style="margin-top: 16px"
+        border
+        :row-config="{isCurrent: true, isHover: true, keyField: 'oid'}"
+        :checkbox-config="{ reserve: true, checkMethod: checkMethod }"
+        :column-config="{resizable: true}"
+        align="left"
+        :data="innerTableData"
+        :column="innerColumn"
+        :height="'500px'"
+        show-overflow
+        v-bind="$attrs"
+        v-on="$listeners"
+        ref="erdTable"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+    >
+        <template #column:default:identifierNo="scope">
+            <i :class="[formatterDisplayName({ row: scope?.data?.row, column: { field: 'icon' } })]"></i>
+            <span>{{formatterDisplayName(scope.data)}}</span>
+        </template>
+        <template #column:default:ruleName="scope">
+            <!-- <erd-tooltip
+                placement="top"
+                effect="light"
+            >
+                <div
+                    slot="content"
+                    style="width: 260px; padding: 6px"
+                >
+                    <div>
+                        {{i18n['相关对象']}} -
+                        <i :class="[formatterDisplayName({ row: scope?.data?.row, column: { field: 'icon' } })]"></i>
+                        <span
+                            >{{formatterDisplayName({ row: scope?.data?.row, column: { field: 'identifierNo' }
+                            })}}</span
+                        >
+                    </div>
+                    <template v-if="showAssociatedInfo({ row: scope?.data?.row, column: { field: 'ruleName' } })">
+                        <div style="margin: 6px 0; width: 100%; height: 1px; background-color: #dcdfe6"></div>
+                        <div>
+                            {{i18n['作为']}} {{formatterDisplayName(scope.data)}} {{i18n['包含在内']}}
+                            <br />
+                            {{getAssociatedInfo(scope.data)}}
+                        </div>
+                    </template>
+                </div> -->
+                <span>{{formatterDisplayName(scope.data)}}</span>
+            <!-- </erd-tooltip> -->
+        </template>
+        <template #column:default:operation="scope">
+            <erd-button
+                type="text"
+                :disabled="getRemoveObjectDisabled(scope?.data)"
+                @click="removeCollectObjectOne(scope?.data)"
+            >
+                {{i18n['移除']}}
+            </erd-button>
+        </template>
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            >
+            </slot>
+        </template>
+    </FamErdTable>
+</div>

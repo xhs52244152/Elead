@@ -1,0 +1,102 @@
+<erd-ex-dialog
+    custom-class="delete-confirm-dialog"
+    :title="title"
+    :destroy-on-close="true"
+    :visible.sync="visible"
+    :width="width || '400px'"
+    @close="close"
+>
+    <div class="message-content">
+        <div class="content-tip">
+            <i class="el-icon-status el-icon-warning"></i>
+            <p>{{ confirmTitle }}</p>
+        </div>
+        <div :class="['content-des', hasContent ? 'content-des_content' : 'content-des_no-content' ]">{{ tips }}</div>
+        <div class="content-body">
+            <template v-if="type === 'delete'">
+                <erd-radio-group v-model="deleteType">
+                    <erd-radio
+                        :disabled="hasDraft"
+                        :label="1"
+                        >{{ i18n.deleteType1 }}</erd-radio
+                    >
+                    <erd-radio
+                        :disabled="hasDraft"
+                        :label="2"
+                        >{{ i18n.deleteType2 }}</erd-radio
+                    >
+                    <erd-radio :label="3">{{ i18n.deleteType3 }}</erd-radio>
+                </erd-radio-group>
+            </template>
+            <template v-else-if="type === 'reversion'">
+                <FamErdTable
+                    border
+                    :maxLine="10"
+                    :column="columns"
+                    :data="rowList"
+                    ref="erdTable"
+                >
+                    <template #column:header:rename="{data}">
+                        <span
+                            ><i
+                                class="erd-iconfont erd-icon-edit"
+                                style="margin-right: 4px"
+                            ></i
+                            >{{i18n.rename}}</span
+                        >
+                    </template>
+                    <template #column:default:rename="{data}">
+                        <erd-input
+                            :placeholder="i18n.enter"
+                            v-model="data.row.rename"
+                        >
+                        </erd-input>
+                    </template>
+                    <template #column:header:owner="{data}">
+                        <span
+                            ><i
+                                class="erd-iconfont erd-icon-edit"
+                                style="margin-right: 4px"
+                            ></i
+                            >{{i18n.owner}}</span
+                        >
+                    </template>
+                    <template #column:default:owner="{data}">
+                        <FamParticipantSelect
+                            fixed-height
+                            clearable
+                            searchScop="all"
+                            popper-class="vxe-table--ignore-clear"
+                            :default-value="defaultMember"
+                            :isgetdisable="false"
+                            :query-params="queryParams"
+                            :query-scope="queryScope"
+                            :show-type="['USER']"
+                            @change="(...args)=>(fnMemberSelect(...args, data.row))"
+                        ></FamParticipantSelect>
+                    </template>
+                </FamErdTable>
+            </template>
+            <template v-else-if="type==='base'">
+                <FamErdTable
+                    border
+                    :maxLine="10"
+                    :column="columns"
+                    :data="rowList"
+                    ref="erdTable"
+                >
+                </FamErdTable>
+            </template>
+        </div>
+    </div>
+    <template #footer>
+        <erd-button
+            type="primary"
+            v-loading="loading"
+            @click="!loading && confirm()"
+        >
+            {{ i18n.confirm }}
+        </erd-button>
+        <erd-button @click="cancel">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

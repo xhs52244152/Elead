@@ -1,0 +1,48 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    width="1200px"
+    custom-class="baseline-operate-dialog"
+    :append-to-body="true"
+    :title="`确认${actionName}`"
+    @close="close"
+>
+    <div class="baseline-refuse">
+        <div class="el-message-box__container">
+            <div class="el-message-box__status el-icon-warning"></div>
+            <div class="el-message-box__message">
+                <p class="font-bold">{{`确认${actionName}所选数据(部分数据不可${actionName})`}}</p>
+            </div>
+        </div>
+        <div class="baseline-tips mt-lg">
+            <div class="text-12 mtb-lg">{{`以下数据不可${actionName},因为无权限`}}</div>
+            <div class="baseline-refuse-body overflow-hidden">
+                <FamErdTable
+                    border
+                    class="m-lg"
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    max-height="300"
+                    :data="data"
+                    :column="column"
+                    show-overflow
+                    ref="erdTable"
+                    header-cell-class-name="baseline-operate-table-header-cell"
+                >
+                </FamErdTable>
+            </div>
+        </div>
+    </div>
+    <div
+        class="flex justify-center mt-20"
+        style="margin-top: 20px !important"
+    >
+        <erd-button
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18n.done }}
+        </erd-button>
+        <erd-button @click="close">{{ i18n.cancel }}</erd-button>
+    </div>
+</erd-ex-dialog>

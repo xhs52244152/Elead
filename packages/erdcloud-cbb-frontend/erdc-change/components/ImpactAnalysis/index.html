@@ -1,0 +1,142 @@
+<div
+    class="w-100p"
+    v-if="!readonly"
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="title"
+    >
+        <template v-slot:header-right>
+            <div
+                v-if="!readonly"
+                v-show="isShow && panelUnfold"
+                class="btn-group"
+            >
+                <FamActionButton
+                    :is-operation="false"
+                    :action-config="actionConfig"
+                    :is-default-btn-type="true"
+                    @click="actionClick"
+                >
+                </FamActionButton>
+            </div>
+        </template>
+        <template v-slot:content>
+            <FamErdTable
+                border
+                ref="erdTable"
+                :column="columns"
+                :data="tableData"
+                :row-config="{isCurrent: true, isHover: true, useKey: true, keyField: 'id' }"
+                :column-config="{resizable: true}"
+                height="100%"
+                align="left"
+                :maxLine="10"
+                :validator="validRules"
+                auto-resize
+                show-overflow
+                :tooltip-config="{contentMethod: contentMethod}"
+                :row-class-name="tableRowClassName"
+                :cell-class-name="tableCellClassName"
+                :edit-config="{trigger: 'click', mode: 'cell', beforeEditMethod: beforeEditMethod}"
+                :edit-rules="validRules"
+                class="w-100p h-100p"
+                @edit-actived="editActive"
+                @edit-closed="editClosed"
+                @checkbox-change="selectChangeEvent"
+                @checkbox-all="checkboxAll"
+            >
+                <!-- 影响要素 -->
+                <template #column:default:name="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row[data.column.property]}}</span>
+                    <span v-else-if="data.row[data.column.property]">{{data.row[data.column.property]}}</span>
+                    <span
+                        v-else
+                        style="color: #999"
+                        >{{i18n.pleaseEnter}}</span
+                    >
+                </template>
+                <template #column:edit:name="{data}">
+                    <erd-input
+                        v-model="data.row[data.column.property]"
+                        maxlength="100"
+                        :placeholder="i18n.pleaseEnter"
+                        @change="(value)=>(inputCallback(value, data))"
+                        ref="nameInput"
+                    >
+                    </erd-input>
+                </template>
+                <!-- 执行人 -->
+                <template #column:default:executor="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row.executorName || data.row[data.column.property]}}</span>
+                    <span v-else-if="data.row[data.column.property]">{{data.row.executorName}}</span>
+                    <span
+                        v-else
+                        style="color: #999"
+                        >{{i18n.pleaseSelect}}</span
+                    >
+                </template>
+                <template #column:edit:executor="{data}">
+                    <FamParticipantSelect
+                        ref="ownerRef"
+                        fixed-height
+                        clearable
+                        searchScop="all"
+                        popper-class="vxe-table--ignore-clear"
+                        :default-value="data.row.executorObj"
+                        :isgetdisable="false"
+                        :query-params="queryParams"
+                        :query-scope="queryScope"
+                        :show-type="['USER']"
+                        @change="(...args)=>(fnMemberSelect(data.row, ...args))"
+                    ></FamParticipantSelect>
+                </template>
+                <!-- 优先级 -->
+                <template #column:default:priority="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row.priorityName || data.row[data.column.property]}}</span>
+                    <span v-else-if="data.row[data.column.property]">{{data.row.priorityName}}</span>
+                    <span
+                        v-else
+                        style="color: #999"
+                        >{{i18n.pleaseSelect}}</span
+                    >
+                </template>
+                <template #column:edit:priority="{data}">
+                    <custom-select
+                        v-model="data.row[data.column.property]"
+                        :row="priorityRow"
+                        @change="(...args)=>(changePriority(...args, data.row))"
+                    ></custom-select>
+                </template>
+                <!-- 类型 -->
+                <template #column:default:typeReference="{data}">
+                    <span v-if="!data.row.editFlag"
+                        >{{data.row.typeReferenceName || data.row[data.column.property]}}</span
+                    >
+                    <span v-else-if="data.row[data.column.property]">{{data.row.typeReferenceName}}</span>
+                    <span
+                        v-else
+                        style="color: #999"
+                        >{{i18n.pleaseSelect}}</span
+                    >
+                </template>
+                <template #column:edit:typeReference="{data}">
+                    <custom-select
+                        v-model="data.row[data.column.property]"
+                        :row="typeReferenceRow"
+                        @change="(...args)=>(changeType(...args, data.row))"
+                    ></custom-select>
+                </template>
+                <!-- 操作 -->
+                <template #column:default:operation="{data}">
+                    <erd-button
+                        v-if="data.row.isNew"
+                        @click="handlerConfirm(data.row)"
+                        type="text"
+                        >{{i18n.confirm}}</erd-button
+                    >
+                </template>
+            </FamErdTable>
+        </template>
+    </erd-contraction-panel>
+</div>

@@ -1,0 +1,22 @@
+<div
+    id="part-basic-info"
+    class="basic-part"
+    v-cloak
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        title="基本信息"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="formData"
+                :data="formConfigs"
+                :readonly="readonly"
+                @field:change="innerOnFieldChange"
+                :editableAttr="editableAttr"
+            >
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

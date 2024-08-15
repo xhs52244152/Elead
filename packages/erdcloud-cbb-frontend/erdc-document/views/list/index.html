@@ -1,0 +1,51 @@
+<div
+    id="document-list"
+    class="h-100p"
+    v-cloak
+>
+    <FamViewTable
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        :enable-scroll-load="true"
+        class="bg-white"
+        ref="famViewTable"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row, {
+                    inTable: true,
+                    isBatch: false
+                }]"
+            ></FamActionPulldown>
+        </template>
+        <template v-slot:[slotName.mainContent]="{ scope }">
+            <i
+                style="color: var(--colorArrow); font-size: var(--iconSize)"
+                :class="[scope.row[className + '#mainContent'], 'cursor-pointer']"
+                @click="previewAttach(scope.row)"
+            ></i>
+        </template>
+    </FamViewTable>
+    <FamFilePreview
+        app-name="PDM"
+        ref="filePreview"
+    >
+        <template #footer="scope">
+            <erd-button
+                v-if="scope.isViewMode && scope.type === 'onlyoffice'"
+                type="text"
+                @click="switchToEdit"
+                >{{i18n.edit}}</erd-button
+            >
+        </template>
+    </FamFilePreview>
+    <BatchSetValue
+        :visible.sync="setValue.visible"
+        :table-data="setValue.tableData"
+        :class-name="className"
+        @set-value-success="setValueSuccess"
+    ></BatchSetValue>
+</div>

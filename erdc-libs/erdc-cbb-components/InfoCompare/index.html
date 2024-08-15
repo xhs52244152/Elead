@@ -1,0 +1,97 @@
+<div
+    id="info-compare"
+    class="h-100p bg-white p-xl"
+    v-cloak
+>
+    <div class="mb-lg flex justify-between align-items-center">
+        <div class="info-compare-route text-gray-45">
+            <erd-page-header
+                @back="handleReturn"
+                :content="i18n['信息比较']"
+            >
+            </erd-page-header>
+        </div>
+        <div class="flex align-items-center">
+            <erd-checkbox
+                v-model="isOnlyDifferentChecked"
+                @change="handleOnlyDifferent"
+                >{{i18n['仅显示不同']}}
+            </erd-checkbox>
+            <erd-button
+                class="ml-normal"
+                type="primary"
+                @click="handleAddObject"
+            >
+                {{i18n['增加比较对象']}}</erd-button
+            >
+            <erd-dropdown
+                class="cursor-pointer ml-normal"
+                trigger="click"
+            >
+                <erd-button type="">
+                    {{i18n['管理比较项']}} <i class="el-icon-arrow-down el-icon--right"></i>
+                </erd-button>
+                <erd-dropdown-menu
+                    slot="dropdown"
+                    :hide-on-click="false"
+                >
+                    <div class="info-compare-drop p-lg">
+                        <erd-checkbox
+                            :indeterminate="isIndeterminate"
+                            v-model="checkAll"
+                            @change="handleCheckAllChange"
+                            class="checkAlls mt-sm pb-sm block"
+                        >
+                            {{i18n['All']}}
+                        </erd-checkbox>
+                        <erd-checkbox-group
+                            v-model="isCheckIdList"
+                            v-if="checkboxLists.length > 0"
+                            @change="handleCheckedChange"
+                        >
+                            <div class="checkboxLists pr-lg text-xl">
+                                <erd-checkbox
+                                    v-for="item in checkboxLists"
+                                    :label="item[keys]"
+                                    :key="item[keys]"
+                                    style="display: block"
+                                    class="checiboxItem"
+                                >
+                                    {{ item.displayName }}
+                                </erd-checkbox>
+                            </div>
+                        </erd-checkbox-group>
+                        <div
+                            v-if="checkboxLists.length === 0"
+                            class="noData m-lg text-center text-gray-65 text-normal"
+                        >
+                            {{i18n['无数据']}}
+                        </div>
+                    </div>
+                </erd-dropdown-menu>
+            </erd-dropdown>
+        </div>
+    </div>
+
+    <div style="height: calc(100% - 40px);">
+        <vxe-grid
+            class="reverse-table"
+            :span-method="rowspanMethod"
+            :cell-style="cellStyle"
+            :loading="loading"
+            v-bind="gridOptions2"
+        ></vxe-grid>
+    </div>
+
+    <!-- 增加对象 -->
+    <RelatedObject
+        v-if="objectForm.visible"
+        :visible.sync="objectForm.visible"
+        :title="objectForm.title"
+        :view-types-list="objectForm.viewTypesList"
+        :left-table-columns="objectForm.leftTableColumns"
+        :excluded="objectForm.excluded"
+        :app-name="appName"
+        @before-submit="beforeSubmit"
+    ></RelatedObject>
+</div>

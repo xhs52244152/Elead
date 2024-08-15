@@ -1,0 +1,10 @@
+#batch-set-value .set-value-comp #ComponentWapper-famMemberSelect,
+#batch-set-value .set-value-comp .el-date-editor.el-input,
+#batch-set-value .set-value-comp .el-input__inner,
+#batch-set-value .set-value-comp .el-input-number,
+#batch-set-value .set-value-comp .el-select {
+  width: 100%;
+}
+#batch-set-value .set-value-comp .searchInputWapper .el-input__inner {
+  width: 180px;
+}

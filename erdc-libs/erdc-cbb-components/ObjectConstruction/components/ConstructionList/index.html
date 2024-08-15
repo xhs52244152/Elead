@@ -1,0 +1,132 @@
+<div
+    id="pdm-construction"
+    class="h-100p"
+    v-cloak
+>
+    <div class="h-100p pdm-table-hide-padding pdm-table-hide-slot-margin">
+        <fam-view-table
+            @loaded="getButtonData"
+            ref="ConstructionList"
+            :view-table-config="viewTableConfig"
+            is-adaptive-height
+        >
+            <template slot="left:toolbar:first">
+                <erd-form inline>
+                    <component-width-label
+                        class="mr-6 m-0 overflow-hidden"
+                        style="width: 132px"
+                        :is-render="viewConfig.showComponent"
+                        :label="i18n['视图']"
+                        :options="viewConfig.options"
+                        v-model="viewConfig.view"
+                        :removeable="false"
+                        :clearable="false"
+                        :disabled="viewConfig.disabled"
+                        @after-change="handleViewChange"
+                    >
+                    </component-width-label>
+                </erd-form>
+            </template>
+
+            <template
+                v-for="item in slotList"
+                v-slot:[item.slotName]="{ scope }"
+            >
+                <!-- 其他编辑的动态插槽 -->
+                <component
+                    v-if="item.type=='edit'&&item.attrName!=nameAttClass"
+                    :is="item.component"
+                    v-model="scope.row[item.prop]"
+                    :item-name="item.dataKey"
+                    popper-class="vxe-table--ignore-clear"
+                    data-type="object"
+                >
+                </component>
+                <!-- 名称的特定插槽 -->
+                <input-Search-Object
+                    v-else-if="item.type=='edit'&&item.attrName==nameAttClass"
+                    v-model="scope.row.visible"
+                    :className="className"
+                    :tableKey="tableKey"
+                    @callback="handleCallback"
+                    @chooseObject="handleChooseObject"
+                    :edit-row="editRow"
+                    :info="info"
+                    :condition="condition"
+                >
+                </input-Search-Object>
+                <span
+                    v-else-if="item.type=='default'&&item.attrName==identifierNoAttClass"
+                    :class="scope.row.accessToView?['color-primary','cursor-pointer']:['color-normal','cursor-not-allowed']"
+                    href="javascript:;"
+                    @click="handleDetail(scope.row)"
+                >
+                    {{scope.row[identifierNoAttClass]}}
+                </span>
+                <!-- 纯文本显示插槽 -->
+                <span v-else
+                    >{{scope.row[item.prop]?.displayName? scope.row[item.prop]?.displayName:
+                    scope.row[item.prop]}}</span
+                >
+            </template>
+        </fam-view-table>
+    </div>
+    <!-- 替换管理弹窗 -->
+    <erd-ex-dialog
+        :title="i18n['管理替代部件']"
+        :visible.sync="showReplaceDialog"
+    >
+        <replace-management
+            ref="ReplaceManagement"
+            v-if="showReplaceDialog"
+            :className="className"
+            :info="info"
+            :globalRelationshipRef="info?.masterRef"
+            :localRelationshipRef="info?.usageRef"
+            :global-action-config="globalActionConfig"
+            :local-action-config="localActionConfig"
+            localTableKey="ManageSubstituteView"
+            :get-parent-part-info="getParentInfo"
+            :is-open-submit="false"
+            :detail-callback="handleReplaceDetailCallback"
+        ></replace-management>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="handleSubmit()"
+                >{{i18n['确定']}}</erd-button
+            >
+            <erd-button @click="showReplaceDialog = false;">{{i18n['取消']}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <!-- 对象穿梭框 -->
+    <related-object
+        v-if="visible"
+        :visible.sync="visible"
+        :view-types-list="handleViewTypesList"
+        @submit="handleAssociationSubmit"
+        :url-config="urlConfig"
+    >
+    </related-object>
+
+    <!-- 创建BOM视图弹窗 -->
+    <erd-ex-dialog
+        title="BOM视图"
+        :visible.sync="showBomViewDialog"
+    >
+        <bom-view-form
+            ref="bomViewForm"
+            :view-list="filterViewlist"
+            v-if="showBomViewDialog"
+        ></bom-view-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="!loading && handleSubmitBomForm()"
+                >确定</erd-button
+            >
+            <erd-button @click="showBomViewDialog = false;">取消</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

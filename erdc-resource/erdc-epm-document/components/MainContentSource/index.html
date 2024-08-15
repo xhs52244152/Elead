@@ -1,0 +1,42 @@
+<div
+    id="MainContentSource"
+    class="w-100p"
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18n['主要内容源']"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="mainSourceForm"
+                :form.sync="mainSourceInfo"
+                :data="formConfigs"
+            >
+                <template v-slot:uploadComponent="scope">
+                    <!-- 自定义上传 -->
+                    <!-- <FamUpload
+                        ref="famUpload"
+                        :multiple="false"
+                        :http-request="httpRequest"
+                        :show-file-list="false"
+                        :on-success="onSuccess"
+                    ></FamUpload> -->
+                    <!-- 平台上传,适配大文件上传 -->
+                    <FamUpload
+                        ref="famUpload"
+                        :multiple="false"
+                        :show-file-list="false"
+                        :on-success="onSuccess"
+                        class-name="erd.cloud.pdm.epm.entity.EpmDocument"
+                    ></FamUpload>
+                    <span
+                        v-if="scope.data['templateFile']"
+                        class="download-btn"
+                        @click="hanldeDownloadTemplate"
+                        >下载模板</span
+                    >
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

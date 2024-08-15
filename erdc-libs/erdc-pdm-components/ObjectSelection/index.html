@@ -1,0 +1,55 @@
+<erd-popover
+    :placement="placement"
+    :trigger="trigger"
+    :width="width"
+    v-model="visible"
+>
+    <erd-input
+        slot="reference"
+        :style="{ 'width': width + 'px' }"
+    ></erd-input>
+    <div class="object-selection-content">
+        <erd-scrollbar class="content_top">
+            <div
+                class="content_top-item"
+                v-for="(item, index) in tableData"
+                :key="index"
+            >
+                <slot
+                    name="popoverItem"
+                    :data="item"
+                >
+                    <span>{{item.label}}</span>
+                </slot>
+            </div>
+        </erd-scrollbar>
+        <div class="content_bot">
+            <div class="bot-paper">
+                <erd-pagination
+                    :current-page.sync="currentPage"
+                    :page-sizes="pageSizes"
+                    :page-size.sync="pageSize"
+                    :layout="layout"
+                    :total="total"
+                    :small="small"
+                    :streamline="streamline"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                >
+                </erd-pagination>
+            </div>
+            <div class="bot-btn">
+                <erd-button
+                    @click="visible = false"
+                    type="text"
+                    >{{i18n['插入更多']}}</erd-button
+                >
+                <erd-button
+                    @click="visible = false"
+                    type="text"
+                    >{{i18n['关闭']}}</erd-button
+                >
+            </div>
+        </div>
+    </div>
+</erd-popover>

@@ -1,0 +1,12 @@
+.object-selection-content {
+  display: flex;
+  flex-direction: column;
+}
+.object-selection-content .content_top {
+  height: 400px;
+}
+.object-selection-content .content_bot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}/*# sourceMappingURL=index.css.map */

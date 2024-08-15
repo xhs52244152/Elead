@@ -1,0 +1,9 @@
+#MainContentSource .download-btn{
+  color: var(--buttonTextColor);
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,5 @@
+#pane-relationObj:has(.document-relation-object) {
+  margin: calc(-1 * var(--largeSpace));
+  padding-top: 4px;
+  height: calc(100% + 2 * var(--largeSpace));
+}

@@ -1,0 +1,24 @@
+<erd-ex-dialog
+    id="import-and-export"
+    :title="innerTitle"
+    :visible.sync="innerVisible"
+    v-bind="dialogProps"
+    v-on="$listeners"
+    v-cloak
+>
+    <component
+        :ref="component.ref"
+        :is="component.is"
+        v-bind="component.props"
+        @cancel="cancel"
+    ></component>
+    <template #footer>
+        <erd-button
+            type="primary"
+            v-loading="loading"
+            @click="!loading && confirm()"
+            >{{ i18n.confirm }}
+        </erd-button>
+        <erd-button @click="innerVisible = false;">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

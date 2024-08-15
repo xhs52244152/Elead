@@ -1,0 +1,27 @@
+<div
+    id="structure-template"
+    v-cloak
+>
+    <DefaultTemplate
+        ref="templateRef"
+        :form-configs="formConfigs"
+        :form-data.sync="formData"
+        :transferUnfold.sync="transferUnfold"
+        :baseInfoUnfold.sync="baseInfoUnfold"
+        :transfer-title="i18n?.['BOM属性设置']"
+        :table-data="typeAttributeList"
+        :fields.sync="viewInfo[formData.view]"
+    >
+        <template #prepend>
+            <erd-ex-select
+                ref="selectRef"
+                class="mr-lg"
+                v-model="formData.view"
+                :options="viewList"
+                filterable
+                :default-props="{ label: 'displayName', value: 'oid', key: 'oid' }"
+            >
+            </erd-ex-select>
+        </template>
+    </DefaultTemplate>
+</div>

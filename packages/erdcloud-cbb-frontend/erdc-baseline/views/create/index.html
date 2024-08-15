@@ -1,0 +1,33 @@
+<div class="baseline-form h-100p flex flex-column bg-normal" v-fam-fs >
+    <common-page-title v-bind="formPageAttr" class="p-xl">
+    </common-page-title>
+    <erd-scrollbar class="grow-1 bg-white">
+        <div class="baseline-form-wrapper">
+            <div class="form_content_body p-xl">
+                <baseline-form
+                    @change="handleFormChange"
+                    ref="baselineForm"
+                    :oid="oid"
+                    :pid="pid"
+                    :view-type="viewType"
+                    v-bind="$attrs"
+                ></baseline-form>
+            </div>
+        </div>
+    </erd-scrollbar>
+    <div class="common-btn bg-white flex justify-center ptb-lg">
+        <erd-button
+            type="primary"
+            v-loading="saveLoading"
+            @click="!draftLoading && !saveLoading && save()"
+            >{{ i18n.save }}</erd-button
+        >
+        <erd-button
+            v-loading="draftLoading"
+            @click="!saveLoading && !draftLoading && saveDraft()"
+            v-if="!oid || formData['lifecycleStatus.status'] === 'DRAFT'"
+            >{{ i18n.saveDraft }}</erd-button
+        >
+        <erd-button @click="!saveLoading && !draftLoading && cancel()">{{ i18n.cancel }}</erd-button>
+    </div>
+</div>

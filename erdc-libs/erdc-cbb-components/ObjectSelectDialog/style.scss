@@ -1,0 +1,24 @@
+.pdm-object-select-dialog--filter {
+    .fam-basicfilter-remove {
+        display: none !important;
+    }
+    .fam-basicfilter-btn {
+        display: none;
+    }
+
+    .el-input__inner {
+        width: 120px !important;
+    }
+}
+
+.pdm-object-select-dialog--table {
+    min-height: calc(100vh - 250px);
+
+    .viewtable-body-container {
+        padding-bottom: 0 !important;
+    }
+}
+
+.pdm-object-select-dialog--search {
+    width: 400px;
+}

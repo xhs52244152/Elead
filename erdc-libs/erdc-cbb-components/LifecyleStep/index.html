@@ -1,0 +1,32 @@
+<erd-popover
+    popper-class="lifecyle-step"
+    placement="bottom"
+    trigger="click"
+    @hide="hide"
+    @show="show"
+>
+    <erd-steps
+        direction="vertical"
+        :active="active"
+        :space="32"
+    >
+        <erd-step
+            v-for="(item, index) in statusList"
+            :key="index"
+            :title="item.displayName"
+            :status="active === index ? 'process' : 'wait'"
+        ></erd-step>
+    </erd-steps>
+
+    <span
+        style="cursor: pointer"
+        slot="reference"
+    >
+        <span>{{ lifecyleStatus?.displayName || lifecyleStatus }}</span>
+        <i
+            style="color: #567ffd"
+            :class="visible ? 'erd-iconfont erd-icon-arrow-up' : 'erd-iconfont erd-icon-arrow-down'"
+        >
+        </i>
+    </span>
+</erd-popover>

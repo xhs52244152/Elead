@@ -1,0 +1,39 @@
+<div
+    id="pdm-construction-operation"
+    v-cloak
+>
+    <div class="flex justify-between pt-sm pb-sm pdm_construction_operation_box pr-xl pl-xl">
+        <div class="flex">
+            <erd-form inline>
+                <component-width-label
+                    class="mr-6 m-0 overflow-hidden"
+                    style="width: 132px"
+                    :is-render="viewConfig.showComponent"
+                    :label="viewConfig.label"
+                    :options="viewConfig.options"
+                    v-model="viewConfig.view"
+                    :removeable="false"
+                    :clearable="false"
+                    :disabled="viewConfig.disabled"
+                    @after-change="handleViewChange"
+                >
+                </component-width-label>
+                <!-- 筛选器 -->
+                <!-- <component-width-label class="mr-6 m-0 overflow-hidden" style="width: 132px"
+                    :is-render="sizer.showComponent" :label="sizer.label" :options="sizer.options" v-model="sizer.value"
+                    :removeable="false" :clearable="false" @after-change="handleSizerChange">
+                </component-width-label> -->
+            </erd-form>
+
+            <!-- <erd-button type="text">{{i18n['筛选器管理']}}</erd-button> -->
+        </div>
+        <fam-action-button
+            ref="famActionButton"
+            :is-operation="false"
+            :action-config="getActionConfig()"
+            :args="[self, info]"
+            :is-default-btn-type="true"
+        >
+        </fam-action-button>
+    </div>
+</div>

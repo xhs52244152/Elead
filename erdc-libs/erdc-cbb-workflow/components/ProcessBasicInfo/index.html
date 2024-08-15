@@ -1,0 +1,18 @@
+<FamDynamicForm
+    v-cloak
+    ref="famDynamicFormRef"
+    :form.sync="form"
+    :data="formConfigs"
+    v-bind="$attrs"
+    v-on="$listeners"
+>
+    <template
+        v-for="(slot, slotName) in $scopedSlots"
+        v-slot:[slotName]="slotProps"
+    >
+        <slot
+            :name="slotName"
+            v-bind="slotProps"
+        ></slot>
+    </template>
+</FamDynamicForm>

@@ -1,0 +1,66 @@
+<div class="w-100p h-100p flex flex-column">
+    <div class="flex mb-normal align-items-center">
+        <div>{{ titleConfig.title }}</div>
+        <erd-ex-select
+            v-if="needBomView"
+            class="w-100 ml-normal"
+            v-model="viewOid"
+            :options="bomViewOptions"
+            :default-props="defaultProps"
+            @change="onChangeView"
+        ></erd-ex-select>
+        <div style="margin-left: auto">
+            <erd-button @click="openSingleObjSelect">{{ titleConfig.changeBntTitle }}</erd-button>
+        </div>
+    </div>
+    <erd-input
+        class="mb-normal"
+        suffix-icon="erd-iconfont erd-icon-search"
+        v-model="keyword"
+        :placeholder="i18n['请输入编码或名称']"
+        @input="onKeywordChange"
+    ></erd-input>
+    <el-scrollbar
+        class="grow-1"
+        ref="scrollbar"
+    >
+        <erd-ex-tree
+            ref="tree"
+            node-key="nodeKey"
+            :data="treeData"
+            :props="{ label: 'caption', children: 'children', isLeaf: 'leaf' }"
+            :load="onLoad"
+            :filter-node-method="filterMethod"
+            :expand-on-click-node="false"
+            lazy
+            highlight-current
+            @node-click="onNodeClick"
+            @node-expand="onNodeExpand"
+            @node-collapse="onNodeCollapse"
+        >
+            <template v-slot="{ data, node }">
+                <div :class="['flex', { 'pdm-construction--compare--disabled': data.disabled }]">
+                    <fam-icon
+                        class="mr-normal"
+                        :value="data.icon"
+                    ></fam-icon>
+                    <span :class="{ 'pdm-construction--compare--diff-node': !data.hasForEach }"
+                        >{{ data.caption }}</span
+                    >
+                </div>
+            </template>
+        </erd-ex-tree>
+    </el-scrollbar>
+
+    <object-select-dialog
+        v-if="dialogOpen"
+        ref="objectSelectDialog"
+        :title="titleConfig.changeBntTitle"
+        :visible.sync="selectProjectConfig.visible"
+        :className="className"
+        :table-key="tableKey"
+        :page-url="pageUrl"
+        :handle-params="handleParams"
+        :extend-filter-conditions="extendFilterConditions"
+    ></object-select-dialog>
+</div>

@@ -1,0 +1,39 @@
+<div class="common-document h-100p">
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="innerViewTableConfig"
+        :enable-scroll-load="true"
+        @action-click="actionClick"
+        @loaded="loaded"
+        v-on="$listeners"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                :disabled="!rowRemoveStauts"
+                @click="handleDelete(scope.row)"
+                >{{ i18n.remove }}</erd-button
+            >
+        </template>
+        <template
+            v-for="(slot, name) in $scopedSlots"
+            v-slot:[name]="scope"
+        >
+            <slot
+                :name="name"
+                v-bind="scope"
+            ></slot>
+        </template>
+    </fam-view-table>
+
+    <!-- 增加对象 -->
+    <RelatedObject
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        v-bind="relatedObjectProps"
+        :excluded="_.isFunction(relatedObjectProps.excluded) ? relatedObjectProps.excluded(fnGetCurrentSelection()) : relatedObjectProps.excluded"
+        v-on="$listeners"
+        @submit="submit"
+    >
+    </RelatedObject>
+</div>

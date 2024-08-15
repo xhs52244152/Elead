@@ -1,0 +1,4 @@
+[submodule "packages/erdcloud-cbb-frontend"]
+	path = packages/erdcloud-cbb-frontend
+	url = http://gitlab.ddns.e-lead.cn/erdcloud-plm/erdcloud-cbb/erdcloud-cbb-frontend.git
+	branch = rc/3.1.RC4

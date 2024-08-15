@@ -1,0 +1,23 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    :title="dialogTitle"
+    custom-class="create-template-form-dialog"
+    width="800px"
+    @close="handleClose"
+>
+    <FamDynamicForm
+        ref="templateForm"
+        :form.sync="formData"
+        :data="formConfigs"
+    >
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            :loading="loading"
+            @click="handleCreate"
+            >{{i18n.confirm}}</erd-button
+        >
+        <erd-button @click="handleClose()">{{i18n.close}}</erd-button>
+    </template>
+</erd-ex-dialog>

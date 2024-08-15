@@ -1,0 +1,26 @@
+<div class="basic-epm-document">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        title="基本信息"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="formData"
+                :data="formConfigs"
+                :readonly="readonly"
+                :editableAttr="editableAttr"
+            >
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group
+                        style="width: 100%"
+                        v-model="scope.data[scope.formConfig.field]"
+                    >
+                        <erd-radio :label="true">{{i18n.yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18n.no}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

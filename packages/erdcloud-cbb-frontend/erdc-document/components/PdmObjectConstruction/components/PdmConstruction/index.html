@@ -1,0 +1,91 @@
+<div
+    id="pdm_construction"
+    class="h-100p"
+>
+    <div class="h-100p pdm-table-hide-padding">
+        <fam-view-table
+            ref="PdmConstruction"
+            is-adaptive-height
+            :view-table-config="viewTableConfig"
+            @action-click="actionClick"
+        >
+            <template
+                v-for="item in slotList"
+                v-slot:[item.slotName]="{ scope }"
+            >
+                <!-- 其他编辑的动态插槽 -->
+                <component
+                    v-if="item.type=='edit'&&item.attrName!=nameAttClass"
+                    :is="item.component"
+                    v-model="scope.row[item.prop]"
+                    :item-name="item.dataKey"
+                    popper-class="vxe-table--ignore-clear"
+                    data-type="object"
+                >
+                </component>
+                <!-- 名称的特定插槽 -->
+                <input-Search-Object
+                    v-else-if="item.type=='edit'&&item.attrName==nameAttClass"
+                    v-model="scope.row.visible"
+                    :className="className"
+                    :tableKey="tableKey"
+                    @callback="handleCallback"
+                    @chooseObject="handleChooseObject"
+                    :edit-row="editRow"
+                    :info="info"
+                >
+                </input-Search-Object>
+                <span
+                    v-else-if="item.type=='default'&&item.attrName==identifierNoAttClass"
+                    :class="scope.row.accessToView?['color-primary','cursor-pointer']:['color-normal','cursor-not-allowed']"
+                    href="javascript:;"
+                    @click="handleDetail(scope.row)"
+                >
+                    {{scope.row[identifierNoAttClass]}}
+                </span>
+                <!-- 主内容 -->
+                <span v-else-if="item.type === 'default' && item.attrName === mainContentField">
+                    <i
+                        style="color: var(--colorArrow); font-size: var(--iconSize)"
+                        :class="[scope.row[item.prop], 'cursor-pointer']"
+                        @click="download(scope.row)"
+                    ></i>
+                </span>
+                <!-- 纯文本显示插槽 -->
+                <span v-else
+                    >{{scope.row[item.prop]?.displayName? scope.row[item.prop]?.displayName:
+                    scope.row[item.prop]}}</span
+                >
+            </template>
+        </fam-view-table>
+    </div>
+    <!-- 替换管理弹窗 文档模型没有替换管理，只有部件有-->
+    <!-- <erd-ex-dialog
+        :title="i18n['管理替换部件']"
+        :visible.sync="showReplaceDialog"
+    >
+        <replace-management
+            ref="ReplaceManagement"
+            v-if="showReplaceDialog"
+            :className="className"
+            :info="info"
+            :request-params="requestParams"
+        ></replace-management>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="handleSubmit()"
+                >{{i18n['确定']}}</erd-button
+            >
+            <erd-button @click="showReplaceDialog = false;">{{i18n['取消']}}</erd-button>
+        </template>
+    </erd-ex-dialog> -->
+    <!-- 对象穿梭框 -->
+    <related-object
+        v-if="visible"
+        :visible.sync="visible"
+        :view-types-list="handleViewTypesList"
+        @submit="handleAssociationSubmit"
+    >
+    </related-object>
+</div>

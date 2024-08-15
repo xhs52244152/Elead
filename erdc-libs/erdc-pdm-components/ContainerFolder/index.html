@@ -1,0 +1,36 @@
+<FolderList
+    v-bind="bindFolderInfo"
+    ref="folderListRef"
+    @handler-data="handlerData"
+    @node-folder-click="nodeFolderClick"
+    @hook:mounted="initFolderMounted = true"
+>
+    <template v-slot:[slotName.identifierNo]="{ scope }">
+        <span
+            :class="['color-primary cursor-pointer', { 'color-disabled cursor-default': scope.row.accessToView === false }]"
+            @click="onDetail(scope.row)"
+        >
+            {{ scope.row.identifierNo }}
+        </span>
+    </template>
+    <template v-slot:[slotName.name]="{ data }">
+        <span
+            :class="['color-primary cursor-pointer', { 'color-disabled cursor-default': data.row.accessToView === false }]"
+            @click="handleRowLink(data.row)"
+            >{{ data.row.name }}</span
+        >
+    </template>
+    <template v-slot:[slotName.displayName]="{ data }">
+        <span
+            :class="['color-primary cursor-pointer', { 'color-disabled cursor-default': data.row.accessToView === false }]"
+            @click="handleRowLink(data.row)"
+            >{{ data.row.displayName }}</span
+        >
+    </template>
+    <template v-slot:[slotName.icon]="{ data }">
+        <FamIcon
+            :value="data.row.icon"
+            class="text-16"
+        ></FamIcon>
+    </template>
+</FolderList>

@@ -1,0 +1,16 @@
+{
+  "name": "@erdc-app/erdc-codesign-web",
+  "description": "CoDesign",
+  "version": "3.1.0-rc4",
+  "i18n": {
+    "zh_cn": "CoDesign",
+    "en_us": "CoDesign"
+  },
+  "scripts": {
+    "serve": "npx erdc-cli serve --proxy http://pdm-sit.apps.paas.sh.ddns.e-lead.cn/",
+    "pack": "npx erdc-cli pack --pack false --license"
+  },
+  "devDependencies": {
+    "erdc-cli": "~3.1.0-rc4"
+  }
+}

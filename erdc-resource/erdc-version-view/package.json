@@ -1,0 +1,9 @@
+{
+  "name": "@erdc-resource/erdc-version-view",
+  "version": "3.1.0-rc4",
+  "description": "版本视图管理",
+  "dependencies": {
+    "@erdc-libs/erdc-cbb-components": "workspace:*",
+    "@erdc-libs/erdc-pdm-icon": "workspace:*"
+  }
+}

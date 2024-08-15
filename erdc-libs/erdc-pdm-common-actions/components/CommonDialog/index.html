@@ -1,0 +1,28 @@
+<erd-ex-dialog
+    :visible="true"
+    :title="title"
+    custom-class="dialog-handler"
+    :width="width"
+    @close="close"
+>
+    <slot name="header"></slot>
+    <slot name="content"></slot>
+
+    <slot
+        v-if="$slots.footer"
+        name="footer"
+    ></slot>
+    <span
+        v-else
+        slot="footer"
+        class="dialog-footer"
+    >
+        <el-button
+            type="primary"
+            @click="confirm"
+            :loading="loading"
+            >{{i18n.confirm}}</el-button
+        >
+        <el-button @click="close">{{i18n.cancel}}</el-button>
+    </span>
+</erd-ex-dialog>

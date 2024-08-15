@@ -1,0 +1,72 @@
+<div>
+    <!-- 受影响的对象列表 -->
+    <object-list
+        ref="objectList"
+        v-if="isIssue || isRequest"
+        class="mb-normal"
+        :prob-oid="oid"
+        :is-show="false"
+    ></object-list>
+    <!-- 关联的对象 -->
+    <related-object
+        ref="relatedObject"
+        v-if="isRequest || isOrder || isActivity"
+        class="mb-normal"
+        app-name="PDM"
+        :title="relateObjectTitle"
+        :prob-oid="oid"
+        :type-name="typeName"
+        :is-show="false"
+    ></related-object>
+    <!-- 影响分析 -->
+    <impact-analysis
+        ref="impactAnalysis"
+        v-if="isRequest"
+        class="mb-normal"
+        app-name="PDM"
+        :prob-oid="oid"
+        :is-show="false"
+    ></impact-analysis>
+    <!-- 变更通告 -->
+    <change-notice
+        ref="changeNotice"
+        v-if="isRequest"
+        class="mb-normal"
+        prefix-route="/erdc-change"
+        :prob-oid="oid"
+        :is-show="isEcrCreateEco"
+        :container-ref="containerRef"
+    ></change-notice>
+    <!-- 变更任务 -->
+    <change-task
+        ref="changeTask"
+        v-if="isOrder"
+        prefix-route="/erdc-change"
+        :is-show="isEcoCreateEca"
+        :prob-oid="oid"
+        type="flow"
+        :container-ref="containerRef"
+    ></change-task>
+    <task-object
+        ref="object-list"
+        v-if="isActivity"
+        class="mb-normal"
+        type="affected"
+        :vm="vm"
+        :prob-oid="oid"
+        :action-config="{
+            name: 'CHANGE_ACTIVITY_AFFECTED_OP_MENU'
+        }"
+    ></task-object>
+    <task-object
+        ref="product-object"
+        v-if="isActivity"
+        title="产生的对象"
+        :vm="vm"
+        type="product"
+        :prob-oid="oid"
+        :action-config="{
+            name: 'CHANGE_ACTIVITY_PRODUCE_OP_MENU'
+        }"
+    ></task-object>
+</div>

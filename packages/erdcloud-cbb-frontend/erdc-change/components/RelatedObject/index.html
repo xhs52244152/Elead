@@ -1,0 +1,76 @@
+<div
+    class="w-100p"
+    v-if="!readonly"
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="title"
+    >
+        <template v-slot:header-right>
+            <div
+                v-if="!readonly"
+                v-show="isShow && panelUnfold"
+                class="btn-group"
+            >
+                <FamActionButton
+                    :is-operation="false"
+                    :action-config="actionConfig"
+                    :is-default-btn-type="true"
+                    @click="actionClick"
+                >
+                </FamActionButton>
+            </div>
+        </template>
+        <template v-slot:content>
+            <FamErdTable
+                ref="erdTable"
+                :column="columns"
+                :data="tableData"
+                :maxLine="10"
+                border
+                show-overflow
+                auto-resize
+                @checkbox-change="checkboxChange"
+                @checkbox-all="checkboxAll"
+            >
+                <template #column:default:icon="{data}">
+                    <FamIcon
+                        :value="getIcon(data.row)"
+                        class="text-16"
+                    ></FamIcon>
+                </template>
+                <template #column:default:identifierNo="{data}">
+                    <a
+                        href="javascript:;"
+                        @click="handleGoDetail(data.row)"
+                        >{{data.row.identifierNo}}</a
+                    >
+                </template>
+            </FamErdTable>
+            <RelatedObject
+                v-if="showDialog"
+                ref="assRef"
+                :app-name="appName"
+                :class-name="associationCfg.className"
+                :table-key="associationCfg.tableKey"
+                :visible.sync="showDialog"
+                :urlConfig="urlConfig"
+                @after-request="afterRequest"
+                @submit="submit"
+                :is-unfixed-source="true"
+                :leftTitle="leftTitle"
+                :left-table-columns="tableColumns"
+                :excluded="excluded"
+                :default-view="true"
+            >
+                <template #column:default:icon="{data}">
+                    <FamIcon
+                        :value="getIcon(data.row)"
+                        class="text-16"
+                        :style="data.row['iconColor']"
+                    ></FamIcon>
+                </template>
+            </RelatedObject>
+        </template>
+    </erd-contraction-panel>
+</div>

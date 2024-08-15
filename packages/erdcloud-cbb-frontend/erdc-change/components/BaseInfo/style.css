@@ -1,0 +1,3 @@
+form.basic-info-form-content.last-line-no-bottom  .el-col:last-child {
+    margin-bottom: var(--largeSpace);
+}

@@ -1,0 +1,41 @@
+<div
+    id="version_view_form"
+    v-cloak
+>
+    <FamAdvancedForm
+        ref="versionViewForm"
+        :model.sync="formData"
+        :form-id="formId"
+        :class-name="className"
+        :oid="oid"
+        :objectOid="oid"
+        :schema-mapper="schemaMapper"
+        :query-layout-params="queryLayoutParams"
+        :modelMapper="modelMapper"
+    >
+        <template slot="parent-ref">
+            <erd-tree-select
+                class="w-100p"
+                v-if="formId=='CREATE'"
+                v-model="formData.parentRef"
+                filterable
+                nodeKey="oid"
+                :data="parentRefData"
+                :props="parentRefTreeProps"
+            ></erd-tree-select>
+            <span v-else>{{parentRefDisplayName}}</span>
+        </template>
+        <template slot="supported-class">
+            <erd-tree-select
+                class="w-100p"
+                v-if="formId=='CREATE'"
+                v-model="formData.supportedClass"
+                filterable
+                nodeKey="typeName"
+                :data="supportedClassData"
+                :props="supportedClassTreeProps"
+            ></erd-tree-select>
+            <span v-else>{{supportedClassDisplayName}}</span>
+        </template>
+    </FamAdvancedForm>
+</div>

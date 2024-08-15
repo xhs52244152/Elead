@@ -1,0 +1,72 @@
+<erd-ex-dialog
+    id="epm-document-update-association"
+    width="1200px"
+    :title="i18n['编辑关联']"
+    :destroy-on-close="true"
+    :visible.sync="visible"
+    @close="close"
+>
+    <FamAdvancedTable
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        :tableMaxHeight="tableMaxHeight"
+        @custom-refresh="customRefresh"
+        @header-submit-success="headerSubmitSuccess"
+    >
+        <template #left:toolbar:first>
+            <FamPageTitle
+                :staticTitle="true"
+                :title="pageTitle"
+                :icon="pageIcon"
+            >
+            </FamPageTitle>
+        </template>
+        <template #column:default:icon="{data}">
+            <fam-icon
+                :value="getIcon(data.row)"
+                class="text-16"
+            ></fam-icon>
+        </template>
+        <template #column:default:buildType="{data}">
+            <erd-select
+                v-if="canShowBuildTypeList(data.row._buildTypeVal)"
+                v-model="data.row._buildTypeVal"
+                @change="checkRelation($event, data.row)"
+                style="margin-right: 8px"
+            >
+                <erd-option
+                    v-for="item in typeList"
+                    :key="item.value"
+                    :label="item.description"
+                    :value="item.value"
+                >
+                </erd-option>
+            </erd-select>
+            <p
+                v-else
+                style="padding: 0 10px"
+            >
+                {{ data.row._buildTypeVal }}
+            </p>
+        </template>
+    </FamAdvancedTable>
+
+    <related-object
+        v-if="showDialog"
+        :visible.sync="showDialog"
+        v-bind="associationCfg"
+        @submit="submit"
+    >
+        >
+    </related-object>
+    <template #footer>
+        <erd-button
+            :loading="loading"
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18n['确定'] }}
+        </erd-button>
+        <erd-button @click="close">{{ i18n['取消'] }}</erd-button>
+    </template>
+</erd-ex-dialog>

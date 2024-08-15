@@ -1,0 +1,18 @@
+<div>
+    <erd-contraction-panel
+        class="mb-2xl"
+        :unfold.sync="panelUnfold"
+        title="基本信息"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="baseInfoRef"
+                :form.sync="formData"
+                :data="innerFormConfigs"
+                :readonly="readonly"
+                @field:change="innerOnFieldChange"
+            >
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

@@ -1,0 +1,58 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    :title="i18n.collector"
+    width="1200px"
+>
+    <fam-advanced-table
+        ref="table"
+        :table-height="tableHeight"
+        :view-table-config="viewTableConfig"
+    >
+        <!--        <template #column:default:menu:content="{ scope }">-->
+        <!--            <span>王钢齐</span>-->
+        <!--        </template>-->
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="handleEditlayout(scope.row)"
+            >
+                {{i18n.edit}}
+            </erd-button>
+            <erd-button
+                type="text"
+                @click="handleOpenRelateUser(scope.row)"
+            >
+                {{i18n.relateUser}}
+            </erd-button>
+            <erd-button
+                type="text"
+                @click="configLayout(scope.row)"
+            >
+                {{i18n.layout}}
+            </erd-button>
+            <erd-button
+                type="text"
+                @click="handleDeletelayout(scope.row)"
+            >
+                {{i18n.deletelayout}}
+            </erd-button>
+        </template>
+        <template #column:default:appName:content="{ scope }">
+            {{appMap[scope.row.appName] && appMap[scope.row.appName].nameI18nJson &&
+            appMap[scope.row.appName].nameI18nJson[currentLan] ? appMap[scope.row.appName].nameI18nJson[currentLan] :
+            appMap[scope.row.appName] ? appMap[scope.row.appName].displayName : '' }}
+        </template>
+        <template #column:default:state:content="{ scope }">
+            {{scope.row.state === 'STARTED' ? i18n.enable : i18n.disable}}
+        </template>
+    </fam-advanced-table>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+            >{{ i18n.done }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

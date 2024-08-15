@@ -1,0 +1,6 @@
+1. 传参方式：地址传参from和oid
+参数1： from=pdm
+参数2： oid为derivedImageOid
+示例： index.html?from=pdm&oid=OR:erd.cloud.pdm.viewmarkup.entity.DerivedImage:523f1745dbc5772f1da880ed1eaa92e8
+
+2. 部署在pdm前端所在的nginx服务中，accessToken会从localStorage中获取。

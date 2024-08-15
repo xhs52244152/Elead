@@ -1,0 +1,72 @@
+<div
+    id="import"
+    v-cloak
+>
+    <div class="pr-2 pl-lg mb-lg">
+        <erd-alert
+            :title="title"
+            type="info"
+            show-icon
+            :closable="false"
+            style="width: 100%"
+        >
+        </erd-alert>
+    </div>
+    <FamDynamicForm
+        ref="form"
+        :form.sync="formData"
+        :data="formConfigs"
+    >
+        <template v-slot:importType="scope">
+            <erd-radio-group v-model="formData[scope.formConfig.field]">
+                <template v-for="item in importTypeList">
+                    <erd-radio
+                        :key="item.value"
+                        :label="item.value"
+                        >{{item.label}}
+                    </erd-radio>
+                </template>
+            </erd-radio-group>
+        </template>
+        <template v-slot:uploadFile="scope">
+            <FamUpload
+                ref="upload"
+                :limit="1"
+                :multiple="false"
+                :on-success="onSuccess"
+                @input="(...args) => initUploadFile(scope, ...args)"
+            >
+                <erd-button>{{i18n?.['点击上传']}}</erd-button>
+            </FamUpload>
+        </template>
+        <template v-slot:emptyTemplate="scope">
+            <span
+                style="color: var(--colorPrimary); cursor: pointer"
+                @click="handlerEmptyTemplate"
+                >{{ i18n?.['空模板'] }}</span
+            >
+        </template>
+    </FamDynamicForm>
+    <erd-ex-dialog
+        width="1200px"
+        :title="i18n?.['空模板下载']"
+        :visible.sync="visible"
+        v-on="$listeners"
+    >
+        <component
+            v-if="visible"
+            :ref="component.ref"
+            :is="component.is"
+            v-bind="component.props"
+        ></component>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="!loading && confirm()"
+                >{{ i18n.confirm }}
+            </erd-button>
+            <erd-button @click="visible = false;">{{ i18n.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

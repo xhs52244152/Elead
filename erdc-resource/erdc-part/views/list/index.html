@@ -1,0 +1,31 @@
+<div
+    id="part-list"
+    class="h-100p"
+    v-cloak
+>
+    <FamViewTable
+        class="bg-white"
+        ref="famViewTable"
+        :is-adaptive-height="true"
+        :view-table-config="viewTableConfig"
+        :enable-scroll-load="true"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :args="[vm, scope.row, {
+                    inTable: true,
+                    isBatch: false
+                }]"
+            >
+            </FamActionPulldown>
+        </template>
+    </FamViewTable>
+    <BatchSetValue
+        :visible.sync="setValue.visible"
+        :table-data="setValue.tableData"
+        :class-name="partViewTableMap.className"
+        @set-value-success="setValueSuccess"
+    ></BatchSetValue>
+</div>

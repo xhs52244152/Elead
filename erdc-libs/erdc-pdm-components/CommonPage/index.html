@@ -1,0 +1,17 @@
+<CommonForm
+    v-cloak
+    ref="commonFormRef"
+    :key="componentKey"
+    :form-data.sync="formData"
+    :bind-page-title="bindPageTitle"
+    :bind-common-form="bindCommonForm"
+    :button-list="buttonList"
+    :style="{ 'height': height + 'px' }"
+>
+    <template #type-reference="scope">
+        <FamCustomSelectStaticText
+            v-model="formData.typeReference"
+            :row="typeReferenceRow"
+        ></FamCustomSelectStaticText>
+    </template>
+</CommonForm>

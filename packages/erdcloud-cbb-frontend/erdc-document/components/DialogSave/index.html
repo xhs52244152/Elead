@@ -1,0 +1,55 @@
+<div id="DialogHandler">
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="title"
+        :width="width"
+        @close="close"
+    >
+        <template v-if="type == 'save'">
+            <div class="flex">
+                <span
+                    style="width: 120px"
+                    class="inline-block w-100 text-right mr-normal"
+                    >备注</span
+                >
+                <erd-input
+                    v-model="note"
+                    type="textarea"
+                    placeholder="请输入"
+                    :maxlength="200"
+                ></erd-input>
+            </div>
+            <div class="mt-lg">
+                <span class="inline-block w-100 text-right mr-normal">保存并检入</span>
+                <erd-radio-group
+                    v-model="radio"
+                    :disabled="disabled"
+                >
+                    <erd-radio label="3">是</erd-radio>
+                    <erd-radio label="6">否</erd-radio>
+                </erd-radio-group>
+            </div>
+        </template>
+        <template v-else-if="type == 'sourceContent'">
+            <MainContentSource
+                ref="sourceContent"
+                :hide-collapse="true"
+                :oid="oid"
+                :class-name="className"
+            >
+            </MainContentSource>
+        </template>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button
+                type="primary"
+                @click="onSubmit"
+                :loading="loading"
+                >{{i18n.confirm}}</el-button
+            >
+            <el-button @click="toggleShow">{{i18n.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

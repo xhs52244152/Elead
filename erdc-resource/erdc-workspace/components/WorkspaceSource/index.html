@@ -1,0 +1,42 @@
+<div
+    id="workspace-source"
+    class="workspace-source w-100p"
+    v-cloak
+>
+    <erd-row>
+        <erd-col
+            :span="24"
+            style="margin-bottom: 12px"
+        >
+            <erd-contraction-panel
+                :unfold.sync="partsPanelUnfold"
+                :title="i18n.partsConfigStandard"
+                class="pb-lg"
+            >
+                <template v-slot:content>
+                    <FamDynamicForm
+                        ref="partSourceForm"
+                        :form.sync="form"
+                        :data="formConfigs('parts')"
+                    >
+                    </FamDynamicForm>
+                </template>
+            </erd-contraction-panel>
+        </erd-col>
+        <erd-col :span="24">
+            <erd-contraction-panel
+                :unfold.sync="epmDocPanelUnfold"
+                :title="i18n.documentConfigStandard"
+            >
+                <template v-slot:content>
+                    <FamDynamicForm
+                        ref="epmDocSourceForm"
+                        :form.sync="form"
+                        :data="formConfigs('epmDoc')"
+                    >
+                    </FamDynamicForm>
+                </template>
+            </erd-contraction-panel>
+        </erd-col>
+    </erd-row>
+</div>

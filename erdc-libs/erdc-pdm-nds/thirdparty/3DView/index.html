@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cache-control" content="no-cache"><meta http-equiv="expires" content="0"><meta http-equiv="pragma" content="no-cache"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport"><link rel="icon" href="favicon.ico"><title>xdviewer0b</title><style>.ndp3-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 991;
+    }
+    .ndp3-waiter {
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 25%;
+      visibility: visible;
+      text-align: center;
+      height: 12.5%;
+      z-index: 991;
+    }
+    
+    .ndp3-waiter > div {
+      width: 12%;
+      height: 0;
+      padding-bottom: 12%;
+      margin: 0 1.5%;
+      background-color: #2b9ae8;
+      border-radius: 100%;
+      display: inline-block;
+      animation: bouncedelay 1.4s infinite ease-in-out;
+      -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+      -moz-animation: bouncedelay 1.4s infinite ease-in-out;
+      -o-animation: bouncedelay 1.4s infinite ease-in-out;
+      animation-fill-mode: both;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both;
+      -o-animation-fill-mode: both;
+    }
+    
+    @keyframes bouncedelay {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+    
+    .ndp3-waiter .bounce1 {
+      animation-delay: -0.75s;
+      -webkit-animation-delay: -0.75s;
+      -moz-animation-delay: -0.75s;
+      -o-animation-delay: -0.75s;
+    }
+    
+    .ndp3-waiter .bounce2 {
+      animation-delay: -0.5s;
+      -webkit-animation-delay: -0.5s;
+      -moz-animation-delay: -0.5s;
+      -o-animation-delay: -0.5s;
+    }
+    
+    .ndp3-waiter .bounce3 {
+      animation-delay: -0.25s;
+      -webkit-animation-delay: -0.25s;
+      -moz-animation-delay: -0.25s;
+      -o-animation-delay: -0.25s;
+    }</style><link href="css/app.10f2111a.css" rel="preload" as="style"><link href="css/chunk-vendors.1f11911e.css" rel="preload" as="style"><link href="js/app.c55a26cf.js" rel="preload" as="script"><link href="js/chunk-vendors.cd510e86.js" rel="preload" as="script"><link href="js/polyfill.1e805a3d.js" rel="preload" as="script"><link href="css/chunk-vendors.1f11911e.css" rel="stylesheet"><link href="css/app.10f2111a.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but xdviewer0b doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"><div><div class="ndp3-waiter"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div><div class="ndp3-cover"></div></div></div><script>try {
+      window.parent.postMessage("startloadViewer");
+    } catch (error) {
+    }</script><script src="./coreViewer/res/vue/vue3@3.2.31.js"></script><script src="./coreViewer/res/vue/vuex@4.0.2.js"></script><script src="./coreViewer/res/jquery-1.11.3.min.js"></script><script src="./coreViewer/res/canvg.min.js"></script><script src="./coreViewer/res/html2canvas.min.js"></script><script src="./coreViewer/res/locales/Resource.js"></script><script src="./coreViewer/third-party/Detector.js?ver=4.1"></script><script src="./coreViewer/third-party/three.min.js?ver=4.1"></script><script src="./coreViewer/third-party/DracoDecoder.js"></script><script src="./coreViewer/third-party/ziplib.js"></script><script src="./coreViewer/NDSWebViewer.js"></script><script src="./coreViewer/NDSRefModelMode.js"></script><script src="./coreViewer/third-party/pako.min.js"></script><script src="./coreViewer/third-party/fingerPrint.js"></script><script src="./coreViewer/third-party/rsa.js"></script><script src="js/chunk-vendors.cd510e86.js"></script><script src="js/app.c55a26cf.js"></script><script src="js/polyfill.1e805a3d.js"></script></body><script>function getBroswer(){  // 判断浏览器版本
+    var Sys = {};
+    var ua = navigator.userAgent.toLowerCase();
+    var s;
+    (s = ua.match(/edge\/([\d.]+)/)) ? Sys.edge = s[1] :
+    (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? Sys.ie = s[1] :
+    (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
+    (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+    (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
+    (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+    (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+
+    if (Sys.edge) return { broswer : "Edge", version : Sys.edge };
+    if (Sys.ie) return { broswer : "IE", version : Sys.ie };
+    if (Sys.firefox) return { broswer : "Firefox", version : Sys.firefox };
+    if (Sys.chrome) return { broswer : "Chrome", version : Sys.chrome };
+    if (Sys.opera) return { broswer : "Opera", version : Sys.opera };
+    if (Sys.safari) return { broswer : "Safari", version : Sys.safari };
+    
+    return { broswer : "", version : "0" };
+  }
+  if(getBroswer().broswer == 'IE' || getBroswer().broswer == 'Edge') {
+    var language = (nd_viewCtrl && nd_viewCtrl.language) || 'en';
+    var html = '<div style="position: fixed;top: 30%;width: 100%;text-align: center;"><img src="./img/status-fail.png" style="width: 100px;" alt=""><div style="margin: 15px 0;font-size: 16px;">生成预览失败</div><div style="font-size: 13px;">失败原因：暂不支持该浏览器，请用其他浏览器打开。</div></div>';
+    if(language == 'en') {
+      html = '<div style="position: fixed;top: 30%;width: 100%;text-align: center;"><img src="./img/status-fail.png" style="width: 100px;" alt=""><div style="margin: 15px 0;font-size: 16px;">Preview Error</div><div style="font-size: 13px;">Reason：Sorry, your browser is not currently supported. Please download a supported browser to view this site.</div></div>';
+    }
+    document.write(html);
+    document.getElementById('app').style.display = 'none';
+  }</script></html>

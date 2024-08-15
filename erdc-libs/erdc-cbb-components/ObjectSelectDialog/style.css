@@ -1,0 +1,20 @@
+.pdm-object-select-dialog--filter .fam-basicfilter-remove {
+  display: none !important;
+}
+.pdm-object-select-dialog--filter .fam-basicfilter-btn {
+  display: none;
+}
+.pdm-object-select-dialog--filter .el-input__inner {
+  width: 120px !important;
+}
+
+.pdm-object-select-dialog--table {
+  min-height: calc(100vh - 250px);
+}
+.pdm-object-select-dialog--table .viewtable-body-container {
+  padding-bottom: 0 !important;
+}
+
+.pdm-object-select-dialog--search {
+  width: 400px;
+}/*# sourceMappingURL=style.css.map */

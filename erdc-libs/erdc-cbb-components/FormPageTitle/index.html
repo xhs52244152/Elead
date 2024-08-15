@@ -1,0 +1,49 @@
+<div
+    id="form-page-title"
+    class="flex align-items-center justify-between"
+    v-cloak
+>
+    <slot>
+        <div :class="['flex','align-items-center',customClass]">
+            <FamPageTitle
+                v-bind="{ ...$attrs, title }"
+                v-on="$listeners"
+            >
+                <template
+                    v-for="(slot, slotName) in $scopedSlots"
+                    v-slot:[slotName]
+                >
+                    <slot :name="slotName"></slot>
+                </template>
+            </FamPageTitle>
+            <div class="flex align-items-center justify-center ml-normal">
+                <template v-if="isShowTag">
+                    <slot name="tag">
+                        <erd-tag size="mini"> {{tagName}} </erd-tag>
+                    </slot>
+                </template>
+            </div>
+        </div>
+        <div class="flex align-items-center justify-center">
+            <template v-if="isShowPulldown">
+                <slot name="button">
+                    <erd-pulldown type="primary">
+                        {{ innerPulldownName }}
+                        <template #pulldown>
+                            <erd-pulldown-menu>
+                                <erd-pulldown-menu-item
+                                    v-for="(item, index) in pulldownList"
+                                    :key="index"
+                                    v-bind="_.omit(item, 'label', 'onclick')"
+                                    @click="item.onclick(item)"
+                                >
+                                    {{ item.label }}
+                                </erd-pulldown-menu-item>
+                            </erd-pulldown-menu>
+                        </template>
+                    </erd-pulldown>
+                </slot>
+            </template>
+        </div>
+    </slot>
+</div>

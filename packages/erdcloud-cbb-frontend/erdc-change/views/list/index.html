@@ -1,0 +1,49 @@
+<div
+    id="change-manage-list"
+    class="h-100p"
+>
+    <FamViewTable
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        :enable-scroll-load="true"
+        @callback="fnCallback"
+        class="bg-white"
+        ref="famViewTable"
+        @action-click="actionClick"
+    >
+        <template #left:toolbar:first>
+            <erd-form
+                class="change-type"
+                inline
+                @submit.native.prevent
+            >
+                <ComponentWidthLabel
+                    v-model="applyFilter.value"
+                    :label="applyFilter.label"
+                    :is-render="applyFilter.showComponent"
+                    :removeable="false"
+                    @input="typeNameChange"
+                >
+                    <erd-option
+                        v-for="(type, index) in typeNameList"
+                        :label="type.displayName"
+                        :key="type.value"
+                        :value="type.value"
+                    ></erd-option>
+                </ComponentWidthLabel>
+            </erd-form>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row, {
+                    inTable: true,
+                    isBatch: false,
+                }]"
+                @click="onCommand"
+            ></FamActionPulldown>
+        </template>
+    </FamViewTable>
+</div>

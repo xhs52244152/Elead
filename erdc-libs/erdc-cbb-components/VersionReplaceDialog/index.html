@@ -1,0 +1,33 @@
+<erd-ex-dialog
+    :title="dialogTitle"
+    :visible.sync="replaceVisible"
+    v-bind="$attrs"
+    v-on="$listeners"
+>
+    <FamErdTable
+        border
+        :data="tableData"
+        :column="column"
+        show-overflow
+        :checkbox-config="{checkAll:true}"
+        @checkbox-change="handleCheckboxChange"
+        @checkbox-all="handleCheckboxAll"
+    >
+        <template #column:default:version="{data}">
+            <erd-ex-select
+                v-model="data.row.versionValue"
+                :options="data.row.versionOption"
+            >
+            </erd-ex-select>
+        </template>
+    </FamErdTable>
+    <template #footer>
+        <erd-button
+            type="primary"
+            :loading="loading"
+            @click="confirm"
+            >{{ i18n['confirm'] }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18n['cancel'] }}</erd-button>
+    </template>
+</erd-ex-dialog>

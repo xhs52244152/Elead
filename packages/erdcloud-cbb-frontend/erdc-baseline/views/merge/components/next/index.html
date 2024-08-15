@@ -1,0 +1,52 @@
+<div id="baseline-merge-next-container">
+    <div class="el-form-item">
+        <span
+            class="el-form-item__label color-normal"
+            style="width: 12.5%"
+            >{{i18n.merge}}</span
+        >
+        <div class="block el-form-item__content">
+            <erd-radio-group v-model="mode">
+                <erd-radio label="2">{{i18n.newBaselineOpt}}</erd-radio>
+                <erd-radio label="1">{{i18n.masterBaselineOpt}}</erd-radio>
+            </erd-radio-group>
+        </div>
+    </div>
+    <baseline-form
+        v-if="isCreateBaselineMode"
+        ref="baselineFormRef"
+        :pid="pid"
+        view-type="CREATE"
+        :isBaselineMerge="true"
+        :key="mode"
+    >
+    </baseline-form>
+    <baseline-form
+        v-else
+        :pid="pid"
+        @change="handleFormChange"
+        :oid="getMergeInfo.masterBaselineOid"
+        view-type="DETAIL"
+        readonly
+    >
+    </baseline-form>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfoldObject"
+        :title="i18n.baselineObject"
+        :class='[panelUnfoldObject ? "mt-2xl" :"mt-xl"]'
+    >
+        <template v-slot:content>
+            <erd-table
+                border
+                :data="formattedMergedList"
+                :column="columns"
+                ref="erdTable"
+                show-overflow="title"
+                auto-resize
+                isEmbedTable
+                :row-config="{isCurrent: true, isHover: true}"
+            >
+            </erd-table>
+        </template>
+    </erd-contraction-panel>
+</div>

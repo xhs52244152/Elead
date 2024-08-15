@@ -1,0 +1,5 @@
+packages:
+  - 'packages/erdcloud-cbb-frontend/*'
+  - 'erdc-app/*'
+  - 'erdc-libs/*'
+  - 'erdc-resource/*'

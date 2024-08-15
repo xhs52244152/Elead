@@ -1,0 +1,41 @@
+<div v-cloak class="common-form-content">
+    <div class="form-content_top" v-if="isShowTitle">
+        <FormPageTitle 
+            ref="formPageTitleRef"
+            v-bind="bindPageTitle"
+            v-on="$listeners"
+        >
+            <template
+                v-for="(slot, slotName) in $slots"
+                v-slot:[slotName]
+            >
+                <slot :name="slotName"></slot>
+            </template>
+        </FormPageTitle>
+    </div>
+    <erd-scrollbar class="form-content_mid" v-if="isShowLayout">
+        <fam-advanced-form
+            ref="commonFormRef"
+            :model.sync="innerFormData"
+            v-bind="bindCommonForm"
+            v-on="$listeners"
+        >
+            <template
+                v-for="(slot, slotName) in $scopedSlots"
+                v-slot:[slotName]="slotProps"
+            >
+                <slot :name="slotName" v-bind="slotProps"></slot>
+            </template>
+        </fam-advanced-form>
+    </erd-scrollbar>
+    <div class="form-content_bot" v-if="isShowButton">
+        <template v-for="item in buttonList">
+            <erd-button
+                @click="item.onclick"
+                v-bind="_.omit(item, 'name', 'onclick')"
+                >
+                    {{ item.name }}
+            </erd-button>
+        </template>
+    </div>
+</div>

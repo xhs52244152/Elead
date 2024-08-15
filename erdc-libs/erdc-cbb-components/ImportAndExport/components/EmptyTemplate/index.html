@@ -1,0 +1,51 @@
+<div
+    id="empty-template"
+    v-cloak
+>
+    <DefaultTemplate
+        ref="templateRef"
+        :form-configs="formConfigs"
+        :form-data.sync="formData"
+        :transferUnfold.sync="transferUnfold"
+        :baseInfoUnfold.sync="baseInfoUnfold"
+        :transfer-title="i18n?.['类型属性设置']"
+        :transfer-height="isShowClassify && cateUnfold ? 280 : 420"
+        :table-data="typeAttributeList"
+        :fields.sync="typeAttrInfo"
+    >
+    </DefaultTemplate>
+    <template v-if="isShowClassify">
+        <erd-contraction-panel
+            class="mt-xl"
+            :unfold.sync="cateUnfold"
+            :title="i18n?.['分类属性设置']"
+        >
+            <template v-slot:content>
+                <Transfer
+                    ref="classifyTransferRef"
+                    :height="transferUnfold ? 280 : 420"
+                    :table-data="classAttributeList"
+                    :fields.sync="classAttrInfo[formData?.classifyReference?.oid]"
+                >
+                    <template #prepend>
+                        <erd-tree-select
+                            ref="treeSelectRef"
+                            class="mr-lg"
+                            v-model="formData.classifyReference"
+                            :data="computedClassifyList"
+                            :default-expanded-keys="[formData?.classifyReference?.oid]"
+                            :filter-node-method="filterNodeMethod"
+                            filterable
+                            nodeKey="oid"
+                            :props="{
+                                label: 'displayName',
+                                children: 'children',
+                                disabled: 'disabled'
+                            }"
+                        ></erd-tree-select>
+                    </template>
+                </Transfer>
+            </template>
+        </erd-contraction-panel>
+    </template>
+</div>

@@ -1,0 +1,141 @@
+<erd-ex-dialog
+    @closed="handleDialogClosed"
+    :visible.sync="visible"
+    width="1200px"
+    :append-to-body="true"
+    :title="i18n.rename"
+>
+    <div
+        ref="header"
+        class="mb-xl flex justify-between"
+        v-if="isBatchEdit"
+    >
+        <div class="w-240 grow-0">
+            <erd-input
+                class="w-100p"
+                :placeholder="i18n.pleaseEnter"
+                clearable
+                v-model="searchName"
+            >
+            </erd-input>
+        </div>
+        <erd-button @click="handleBatchEdit"> {{i18n.batchEdit}} </erd-button>
+    </div>
+    <vxe-table
+        border
+        max-height="400"
+        class="baseline-vxe-table"
+        :data="filteredTableData"
+        :edit-config="{trigger: 'click', mode: 'cell', showIcon: false}"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+        header-cell-class-name="baseline-operate-table-header-cell"
+    >
+        <vxe-column
+            v-if="isBatchEdit"
+            type="checkbox"
+            width="40"
+            title=""
+            align="center"
+        ></vxe-column>
+        <vxe-column
+            type="seq"
+            width="48"
+            title=" "
+            align="center"
+        ></vxe-column>
+        <vxe-column
+            field="name"
+            show-overflow="title"
+            :title="i18n.originName"
+        ></vxe-column>
+        <vxe-column
+            field="newLifecycleStatus"
+            show-overflow="title"
+            :title="i18n.rename"
+            :edit-render="{}"
+        >
+            <template #header>
+                <i class="erd-iconfont erd-icon-edit"></i>
+                <span>{{i18n.rename}}</span>
+            </template>
+            <template #default="{ row }">
+                <span
+                    :class="{'color-disabled': !row.newName}"
+                    :title="row.newName"
+                    >{{row.newName || i18n.pleaseEnter}}</span
+                >
+            </template>
+            <template #edit="{ row }">
+                <erd-input
+                    class="w-100p baseline-select-container"
+                    v-model="row.newName"
+                    :placeholder="i18n.pleaseEnter"
+                >
+                </erd-input>
+            </template>
+        </vxe-column>
+        <vxe-column
+            field="code"
+            show-overflow="title"
+            :title="i18n.code"
+        >
+        </vxe-column>
+        <vxe-column
+            field="context"
+            show-overflow="title"
+            :title="i18n.context"
+        >
+        </vxe-column>
+        <vxe-column
+            field="folder"
+            show-overflow="title"
+            :title="i18n.folder"
+        >
+        </vxe-column>
+    </vxe-table>
+    <erd-ex-dialog
+        width="600px"
+        :visible.sync="visibleForBatchEdit"
+        :append-to-body="true"
+        :title="i18n.batchEdit"
+        destroy-on-close
+    >
+        <erd-form
+            :model="batchEditFormData"
+            label-position="right"
+            label-width="12.5%"
+        >
+            <erd-form-item
+                :label="i18n.name"
+                class="mb-0"
+            >
+                <template #label>
+                    <span class="color-normal">{{i18n.name}}</span>
+                </template>
+                <erd-input
+                    class="w-100p baseline-select-container"
+                    v-model="batchEditFormData.name"
+                    :placeholder="i18n.pleaseEnter"
+                >
+                </erd-input>
+            </erd-form-item>
+        </erd-form>
+        <template slot="footer">
+            <erd-button
+                type="primary"
+                @click="saveBatchEditData"
+                >{{i18n.done}}</erd-button
+            >
+            <erd-button @click="visibleForBatchEdit = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <template slot="footer">
+        <erd-button
+            type="primary"
+            @click="handleRename"
+            >{{i18n.done}}</erd-button
+        >
+        <erd-button @click="visible = false">{{i18n.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

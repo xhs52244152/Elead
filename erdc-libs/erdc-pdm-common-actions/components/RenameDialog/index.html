@@ -1,0 +1,109 @@
+<commonDialog
+    :title="i18nMap.rename"
+    @confirm="submit"
+    ref="dialog"
+    :loading="loading"
+>
+    <div
+        slot="header"
+        class="mb-xl flex justify-between"
+    >
+        <div slot="header">
+            <erd-input
+                class="align-middle mt-0"
+                style="width: 220px"
+                v-model="searchValue"
+                clearable
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18nMap.enterSearchWord"
+            ></erd-input>
+        </div>
+        <div class="flex">
+            <erd-button
+                v-show="viewTable.length > 1"
+                @click="batchModify"
+            >
+                {{i18nMap.modify}}
+            </erd-button>
+
+            <erd-button
+                v-if="showCollect"
+                @click="handleCollect"
+            >
+                {{i18nMap.object}}
+            </erd-button>
+
+        </div>
+    </div>
+    <fam-erd-table
+        slot="content"
+        border
+        :maxLine="10"
+        :column="columns"
+        :show-overflow="true"
+        :data="viewTable"
+        :edit-config="{trigger: 'click', mode: 'cell', icon: 'erd-iconfont erd-icon-edit', beforeEditMethod: activeCellMethod}"
+        @edit-actived="editActived"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+    >
+        <template #column:header:rename="{data}">
+            <span>{{i18nMap.rename}}</span>
+        </template>
+        <template #column:default:rename="{data}">
+            <span
+                v-if="!data.row.rename"
+                style="color: var(--colorTextPlaceholder)"
+                >{{i18nMap.renamePlaceholder}}</span
+            >
+            <span v-else>{{data.row.rename}}</span>
+        </template>
+        <template #column:edit:rename="{data}">
+            <erd-input
+                autofocus
+                ref="renameInput"
+                :placeholder="i18nMap.enter"
+                v-model.trim="data.row['rename']"
+            >
+            </erd-input>
+        </template>
+        <template #column:default:newCadName="{data}">
+            <span v-if="!isEpmRow(data.row)" style="color: var(--colorDisabled)" >
+                --
+            </span>
+            <span
+                v-else-if="!data.row.newCadName"
+                style="color: var(--colorTextPlaceholder)"
+            >
+                {{ i18nMap.newCadNamePlaceholder }}
+            </span>
+            <span v-else >{{ data.row.newCadName + getSuffix(data.row.cadName) }}</span>
+                    </template>
+        </template>
+        <template #column:edit:newCadName="{data}">
+            <erd-input
+                v-model.trim="data.row.newCadName"
+                ref="newCadNameInput"
+                autofocus
+                :placeholder="i18nMap.enter"
+            >
+                <template slot="append">
+                    <erd-show-tooltip
+                        style="margin: 0 -15px; max-width: 60px"
+                        placement="top"
+                        :content="getSuffix(data.row.cadName)"
+                        :enterable="false"
+                        :flex="false"
+                        :open-delay="100"
+                    >
+                        <template v-slot:show-tooltip-title>
+                            <span class="title_text">
+                                {{ getSuffix(data.row.cadName) }}
+                            </span>
+                        </template>
+                    </erd-show-tooltip>
+                </template>
+            </erd-input>
+        </template>
+    </fam-erd-table>
+</commonDialog>

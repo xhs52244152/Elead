@@ -1,0 +1,43 @@
+define([], function () {
+    return {
+        i18n: {
+            BOM结构树: { CN: 'BOM结构树', EN: 'BOM Structure Tree' },
+            层级: { CN: '层级', EN: 'Level' },
+            请选择层级: { CN: '请选择层级', EN: 'Please select a level' },
+            展开一级: { CN: '展开一级', EN: 'Developed stage' },
+            展开二级: { CN: '展开二级', EN: 'Developed second order' },
+            展开三级: { CN: '展开三级', EN: 'Developed tertiary' },
+            展开所有: { CN: '展开所有', EN: 'Expand all' },
+            属性: { CN: '属性', EN: 'attribute' },
+            可视化: { CN: '可视化', EN: 'visualization' },
+            结构: { CN: '结构', EN: 'construction' },
+            被使用: { CN: '被使用', EN: 'in use' },
+            BOM视图: { CN: 'BOM视图', EN: 'BOM view' },
+            有效性: { CN: '有效性', EN: 'Check validity' },
+            请输入编码或名称: { CN: '请输入编码或名称', EN: 'Please enter a code or name' },
+            精确: { CN: '精确', EN: 'precise' },
+            非精确: { CN: '非精确', EN: 'Imprecise' },
+            attr: { CN: '属性', EN: 'Attribute' },
+            containerRef: { CN: '上下文', EN: 'Context' },
+            identifierNo: { CN: '编码', EN: 'Identifier No' },
+            name: { CN: '名称', EN: 'Name' },
+            lineNumber: { CN: '位号', EN: 'Line Number' },
+            viewRef: { CN: '视图', EN: 'View' },
+            amount: { CN: '数量', EN: 'Amount' },
+            lifecycleStatus: { CN: '生命周期状态', EN: 'Lifrecycle Status' },
+            seq: { CN: '序号', EN: 'Seq' },
+            unit: { CN: '单位', EN: 'Unit' },
+            version: { CN: '版本', EN: 'Version' },
+            displayDiff: { CN: '仅显示不同', EN: 'Only display different' },
+            fieldSet: { CN: '字段设置', EN: 'Field Set' },
+            changeComparePart: { CN: '更改比较部件', EN: 'Change compare part' },
+            changeCompareDoc: { CN: '更改比较文档', EN: 'Change compare document' },
+            changeCompareEpm: { CN: '更改比较模型', EN: 'Change compare epm document' },
+            docStruct: { CN: '文档结构', EN: 'Document structure' },
+            epmStruct: { CN: '模型结构', EN: 'Epm Document structure' },
+            generateReport: { CN: '生成报告', EN: 'Generate Report' },
+            manageCompareAttr: { CN: '管理比较属性', EN: 'Manage Compare Attribute' },
+            selectOneAttrTips: { CN: '请至少选择一个属性', EN: 'Please select at least one attribute' }
+        }
+    };
+});

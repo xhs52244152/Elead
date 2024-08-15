@@ -1,0 +1,47 @@
+<div
+    id="baseline-merge"
+    class="bg-white h-100p flex flex-column p-xl"
+    v-fam-fs
+>
+    <FormPageTitle
+        ref="formPageTitleRef"
+        v-bind="formPageAttr"
+        class="text-xl mb-lg"
+    >
+    </FormPageTitle>
+    <erd-scrollbar
+        class="grow-1"
+        v-fam-fs="{ marginBottom: 140 }"
+    >
+        <keep-alive>
+            <Previous
+                v-if="activeStep==0"
+                ref="previousComp"
+            ></Previous>
+            <Next
+                v-else="activeStep==1"
+                ref="nextComp"
+            ></Next>
+        </keep-alive>
+    </erd-scrollbar>
+    <div class="common-btn flex justify-center pt-lg pb-lg flex-nowrap">
+        <erd-button
+            v-if="activeStep==1"
+            @click="previous()"
+            >{{i18n.prevStep}}</erd-button
+        >
+        <erd-button
+            v-if="activeStep==0"
+            type="primary"
+            @click="next()"
+            >{{i18n.nextStep}}</erd-button
+        >
+        <erd-button
+            @click="saveMerge"
+            v-if="activeStep==1"
+            type="primary"
+            >{{i18n.done}}</erd-button
+        >
+        <erd-button @click="cancel">{{i18n.cancel}}</erd-button>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<div
+    id="pdm_object_attrInfo"
+    class="h-100p flex flex-column"
+>
+    <el-scrollbar
+        wrap-style="height:100%;overflow-y: scroll;"
+        style="height: 1px; flex-grow: 1"
+    >
+        <fam-advanced-form
+            :form-id="formId"
+            :class-name="className"
+            :model.sync="formData"
+            :oid="oid"
+            :object-oid="oid"
+            :query-layout-params="queryLayoutParams"
+            :model-mapper="modelMapper"
+            ref="attrInfoForm"
+            @base-form-data="baseFormData"
+        >
+            <!-- 部件插槽 -->
+            <template #attach-file>
+                <UploadFileList
+                    ref="attachment"
+                    :oid="oid"
+                    :className="className"
+                    :readonly="true"
+                >
+                </UploadFileList>
+            </template>
+            <!-- 文档插槽 -->
+            <template #files>
+                <UploadFileList
+                    ref="attachment"
+                    :oid="oid"
+                    :className="className"
+                    :readonly="true"
+                >
+                </UploadFileList>
+            </template>
+            <!-- 上下文插槽 -->
+            <template #context="scope">
+                <erd-button
+                    type="text"
+                    @click="handleGoDetail(scope.data)"
+                >
+                    {{ scope.data?.containerRef?.displayName }}
+                </erd-button>
+            </template>
+            <template #container="scope">
+                <erd-button
+                    type="text"
+                    @click="handleGoDetail(scope.data)"
+                >
+                    {{ scope.data?.containerRef?.displayName }}
+                </erd-button>
+            </template>
+            <!-- 生命周期插槽 -->
+            <template
+                slot="lifecyle-status"
+                slot-scope="scope"
+            >
+                <lifecyleStatus :data="sourceData"> </lifecyleStatus>
+            </template>
+            <!-- 文件夹 -->
+            <template
+                slot="folder"
+                slot-scope="scope"
+            >
+                <erd-show-tooltip
+                    class="w-100p"
+                    placement="top"
+                    :content="scope.data?.folderRef?.displayName"
+                    :enterable="false"
+                    :flex="false"
+                    :open-delay="100"
+                >
+                    <template v-slot:show-tooltip-title>
+                        <span class="title_text">
+                            <a
+                                href="javascript:;"
+                                @click="handleGoDetail(scope.data, 'folder')"
+                            >
+                                {{ scope.data?.folderRef?.displayName}}
+                            </a>
+                        </span>
+                    </template>
+                </erd-show-tooltip>
+            </template>
+            <template
+                slot="main-source"
+                slot-scope="scope"
+            >
+                <MainContentSource
+                    ref="source"
+                    :class-name="className"
+                    :readonly="true"
+                    :oid="oid"
+                >
+                </MainContentSource>
+            </template>
+        </fam-advanced-form>
+    </el-scrollbar>
+</div>

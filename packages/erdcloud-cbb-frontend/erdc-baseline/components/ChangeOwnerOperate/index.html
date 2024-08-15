@@ -1,0 +1,153 @@
+<erd-ex-dialog
+    @closed="handleDialogClosed"
+    :visible.sync="visible"
+    :append-to-body="true"
+    :title="i18n.changeOwner"
+    destroy-on-close
+>
+    <div
+        v-if="isBatchEdit"
+        ref="header"
+        class="mb-xl flex justify-between"
+    >
+        <div class="w-240 grow-0">
+            <erd-input
+                class="w-100p"
+                :placeholder="i18n.pleaseEnter"
+                clearable
+                v-model="searchName"
+            >
+            </erd-input>
+        </div>
+        <erd-button @click="handleBatchEdit"> {{i18n.batchEdit}} </erd-button>
+    </div>
+    <vxe-table
+        border
+        max-height="400"
+        :data="filteredTableData"
+        :edit-config="{trigger: 'click', mode: 'cell', showIcon: false}"
+        class="baseline-vxe-table"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+        header-cell-class-name="baseline-operate-table-header-cell"
+    >
+        <vxe-column
+            v-if="isBatchEdit"
+            type="checkbox"
+            width="40"
+            title=""
+            align="center"
+        ></vxe-column>
+        <vxe-column
+            type="seq"
+            width="48"
+            title=" "
+            align="center"
+        ></vxe-column>
+        <vxe-column
+            field="name"
+            show-overflow="title"
+            :title="i18n.name"
+        ></vxe-column>
+        <vxe-column
+            field="code"
+            show-overflow="title"
+            :title="i18n.code"
+        >
+        </vxe-column>
+        <vxe-column
+            field="owner"
+            show-overflow="title"
+            :title="i18n.originOwner"
+        >
+        </vxe-column>
+        <vxe-column
+            field="newOwner"
+            show-overflow="title"
+            :title="i18n.owner"
+            :edit-render="{}"
+        >
+            <template #header>
+                <i class="erd-iconfont erd-icon-edit"></i>
+                <span>{{i18n.owner}}</span>
+            </template>
+            <template #default="{row}">
+                <fam-user
+                    v-if="row.ownerDetail"
+                    :users="row.ownerDetail"
+                >
+                </fam-user>
+                <span
+                    v-else
+                    class="color-disabled"
+                    >{{i18n.pleaseSelect}}</span
+                >
+            </template>
+            <template #edit="{row}">
+                <FamParticipantSelect
+                    fixed-height
+                    tableWidth="350"
+                    clearable
+                    v-model="row.newOwner"
+                    searchScop="all"
+                    popper-class="vxe-table--ignore-clear"
+                    :isgetdisable="false"
+                    :query-params="queryParams"
+                    :query-scope="queryScope"
+                    :show-type="['USER']"
+                    @change="(value,detail) => row.ownerDetail = detail"
+                ></FamParticipantSelect>
+            </template>
+        </vxe-column>
+    </vxe-table>
+    <erd-ex-dialog
+        width="600px"
+        destroy-on-close
+        :visible.sync="visibleForBatchEdit"
+        :append-to-body="true"
+        :title="i18n.batchEdit"
+    >
+        <erd-form
+            :model="batchEditFormData"
+            label-position="right"
+            label-width="12.5%"
+        >
+            <erd-form-item
+                :label="i18n.owner"
+                class="mb-0"
+            >
+                <template #label>
+                    <span class="color-normal">{{i18n.owner}}</span>
+                </template>
+                <FamParticipantSelect
+                    fixed-height
+                    clearable
+                    v-model="batchEditFormData.owner"
+                    searchScop="all"
+                    popper-class="vxe-table--ignore-clear"
+                    :isgetdisable="false"
+                    :query-params="queryParams"
+                    :query-scope="queryScope"
+                    :show-type="['USER']"
+                    @change="(value,detail) => batchEditFormData.ownerDetail = detail"
+                ></FamParticipantSelect>
+            </erd-form-item>
+        </erd-form>
+        <template slot="footer">
+            <erd-button
+                type="primary"
+                @click="saveBatchEditData"
+                >{{i18n.done}}</erd-button
+            >
+            <erd-button @click="visibleForBatchEdit = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <template slot="footer">
+        <erd-button
+            type="primary"
+            @click="handleChangeOwner"
+            >{{i18n.done}}</erd-button
+        >
+        <erd-button @click="visible = false">{{i18n.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

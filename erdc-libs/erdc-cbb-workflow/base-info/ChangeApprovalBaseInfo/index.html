@@ -1,0 +1,39 @@
+<div v-cloak style="padding-left: 0;">
+    <!-- <erd-contraction-panel
+        :unfold.sync="guideUnfold"
+        :title="i18n['流程指引']"
+    >
+        <template #content>
+            <div class="mt-normal">
+                <ProcessGuide ref="processGuideRef"></ProcessGuide>
+            </div>
+        </template>
+    </erd-contraction-panel> -->
+    <fam-advanced-form
+        ref="commonFormRef"
+        :model.sync="innerFormData"
+        v-bind="bindCommonForm"
+        :form-id="formId"
+        :query-layout-params="queryLayoutParams"
+        :class-name="className"
+        :object-oid="oid"
+        v-on="$listeners"
+    >
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            ></slot>
+        </template>
+        <template #identifier="scope">
+            <a
+                href="javascript:;"
+                @click="viewDetails(scope.data, {skipMode: 'replace'})"
+                >{{scope?.data?.identifierNo?.displayName}}</a
+            >
+        </template>
+    </fam-advanced-form>
+</div>

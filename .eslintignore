@@ -1,0 +1,14 @@
+dist/
+packages/erdc-libs/socket/
+packages/erdc-libs/requirejs/
+packages/erdc-libs/monacoEditor/
+packages/erdc-libs/watermark/
+packages/erdc-libs/file-save/
+packages/erdc-libs/storage/
+packages/erdc-libs/keycloak/
+packages/erdc-libs/doc-sdk/
+packages/erdc-libs/fam-utils/sortable.min.js
+packages/erdc-libs/fam-utils/XEUtils.js
+packages/erdc-libs/jquery-plugins/
+packages/erdc-libs/erdc-components/BpmFlowchart/BpmFlowchart/
+packages/erdc-kit/lib/

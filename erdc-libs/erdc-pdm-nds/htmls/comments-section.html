@@ -1,0 +1,55 @@
+<div
+    id="comments-section"
+    :class="isClosedClass"
+>
+    <div
+        class="toggle"
+        :class="getArrows"
+        @click="toggleSlide"
+    ></div>
+    <div
+        class="wrap"
+        v-if="!loading"
+    >
+        <el-tabs
+            v-model="activeTabs"
+            @tab-click="handleClick"
+            style="width: 100%"
+        >
+            <!-- 评论 -->
+            <el-tab-pane
+                :label="i18n?.['评论']"
+                name="comments"
+            >
+                <!-- 顶部评论区域 -->
+                <comments-textarea @handle-submit="getTopComments"></comments-textarea>
+                <!-- 评论列表 -->
+                <comments-list
+                    :list="getCommentsListRenderData"
+                    @handle-remove="removeCommentItem"
+                    @handle-add="addCommentItem"
+                    style="margin: 8px 0"
+                ></comments-list>
+            </el-tab-pane>
+            <!-- <el-tab-pane label="历史版本" name="history">
+                敬请期待
+            </el-tab-pane> -->
+        </el-tabs>
+    </div>
+    <div
+        class="wrap empty-placeholder"
+        v-else
+    >
+        <!-- 努力加载中... -->
+        <p>{{i18n?.['努力加载中']}}</p>
+        <!-- 重新加载 -->
+        <el-button
+            v-if="showRefreshBtn"
+            @click="reloadAll"
+            type="primary"
+            style="border: transparent"
+        >
+            {{i18n?.['重新加载']}}
+        </el-button>
+    </div>
+</div>

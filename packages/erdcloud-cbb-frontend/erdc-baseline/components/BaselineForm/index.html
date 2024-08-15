@@ -1,0 +1,176 @@
+<div class="baseline-form">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18n.baseInfo"
+        class="pb-24"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="formData"
+                :data="formConfigs"
+                :readonly="readonly"
+            >
+                <template #context-slot="scope">
+                    <template v-if="readonly">
+                        <erd-show-tooltip
+                            class="w-100p"
+                            placement="top"
+                            :content="formData.containerRef?.displayName"
+                            :enterable="false"
+                            :flex="false"
+                            :open-delay="100"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <span class="title_text">
+                                    <a
+                                        href="javascript:;"
+                                        @click="enterContextSpace(formData)"
+                                    >
+                                        {{formData.containerRef?.displayName}}
+                                    </a>
+                                </span>
+                            </template>
+                        </erd-show-tooltip>
+                    </template>
+                    <template v-else>
+                        <template v-if="isFromPortal">
+                            <erd-ex-select
+                                v-if="isCreate"
+                                class="w-100p baseline-select-container"
+                                filterable
+                                v-model="formData.containerRef"
+                                :options="contextOptions"
+                                @change="handleContextChange"
+                            >
+                            </erd-ex-select>
+                            <span
+                                v-else
+                                class="color-normal"
+                                >{{formData.containerRefOrigin?.displayName}}</span
+                            >
+                        </template>
+                        <template v-else>
+                            <span class="color-normal"
+                                >{{ _.find(contextOptions, { value: contextInfo['containerRef'] || '' })?.label }}</span
+                            >
+                        </template>
+                    </template>
+                </template>
+                <template #type-slot="scope">
+                    <template v-if="readonly">
+                        <span class="fam-dynamic-form__readonly-field">{{formData.typeReference?.displayName}}</span>
+                    </template>
+                    <template v-else-if="isCreate">
+                        <erd-ex-select
+                            class="w-100p baseline-select-container"
+                            filterable
+                            v-model="formData.typeReference"
+                            :options="accessType"
+                        >
+                        </erd-ex-select>
+                    </template>
+                    <span
+                        v-else
+                        class="color-normal"
+                        >{{formData.typeReferenceOrigin?.displayName}}</span
+                    >
+                </template>
+                <template #folder-slot="scope">
+                    <template v-if="readonly">
+                        <erd-show-tooltip
+                            class="w-100p"
+                            placement="top"
+                            :content="formData.folderRef?.displayName"
+                            :enterable="false"
+                            :flex="false"
+                            :open-delay="100"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <span class="title_text">
+                                    <a
+                                        href="javascript:;"
+                                        @click="enterContextSpace(formData, 'folder')"
+                                    >
+                                        {{formData.folderRef?.displayName}}
+                                    </a>
+                                </span>
+                            </template>
+                        </erd-show-tooltip>
+                    </template>
+                    <template v-else-if="isCreate">
+                        <erd-tree-select
+                            style="width: 100%"
+                            v-model="formData.folderRef"
+                            :data="folderTree"
+                            node-key="oid"
+                            :placeholder="i18n.pleaseSelectFolder"
+                            :props="{
+                                label: 'displayName',
+                                children: 'childList',
+                            }"
+                        ></erd-tree-select>
+                    </template>
+                    <span
+                        v-else
+                        class="color-normal"
+                        >{{formData.folderRefOrigin?.displayName}}</span
+                    >
+                </template>
+                <template #code-slot="scope">
+                    <template v-if="readonly">
+                        <span class="fam-dynamic-form__readonly-field">{{formData.identifierNo}}</span>
+                    </template>
+                    <template v-else>
+                        <fam-code-generator
+                            class="color-normal"
+                            v-model="formData.identifierNo"
+                            type="system"
+                        ></fam-code-generator>
+                    </template>
+                </template>
+                <template #lifecycleStatusStatus-slot="scope">
+                    <LifecycleStep
+                        label-key="displayName"
+                        :value="formData['lifecycleStatus.status']"
+                        :options="formData.lifecycleStatusOrigin?.values"
+                    ></LifecycleStep>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <fam-advanced-form
+        class="pb-24"
+        ref="layoutForm"
+        :oid="oid"
+        :object-oid="oid"
+        :model.sync="formData"
+        :form-id="viewType"
+        :query-layout-params="queryLayoutParams()"
+        :class-name="typeClassName"
+        :model-mapper="modelMapper"
+        :scoped-slots="{lockDate: true, updateTime: true, createTime: true}"
+        @base-form-data="handleDataBeforeMapper"
+    >
+        <template #create-time="scope">
+            <span>{{scope.data.createTime}}</span>
+        </template>
+        <template #lock-date="scope">
+            <span>{{scope.data['lock.lockDate']}}</span>
+        </template>
+        <template #update-time="scope">
+            <span>{{scope.data.updateTime}}</span>
+        </template>
+    </fam-advanced-form>
+    <UploadFileList
+        ref="attachment"
+        :oid="oid"
+        :className="baselineClassName"
+        :is-create="isCreate"
+        :is-edit="!isCreate && !readonly"
+        :readonly="readonly"
+        :is-checkout="isCheckout"
+        :vm="this"
+    >
+    </UploadFileList>
+</div>

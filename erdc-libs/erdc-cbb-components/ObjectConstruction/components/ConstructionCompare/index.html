@@ -1,0 +1,130 @@
+<div class="pdm-construction--compare-container h-100p mlr-xl">
+    <fam-page-title
+        title="结构比较"
+        static-title
+        show-back-button
+        @back="onBack"
+    >
+    </fam-page-title>
+    <div class="flex mb-xl align-items-center">
+        <erd-checkbox
+            v-model="onlyShowDiff"
+            @change="onChangeShowDiff"
+            style="margin-left: auto"
+            >{{ i18n.displayDiff }}</erd-checkbox
+        >
+        <!-- <erd-button
+            type="primary"
+            class="ml-normal"
+            >{{ i18n.generateReport }}</erd-button
+        > -->
+        <erd-button
+            class="ml-normal"
+            @click="openColSet()"
+            >{{ i18n.manageCompareAttr }}</erd-button
+        >
+        <erd-button
+            class="ml-normal"
+            type="fill-icon"
+            icon="el-icon-refresh"
+            @click="refresh(true, true)"
+        ></erd-button>
+    </div>
+    <div
+        class="pdm-construction--compare-box"
+        ref="infoContainer"
+    >
+        <!-- 左上区域 -->
+        <div class="pdm-construction--compare-box-item">
+            <compare-tree
+                ref="left-tree"
+                :class-name="className"
+                :root-data="rootA"
+                :title-config="titleConfig"
+                :need-bom-view="needBomView"
+                :view-options="viewOptions"
+                :default-view="leftInitView"
+                @expand="(data, node) => { syncTreeExpand(data, node, 'right-tree') }"
+                @collapse="(data, node) => { syncTreeExpand(data, node, 'right-tree', false) }"
+                @load="(node, resolve) => { syncTreeLoad(node, resolve, 'right-tree') }"
+                @click="(data, node) => { syncTreeClick(data, node, 'right-tree') }"
+                @set-default="(data) => { setDefaultNodeData(data, 'left') }"
+                @change-object="(selection) => { changeRootData(selection, 'left') }"
+                @change-view="refresh(true)"
+                @scroll="onLeftScroll"
+            ></compare-tree>
+        </div>
+        <!-- 右上区域 -->
+        <div class="pdm-construction--compare-box-item">
+            <compare-tree
+                ref="right-tree"
+                :class-name="className"
+                :root-data="rootB"
+                :title-config="titleConfig"
+                :need-bom-view="needBomView"
+                :view-options="viewOptions"
+                :default-view="rightInitView"
+                @expand="(data, node) => { syncTreeExpand(data, node, 'left-tree') }"
+                @collapse="(data, node) => { syncTreeExpand(data, node, 'left-tree', false) }"
+                @load="(node, resolve) => { syncTreeLoad(node, resolve, 'left-tree') }"
+                @click="(data, node) => { syncTreeClick(data, node, 'left-tree') }"
+                @set-default="(data) => { setDefaultNodeData(data, 'right') }"
+                @change-object="(selection) => { changeRootData(selection, 'right') }"
+                @change-view="refresh(true)"
+                @scroll="onRightScroll"
+            ></compare-tree>
+        </div>
+        <!-- 左下区域 -->
+        <div class="pdm-construction--compare-box-item">
+            <compare-attr
+                ref="left-attr"
+                :class-name="className"
+                :oid="leftCurrentNodeData.oid"
+                :attr-data="leftAttrData"
+                :default-icon="defaultIcon"
+                :need-visualization="needVisualization"
+                :headers="headers"
+                :attr-loading="attrLoading"
+                :file-is-difference="fileIsDifference"
+                @file-update="(files) => leftFiles = files"
+            ></compare-attr>
+        </div>
+        <!-- 右下区域 -->
+        <div class="pdm-construction--compare-box-item">
+            <compare-attr
+                ref="right-attr"
+                :class-name="className"
+                :oid="rightCurrentNodeData.oid"
+                :attr-data="rightAttrData"
+                :default-icon="defaultIcon"
+                :need-visualization="needVisualization"
+                :headers="headers"
+                :attr-loading="attrLoading"
+                :file-is-difference="fileIsDifference"
+                @file-update="(files) => rightFiles = files"
+            ></compare-attr>
+        </div>
+        <!-- 竖线 -->
+        <div
+            class="pdm-construction--compare-box--line-transverse"
+            ref="transverseLine"
+            @dblclick="resetTransverseLine"
+        ></div>
+        <!-- 横线 -->
+        <div
+            class="pdm-construction--compare-box--line-portrait"
+            ref="portraitLine"
+            @dblclick="resetPortraitLine"
+        ></div>
+    </div>
+
+    <FamTableColSet
+        :visible.sync="colSetVisible"
+        :title="i18n['fieldSet']"
+        :columns-list="columnsList"
+        :default-columns="defaultColumns"
+        :before-submit="beforeColSubmit"
+        valueKey="attrName"
+        @onsubmit="fnColSettingSubmit"
+    ></FamTableColSet>
+</div>

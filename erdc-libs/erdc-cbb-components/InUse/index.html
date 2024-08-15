@@ -1,0 +1,32 @@
+<div
+    id="in-use"
+    class="h-100p pdm-table-hide-padding"
+    v-cloak
+>
+    <FamAdvancedTable
+        v-if="init"
+        ref="inUseTable"
+        is-adaptive-height
+        :view-table-config="innerViewTableConfig"
+        @callback="handleCallBack"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
+        <template #column:default:icon:content="{scope}">
+            <FamIcon
+                :value="getIcon(scope.row)"
+                class="text-16 mr-sm"
+            ></FamIcon>
+        </template>
+        <!-- 插槽穿透 -->
+        <template
+            v-for="(slot, name) in $scopedSlots"
+            v-slot:[name]="scope"
+        >
+            <slot
+                :name="name"
+                v-bind="scope"
+            ></slot>
+        </template>
+    </FamAdvancedTable>
+</div>

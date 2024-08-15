@@ -1,0 +1,53 @@
+<div
+    id="epm-document-list"
+    class="h-100p"
+>
+    <FamViewTable
+        class="bg-white"
+        ref="famViewTable"
+        :is-adaptive-height="true"
+        :view-table-config="viewTableConfig"
+        @action-click="actionClick"
+        :enable-scroll-load="true"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row, {
+                    inTable: true,
+                    isBatch: false,
+                }]"
+                @click="onCommand"
+            >
+            </FamActionPulldown>
+        </template>
+
+        <template v-slot:[slotName.mainContent]="{ scope }">
+            <i
+                v-if="scope.row[epmDocumentViewTableMap.className + '#mainContent']"
+                :class="[scope.row[epmDocumentViewTableMap.className + '#mainContent'], 'cursor-pointer']"
+                style="color: var(--colorArrow); font-size: var(--iconSize)"
+                @click="download(scope.row)"
+            >
+            </i>
+        </template>
+        <!-- 编码 -->
+        <template v-slot:[slotName.identifierNo]="{ scope }">
+            <a
+                href="javascript:;"
+                :disabled="!scope.row.accessToView"
+                @click="handleNoClick(scope.row)"
+            >
+                {{ getIdentifierNo(scope.row)}}
+            </a>
+        </template>
+    </FamViewTable>
+    <BatchSetValue
+        :visible.sync="setValue.visible"
+        :table-data="setValue.tableData"
+        :class-name="epmDocumentViewTableMap.className"
+        @set-value-success="setValueSuccess"
+    ></BatchSetValue>
+</div>

@@ -1,0 +1,21 @@
+<!--
+ * @Author: wyl
+ * @Date: 2021-11-05 09:23:49
+ * @Description: 
+ * @LastEditTime: 2021-11-18 18:12:37
+-->
+<div id="pdm-nds-container">
+    <div class="wrap">
+        <!-- 用于放模型展示的iframe，id不能修改 -->
+        <div id="iframeDiv"></div>
+        <!-- 评论区 -->
+        <comments-section
+            :loading="ndsIsLoading"
+            :comments-arr="commentsArr"
+            @handler-update="updateComments"
+            @handler-error-refresh="setup"
+            :params="getParams"
+        >
+        </comments-section>
+    </div>
+</div>

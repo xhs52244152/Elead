@@ -1,0 +1,100 @@
+<div
+    id="lightweight-conversion"
+    class="h_100p p-xl"
+    style="padding-bottom: 0"
+    v-cloak
+>
+    <FamAdvancedTable
+        ref="advancedTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+    >
+        <!-- 工具栏插槽 -->
+        <template #left:toolbar:first="{}">
+            <div class="flex justify-center align-items-center">
+                <span>{{ i18n['任务'] }}</span>
+                <erd-ex-select
+                    class="ml-8"
+                    v-model="taskStatus"
+                    :default-props="defaultProps"
+                    :options="taskList"
+                    clearable
+                    @change="fnRefreshTable"
+                >
+                </erd-ex-select>
+            </div>
+        </template>
+        <template #column:default:name="{data}">
+            <span
+                class="color-primary cursor-pointer"
+                @click="viewTaskDetails(data)"
+                >{{ data.row.docName || '' }}
+            </span>
+        </template>
+        <template #column:default:docName="{data}">
+            <span
+                class="color-primary cursor-pointer"
+                @click="viewEpmDetails(data)"
+                >{{ data.row.docName || '' }}
+            </span>
+        </template>
+        <template #column:default:docNumber="{data}">
+            <span
+                class="color-primary cursor-pointer"
+                @click="viewEpmDetails(data)"
+                >{{ data.row.docName || '' }}
+            </span>
+        </template>
+        <template #column:default:historyRecords="{data}">
+            <i
+                class="erd-iconfont erd-icon-visible color-primary cursor-pointer text-16"
+                @click="viewHistory(data)"
+            ></i>
+        </template>
+        <template #column:default:operation="{data}">
+            <erd-dropdown trigger="click">
+                <span class="erd-dropdown-link color-primary cursor-pointer">
+                    <span>{{i18n?.['操作']}}</span><i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <erd-dropdown-menu slot="dropdown">
+                    <erd-dropdown-item @click.native.stop="deleteTask([data.row])"
+                        >{{i18n?.['删除']}}</erd-dropdown-item
+                    >
+                    <erd-dropdown-item @click.native.stop="restartTask([data.row])"
+                        >{{i18n?.['重启任务']}}</erd-dropdown-item
+                    >
+                </erd-dropdown-menu>
+            </erd-dropdown>
+        </template>
+    </FamAdvancedTable>
+
+    <!-- 增加对象 -->
+    <RelatedObject
+        v-if="objectForm.visible"
+        :visible.sync="objectForm.visible"
+        :view-types-list="objectForm.viewTypesList"
+        @before-submit="beforeSubmit"
+    ></RelatedObject>
+
+    <!-- 任务详情/历史记录 -->
+    <erd-ex-dialog
+        :title="detailsForm.title"
+        :visible.sync="detailsForm.visible"
+        width="1200px"
+    >
+        <template v-if="detailsForm.visible">
+            <!-- 历史记录 -->
+            <HistoricalRecord
+                v-if="detailsForm.type === 'historicalRecord'"
+                :oid="detailsForm.oid"
+                :class-name="className"
+            ></HistoricalRecord>
+            <!-- 任务详情 -->
+            <TaskDetails
+                v-else
+                :oid="detailsForm.oid"
+                :class-name="className"
+            ></TaskDetails>
+        </template>
+    </erd-ex-dialog>
+</div>

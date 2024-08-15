@@ -1,0 +1,52 @@
+<div
+    id="default-template"
+    v-cloak
+>
+    <erd-contraction-panel
+        class="mb-xl"
+        :unfold.sync="innerBaseInfoUnfold"
+        :title="i18n?.['基本信息']"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="baseInfoRef"
+                :form.sync="formData"
+                :data="formConfigs"
+                v-on="$listeners"
+            >
+                <template
+                    v-for="(slot, slotName) in $scopedSlots"
+                    v-slot:[slotName]="slotProps"
+                >
+                    <slot
+                        :name="slotName"
+                        v-bind="slotProps"
+                    >
+                    </slot>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        class="mb-xl"
+        :unfold.sync="innerTransferUnfold"
+        :title="transferTitle"
+    >
+        <template v-slot:content>
+            <Transfer
+                ref="transferRef"
+                :height="transferHeight"
+                :table-data="tableData"
+                :fields="innerFields"
+                v-on="$listeners"
+            >
+                <template
+                    v-for="(slot, slotName) in $slots"
+                    v-slot:[slotName]
+                >
+                    <slot :name="slotName"> </slot>
+                </template>
+            </Transfer>
+        </template>
+    </erd-contraction-panel>
+</div>

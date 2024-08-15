@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh">
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1"
+        />
+        <style>
+            body {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                margin: 0px;
+                padding: 0px;
+                user-select: none;
+                overflow: hidden;
+                user-select: none;
+            }
+        </style>
+        <script src="./static/login.bundle.js"></script>
+    </head>
+    <body>
+        <script>
+            document.title = new URLSearchParams(window.location.search).get("title") || document.title;
+        </script>
+        <script>
+            window.openUI();
+        </script>
+    </body>
+</html>

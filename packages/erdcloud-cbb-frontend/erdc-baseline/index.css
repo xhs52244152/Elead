@@ -1,0 +1,179 @@
+/*列表开始*/
+#BaselineList {
+    height: 100%;
+}
+#BaselineList .view_table {
+    background: #fff;
+    height: 100%;
+}
+/*列表结束*/
+
+/*表单开始*/
+/* .baseline-form {
+} */
+
+/* .baseline-form .baseline-form-title {
+    margin: var(--largeSpace) var(--largeSpace) var(--largeSpace) var(--largeSpace);
+} */
+
+.baseline-form .baseline-form-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+.baseline-form .el-tabs__content {
+    height: calc(100% - 40px);
+}
+.baseline-form .el-tabs__content .detail-panel {
+    height: 100%;
+    overflow: hidden;
+}
+.baseline-vxe-table .vxe-cell {
+    padding: 0 8px;
+}
+.baseline-vxe-table .erd-iconfont.erd-icon-edit {
+    color: #999;
+}
+
+.baseline-vxe-table .baseline-text-ellipsis {
+    width: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* .baseline-form .baseline-form-wrapper  .form_content_body {
+    flex-grow: 1;
+    overflow: hidden;
+    overflow-y: auto;
+    background: #fff;
+} */
+/*.baseline-form .baseline-form-wrapper .form_content_body .baseline-form-container {*/
+/*    margin-top: 12px;*/
+/*}*/
+/*.baseline-form .baseline-form-wrapper .form_content_body .el-scrollbar__view {*/
+/*    padding: 16px;*/
+/*}*/
+.baseline-form .common-btn {
+    border-top: 1px solid #ebebeb;
+}
+
+.baseline-select-container .el-select {
+    width: 100%;
+}
+
+/*表单结束*/
+
+/*附件开始*/
+
+/*附件结束*/
+
+/*操作*/
+.baseline-refuse-body {
+    background: var(--colorFullBg);
+}
+/*操作结束*/
+
+.baseline-operate-table-header-cell {
+    background-color: #f8f8f8;
+}
+
+/*详情*/
+.history-record {
+    height: 100%;
+}
+/*详情结束*/
+
+/*基线合并*/
+.baseline-merge .common-btn {
+    border-top: 1px solid #ebebeb;
+}
+.baseline-merge-transfer .item-title-sub {
+    display: none;
+}
+/*基线合并结束*/
+
+.baseline-detail {
+    height: calc(100% - 48px);
+}
+.baseline-detail .el-tabs__content {
+    height: calc(100% - 48px);
+}
+/*相关对象开始*/
+.baseline-relation-object .relation-object {
+    margin: -16px -16px 0px;
+}
+.baseline-relation-object .advanced-table-container {
+    padding: 0 !important;
+}
+.baseline-relation-object .relation-object .el-tabs__header .el-tabs__item.is-active:after {
+    display: none !important;
+}
+.baseline-relation-object .relation-object .el-tab-pane {
+    padding: 16px 0px;
+}
+.baseline-associate-object-transfer .item-title-sub {
+    display: none;
+}
+/*相关对象结束*/
+
+/* 添加至基线 */
+
+.baseline-add-container .form-content_bot::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--colorSplit);
+}
+/*  */
+
+.baseline-operate-dialog .el-dialog__body {
+    padding: 20px !important;
+}
+
+/*详情里面，生命周期步骤组件的样式开始*/
+
+.baseline-form .lifecyle-step {
+    padding: 9px 12px 0;
+}
+.baseline-form .lifecyle-step .el-step.is-vertical .el-step__head {
+    width: 12px;
+}
+.baseline-form .lifecyle-step .el-step.is-vertical .el-step__line {
+    left: 6px;
+    background: #d9d9d9;
+}
+.baseline-form .lifecyle-step .el-step.is-vertical .el-step__main {
+    padding-left: 4px;
+}
+.baseline-form .lifecyle-step .el-step.is-vertical .el-step__title {
+    line-height: 32px;
+    padding-bottom: 0;
+    font-size: 14px;
+    position: relative;
+    top: -10px;
+}
+.baseline-form .lifecyle-step .el-step__icon {
+    width: 14px;
+    height: 14px;
+    background: #d9d9d9;
+}
+.baseline-form .lifecyle-step .el-step__icon.is-text {
+    top: -2px;
+}
+.baseline-form .lifecyle-step .el-step__icon-inner {
+    display: none;
+}
+.baseline-form .lifecyle-step .el-steps .el-step__head.is-process .el-step__icon {
+    background: #567ffd;
+}
+.baseline-form .lifecyle-step .el-step__title.is-process {
+    color: #567ffd;
+}
+
+/*详情里面，生命周期步骤组件的样式 结束*/

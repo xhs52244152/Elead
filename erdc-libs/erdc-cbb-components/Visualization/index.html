@@ -1,0 +1,118 @@
+<div
+    class="pdm-visualization-content h-100p flex flex-column"
+    v-cloak
+>
+    <el-scrollbar
+        wrap-style="height:100%;overflow-y: scroll;"
+        style="height: 1px; flex-grow: 1"
+    >
+        <erd-contraction-panel
+            :unfold.sync="visualizationUnfold"
+            :title="i18n['可视化']"
+        >
+            <template v-slot:content>
+                <div
+                    v-loading="imageIsLoading"
+                    class="bordered border-4 flex align-items-center justify-center"
+                    style="height: 455px"
+                >
+                    <img
+                        v-show="!imageIsLoading"
+                        :src="visualizationImgSrc"
+                        :title="i18n.viewThumb"
+                        :alt="i18n.loading"
+                        class="cursor-pointer"
+                        style="height: 100%; width: 100%; object-fit: contain; background-size: cover"
+                        @load="onImageLoad"
+                        @click="viewVisualization"
+                    />
+                </div>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :unfold.sync="expressionUnfold"
+            :title="i18n['表示/注释']"
+            class="pdm-table-hide-view-header pdm-table-hide-padding"
+        >
+            <template #header-right>
+                <erd-button
+                    v-if="showTools"
+                    @click="refreshDerivedImage"
+                    style="margin-top: -2px"
+                    >{{ i18n.restartLightweight }}</erd-button
+                ><erd-button
+                    v-if="showTools"
+                    type="fill-icon"
+                    icon="el-icon-refresh"
+                    style="margin-top: -2px"
+                    @click="refresh"
+                ></erd-button>
+            </template>
+            <template #content>
+                <div style="height: 120px">
+                    <fam-advanced-table
+                        ref="famViewTable"
+                        :view-table-config="viewTableConfig"
+                        :is-adaptive-height="true"
+                    >
+                        <template
+                            v-for="column in slotsNameList"
+                            v-slot:[column.slotName]="{ scope }"
+                        >
+                            <template v-if='column._key === "thumbnail"'>
+                                <fam-icon
+                                    :value="scope.row.thumbnail"
+                                    class="text-16 cursor-pointer"
+                                    :title="i18n.viewThumb"
+                                    @click.native="viewThumbMain(scope.row)"
+                                ></fam-icon>
+                            </template>
+                            <template v-if='column._key === "defaultRepresentation"'>
+                                <fam-icon
+                                    v-if="scope.row.defaultRepresentation"
+                                    value="el-icon-star-on"
+                                    class="inline-block cursor-pointer color-primary text-16"
+                                    :title="i18n.defaultRep"
+                                    @click.native="changeDefault(scope.row)"
+                                ></fam-icon>
+                                <fam-icon
+                                    v-else
+                                    value="el-icon-star-off"
+                                    class="inline-block cursor-pointer color-primary text-16"
+                                    :title="i18n.setAsDefaultRep"
+                                    @click.native="changeDefault(scope.row)"
+                                ></fam-icon>
+                            </template>
+                            <template v-if='column._key === "openWith"'>
+                                <erd-radio-group
+                                    :disabled="!scope.row['defaultRepresentation']"
+                                    v-model="scope.row.openWith"
+                                    @input="onChangeOpenWidth(scope.row)"
+                                >
+                                    <erd-radio label="web">web</erd-radio>
+                                    <erd-radio
+                                        label="client"
+                                        :disabled="scope.row.taskType !== 'MDB'"
+                                        >client</erd-radio
+                                    >
+                                </erd-radio-group>
+                            </template>
+                            <template v-if="column._key === 'owner'">
+                                <fam-user
+                                    :users="scope.row.owner"
+                                    width-avatar
+                                ></fam-user>
+                            </template>
+                        </template>
+                    </fam-advanced-table>
+                </div>
+            </template>
+        </erd-contraction-panel>
+    </el-scrollbar>
+
+    <!-- 查看缩略图附件弹窗 -->
+    <thumb-attach-dialog
+        ref="thumbAttach"
+        :visible.sync="thumbVisible"
+    ></thumb-attach-dialog>
+</div>

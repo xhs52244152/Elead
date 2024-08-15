@@ -1,0 +1,6 @@
+{
+  "name": "@erdc-libs/erdc-cbb-components",
+  "version": "3.1.0-rc4",
+  "description": "CBB通用组件",
+  "dependencies": {}
+}

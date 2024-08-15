@@ -1,0 +1,46 @@
+<erd-ex-dialog
+    :visible.sync="innerVisible"
+    :title="title"
+    width="1200px"
+    v-on="$listeners"
+>
+    <FamDynamicForm
+        ref="templateForm"
+        :form.sync="formData"
+        :data="formConfigs"
+        :readonly="readonly"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
+        <template v-slot:uploadComponent="scope">
+            <erd-input
+                v-model="formData.cadName"
+                disabled
+            >
+            </erd-input>
+            <FamUpload
+                ref="famUpload"
+                class="ml-8"
+                :btnConfig="{ type: '' }"
+                :multiple="false"
+                :http-request="httpRequest"
+                :show-file-list="false"
+                :data="{ storageType: 'local' }"
+                :on-success="onSuccess"
+            ></FamUpload>
+        </template>
+    </FamDynamicForm>
+    <template
+        #footer
+        v-if="!readonly"
+    >
+        <erd-button
+            :loading="loading"
+            type="primary"
+            @click="!loading && handleCreate()"
+        >
+            {{i18n.confirm}}
+        </erd-button>
+        <erd-button @click="innerVisible = false;">{{i18n.close}}</erd-button>
+    </template>
+</erd-ex-dialog>

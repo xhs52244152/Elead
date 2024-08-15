@@ -1,0 +1,52 @@
+<div
+    id="version_view_table"
+    v-cloak
+>
+    <FormPageTitle
+        ref="formPageTitleRef"
+        :title="ViewVersoinTitle"
+    >
+    </FormPageTitle>
+    <FamAdvancedTable
+        ref="version_view_table"
+        :view-table-config="viewTableConfig"
+    >
+        <template #column:default:enabled:content="{ scope }">
+            <span>{{scope.row.enabled?'是':'否'}}</span>
+        </template>
+        <template #column:default:description:content="{ scope }">
+            <span>{{ getDescription(scope.row) }}</span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row]"
+            ></FamActionPulldown>
+        </template>
+    </FamAdvancedTable>
+    <erd-ex-dialog
+        size="large"
+        v-if="visibleValue"
+        :title="title"
+        :visible.sync="visibleValue"
+    >
+        <VersionViewForm
+            v-if="visibleValue"
+            ref="versionTableForm"
+            :class-name="className"
+            :form-id="formId"
+            :oid="oid"
+            :block-data="blockData"
+        ></VersionViewForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="submitBeforeCheck()"
+                >确定</erd-button
+            >
+            <erd-button @click="handleCancel()">取消</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

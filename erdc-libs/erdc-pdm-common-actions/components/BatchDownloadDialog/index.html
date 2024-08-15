@@ -1,0 +1,24 @@
+<commonDialog
+    :title="title"
+    @confirm="handleSubmit"
+    ref="dialog"
+    :loading="loading"
+    width="600px"
+>
+    <div
+        slot="header"
+        class="mb-xl flex justify-between"
+    >
+        {{i18nMap.documentType}}
+    </div>
+    <div slot="content">
+        <erd-checkbox-group v-model="checkList">
+            <erd-checkbox
+                v-for="(item,index) in downloadOptions"
+                :key="index"
+                :label="index"
+                >{{item}}</erd-checkbox
+            >
+        </erd-checkbox-group>
+    </div>
+</commonDialog>

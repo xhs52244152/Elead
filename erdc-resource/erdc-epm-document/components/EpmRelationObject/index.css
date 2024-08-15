@@ -1,0 +1,16 @@
+#pane-relationObj:has(.epmDocument-relation-object) {
+  margin: calc(-1 * var(--largeSpace));
+  padding-top: 4px;
+  height: calc(100% + 2 * var(--largeSpace));
+}
+
+.epmDocument-relation-object {
+  width: 100%;
+}
+.epmDocument-relation-object .relation-object .el-tabs__content {
+  padding: 0px;
+}
+.epmDocument-relation-object #FamViewTable .advanced-table-container {
+  padding-left: 0px;
+  padding-right: 0px;
+}/*# sourceMappingURL=index.css.map */

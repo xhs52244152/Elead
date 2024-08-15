@@ -1,0 +1,362 @@
+$borderColor: #ebebeb;
+
+.dialog-handler {
+    // 表头颜色
+    .vxe-table--render-default .vxe-header--column {
+        height: 36px;
+    }
+
+    // 表头可编辑图标
+    .vxe-header--column {
+        .vxe-cell--edit-icon,
+        .vxe-cell-help-icon {
+            font-size: 12px;
+            color: #999;
+        }
+    }
+
+    .vxe-table--header .vxe-header--row {
+        .vxe-cell--edit-icon,
+        .vxe-cell-help-icon {
+            font-size: 12px;
+            color: #999;
+        }
+    }
+
+    .vxe-table--body .vxe-body--row {
+        background-color: #fff;
+    }
+
+    // 斑马颜色
+    .vxe-table--body .vxe-body--row.row--stripe {
+        background-color: #f8f8f8;
+    }
+
+    // 边框颜色
+    .vxe-table--render-default.border--full .vxe-body--column,
+    .vxe-table--render-default.border--full .vxe-footer--column,
+    .vxe-table--render-default.border--full .vxe-header--column {
+        background-image: -webkit-gradient(linear, left top, left bottom, from($borderColor), to($borderColor)),
+            -webkit-gradient(linear, left top, left bottom, from($borderColor), to($borderColor));
+        background-image: linear-gradient($borderColor, $borderColor), linear-gradient($borderColor, $borderColor);
+        background-repeat: no-repeat;
+        background-size: 1px 100%, 100% 1px;
+        background-position: 100% 0, 100% 100%;
+    }
+
+    // hover颜色
+    .vxe-table--render-default .vxe-body--row {
+        transition: background-color 0.2s ease 0s;
+    }
+
+    .vxe-table--render-default .vxe-body--row.row--hover {
+        background-color: #e4ecff !important;
+    }
+
+    // 表头文案
+    .vxe-table--render-default .vxe-cell--title {
+        // font-weight: 700;
+        // font-size: 14px;
+        // color: rgba(0, 0, 0, 0.85);
+        // line-height: 22px;
+        // width: 100%;
+        // .erd-iconfont {
+        //     color: #999;
+        // }
+    }
+
+    // 设置最小行号 解决show-overflow导致复选框被隐藏的问题
+    .vxe-body--row .vxe-cell {
+        min-height: 18px;
+    }
+
+    .vxe-header--row .vxe-cell .custom-box {
+        .erd-iconfont {
+            color: var(--tableSortButtonColor);
+            font-weight: normal;
+        }
+
+        .el-icon-question {
+            color: var(--tableSortButtonColor);
+        }
+
+        .el-icon-question:hover,
+        .erd-icon-filter:hover,
+        .erd-icon-filter.active {
+            color: var(--colorPrimary);
+        }
+    }
+
+    // 自定义排序
+    .vxe-header--row .vxe-cell .custom-sort {
+        vertical-align: top !important;
+
+        &.sortFixRight {
+            top: 1px;
+        }
+
+        &.sortFixRight {
+            float: right;
+
+            &::after {
+                content: '';
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+            }
+        }
+    }
+
+    // 树
+    .vxe-table--render-default .vxe-tree-cell {
+        padding-left: 1.5em;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .vxe-table--body-wrapper {
+        overflow: auto;
+
+        /*滚动条样式*/
+        &::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+            background: rgba(144, 147, 153, 0.3);
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(144, 147, 153, 0.5);
+        }
+
+        // &::-webkit-scrollbar-track {
+        //     -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, .3);
+        //     border-radius: 0;
+        //     background: rgba(144, 147, 153, .3);
+        // }
+    }
+
+    // 优化空数据内表格宽度过宽出现滚动条问题
+    .NULL-DATA .vxe-table--body-wrapper {
+        overflow-x: hidden !important;
+    }
+
+    // 禁用的tr -- 应用于拖拽等展示
+    .vxe-table--body-wrapper .disabled-drag td {
+        background: #ccc;
+        cursor: no-drop;
+    }
+
+    // 边线消失问题
+    .vxe-table--render-default.border--full .vxe-table--border-line {
+        z-index: 100;
+        border-right: 1px solid #e8eaec;
+    }
+
+    // 复选框大小样式冲突问题
+    .vxe-table--render-default .vxe-cell--checkbox .vxe-checkbox--icon {
+        font-size: 14px;
+        background: #fff;
+    }
+
+    /*
+       * 自定义校验样式
+       */
+    tbody tr {
+        td {
+            position: relative;
+            height: 36px;
+
+            &.erd_table-editCell {
+                .vxe-cell--tree-node {
+                    padding-left: 0 !important;
+
+                    .vxe-tree-cell {
+                        padding-left: 0;
+                    }
+
+                    .vxe-tree--btn-wrapper {
+                        display: none;
+                    }
+                }
+            }
+
+            .erd_table-tooltip {
+                position: absolute;
+                top: 0px;
+                right: 4px;
+            }
+        }
+
+        .erd_table-editIcon::after {
+            content: '';
+            border-top: 4px solid #00a854;
+            border-bottom: 4px solid transparent;
+            border-right: 4px solid #00a854;
+            border-left: 4px solid transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .erd_table-valid-error {
+            &.erd_table-editIcon {
+                &::after {
+                    border-top: 4px solid #f04134;
+                    border-right: 4px solid #f04134;
+                }
+            }
+
+            .el-input__inner {
+                border-color: #f04134 !important;
+                border: 1px solid #f04134;
+            }
+
+            .vxe-input--inner {
+                border-color: #f04134 !important;
+                border: 1px solid #f04134;
+            }
+
+            .intermation {
+                border-color: #f04134 !important;
+                // color: #f04134 !important;
+            }
+        }
+    }
+
+    .vxe-table--render-default {
+        &.size--mini {
+            font-size: 14px;
+        }
+        .vxe-cell {
+            padding: 0 8px;
+        }
+        .vxe-body--column {
+            color: rgba(#000000, 0.85);
+        }
+        .vxe-body--column.col--valid-error .vxe-cell--valid .vxe-cell--valid-msg {
+            display: none;
+        }
+    }
+
+    .vxe-input--inner {
+        appearance: none;
+        background-color: #fff;
+        border-radius: 0px;
+        border: 1px solid #dcdfe6;
+        box-sizing: border-box;
+        color: #606266;
+        display: inline-block;
+        font-size: inherit;
+        height: 28px;
+        line-height: 28px;
+        outline: 0;
+        padding: 0 15px;
+        transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        width: 100%;
+    }
+
+    .vxe-input {
+        height: auto;
+    }
+    .erd_table-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--colorTextPlaceholder);
+        font-weight: 400;
+        img {
+            display: block;
+            width: 120px;
+            height: 100px;
+            margin-bottom: 4px;
+        }
+    }
+    .vxe-header--column .vxe-resizable.is--line:before {
+        background-color: #bebebe;
+    }
+
+    &.embed-transfer-table {
+        height: 100%;
+        .vxe-table--render-default {
+            .vxe-body--column {
+                .el-icon-close {
+                    color: var(--colorPrimary);
+                }
+            }
+            .vxe-cell--title {
+                font-size: 12px;
+            }
+        }
+    }
+
+    &.no-border-table {
+        .vxe-table--render-default {
+            .vxe-table--header-wrapper {
+                background: white;
+            }
+
+            .vxe-header--column {
+                background: white;
+            }
+
+            .vxe-body--column {
+                background: white;
+            }
+
+            .vxe-table--border-line {
+                border: none;
+            }
+
+            .vxe-cell--title {
+                color: var(--colorTextExplain);
+                font-weight: normal;
+                font-family: var(--fontFamily);
+            }
+        }
+
+        .is--empty {
+            border-right: none;
+        }
+    }
+
+    &.embed-table {
+        margin: 0 16px 12px;
+        .vxe-table--render-default {
+            .vxe-header--column {
+                background: #fbfbfb;
+            }
+
+            .vxe-body--column {
+                background: #fbfbfb;
+            }
+
+            .vxe-table--body-wrapper {
+                background: #fbfbfb;
+            }
+        }
+        .is--empty {
+            margin-bottom: -12px;
+        }
+    }
+
+    .vxe-body--expanded-column.col--ellipsis > .vxe-body--expanded-cell {
+        background: #fbfbfb;
+    }
+
+    .col--expand > .vxe-cell {
+        display: flex;
+        align-items: center;
+
+        .vxe-table--expand-label {
+            flex-grow: 1;
+        }
+    }
+}

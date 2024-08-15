@@ -1,0 +1,40 @@
+<div
+    id="relation-object"
+    class="relation-object h-100p pdm-table-hide-padding"
+    v-cloak
+>
+    <erd-tabs v-model="activeName">
+        <erd-tab-pane
+            v-for="(item,index) in tabs"
+            :key="index"
+            :label="item.label"
+            :name="item.name"
+            :lazy="true"
+            v-bind="item.props"
+            v-on="$listeners"
+        >
+            <!-- 动态注册组件 -->
+            <component
+                v-if="item.component"
+                :is="item.component.is"
+                :ref="item.component.ref || item.name"
+                :vm="vm"
+                v-bind="item.component.props"
+                v-on="$listeners"
+                @refresh-all="refreshAll"
+                @refresh-current="refreshCurrent"
+            >
+                <template
+                    v-for="(slot, name) in $scopedSlots"
+                    v-slot:[name]="scope"
+                >
+                    <slot
+                        :name="name"
+                        v-bind="scope"
+                    >
+                    </slot>
+                </template>
+            </component>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

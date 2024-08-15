@@ -1,0 +1,20 @@
+<div
+    id="part-replace"
+    style="height: 100%"
+    class="bg-white"
+    v-cloak
+>
+    <ReplaceManagement
+        ref="replaceManagementRef"
+        :oid="oid"
+        :className="className"
+        :info="formData"
+        :globalRelationshipRef="vm?.formData?.masterRef"
+        :localRelationshipRef="vm?.formData?.masterRef"
+        :global-action-config="globalActionConfig"
+        localTableKey="SubstituteView"
+        :localTableParams="{extendMessage: 'SubstituteView' }"
+        :handleHeader="handleHeader"
+    >
+    </ReplaceManagement>
+</div>

@@ -1,0 +1,23 @@
+{
+  "name": "@erdc-app/erdc-library-web",
+  "description": "资源库",
+  "version": "3.1.0-rc4",
+  "erdcData": {
+    "init": {
+      "path": "/erdc-app/erdc-library-web/config/template-register.js",
+      "deps": ["erdc-bizadmin-web"]
+    }
+  },
+  "i18n": {
+    "zh_cn": "资源库",
+    "en_us": "Library"
+  },
+  "appId": "PDM",
+  "scripts": {
+    "start": "npx erdc-cli start",
+    "pack": "npx erdc-cli pack"
+  },
+  "devDependencies": {
+    "erdc-cli": "~3.1.0-rc4"
+  }
+}

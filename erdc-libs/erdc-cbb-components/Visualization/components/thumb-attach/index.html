@@ -1,0 +1,46 @@
+<!-- 查看缩略图-附件弹窗 -->
+<div>
+    <erd-ex-dialog
+        :title="i18n.viewThumbnail"
+        :visible.sync="dataVisible"
+    >
+        <!-- <erd-contraction-panel
+            :unfold.sync="unfold"
+            title="附件信息"> -->
+        <fam-erd-table
+            :column="columns"
+            :data="tableData"
+            max-line="10"
+            border
+            show-overflow
+            auto-resize
+        >
+            <template #column:default:size="{ data }">{{ getSizeDisplayName(data.row.size) }}</template>
+            <template #column:default:operation="{ data }">
+                <erd-button
+                    type="text"
+                    @click="previewAttach(data.row)"
+                    >{{ i18n.preview }}</erd-button
+                >
+                <erd-button
+                    type="text"
+                    @click="downLoad(data.row)"
+                    >{{ i18n.download }}</erd-button
+                >
+                <!-- <fam-action-pulldown
+                    :is-operation="true"
+                    :action-config="getActionConfig(data.row)"
+                    :action-data="data.row"
+                    :extend-disabled-validate="function (button) { extendDisabledValidate(button, data.row) }"
+                    @click="onCommand"
+                ></fam-action-pulldown> -->
+            </template>
+        </fam-erd-table>
+        <!-- </erd-contraction-panel> -->
+    </erd-ex-dialog>
+    <FamFilePreview
+        app-name="PDM"
+        ref="filePreview"
+    >
+    </FamFilePreview>
+</div>

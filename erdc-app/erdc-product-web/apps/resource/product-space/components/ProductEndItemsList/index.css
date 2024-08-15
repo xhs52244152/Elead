@@ -1,0 +1,10 @@
+.product-enditem-view_table .advanced-table-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.product-enditem-view_table .fam-basicfilter-container .fam-basicfilter-btn {
+  margin: 16px 0 0;
+}
+.product-enditem-view_table .fam-basicfilter-container > form > .el-form-item {
+  margin-top: 16px;
+}/*# sourceMappingURL=index.css.map */

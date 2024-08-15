@@ -1,0 +1,18 @@
+.info-compare-route {
+    //修改erd的标题颜色
+    .el-page-header__content {
+        color: #333;
+        font-weight: 700;
+    }
+    .el-page-header {
+        .el-page-header__left{
+            color: var(--colorPrimary);
+        }
+    }
+}
+//挂载在根节点，不能加前缀
+.info-compare-drop {
+    .checkboxLists {
+        max-height: 260px;
+    }
+}

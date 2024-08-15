@@ -1,0 +1,79 @@
+<div v-cloak>
+    <div
+        class="flex justify-end align-items-center"
+        v-if="!hideOper"
+    >
+        <erd-button
+            v-if="!hideAppend"
+            @click="addReviewObject"
+            >{{i18n['增加']}}</erd-button
+        >
+        <erd-button
+            v-if="!hideCollect"
+            @click="collectReviewObject"
+            >{{i18n['收集相关对象']}}</erd-button
+        >
+        <erd-button
+            v-if="!hideRemove"
+            @click="removeReviewObject"
+            >{{i18n['移除']}}</erd-button
+        >
+    </div>
+    <fam-erd-table
+        border
+        :row-config="{isCurrent: true, isHover: true}"
+        :column-config="{resizable: true}"
+        align="left"
+        :data="innerTable"
+        :column="column"
+        show-overflow
+        v-bind="$attrs"
+        v-on="$listeners"
+        ref="erdTable"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+    >
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            >
+            </slot>
+        </template>
+    </fam-erd-table>
+
+    <!-- 增加对象 -->
+    <RelatedObject
+        v-if="objectForm.visible"
+        app-name="PDM"
+        :visible.sync="objectForm.visible"
+        :url-config="objectForm.urlConfig"
+        @before-submit="beforeSubmit"
+    ></RelatedObject>
+
+    <!-- 收集相关对象 -->
+    <erd-ex-dialog
+        size="large"
+        :title="collectForm.title"
+        :visible.sync="collectForm.visible"
+        @close="collectForm.tableData = []"
+    >
+        <CollectObjects
+            ref="collectObjectsRef"
+            v-if="collectForm.visible"
+            :table-data="collectForm.tableData"
+            :class-name="collectForm.className"
+        ></CollectObjects>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="collectObjectClick"
+                >{{ i18n['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'collectForm' })">{{ i18n['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

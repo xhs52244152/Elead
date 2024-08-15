@@ -1,0 +1,23 @@
+<!-- tabs是动态的,那我可根据表示，来获取需要tab组件，来渲染需要的tab组件 -->
+<erd-tabs
+    v-model="activeName"
+    v-bind="attrs"
+    v-on="event"
+>
+    <erd-tab-pane
+        v-for="(item,index) in tabList"
+        :key="index"
+        :label="item.label"
+        :name="item.name"
+        v-bind="item.attrs"
+    >
+        <!-- 动态注册组件 -->
+        <component
+            v-if="canRenderComp(item)"
+            :is="item.component.componentName"
+            v-bind="tabsConfig[item.component?.componentName]['props']"
+            v-on="tabsConfig[item.component?.componentName]['event']"
+        >
+        </component>
+    </erd-tab-pane>
+</erd-tabs>

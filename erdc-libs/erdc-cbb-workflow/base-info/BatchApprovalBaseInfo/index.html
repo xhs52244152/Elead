@@ -1,0 +1,32 @@
+<div v-cloak style="padding-left: 0;">
+    <!-- <erd-contraction-panel
+        :unfold.sync="guideUnfold"
+        :title="i18n['流程指引']"
+    >
+        <template #content>
+            <div class="mt-normal">
+                <ProcessGuide ref="processGuideRef"></ProcessGuide>
+            </div>
+        </template>
+    </erd-contraction-panel> -->
+    <erd-contraction-panel
+        :unfold.sync="infoUnfold"
+        :title="i18n['流程基本信息']"
+    >
+        <template #content>
+            <div class="mt-normal">
+                <ProcessBasicInfo
+                    ref="processBasicInfoRef"
+                    :form.sync="form"
+                    :form-configs="formConfigs"
+                >
+                    <template #avatar="scope">
+                        <BpmAvatar
+                            :users="users"
+                        ></BpmAvatar>
+                    </template>
+                </ProcessBasicInfo>
+            </div>
+        </template>
+    </erd-contraction-panel>
+</div>

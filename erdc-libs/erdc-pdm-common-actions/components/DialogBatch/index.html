@@ -1,0 +1,80 @@
+<div id="DialogBatch">
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="title"
+        width="800px"
+    >
+        <div>
+            <div>
+                <FamDynamicForm
+                    ref="dynamicForm"
+                    :form="formData"
+                    :data="formConfig"
+                >
+                    <template v-slot:stateComponent="scope">
+                        <custom-select
+                            ref="customSelectRef"
+                            v-model="formData.state"
+                            :row="rowState"
+                            @change="changeState"
+                        ></custom-select>
+                    </template>
+                    <template v-slot:contextComponent="scope">
+                        <custom-select
+                            v-model="formData.context"
+                            filterable
+                            :row="rowContext"
+                            @change="changeContext"
+                        ></custom-select>
+                    </template>
+                    <template v-slot:folderComponent="scope">
+                        <custom-select
+                            v-model="formData.folder"
+                            filterable
+                            :row="getRowFolder"
+                            :tree-select="true"
+                            :tree-props="treeProps"
+                            @node-click="changeFolder"
+                        ></custom-select>
+                    </template>
+                    <template v-slot:nameComponent="scope">
+                        <erd-input
+                            autofocus
+                            v-model="formData.rename"
+                            type="text"
+                            placeholder="请输入新名称"
+                        >
+                        </erd-input>
+                    </template>
+                    <template v-slot:ownerComponent="scope">
+                        <FamParticipantSelect
+                            ref="ownerRef"
+                            fixed-height
+                            clearable
+                            searchScop="all"
+                            popper-class="vxe-table--ignore-clear"
+                            :default-value="defaultMember"
+                            :isgetdisable="false"
+                            :query-params="queryParams"
+                            :query-scope="queryScope"
+                            :show-type="['USER']"
+                            @change="(...args)=>(fnMemberSelect(...args,))"
+                        ></FamParticipantSelect>
+                    </template>
+                </FamDynamicForm>
+            </div>
+        </div>
+        <span
+            slot="footer"
+            class="border-0"
+        >
+            <el-button
+                type="primary"
+                @click="onSubmit"
+                :loading="loading"
+                >{{i18n.confirm}}</el-button
+            >
+            <el-button @click="toggleShow">{{i18n.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

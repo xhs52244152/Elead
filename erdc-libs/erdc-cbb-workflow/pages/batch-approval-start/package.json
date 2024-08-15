@@ -1,0 +1,5 @@
+{
+    "name": "@erdc-resource/batch-approval-start",
+    "version": "3.1.0-rc4",
+    "description": "批量审批流程-创建"
+}

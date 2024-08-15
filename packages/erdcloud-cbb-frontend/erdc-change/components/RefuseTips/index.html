@@ -1,0 +1,42 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    width="1200px"
+    :append-to-body="true"
+    :title="`确认${actionName}`"
+>
+    <div class="document-refuse">
+        <div class="el-message-box__container">
+            <div class="el-message-box__status el-icon-warning"></div>
+            <div class="el-message-box__message">
+                <p>{{`确认${actionName}所选数据(部分数据不可${actionName})`}}</p>
+            </div>
+        </div>
+        <div class="document-tips mt-lg">
+            <div class="text-12 mt-lg">{{`以下数据不可${actionName},因为无权限`}}</div>
+            <div class="document-refuse-body overflow-hidden mt-lg">
+                <FamErdTable
+                    border
+                    class="m-lg"
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    max-height="300"
+                    :data="data"
+                    :column="column"
+                    show-overflow
+                    ref="erdTable"
+                >
+                </FamErdTable>
+            </div>
+        </div>
+    </div>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18n.done }}
+        </erd-button>
+        <erd-button @click="close">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

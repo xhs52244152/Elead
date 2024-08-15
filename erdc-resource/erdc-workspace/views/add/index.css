@@ -1,0 +1,9 @@
+.workspace-add-container .workspace-add-btn{
+  margin-left: 10px;
+  position: relative;
+  top: 1px;
+}
+
+.workspace-add-container .form-content_bot {
+  border-top: 1px solid var(--colorSplit);
+}

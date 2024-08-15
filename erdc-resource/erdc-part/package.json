@@ -1,0 +1,22 @@
+{
+  "name": "@erdc-resource/erdc-part",
+  "version": "3.1.0-rc4",
+  "description": "PDM 部件模块",
+  "main": "index.js",
+  "erdcData": {
+    "init": {
+      "path": "/erdc-resource/erdc-part/config/plat-register.js",
+      "deps": ["erdc-bizadmin-web"]
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@erdc-libs/erdc-cbb-components": "workspace:*",
+    "@erdc-resource/erdc-document": "workspace:*",
+    "@erdc-libs/erdc-pdm-icon": "workspace:*"
+  },
+  "author": "",
+  "license": "ISC"
+}

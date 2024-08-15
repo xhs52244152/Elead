@@ -1,0 +1,20 @@
+{
+  "name": "@erdc-resource/erdc-document",
+  "version": "3.1.0-rc4",
+  "description": "PDM文档",
+  "main": "index.js",
+  "erdcData": {
+    "init": {
+      "path": "/erdc-resource/erdc-document/config/template-register.js",
+      "deps": ["erdc-bizadmin-web"]
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@erdc-libs/erdc-cbb-components": "workspace:*"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,34 @@
+html,
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#EleadCADIframeDiv {
+    position: relative;
+    height: calc(100vh - 51px);
+    display: flex;
+}
+
+#Elead-viewer-dialog .el-dialog__body {
+    padding: 0;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+}
+
+#Elead-viewer-dialog .el-dialog__header .el-dialog__headerbtn {
+    float: right;
+}

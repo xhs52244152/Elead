@@ -1,0 +1,11 @@
+.DialogCollectObjects .el-dialog__body {
+  padding: 20px;
+  padding-bottom: 0;
+}
+.DialogCollectObjects .el-dialog__body .el-radio-group .el-radio:first-child {
+  margin-top: 0;
+}
+.DialogCollectObjects .el-dialog__footer {
+  border-top: none;
+  padding: 20px;
+}/*# sourceMappingURL=style.css.map */

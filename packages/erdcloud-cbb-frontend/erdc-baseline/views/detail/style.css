@@ -1,0 +1,22 @@
+.baseline-detail-tabs .el-tabs__header {
+  background-color: var(--colorFullBg);
+}
+.baseline-detail-tabs .el-tabs__content {
+  height: calc(100% - 40px);
+}
+.baseline-detail-tabs .relationObj-baseLine,
+.baseline-detail-tabs .history-record {
+  height: 100%;
+}
+.baseline-detail-tabs .relationObj-baseLine .el-scrollbar__view,
+.baseline-detail-tabs .history-record .el-scrollbar__view {
+  height: 100%;
+}
+
+.history-record .fam-advanced-table-component.adaptive-height .viewtable-body-container > .el-pagination {
+  margin-bottom: 0px;
+}
+
+#object-common-space .object-common-space__content > .el-scrollbar__view {
+  padding: 0 !important;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,5 @@
+{
+    "name": "@erdc-resource/bom-release",
+    "version": "3.1.0-rc4",
+    "description": "BOM发布流程-审批"
+}

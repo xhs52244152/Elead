@@ -1,0 +1,43 @@
+<div
+    class="h-100p bg-white supplier-link-man-content"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        :dataType="false"
+        :view-table-config="viewTableConfig"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'famActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row]"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="supplierAddContact.title"
+        :visible.sync="supplierAddContact.visible"
+        size="large"
+    >
+        <SupplierAddContact
+            v-if="supplierAddContact.visible"
+            ref="supplierAddContactRef"
+            :oid="supplierAddContact.oid"
+            :readonly="supplierAddContact.readonly"
+        ></SupplierAddContact>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="supplierAddContact.loading"
+                @click="!supplierAddContact.loading && addContactCheck()"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'supplierAddContact' })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

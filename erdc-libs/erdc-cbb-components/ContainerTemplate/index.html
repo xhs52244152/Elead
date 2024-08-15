@@ -1,0 +1,26 @@
+<FamAdvancedTable
+    :view-table-config="tableConfig"
+    is-adaptive-height
+    ref="famAdvancedTable"
+>
+    <template
+        v-for="(slot, slotName) in $scopedSlots"
+        v-slot:[slotName]="slotProps"
+    >
+        <slot
+            :name="slotName"
+            v-bind="slotProps"
+        ></slot>
+    </template>
+    <template v-slot:[scopeSlots.operation]="{ scope }">
+        <FamActionPulldown
+            :is-operation="true"
+            :action-config="getActionConfig(scope.row)"
+            :action-data="scope.row"
+            :args="[vm, scope.row, {
+                inTable: true,
+                isBatch: false
+            }]"
+        ></FamActionPulldown>
+    </template>
+</FamAdvancedTable>

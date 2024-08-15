@@ -1,0 +1,87 @@
+<div
+    class="w-100p h-100p flex flex-column pdm-flex-container"
+    v-loading="attrLoading"
+>
+    <fam-page-title
+        :title="caption"
+        static-title
+    >
+        <template v-slot:title="scope">
+            <div
+                class="flex w_100p"
+                style="align-items: center"
+            >
+                <fam-icon
+                    :value="icon"
+                    class="text-16 mr-normal"
+                ></fam-icon>
+                <div
+                    :title="caption"
+                    class="detail-info-title__line__left__content"
+                >
+                    {{caption}}
+                </div>
+            </div>
+        </template>
+    </fam-page-title>
+    <erd-tabs v-model="activeName">
+        <template v-for="(tab, index) in tabsData">
+            <erd-tab-pane
+                :name="tab.name"
+                :label="tab.label"
+                lazy
+            >
+                <erd-scrollbar
+                    v-if="activeName === 'attribute'"
+                    class="w-100p h-100p"
+                >
+                    <FamDynamicForm
+                        ref="dynamicForm"
+                        :form.sync="formData"
+                        :data="fromConfig"
+                        readonly
+                        label-position="right"
+                    >
+                        <template #normal-text="scope">
+                            <!-- 主内容 -->
+                            <main-content
+                                v-if="scope.formConfig.field === 'mainContent'"
+                                :class="{ 'pdm-diff-field': fileIsDifference }"
+                                :class-name="className"
+                                :oid="oid"
+                                readonly
+                                @file-update="onFileUpdate"
+                            ></main-content>
+                            <!-- 普通文本 -->
+                            <erd-show-tooltip
+                                v-else
+                                :content="[ '', null, undefined ].indexOf(scope.data[scope.formConfig.field]) > -1 ? '--' : scope.data[scope.formConfig.field] + ''"
+                                placement="top"
+                                popper="fam-tooltip-max-width"
+                                :class="{ 'pdm-diff-field': isDiffenence(scope.formConfig.field) }"
+                                :tabindex="-1"
+                                :openDelay="800"
+                                flex
+                            >
+                                <template v-slot:show-tooltip-title>
+                                    <span
+                                        class="title_text title-whitespace-pre-line"
+                                        v-fam-clamp="{ truncationStyle: 'inline' }"
+                                        >{{[ '', null, undefined ].indexOf(scope.data[scope.formConfig.field]) > -1 ?
+                                        '--' : scope.data[scope.formConfig.field]}}</span
+                                    >
+                                </template>
+                            </erd-show-tooltip>
+                        </template>
+                    </FamDynamicForm>
+                </erd-scrollbar>
+                <visualization
+                    v-else-if="activeName === 'visualization'"
+                    :oid="isEmpty? '': oid"
+                    :vm="vm"
+                    show-tools
+                ></visualization>
+            </erd-tab-pane>
+        </template>
+    </erd-tabs>
+</div>

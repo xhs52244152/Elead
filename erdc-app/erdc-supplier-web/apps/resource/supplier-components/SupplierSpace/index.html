@@ -1,0 +1,13 @@
+<div id="object-common-space">
+    <FamSecondaryMenu
+        v-if="showSecondaryMenu"
+        :outerRootResource="rootResource"
+        :outerResources="secondaryResources"
+        :handleRoute="handleRoute"
+    >
+    </FamSecondaryMenu>
+    <FamThirdMenu v-if="showThirdMenu" :outerResources="thirdResources"></FamThirdMenu>
+    <erd-scrollbar wrap-class="object-common-space__content" class="w-100p">
+        <KeepAliveRouterView :route-name="routeName"></KeepAliveRouterView>
+    </erd-scrollbar>
+</div>

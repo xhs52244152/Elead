@@ -1,0 +1,15 @@
+{
+  "name": "@erdc-resource/erdc-baseline",
+  "version": "3.1.0-rc4",
+  "description": "PDM基线",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@erdc-libs/erdc-cbb-components": "workspace:*",
+    "@erdc-resource/erdc-document": "workspace:*"
+  },
+  "author": "",
+  "license": "ISC"
+}

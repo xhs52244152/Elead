@@ -1,0 +1,42 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    width="1200px"
+    :append-to-body="true"
+    :title="$t('标题', { actionName })"
+>
+    <div>
+        <div class="el-message-box__container">
+            <div class="el-message-box__status el-icon-warning"></div>
+            <div class="el-message-box__message">
+                <p>{{ $t('提示内容', { actionName }) }}</p>
+            </div>
+        </div>
+        <div class="mt-lg">
+            <div class="text-12 mt-lg">{{ $t('提示原因', { actionName }) }}</div>
+            <div class="overflow-hidden mt-lg">
+                <FamErdTable
+                    border
+                    class="m-lg"
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    max-height="300"
+                    :data="data"
+                    :column="column"
+                    show-overflow
+                    ref="erdTable"
+                >
+                </FamErdTable>
+            </div>
+        </div>
+    </div>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18n.confirm }}
+        </erd-button>
+        <erd-button @click="close">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

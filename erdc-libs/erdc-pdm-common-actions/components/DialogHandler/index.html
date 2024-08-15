@@ -1,0 +1,507 @@
+<div id="DialogHandler">
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="title"
+        custom-class="dialog-handler"
+        :width="width"
+        @close="close"
+    >
+        <div
+            ref="header"
+            class="mb-xl flex justify-between"
+        >
+            <div>
+                <erd-input
+                    class="align-middle mt-0"
+                    style="width: 220px"
+                    v-model="searchValue"
+                    @input="search"
+                    clearable
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    :placeholder="i18n.enterSearchWord"
+                ></erd-input>
+            </div>
+            <!-- 临时占位 -->
+            <!-- <div></div> -->
+            <div
+                class="flex"
+                style="align-items: center"
+            >
+                <erd-button
+                    v-if="isBatchOperations"
+                    @click="batchModify"
+                    >{{i18n.modify}}</erd-button
+                >
+                <!-- ba说另存为暂时注释这个功能 -->
+                <erd-button
+                    v-if="type != 'saveAs' && showCollect"
+                    @click="handleObject"
+                    >{{i18n.object}}</erd-button
+                >
+            </div>
+        </div>
+        <!-- 另存为 -->
+        <div v-if="type == 'saveAs'">
+            <vxe-table
+                border
+                ref="erdTable"
+                :data="viewData"
+                :show-overflow="true"
+                :edit-config="{trigger: 'click', mode: 'cell', icon: 'erd-iconfont erd-icon-edit', beforeEditMethod: activeCellMethod}"
+                @checkbox-change="checkboxChange"
+                @checkbox-all="checkboxAll"
+            >
+                <vxe-column
+                    type="checkbox"
+                    title=" "
+                    width="48"
+                    align="center"
+                ></vxe-column>
+                <vxe-column
+                    type="seq"
+                    title=" "
+                    width="48"
+                    align="center"
+                ></vxe-column>
+                <vxe-colgroup :title="i18n.name">
+                    <vxe-column
+                        :field="joinClassName ? `${className}#name` : 'name'"
+                        :title="i18n.before"
+                    ></vxe-column>
+                    <vxe-column
+                        :field="joinClassName ? `${className}#rename` : 'rename'"
+                        :title="i18n.after"
+                        :edit-render="{autofocus: 'input.el-input__inner'}"
+                    >
+                        <template #edit="scope">
+                            <erd-input
+                                autofocus
+                                v-model="scope.row[scope.column.property]"
+                                type="text"
+                                placeholder="请输入名称"
+                            >
+                            </erd-input>
+                        </template>
+                        <template #default="scope">
+                            <span
+                                v-if="!scope.row[scope.column.property]"
+                                style="color: var(--colorTextPlaceholder)"
+                                >请输入名称</span
+                            >
+                            <span v-else>{{scope.row[scope.column.property]}}</span>
+                        </template>
+                    </vxe-column>
+                </vxe-colgroup>
+                <vxe-column
+                    :field="joinClassName ? `${className}#identifierNo` : 'identifierNo'"
+                    :title="i18n.newCode"
+                    show-overflow
+                >
+                    <template #edit="scope">
+                        <fam-code-generator
+                            popper-class="vxe-table--ignore-clear"
+                            v-model="scope.row[scope.column.property]"
+                            :type-id="scope.row['typeReference']"
+                            :type="scope.row['typeNameClassName']"
+                        >
+                        </fam-code-generator>
+                    </template>
+                    <template #default="scope">
+                        <span>
+                            <span>系统默认</span>
+                            <!-- <span
+                                style="color: var(--colorTextPlaceholder)"
+                                v-else="scope.row['typeNameClassName'] !== 'system'"
+                                >请输入编码</span
+                            > -->
+                        </span>
+                        <!-- <span v-else>{{scope.row[scope.column.property]}}</span> -->
+                    </template>
+                </vxe-column>
+                <vxe-colgroup :title="i18n.context">
+                    <vxe-column
+                        :field="joinClassName ? `${className}#containerName` : 'containerName'"
+                        :title="i18n.before"
+                    ></vxe-column>
+                    <vxe-column
+                        field="afterContext"
+                        :title="i18n.after"
+                        :edit-render="{autofocus: '.el-input__inner', name: '', enabled:!isBatchOperations}"
+                    >
+                        <template #edit="{ row }">
+                            <custom-select
+                                popper-class="vxe-table--ignore-clear"
+                                v-model="row.afterContext"
+                                filterable
+                                :row="rowContext"
+                                @change="(...args) => changeContext(row, ...args)"
+                            >
+                            </custom-select>
+                        </template>
+                        <template #default="{ row }">
+                            <span
+                                v-if="!row.showContext"
+                                style="color: var(--colorTextPlaceholder)"
+                                >请选择</span
+                            >
+                            <span v-else>{{row.showContext}}</span>
+                        </template>
+                    </vxe-column>
+                </vxe-colgroup>
+                <vxe-colgroup :title="i18n.folder">
+                    <vxe-column
+                        :field="joinClassName ? `${className}#folderRef` : 'folderRef'"
+                        :title="i18n.before"
+                    ></vxe-column>
+                    <vxe-column
+                        field="afterFolder"
+                        :title="i18n.after"
+                        :edit-render="{autofocus: '.el-input__inner', name: '', enabled:!isBatchOperations}"
+                    >
+                        <template #edit="{ row }">
+                            <custom-select
+                                popper-class="vxe-table--ignore-clear"
+                                v-model="row.afterFolder"
+                                :row="getFolderRow(row)"
+                                :tree-select="true"
+                                :tree-props="treeProps"
+                                :default-expanded-keys="folderExpandKeys"
+                                @options-change="onFolderOptionsChange"
+                                @node-click="(...args) => changeFolder(row, ...args)"
+                            >
+                            </custom-select>
+                        </template>
+                        <template #default="{ row }">
+                            <span
+                                v-if="!row.showFolder"
+                                style="color: var(--colorTextPlaceholder)"
+                                >请选择</span
+                            >
+                            <span v-else>{{row.showFolder}}</span>
+                        </template>
+                    </vxe-column>
+                </vxe-colgroup>
+                <vxe-column
+                    v-if="className === epmDocumentClassName"
+                    :field="joinClassName ? `${className}#cadName` : 'cadName'"
+                    :title="i18n.oldCadName"
+                    show-overflow
+                >
+                    <template #default="scope">
+                        <span v-if="isEpm(scope.row)"
+                            >{{ scope.row[joinClassName ? `${className}#cadName` : 'cadName'] }}</span
+                        >
+                        <span v-else>--</span>
+                    </template>
+                </vxe-column>
+                <vxe-column
+                    v-if="className === epmDocumentClassName"
+                    :field="joinClassName ? `${className}#newCadName` : 'newCadName'"
+                    :title="i18n.newCadName"
+                    show-overflow
+                    width="150"
+                    :edit-render="{autofocus: 'input.el-input__inner'}"
+                >
+                    <template #default="scope">
+                        <span v-if="!isEpm(scope.row)">--</span>
+                        <span
+                            v-else-if="!scope.row.newCadName"
+                            style="color: var(--colorTextPlaceholder)"
+                            >请输入</span
+                        >
+                        <span v-else
+                            >{{scope.row.newCadName + getDocType(scope.row[joinClassName ? `${className}#cadName` :
+                            'cadName'])}}</span
+                        >
+                    </template>
+                    <template #edit="scope">
+                        <erd-input
+                            v-model="scope.row['newCadName']"
+                            autofocus
+                            :placeholder="i18n.enter"
+                        >
+                            <template slot="append">
+                                <erd-show-tooltip
+                                    style="margin: 0 -15px; max-width: 60px"
+                                    placement="top"
+                                    :content="getDocType(scope.row[joinClassName ? `${className}#cadName` : 'cadName'])"
+                                    :enterable="false"
+                                    :flex="false"
+                                    :open-delay="100"
+                                >
+                                    <template v-slot:show-tooltip-title>
+                                        <span class="title_text">
+                                            {{getDocType(scope.row[joinClassName ? `${className}#cadName` :
+                                            'cadName'])}}
+                                        </span>
+                                    </template>
+                                </erd-show-tooltip>
+                            </template>
+                        </erd-input>
+                    </template>
+                </vxe-column>
+            </vxe-table>
+        </div>
+        <!-- 移动 -->
+        <div v-else-if="type == 'move'">
+            <vxe-table
+                border
+                ref="erdTable"
+                :data="viewData"
+                :show-overflow="true"
+                :edit-config="{trigger: 'click', mode: 'cell', icon: 'erd-iconfont erd-icon-edit'}"
+                @checkbox-change="checkboxChange"
+                @checkbox-all="checkboxAll"
+            >
+                <vxe-column
+                    type="checkbox"
+                    title=" "
+                    width="48"
+                    align="center"
+                ></vxe-column>
+                <vxe-column
+                    type="seq"
+                    title=" "
+                    width="48"
+                    align="center"
+                ></vxe-column>
+                <vxe-column
+                    :field="joinClassName ? `${className}#name` : 'name'"
+                    :title="i18n.name"
+                ></vxe-column>
+                <vxe-column
+                    :field="joinClassName ? `${className}#identifierNo` : 'identifierNo'"
+                    :title="i18n.code"
+                    show-overflow
+                ></vxe-column>
+                <vxe-colgroup :title="i18n.context">
+                    <vxe-column
+                        :field="joinClassName ? `${className}#containerName` : 'containerName'"
+                        :title="i18n.before"
+                    ></vxe-column>
+                    <vxe-column
+                        field="afterContext"
+                        :title="i18n.after"
+                        :edit-render="{autofocus: '.el-input__inner', name: ''}"
+                    >
+                        <template #edit="{ row }">
+                            <custom-select
+                                popper-class="vxe-table--ignore-clear"
+                                v-model="row.afterContext"
+                                filterable
+                                :row="rowContext"
+                                @change="(...args) => changeContext(row, ...args)"
+                            >
+                            </custom-select>
+                        </template>
+                        <template #default="{ row }">
+                            <span
+                                v-if="!row.afterContext"
+                                style="color: var(--colorTextPlaceholder)"
+                                >请选择</span
+                            >
+                            <span v-else>{{row.showContext || row.afterContext}}</span>
+                        </template>
+                    </vxe-column>
+                </vxe-colgroup>
+                <vxe-colgroup :title="i18n.folder">
+                    <vxe-column
+                        :field="joinClassName ? `${className}#folderRef` : 'folderRef'"
+                        :title="i18n.before"
+                    ></vxe-column>
+                    <vxe-column
+                        field="afterFolder"
+                        :title="i18n.after"
+                        :edit-render="{autofocus: '.el-input__inner', name: ''}"
+                    >
+                        <template #edit="{ row }">
+                            <custom-select
+                                popper-class="vxe-table--ignore-clear"
+                                v-model="row.afterFolder"
+                                :row="getFolderRow(row)"
+                                :tree-select="true"
+                                :tree-props="treeProps"
+                                :default-expanded-keys="folderExpandKeys"
+                                @options-change="onFolderOptionsChange"
+                                @node-click="(...args) => changeFolder(row, ...args)"
+                            >
+                            </custom-select>
+                        </template>
+                        <template #default="{ row }">
+                            <span
+                                v-if="!row.afterFolder"
+                                style="color: var(--colorTextPlaceholder)"
+                                >请选择</span
+                            >
+                            <span v-else>{{row.showFolder || row.afterFolder}}</span>
+                        </template>
+                    </vxe-column>
+                </vxe-colgroup>
+            </vxe-table>
+        </div>
+        <fam-erd-table
+            v-else
+            border
+            :maxLine="10"
+            :column="columns"
+            :show-overflow="true"
+            :data="viewData"
+            ref="erdTable"
+            :edit-config="{trigger: 'click', mode: 'cell', icon: 'erd-iconfont erd-icon-edit', beforeEditMethod: activeCellMethod}"
+            @edit-actived="editActived"
+            @checkbox-change="checkboxChange"
+            @checkbox-all="checkboxAll"
+        >
+            <template #column:header:rename="{data}">
+                <span>{{i18n.rename}}</span>
+            </template>
+            <template #column:default:rename="{data}">
+                <span
+                    v-if="!data.row.rename"
+                    style="color: var(--colorTextPlaceholder)"
+                    >请输入新名称</span
+                >
+                <span v-else>{{data.row.rename}}</span>
+            </template>
+            <template #column:edit:rename="{data}">
+                <erd-input
+                    ref="renameRef"
+                    autofocus
+                    :placeholder="i18n.enter"
+                    v-model="data.row['rename']"
+                >
+                </erd-input>
+            </template>
+            <template #column:header:owner="{data}">
+                <span>{{i18n.owner}}</span>
+            </template>
+            <template #column:default:owner="{data}">
+                <span
+                    v-if="!data.row.owner"
+                    style="color: var(--colorTextPlaceholder)"
+                    >请选择</span
+                >
+                <span v-else>{{data.row.ownerName}}</span>
+            </template>
+            <template #column:edit:owner="{data}">
+                <FamParticipantSelect
+                    ref="ownerRef"
+                    fixed-height
+                    clearable
+                    searchScop="group"
+                    popper-class="vxe-table--ignore-clear"
+                    :default-value="data.row.ownerObj"
+                    :isgetdisable="false"
+                    :query-params="queryParams"
+                    :query-scope="queryScope"
+                    :show-type="['USER']"
+                    @change="(...args)=>(fnMemberSelect(data.row, ...args))"
+                ></FamParticipantSelect>
+            </template>
+            <template #column:header:state="{data}">
+                <span>{{i18n.lifecycleState}}</span>
+            </template>
+            <template #column:default:state="{data}">
+                <span
+                    v-if="!data.row.state"
+                    style="color: var(--colorTextPlaceholder)"
+                    >请选择</span
+                >
+                <span v-else>{{data.row.stateName}}</span>
+            </template>
+            <template #column:edit:state="{data}">
+                <custom-select
+                    ref="customSelectRef"
+                    popper-class="vxe-table--ignore-clear"
+                    v-model="data.row.state"
+                    :row="rowState"
+                    @change="(...args) => changeState(...args, data.row)"
+                ></custom-select>
+            </template>
+            <template #column:default:oldCadName="{data}">
+                <span v-if="isEpm(data.row)">{{ data.row['oldCadName'] }}</span>
+                <span v-else>--</span>
+            </template>
+            <template #column:default:newCadName="{data}">
+                <span v-if="!isEpm(data.row)">--</span>
+                <span
+                    v-else-if="!data.row.newCadName"
+                    style="color: var(--colorTextPlaceholder)"
+                    >请输入</span
+                >
+                <span v-else>{{data.row.newCadName + getDocType(data.row['oldCadName'])}}</span>
+            </template>
+            <template #column:edit:newCadName="{data}">
+                <erd-input
+                    ref="renameRef"
+                    v-model="data.row['newCadName']"
+                    autofocus
+                    :placeholder="i18n.enter"
+                >
+                    <template slot="append">
+                        <erd-show-tooltip
+                            style="margin: 0 -15px; max-width: 60px"
+                            placement="top"
+                            :content="getDocType(data.row['oldCadName'])"
+                            :enterable="false"
+                            :flex="false"
+                            :open-delay="100"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <span class="title_text"> {{getDocType(data.row['oldCadName'])}} </span>
+                            </template>
+                        </erd-show-tooltip>
+                    </template>
+                </erd-input>
+            </template>
+        </fam-erd-table>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button
+                type="primary"
+                @click="onSubmit"
+                :loading="loading"
+                >{{i18n.confirm}}</el-button
+            >
+            <el-button @click="toggleShow">{{i18n.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+    <dialog-batch
+        v-if="batchDialogVisible"
+        :visible.sync="batchDialogVisible"
+        :class-name="className"
+        :title="batchTitle"
+        :row-list="tableData"
+        :type="type"
+        :state-list="stateList"
+        :is-table="joinClassName"
+        @batch-submit="batchSubmit"
+    >
+    </dialog-batch>
+
+    <!-- 收集相关对象 -->
+    <erd-ex-dialog
+        v-if="showCollect"
+        size="large"
+        :title="collectForm.title"
+        :visible.sync="collectForm.visible"
+        @close="collectForm.tableData = []"
+    >
+        <CollectObjects
+            ref="collectObjectsRef"
+            v-if="collectForm.visible"
+            :table-data="collectForm.tableData"
+            :class-name="collectForm.className"
+        ></CollectObjects>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="!collectForm.loading && collectObjectClick()"
+                >{{ i18n['confirm'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'collectForm' })">{{ i18n['cancel'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

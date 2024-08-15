@@ -1,0 +1,119 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    :title="i18n.addRelateObject"
+    width="70%"
+    destroy-on-close
+>
+    <erd-ex-transfer
+        class="baseline-associate-object-transfer"
+        :allColumnsList="leftTableData"
+        leftWidth="50%"
+        rightWidth="50%"
+        leftShowFormat="table"
+        rightShowFormat="table"
+        :show-draggable="false"
+        :leftTitle="i18n.allList"
+        :rightTitle="i18n.selectedList"
+    >
+        <template slot="left-header-title">
+            <span>{{i18n.allList}}</span>
+        </template>
+        <template slot="left-search">
+            <div class="flex justify-around">
+                <erd-select
+                    v-model="viewType"
+                    @change="viewTypeChange"
+                >
+                    <erd-option
+                        v-for="item in viewTypes"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    >
+                    </erd-option>
+                </erd-select>
+                <erd-select
+                    v-model="childType"
+                    @change="childTypeChange"
+                >
+                    <erd-option
+                        v-for="item in childTypes"
+                        :key="item.typeName"
+                        :label="item.displayName"
+                        :value="item.typeName"
+                    >
+                    </erd-option>
+                </erd-select>
+                <erd-input
+                    :placeholder="i18n.pleaseEnter"
+                    v-model="searchLeftKey"
+                    clearable
+                    @keyup.enter.native="handleSearchLeft"
+                >
+                    <i
+                        class="el-input__icon erd-iconfont erd-icon-search cursor-pointer"
+                        slot="suffix"
+                        @click="handleSearchLeft"
+                    >
+                    </i>
+                </erd-input>
+            </div>
+        </template>
+        <template slot="left-content">
+            <FamErdTable
+                height="316px"
+                ref="leftTable"
+                tooltip-effect="dark"
+                :column="columnsForTransfer"
+                :data="leftTableData"
+                :checkbox-config="{ checkField: 'checked', checkMethod: ({row}) => row[leftDisabled] }"
+                @checkbox-change="handleSelectionChangeLeft"
+                @checkbox-all="handleSelectionAllChangeLeft"
+            >
+            </FamErdTable>
+            <erd-pagination
+                class="mt-xl"
+                streamline
+                small
+                :current-page.sync="pagination.currentPage"
+                :page-size.sync="pagination.pageSize"
+                :total="pagination.total"
+                :hide-on-single-page="false"
+                @size-change="loadLeftData"
+                @current-change="loadLeftData"
+            >
+            </erd-pagination>
+        </template>
+        <template slot="right-header-title">
+            <span>{{i18n.selectedList}}</span>
+        </template>
+        <template slot="right-search">
+            <erd-input
+                :placeholder="i18n.pleaseEnter"
+                v-model="searchRightKey"
+                clearable
+            ></erd-input>
+        </template>
+        <template slot="right-content">
+            <FamErdTable
+                height="360px"
+                ref="rightTable"
+                tooltip-effect="dark"
+                :column="columnsForTransfer"
+                style="width: 100%"
+                :data="rightTableDataTempFilter"
+                @checkbox-change="handleSelectionChangeRight"
+                @checkbox-all="handleSelectionAllChangeRight"
+            >
+            </FamErdTable>
+        </template>
+    </erd-ex-transfer>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+            >{{ i18n.done }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,29 @@
+.common-form-content {
+  display: flex;
+  flex-direction: column;
+}
+.common-form-content .form-content_top {
+  padding: 16px;
+}
+.common-form-content .form-content_mid {
+  flex-grow: 1;
+  background-color: #ffffff;
+  padding: 16px;
+}
+.common-form-content .form-content_bot {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px 12px 16px;
+  position: relative;
+}
+.common-form-content .form-content_bot::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--colorSplit);
+}/*# sourceMappingURL=index.css.map */

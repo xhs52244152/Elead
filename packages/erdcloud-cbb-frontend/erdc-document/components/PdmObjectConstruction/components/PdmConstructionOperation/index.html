@@ -1,0 +1,24 @@
+<div
+    id="pdm-construction-operation"
+    v-cloak
+>
+    <div class="flex justify-between pt-sm pb-sm pdm_construction_operation_box pr-xl pl-xl">
+        <erd-button type="text">{{i18n['筛选器管理']}}</erd-button>
+        <FamActionButton
+            :is-operation="false"
+            :action-config="getActionConfig()"
+            :args="[this, info]"
+            :is-default-btn-type="true"
+        >
+        </FamActionButton>
+    </div>
+    <!-- 保存弹窗 -->
+    <DialogSave
+        ref="dialogSave"
+        :visible.sync="visible"
+        type="save"
+        :custom-submit="handleSaveSubmit"
+        :title="i18n['保存']"
+        :disabled="true"
+    ></DialogSave>
+</div>

@@ -1,0 +1,20 @@
+{
+  "name": "erdcloud-cbb-frontend",
+  "version": "3.1.0-rc4",
+  "scripts": {
+    "collect": "pnpm --filter @erdc-app/erdc-product-web run pack --output ../../dist",
+    "build:docker": "docker build --no-cache --progress=plain -t erdcloud-mfe-fam:3.1.0 .",
+    "build:kit": "cd packages/erdc-kit && npm run build",
+    "commitlint": "commitlint --config commitlint.config.js -e -V",
+    "postinstall": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.ddns.e-lead.cn:erdcloud-plm/erdcloud-cbb/erdcloud-cbb-frontend.git"
+  },
+  "devDependencies": {
+    "pnpm": "^8.9.2",
+    "prettier": "^3.0.3",
+    "eslint": "^8.52.0"
+  }
+}

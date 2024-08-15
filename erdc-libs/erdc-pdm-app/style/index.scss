@@ -1,0 +1,35 @@
+.pdm-hide-page-margin {
+    #FamAdvancedTable .el-pagination {
+        margin-bottom: 0;
+    }
+}
+
+.pdm-table-hide-padding {
+    #FamViewTable {
+        &.fam-view-table-component, .advanced-table-container {
+            padding: 0;
+        }
+    }
+    .viewtable-body-container>.pt-normal {
+        display: none;
+    }
+}
+
+.pdm-table-hide-slot-margin {
+    #FamAdvancedTable .custom-left-slot {
+        margin-left: 0;
+    }
+}
+
+.pdm-table-hide-view-header {
+    #FamAdvancedTable .viewtable-header-container {
+        display: none;
+    }
+}
+
+.object-common-space .fam-common-page__form__section {
+    height: calc(100vh - var(--layoutHeaderHeight) - var(--layoutSecondaryMenuHeiht) - var(--commonPageMargin) * 2) !important;
+}
+.batchDownLoadTip{
+    z-index: 1211111 !important;
+}

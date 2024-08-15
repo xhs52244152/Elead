@@ -1,0 +1,72 @@
+<commonDialog
+    :title="i18nMap.setState"
+    @confirm="submit"
+    ref="dialog"
+    :loading="loading"
+>
+    <div
+        slot="header"
+        class="mb-xl flex justify-between"
+    >
+        <div slot="header">
+            <erd-input
+                class="align-middle mt-0"
+                style="width: 220px"
+                v-model="searchValue"
+                clearable
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18nMap.enterSearchWord"
+            ></erd-input>
+        </div>
+        <div class="flex">
+            <erd-button
+                v-show="viewTable.length > 1"
+                @click="batchModify"
+            >
+                {{i18nMap.modify}}
+            </erd-button>
+
+            <erd-button @click="handleCollect" v-if="showCollect"> {{i18nMap.object}} </erd-button>
+        </div>
+    </div>
+    <fam-erd-table
+        slot="content"
+        border
+        :maxLine="10"
+        :column="columns"
+        :show-overflow="true"
+        :data="viewTable"
+        :edit-config="{trigger: 'click', mode: 'cell', icon: 'erd-iconfont erd-icon-edit', beforeEditMethod: activeCellMethod}"
+        @edit-actived="editActived"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+    >
+        <!-- <template #column:header:state="{data}">
+            <span>{{i18n.state}}</span>
+        </template> -->
+        <template #column:default:state="{data}">
+            <span
+                v-if="!data.row.state"
+                style="color: var(--colorTextPlaceholder)"
+                >请选择</span
+            >
+            <span v-else>{{ getStatusDisplayName(data.row) }}</span>
+        </template>
+        <template #column:edit:state="{data}">
+            <custom-select
+                ref="customSelectRef"
+                popper-class="vxe-table--ignore-clear"
+                v-model="data.row.state"
+                filterable
+                :row="{
+                    componentName: 'constant-select',
+                    clearNoData: true,
+                    viewProperty: 'displayName',
+                    valueProperty: 'name',
+                    referenceList: stateListMap[getId(data.row)] || []
+                }"
+                @change="value => $set(data.row , 'state' , value)"
+            ></custom-select>
+        </template>
+    </fam-erd-table>
+</commonDialog>

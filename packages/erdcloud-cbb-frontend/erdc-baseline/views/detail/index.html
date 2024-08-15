@@ -1,0 +1,118 @@
+<div
+    id="baseline-detail"
+    class="h-100p"
+    v-cloak
+>
+    <div
+        class="flex flex-column h-100p"
+        :key="componentKey"
+    >
+        <FormPageTitle
+            ref="formPageTitleRef"
+            v-bind="formPageAttr"
+            class="plr-xl bg-normal"
+        >
+            <template #icon>
+                <fam-icon
+                    :value="iconValue"
+                    class="text-16"
+                ></fam-icon>
+            </template>
+            <template #tag>
+                <erd-tag
+                    size="mini"
+                    type="danger"
+                    v-if="editStatus"
+                >
+                    {{i18n.already}} {{editStatus}} {{i18n.edit}}</erd-tag
+                >
+                <erd-tag
+                    size="mini"
+                    v-else
+                    >{{formPageAttr.tagName}}</erd-tag
+                >
+            </template>
+            <template #button>
+                <erd-button
+                    class="mr-normal"
+                    @click="switchToLatest"
+                    v-if="!isLatest"
+                    >{{i18n.transferToLatestVersion}}</erd-button
+                >
+                <fam-action-pulldown
+                    :is-operation="true"
+                    :action-config="{
+                        name: operationBtnKey,
+                        objectOid: oid,
+                        className: baselineClassName
+                    }"
+                    :action-data="formData"
+                    :args="[vm, formData, false]"
+                    :default-btn-config="defaultBtnConfig"
+                ></fam-action-pulldown>
+            </template>
+        </FormPageTitle>
+        <erd-tabs
+            v-model="activeName"
+            class="bg-white grow-1 baseline-detail-tabs"
+        >
+            <erd-tab-pane
+                v-for="item in tabs"
+                :key="item.key"
+                :label="item.label"
+                :name="item.key"
+                :lazy="true"
+                :class="[item.clazz || '', 'h-100p']"
+            >
+                <template v-show="item.key === activeName">
+                    <template v-if="item.showScrollbar">
+                        <erd-scrollbar class="h-100p">
+                            <component
+                                :is="item.componentName"
+                                v-bind="item.props"
+                                v-on="item.eventMethods || {}"
+                                :ref="item.ref"
+                            ></component>
+                        </erd-scrollbar>
+                    </template>
+                    <template v-else>
+                        <component
+                            :is="item.componentName"
+                            v-bind="item.props"
+                            v-on="item.eventMethods || {}"
+                            :ref="item.ref"
+                        ></component>
+                    </template>
+                </template>
+            </erd-tab-pane>
+        </erd-tabs>
+    </div>
+    <baseline-delete
+        ref="deleteDialog"
+        @success="onGoList"
+    ></baseline-delete>
+    <baseline-rename
+        ref="renameDialog"
+        @success="onRefreshPage"
+    ></baseline-rename>
+    <revise-operate
+        ref="reviseDialog"
+        @success="switchToLatest"
+    ></revise-operate>
+    <change-owner
+        ref="changeOwnerDialog"
+        @success="onRefreshPage"
+    ></change-owner>
+    <change-lifecycle
+        ref="changeLifecycleDialog"
+        @success="onRefreshPage"
+    ></change-lifecycle>
+    <baseline-move
+        ref="moveDialog"
+        @success="onRefreshPage"
+    ></baseline-move>
+    <save-as
+        ref="saveAsDialog"
+        @success="()=> {}"
+    ></save-as>
+</div>

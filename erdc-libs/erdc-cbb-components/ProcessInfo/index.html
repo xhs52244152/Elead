@@ -1,0 +1,87 @@
+<div
+    id="process-info"
+    class="h-100p"
+    v-cloak
+>
+    <div class="h-100p">
+        <FamAdvancedTable
+            v-if="init"
+            ref="processInfoTable"
+            is-adaptive-height
+            :view-table-config="viewTableConfig"
+            v-bind="$attrs"
+            v-on="$listeners"
+        >
+            <!-- 流程名称 -->
+            <template #column:default:title="{data}">
+                <a
+                    href="javascript:;"
+                    @click="dealProcess(data.row,true)"
+                    >{{data.row.title}}</a
+                >
+            </template>
+            <!-- 流程模板 -->
+            <template #column:default:processDefinitionName="{data}">
+                <a
+                    href="javascript:;"
+                    @click="viewFlowChart(data.row)"
+                    >{{data.row.processDefinitionName}}</a
+                >
+            </template>
+            <!-- 当前处理人 -->
+            <template #column:default:assignee="{data}">
+                <span v-if="data.row.assigneeUser?.displayName">{{data.row.assigneeUser.displayName}}</span>
+            </template>
+
+            <!-- 结束时间 -->
+            <template #column:default:taskEndTime="{data}">
+                <span v-if="data.row.taskEndTime">{{data.row.taskEndTime}}</span>
+            </template>
+
+            <!-- 当前节点 -->
+            <template #column:default:taskName="{data}">
+                <a
+                    href="javascript:;"
+                    @click="dealProcess(data.row,false)"
+                    >{{data.row.taskName}}</a
+                >
+            </template>
+            <!-- 发起人 -->
+            <template #column:default:startUserID="{data}">
+                <span v-if="data.row.startUser?.displayName">{{data.row.startUser.displayName}}</span>
+            </template>
+            <!-- 发起人 -->
+            <template #column:default:operation="{data}">
+                <div
+                    v-if="data.row.oid"
+                    class="flex justify-around"
+                >
+                    <erd-button
+                        type="text"
+                        @click="dealProcess(data.row, false)"
+                        >{{i18n?.['处理']}}</erd-button
+                    >
+                    <span style="color: var(--colorSplit); line-height: 18px">|</span>
+                    <erd-button
+                        type="text"
+                        @click="viewFlowChart(data.row)"
+                        >{{i18n?.['流程图']}}</erd-button
+                    >
+                </div>
+            </template>
+        </FamAdvancedTable>
+    </div>
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+    >
+        <BpmFlowchart
+            v-if="bpmFlowchart.visible"
+            ref="bpmFlowchart"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></BpmFlowchart>
+    </erd-ex-dialog>
+</div>

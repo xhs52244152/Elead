@@ -1,0 +1,41 @@
+<div
+    id="bom-view-form"
+    v-cloak
+>
+    <div class="BomViewForm-content">
+        <erd-form
+            label-width="110px"
+            :model="formData"
+            :rules="rules"
+            ref="ruleForm"
+        >
+            <erd-form-item
+                :label="i18n['BOM精度选项']"
+                required
+                prop="precise"
+            >
+                <div class="flex-1">
+                    <erd-ex-select
+                        v-model="formData.precise"
+                        :options="precisionOption"
+                    >
+                    </erd-ex-select>
+                </div>
+            </erd-form-item>
+            <erd-form-item
+                :label="i18n['视图']"
+                required
+                prop="viewOid"
+            >
+                <div class="flex-1">
+                    <erd-ex-select
+                        v-model="formData.viewOid"
+                        :disabled="operationType=='edit'"
+                        :options="viewOption"
+                    >
+                    </erd-ex-select>
+                </div>
+            </erd-form-item>
+        </erd-form>
+    </div>
+</div>

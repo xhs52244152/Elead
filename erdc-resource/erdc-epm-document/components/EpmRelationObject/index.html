@@ -1,0 +1,20 @@
+<div
+    id="epm-relation-object"
+    class="epmDocument-relation-object w-100p h-100p"
+    v-cloak
+>
+    <RelationObject
+        v-if="init"
+        ref="relationObject"
+        :vm="vm"
+        :tabs="tabs"
+    >
+        <template #column:default:operation="{ data }">
+            <erd-button
+                type="text"
+                @click="handleRemoveRow(data.row)"
+                >{{i18n.remove}}
+            </erd-button>
+        </template>
+    </RelationObject>
+</div>

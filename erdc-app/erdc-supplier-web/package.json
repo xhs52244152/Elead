@@ -1,0 +1,11 @@
+{
+  "name": "@erdc-app/erdc-supplier-web",
+  "description": "PDM供应商",
+  "version": "3.1.0-rc4",
+  "scripts": {
+    "start": "npx erdc-cli start"
+  },
+  "devDependencies": {
+    "erdc-cli": "~3.1.0-rc4"
+  }
+}

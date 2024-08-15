@@ -1,0 +1,37 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    custom-class="baseline-operate-dialog"
+    :append-to-body="true"
+    :title="i18n.reviseConfirm"
+>
+    <div class="baseline-revise">
+        <div class="el-message-box__container">
+            <div class="el-message-box__status el-icon-warning"></div>
+            <div class="el-message-box__message"><p class="font-bold">{{i18n.reviseConfirmDesc}}</p></div>
+        </div>
+        <div class="baseline-tips">
+            <div class="text-12 mtb-lg">{{i18n.reviseConfirmTitle}}</div>
+            <FamErdTable
+                border
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :data="rows"
+                :column="column"
+                show-overflow
+                ref="erdTable"
+            ></FamErdTable>
+        </div>
+    </div>
+    <div
+        class="flex justify-center mt-20"
+        style="margin-top: 20px"
+    >
+        <erd-button
+            type="primary"
+            @click="handleRevise"
+            >{{i18n.done}}</erd-button
+        >
+        <erd-button @click="visible = false">{{i18n.cancel}}</erd-button>
+    </div>
+</erd-ex-dialog>

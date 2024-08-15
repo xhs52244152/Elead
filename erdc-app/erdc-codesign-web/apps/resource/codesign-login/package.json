@@ -1,0 +1,11 @@
+{
+  "name": "@erdc-resource/codesign-login",
+  "version": "3.1.0-rc4",
+  "description": "codesign登录",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

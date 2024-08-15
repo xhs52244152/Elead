@@ -1,0 +1,52 @@
+<erd-ex-dialog
+    v-loading="loading"
+    :visible.sync="visible"
+    :title="dialogTitle"
+    custom-class="create-template-form-dialog"
+    width="1200px"
+    @close="handleClose"
+>
+    <FamAdvancedForm
+        ref="commonFormRef"
+        :model.sync="innerFormData"
+        v-bind="bindCommonForm"
+        :form-id="formId"
+        :query-layout-params="queryLayoutParams"
+        :class-name="className"
+        :schema-mapper="schemaMapper"
+        @field:change="handleFieldChange"
+        v-on="$listeners"
+    >
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            ></slot>
+        </template>
+        <template #main-source>
+            <MainSource
+                ref="main-source"
+                :className="className"
+                :oid="oid"
+            ></MainSource>
+        </template>
+        <template #files>
+            <AttachFiles
+                ref="files"
+                :className="className"
+                :oid="oid"
+            ></AttachFiles>
+        </template>
+    </FamAdvancedForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="handleCreate()"
+            >{{i18n.confirm}}</erd-button
+        >
+        <erd-button @click="handleClose()">{{i18n.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

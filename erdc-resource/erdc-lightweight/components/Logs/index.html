@@ -1,0 +1,26 @@
+<FamErdTable
+    border
+    :row-config="{isCurrent: true, isHover: true, keyField: 'oid'}"
+    :column-config="{resizable: true}"
+    align="left"
+    :data="tableData"
+    :column="innerColumn"
+    show-overflow
+    v-bind="$attrs"
+    v-on="$listeners"
+    ref="erdTable"
+>
+    <template #column:default:time="scope">
+        <span>{{formatTimeData('YYYY-mm-dd HH:MM:SS', scope?.data?.row?.time || '')}}</span>
+    </template>
+    <template
+        v-for="(slot, slotName) in $scopedSlots"
+        v-slot:[slotName]="slotProps"
+    >
+        <slot
+            :name="slotName"
+            v-bind="slotProps"
+        >
+        </slot>
+    </template>
+</FamErdTable>

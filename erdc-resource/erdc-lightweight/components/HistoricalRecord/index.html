@@ -1,0 +1,32 @@
+<div
+    id="lightweight-historical-record"
+    v-cloak
+>
+    <erd-contraction-panel
+        :unfold.sync="unfold.record"
+        :title="i18n?.['历史记录']"
+    >
+        <template v-slot:content>
+            <Logs
+                :column="recordColumn"
+                :table-data="recordTableData"
+            >
+                <template #column:default:operator="scope">
+                    <span
+                        class="color-primary cursor-pointer"
+                        @click="toViewLog(scope?.data)"
+                        >{{i18n?.['查看日志']}}</span
+                    >
+                </template>
+            </Logs>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="unfold.logs"
+        :title="$t?.('操作日志', { name: currentRow?.identifierNo || '' })"
+    >
+        <template v-slot:content>
+            <Logs :table-data="tableData"></Logs>
+        </template>
+    </erd-contraction-panel>
+</div>

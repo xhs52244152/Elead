@@ -1,0 +1,29 @@
+<div
+    class="h-100p"
+    v-cloak
+>
+    <div>
+        <FamSecondaryMenu></FamSecondaryMenu>
+    </div>
+    <div
+        class="m-lg bg-white"
+        style="height: calc(100% - 72px)"
+    >
+        <fam-view-table
+            ref="famViewTable"
+            :dataType="false"
+            :view-table-config="viewTableConfig"
+            :enable-scroll-load="true"
+        >
+            <template #column:default:operation:content="{ scope }">
+                <fam-action-pulldown
+                    :ref="'famActionPulldown' + '_' + scope.rowIndex"
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[vm, scope.row]"
+                ></fam-action-pulldown>
+            </template>
+        </fam-view-table>
+    </div>
+</div>

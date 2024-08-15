@@ -1,0 +1,16 @@
+{
+    "name": "@erdc-resource/erdc-workspace",
+    "version": "3.1.0-rc4",
+    "description": "PDM 工作区",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@erdc-libs/erdc-cbb-components": "workspace:*",
+      "@erdc-resource/erdc-document": "workspace:*",
+      "@erdc-libs/erdc-pdm-icon": "workspace:*"
+    }
+  }

@@ -1,0 +1,47 @@
+<div
+    id="lightweight-task-details"
+    v-loading="loading"
+    v-cloak
+>
+    <erd-contraction-panel
+        :unfold.sync="unfold.base"
+        :title="i18n?.['基本信息']"
+    >
+        <template
+            v-if="unfold.base"
+            #header-right
+        >
+            <erd-button @click="refreshTaskInfo">{{i18n?.['刷新']}}</erd-button>
+        </template>
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="famDynamicForm"
+                :form.sync="taskDetails"
+                :data="formConfigs"
+                :readonly="true"
+            >
+                <template #doc-details="scope">
+                    <span
+                        class="color-primary cursor-pointer"
+                        @click="viewEpmDetails({row:scope.data})"
+                        >{{scope.data[scope.formConfig.field]}}</span
+                    >
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="unfold.logs"
+        :title="i18n?.['任务日志']"
+    >
+        <template
+            v-if="unfold.logs && canDownload"
+            #header-right
+        >
+            <erd-button @click="downLogs">{{i18n?.['下载到本地']}}</erd-button>
+        </template>
+        <template v-slot:content>
+            <Logs :tableData="tableData"></Logs>
+        </template>
+    </erd-contraction-panel>
+</div>

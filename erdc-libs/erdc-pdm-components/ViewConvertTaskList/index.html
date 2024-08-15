@@ -1,0 +1,82 @@
+<div
+    id="ViewConvertTaskList"
+    class="h_100p w_100p"
+    v-cloak
+>
+    <FamAdvancedTable
+        ref="advancedTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+    >
+        <template #column:default:errorMessage:content="{ scope }">
+            <erd-button
+                v-if="scope.row.status === 4 || !!scope.row.errorMsg"
+                type="text"
+                @click="handlerReviewError(scope.row)"
+                >{{i18n.view}}</erd-button
+            >
+        </template>
+    </FamAdvancedTable>
+    <erd-ex-dialog
+        v-if="dialogVisible"
+        :title="i18n.viewErrorLog"
+        :visible.sync="dialogVisible"
+        width="1200px"
+        custom-class="import-export-error-dialog"
+        class="import-export-error-dialog"
+    >
+        <div class="error-dialog-main-content">
+            <div class="flex dialog-error-title">
+                <div class="flex">
+                    <svg
+                        t="1689134894303"
+                        class="icon"
+                        viewBox="0 0 1024 1024"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        p-id="14431"
+                        width="24"
+                        height="24"
+                    >
+                        <path
+                            d="M165.11 504.463a337.92 337.92 0 1 0 675.84 0 337.92 337.92 0 1 0-675.84 0z"
+                            fill="#F04134"
+                            p-id="14432"
+                        ></path>
+                        <path
+                            d="M381.379 387.154l-26.051 26.091a18.432 18.432 0 0 0 0 26.051l234.578 234.619a18.432 18.432 0 0 0 26.091 0l26.051-26.092a18.432 18.432 0 0 0 0-26.05L407.47 387.153a18.432 18.432 0 0 0-26.091 0z"
+                            fill="#FFFFFF"
+                            p-id="14433"
+                        ></path>
+                        <path
+                            d="M642.048 413.245l-26.05-26.091a18.432 18.432 0 0 0-26.092 0L355.328 621.773a18.432 18.432 0 0 0 0 26.05l26.05 26.092a18.432 18.432 0 0 0 26.092 0l234.578-234.619a18.432 18.432 0 0 0 0-26.05z"
+                            fill="#FFFFFF"
+                            p-id="14434"
+                        ></path>
+                    </svg>
+                </div>
+                <span class="dialog-error-title-content">{{i18n.errorLog}}</span>
+            </div>
+            <div
+                v-if="isTextErrorMsgType"
+                class="dialog-error-content"
+            >
+                {{errorMsg4Text}}
+            </div>
+            <div v-else>
+                <erd-table
+                    border
+                    :column="errorTableColumns"
+                    :data="errorMsg4Table"
+                >
+                </erd-table>
+            </div>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer import-export-error-dialog-footer"
+        >
+            <erd-button @click="dialogVisible = false">{{i18n.close}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

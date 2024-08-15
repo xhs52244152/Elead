@@ -1,0 +1,9 @@
+#BomViewForm .BomViewForm-content .el-select {
+  width: 100%;
+}
+#BomViewForm .BomViewForm-content .el-form .el-form-item--medium {
+  margin-bottom: 16px;
+}
+#BomViewForm .BomViewForm-content .el-form .el-form-item--medium:last-child {
+  margin-bottom: 0;
+}/*# sourceMappingURL=index.css.map */

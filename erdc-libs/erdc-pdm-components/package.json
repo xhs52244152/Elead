@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-libs/erdc-pdm-components",
+  "version": "3.1.0-rc4",
+  "description": "PDM默认组件",
+  "dependencies": {
+
+  }
+}

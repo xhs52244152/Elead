@@ -1,0 +1,33 @@
+<fam-view-table
+    ref="famViewTable"
+    :dataType="false"
+    class="product-enditem-view_table"
+    :view-table-config="viewTableConfig"
+>
+    <template
+        v-for="column in slotsNameList"
+        v-slot:[column.slotName]="{ scope }"
+    >
+        <template v-if='column._key === "operation"'>
+            <erd-button
+                @click="handleUpdateEndItemStatus(scope.row)"
+                type="text"
+                >{{getEndItemMasterStatus(scope.row) ? i18n['取消主要成品']: i18n['设为主要成品']}}</erd-button
+            >
+        </template>
+        <template v-if='column._key === "name"'>
+            <erd-tag
+                size="mini"
+                class="pr-normal"
+                v-if="getEndItemMasterStatus(scope.row)"
+                type="danger"
+                effect="plain"
+                >{{i18n['主要成品']}}</erd-tag
+            >
+            <span>{{scope.row[column.prop]}}</span>
+        </template>
+        <template v-if='column._key === "version"'>
+            <span>{{scope.row[column.prop]}}</span>
+        </template>
+    </template>
+</fam-view-table>

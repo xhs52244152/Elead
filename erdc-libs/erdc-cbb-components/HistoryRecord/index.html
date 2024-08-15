@@ -1,0 +1,24 @@
+<div
+    id="history-record"
+    class="h-100p"
+    v-cloak
+>
+    <FamAdvancedTable
+        v-if="init"
+        ref="historyRecordTable"
+        :view-table-config="innerViewTableConfig"
+        :is-adaptive-height="true"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="slotProps"
+            ></slot>
+        </template>
+    </FamAdvancedTable>
+</div>

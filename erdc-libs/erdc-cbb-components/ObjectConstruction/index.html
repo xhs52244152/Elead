@@ -1,0 +1,156 @@
+<div
+    id="pdm_object_construction"
+    class="h-100p overflow-hidden flex flex-column"
+>
+    <slot
+        name="ConstructionOperation"
+        :vm="vueInstance"
+        :data="{
+            rootData
+        }"
+        :defaultMethds="{
+            appendToNode,
+            removeNode,
+            refreshNode
+        }"
+    >
+        <ConstructionOperation
+            ref="ConstructionOperation"
+            :info="info"
+            :className="getClassName"
+            :root-data="rootData"
+            :vm="vueInstance"
+            :view-options="objectViewOption"
+            :get-tree-data="getTileTreeData"
+            @appendToNode="appendToNode"
+            @refreshNode="refreshNode"
+            @removeNode="removeNode"
+            @refreshTree="refreshTree"
+        ></ConstructionOperation>
+    </slot>
+    <FamResizableContainer
+        :left="{  width: '491px', minWidth: 491 }"
+        class="pdm_object_construction_container grow-1"
+        style="height: 1px"
+    >
+        <template #left>
+            <div class="w-100p h-100p flex flex-column">
+                <div class="container-left pr-xl">
+                    <FormPageTitle
+                        :isShowPulldown="false"
+                        :title="dataLeftTitle"
+                        :static-title="true"
+                        class="mt-xl"
+                    >
+                    </FormPageTitle>
+                    <div class="flex pt-xl mb-normal">
+                        <erd-input
+                            v-model="keyword"
+                            :placeholder="i18n['请输入编码或名称']"
+                            suffix-icon="erd-iconfont erd-icon-search"
+                            clearable
+                            class="mr-6"
+                            @input="handleSearch"
+                        ></erd-input>
+                        <erd-form inline>
+                            <!-- 层级 -->
+                            <ComponentWidthLabel
+                                class="mr-6 mb-0"
+                                style="width: 132px; overflow: hidden"
+                                :is-render="levelConfig.showComponent"
+                                :label="levelConfig.label"
+                                :options="levelConfig.options"
+                                v-model="levelConfig.level"
+                                :removeable="false"
+                                :clearable="false"
+                                @after-change="handleLevelChange"
+                            >
+                            </ComponentWidthLabel>
+                        </erd-form>
+                        <erd-button
+                            type="fill-icon"
+                            icon="el-icon-refresh"
+                            @click="handleReset()"
+                        ></erd-button>
+                    </div>
+                </div>
+                <el-scrollbar
+                    wrap-style="overflow-y: scroll; height:100%"
+                    class="grow-1"
+                >
+                    <erd-ex-tree
+                        ref="constructionTree"
+                        :props="{ label: 'caption', children: 'children', isLeaf: 'leaf' }"
+                        :data="tableData"
+                        @node-click="handleNodeClick"
+                        :highlight-current="true"
+                        node-key="id"
+                        :filter-node-method="handleFilterNode"
+                        default-expand-all
+                        :expand-on-click-node="false"
+                        class="mt-n-2 h-100p"
+                    >
+                        <template v-slot="{ data, node }">
+                            <div class="custom-tree-node flex w-100p">
+                                <erd-show-tooltip
+                                    :content="node.label"
+                                    placement="top"
+                                    :flex="false"
+                                    class="w-100p"
+                                >
+                                    <template #show-tooltip-title>
+                                        <div class="truncate flex w-100p align-items-center flex-1">
+                                            <fam-icon
+                                                :value="data.icon"
+                                                class="text-16 mr-sm"
+                                                :style="data.isDisplay?'color: rgba(0, 0, 0, 0.45)':''"
+                                            ></fam-icon>
+                                            <span
+                                                :class="['truncate','inline-block','w-100p', data.isDisplay ? 'color-disabled' : '']"
+                                            >
+                                                {{node.label}}</span
+                                            >
+                                            <erd-button
+                                                v-if="node.level!=1 &&data.accessToView"
+                                                type="icon"
+                                                icon="erd-iconfont erd-icon-info"
+                                                size="mini"
+                                                class="align-text-bottom tree-node-icon"
+                                                @click.stop="handleDetail(data)"
+                                            ></erd-button>
+                                        </div>
+                                    </template>
+                                </erd-show-tooltip>
+                            </div>
+                        </template>
+                    </erd-ex-tree>
+                </el-scrollbar>
+            </div>
+        </template>
+        <template #right>
+            <slot name="right-title">
+                <FormPageTitle
+                    class="p-xl"
+                    :isShowPulldown="false"
+                    :title="rightTitle"
+                    :is-show-tag="isShowTag"
+                    :tag-name="tagName"
+                    :static-title="true"
+                >
+                    <template #icon>
+                        <FamIcon
+                            :value="icon"
+                            class="mr-sm"
+                        ></FamIcon>
+                    </template>
+                </FormPageTitle>
+            </slot>
+            <AdvancedTabs
+                :className="getClassName"
+                class="construction-tabs flex flex-column grow-1"
+                :tabs-config="tabsConfig"
+                @hook:mounted="initAdvancedTabs = true"
+            ></AdvancedTabs>
+        </template>
+    </FamResizableContainer>
+</div>

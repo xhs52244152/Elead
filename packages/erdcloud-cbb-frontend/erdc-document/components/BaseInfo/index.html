@@ -1,0 +1,28 @@
+<div
+    class="mb-xl"
+    v-if="!readonly"
+>
+    <erd-contraction-panel
+        :unfold.sync="panelUnfold"
+        :title="i18n.baseInfo"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                class="basic-info-form-content"
+                ref="form"
+                :form.sync="formData"
+                :data="formConfigs"
+                :readonly="readonly"
+                :editableAttr="editableAttr"
+                :schema-mapper="schemaMapper"
+            >
+                <template #container-slot="scope">
+                    <span>{{ getDisplayName('containerRef') }}</span>
+                </template>
+                <template #folder-slot="scope">
+                    <span>{{ getDisplayName('folderRef') }}</span>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

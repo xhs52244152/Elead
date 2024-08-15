@@ -1,0 +1,116 @@
+<div id="baseline-merge-previous">
+    <erd-contraction-panel
+        :unfold.sync="panelUnfoldMode"
+        :title="i18n.mergeBaseline"
+    >
+        <template v-slot:header-right>
+            <div
+                class="btn-group font-0"
+                v-show="panelUnfoldMode"
+            >
+                <erd-button @click="openAddBaselineDialog">{{i18n.add}}</erd-button>
+                <erd-button @click="removeBaseline">{{i18n.remove}}</erd-button>
+            </div>
+        </template>
+        <template v-slot:content>
+            <FamErdTable
+                ref="erdTable"
+                :column="columns"
+                :data="rightTableData"
+                :maxHeight="300"
+                border
+                show-overflow
+                auto-resize
+                isEmbedTable
+            >
+                <template #column:default:identifierNo="{data}">
+                    <span>{{data.row.identifierNo}}</span>
+                    <erd-tag
+                        v-if="data.row.isMain"
+                        effect="plain"
+                        size="mini"
+                        type="danger"
+                        >{{i18n.masterBaselineOpt}}</erd-tag
+                    >
+                </template>
+                <!--操作-->
+                <template #column:default:operation="{data}">
+                    <erd-button
+                        v-if="!data.row.isMain"
+                        type="text"
+                        @click="setMainBaseline(data.row)"
+                        >{{i18n.setMasterBaseline}}</erd-button
+                    >
+                </template>
+            </FamErdTable>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        class="mt-xl"
+        :unfold.sync="panelUnfoldForConflict"
+        :title="i18n.versionConflictSetting"
+    >
+        <template v-slot:content>
+            <erd-form
+                :model="formData"
+                label-position="right"
+                label-width="25%"
+            >
+                <erd-row>
+                    <erd-col :span="12">
+                        <erd-form-item :label="i18n.mergedVersion">
+                            <template #label>
+                                <span class="color-normal">{{i18n.mergedVersion}}</span>
+                            </template>
+                            <erd-checkbox-group v-model="formData.checkList">
+                                <erd-checkbox
+                                    v-for="item of conflictOpts"
+                                    :disabled="getConflictOptStatus(item)"
+                                    :label="item.value"
+                                    @change="changeConflictOpts(item)"
+                                    class="conflict-group"
+                                    :key="item.value"
+                                >
+                                    {{item.key}}
+                                </erd-checkbox>
+                            </erd-checkbox-group>
+                        </erd-form-item>
+                    </erd-col>
+                    <erd-col :span="12">
+                        <erd-form-item :label="i18n.deleteNotMasterBaseline">
+                            <template #label>
+                                <span class="color-normal">{{i18n.deleteNotMasterBaseline}}</span>
+                            </template>
+                            <el-radio-group
+                                style="line-height: 32px"
+                                v-model="formData.removeOtherBaseline"
+                            >
+                                <erd-radio
+                                    class="align-middle"
+                                    :label="true"
+                                    >{{i18n.yes}}</erd-radio
+                                >
+                                <erd-radio
+                                    class="align-middle"
+                                    :label="false"
+                                    >{{i18n.no}}</erd-radio
+                                >
+                            </el-radio-group>
+                        </erd-form-item>
+                    </erd-col>
+                </erd-row>
+            </erd-form>
+        </template>
+    </erd-contraction-panel>
+
+    <!-- 增加对象 -->
+    <RelatedObject
+        v-if="objectForm.visible"
+        :visible.sync="objectForm.visible"
+        :url-config="objectForm.urlConfig"
+        :excluded="objectForm.excluded"
+        :defaultView="objectForm.defaultView"
+        :leftTable-columns="objectForm.leftTableColumns"
+        @submit="confirm"
+    ></RelatedObject>
+</div>

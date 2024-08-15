@@ -1,0 +1,39 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    width="400px"
+    custom-class="baseline-operate-dialog"
+    :append-to-body="true"
+    :title="i18n.deleteConfirm"
+>
+    <div class="baseline-delete">
+        <div class="el-message-box__container">
+            <div class="el-message-box__status el-icon-warning"></div>
+            <div class="el-message-box__message"><p class="font-bold">{{i18n.deleteTip}}</p></div>
+        </div>
+        <div
+            class="baseline-tips"
+            style="padding-left: var(--iconSizeLarge)"
+        >
+            <div class="text-12 mtb-lg">{{i18n.youSelect}}</div>
+            <erd-radio
+                class="block mb-lg text-14"
+                v-model="deleteType"
+                v-for="item in deleteTypes"
+                :label="item.value"
+                :key="item.value"
+                >{{item.label}}</erd-radio
+            >
+        </div>
+    </div>
+    <div
+        class="flex align-items-center flex-row justify-center mt-20"
+        style="margin-top: 20px !important"
+    >
+        <erd-button
+            type="primary"
+            @click="handleDelete"
+            >{{i18n.done}}</erd-button
+        >
+        <erd-button @click="visible = false">{{i18n.cancel}}</erd-button>
+    </div>
+</erd-ex-dialog>

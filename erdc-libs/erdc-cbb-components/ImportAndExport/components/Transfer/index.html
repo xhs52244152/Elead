@@ -1,0 +1,25 @@
+<div>
+    <erd-ex-transfer
+        ref="transfer"
+        v-model="selected"
+        :all-columns-list="allColumnsList"
+        :default-selected="defaultSelected"
+        :height="innerHeight + 'px'"
+        value-key="value"
+        allow-disabled-drag
+    >
+        <template #left-search="scope">
+            <div class="left-search-box w-100p flex">
+                <slot name="prepend"></slot>
+                <erd-input
+                    class="search-input"
+                    :placeholder="`内容`"
+                    v-model="searchLeftKey"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                >
+                </erd-input>
+            </div>
+        </template>
+    </erd-ex-transfer>
+</div>
