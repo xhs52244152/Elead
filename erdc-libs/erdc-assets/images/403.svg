@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="100px" viewBox="0 0 120 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>xhdpi/M_Message信息组件/M07缺省页/暂无权限</title>
+    <g id="M_Message信息组件/M07缺省页/暂无权限" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M60,17 C69.3888407,17 77,24.6111593 77,34 L77,57.1764706 L43,57.1764706 L43,34 C43,24.6111593 50.6111593,17 60,17 Z M60,21 C52.8202983,21 47,26.8202983 47,34 L47,53.1764706 L73,53.1764706 L73,34 C73,26.8202983 67.1797017,21 60,21 Z" id="Combined-Shape" stroke="#BBBBBB" fill="#FFFFFF"></path>
+        <rect id="Rectangle" stroke="#BBBBBB" fill="#FFFFFF" x="35.5" y="45.5" width="49" height="37" rx="2"></rect>
+        <path d="M48,53.2989123 C48.0036047,55.8222649 48.0072094,63.7003199 48,67.8861164 C48.6488435,72.2203455 56.4457795,77.1742802 59.9279063,79 C63.4496846,77.1742802 71.3439471,72.2092131 72,67.7302623 C71.9819766,63.6743442 71.9855813,55.8222649 71.9891859,53.3026232 L59.9963953,50 L48,53.2989123 Z" id="Path" stroke="#BBBBBB" fill="#EFEFEF" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle id="Oval" stroke="#BBBBBB" stroke-width="2" cx="60" cy="61" r="4"></circle>
+        <rect id="Rectangle" stroke="#BBBBBB" fill="#BBBBBB" x="58.5" y="64.5" width="3" height="8" rx="1.5"></rect>
+        <rect id="Rectangle" fill="#BBBBBB" x="81" y="82" width="16" height="1" rx="0.5"></rect>
+        <rect id="Rectangle-Copy-10" fill="#BBBBBB" x="99" y="82" width="8" height="1" rx="0.5"></rect>
+        <rect id="Rectangle-Copy-11" fill="#BBBBBB" x="88" y="27" width="9" height="1" rx="0.5"></rect>
+        <rect id="Rectangle-Copy-12" fill="#BBBBBB" x="92" y="24" width="16" height="1" rx="0.5"></rect>
+        <rect id="Rectangle-Copy-13" fill="#BBBBBB" x="20" y="50" width="16" height="1" rx="0.5"></rect>
+        <circle id="Oval" stroke="#BBBBBB" fill="#FFFFFF" cx="102.5" cy="10.5" r="2"></circle>
+        <rect id="Rectangle" stroke="#BBBBBB" fill="#FFFFFF" x="11.5" y="21.5" width="6" height="1"></rect>
+        <rect id="Rectangle-Copy-12" stroke="#BBBBBB" fill="#FFFFFF" x="14.5" y="18.5" width="1" height="6"></rect>
+        <circle id="Oval-Copy" stroke="#BBBBBB" fill="#FFFFFF" cx="25" cy="85" r="1.5"></circle>
+    </g>
+</svg>

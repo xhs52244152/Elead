@@ -1,0 +1,48 @@
+<div class="FamImport">
+    <erd-ex-dialog
+        :title="i18n.import"
+        :visible.sync="innerVisible"
+        size="small"
+    >
+        <div
+            v-if="isShowTemplate"
+            class="mb-8 bg-split p-normal rounded color-placeholder"
+        >
+            <span>{{i18n.note}}{{i18n.downloadTips}}</span>
+        </div>
+
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="dataConfig"
+        >
+            <template v-slot:templateComponent="scope">
+                <div class="flex file-template-list flex-wrap justify-start">
+                    <template v-if="fileList && fileList.length">
+                        <erd-button
+                            v-for="item in fileList"
+                            :key="item.id"
+                            type="text"
+                            @click="onDownload(item)"
+                        >
+                            {{item.displayName}}
+                        </erd-button>
+                    </template>
+                    <template v-else>
+                        <span class="color-disabled"> {{i18n.noTemplate}} </span>
+                    </template>
+                </div>
+            </template>
+        </FamDynamicForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="loading"
+                @click="onSubmit"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="closeBtn">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

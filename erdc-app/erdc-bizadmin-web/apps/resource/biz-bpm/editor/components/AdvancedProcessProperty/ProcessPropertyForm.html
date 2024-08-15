@@ -1,0 +1,69 @@
+<erd-ex-dialog
+    v-if="innerVisible"
+    :title="dialogTitle"
+    :visible.sync="innerVisible"
+    destroy-on-close
+>
+    <FamDynamicForm
+        ref="form"
+        v-if="innerVisible"
+        :form.sync="formData"
+        :data="formConfigs"
+        :validators="validators"
+        :readonly="readonly"
+        :schema-mapper="schemaMapper"
+        @field:input="onFieldChange"
+    ></FamDynamicForm>
+    <erd-contraction-panel
+        v-if="formData.componentContent && configurations.length"
+        style="padding: var(--largePadding) 0 0;"
+        :title="i18nMappingObj.componentProps"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <erd-form
+                class="fam-dynamic-form last-line-no-bottom"
+                :model.sync="formData.componentContent.schema"
+                label-width="25%"
+                label-position="right"
+            >
+                <erd-row
+                    type="flex"
+                    justify-content="space-around"
+                    :gutter="8"
+                >
+                    <erd-col
+                        v-for="(conf, index) in configurations"
+                        v-if="isConfigurationShows(conf, formData.componentContent.schema)"
+                        :key="conf.name || conf"
+                        :span="getConfSpan(conf)"
+                    >
+                        <component
+                            :is="getConfigurationComponent(conf)"
+                            :props="conf.props"
+                            :schema="formData.componentContent.schema"
+                            :widget="formData.componentContent"
+                            :scope="{}"
+                            :formConfig="{}"
+                            :formData="formData.componentContent.schema"
+                            :readonly="readonly"
+                            style="width: 100%"
+                            @update-widget="onWidgetUpdate"
+                            @update-schema="onSchemaUpdate"
+                        ></component>
+                    </erd-col>
+                </erd-row>
+            </erd-form>
+        </template>
+    </erd-contraction-panel>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="saveProperty"
+        >
+            {{ i18nMappingObj.confirm }}
+        </erd-button>
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

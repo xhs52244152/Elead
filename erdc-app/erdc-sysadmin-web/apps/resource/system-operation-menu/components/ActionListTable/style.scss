@@ -1,0 +1,59 @@
+.fam-action-list-table {
+    .fam-action-list-table-panel {
+        display: flex;
+        flex-direction: column;
+
+        .parity-regulator-association {
+            text-align: right;
+            .link {
+                color: #567FFD;
+                cursor: pointer;
+                margin-right: 10px;
+
+                &:last-child {
+                    margin: 0;
+                }
+            }
+        }
+
+        #ContractionPanel .panelTitle {
+            font-size: 16px;
+            color: var(--colorTextNormal);
+            letter-spacing: 0;
+            line-height: 24px;
+            font-weight: 700;
+        }
+        .ContractionPanel + .ContractionPanel {
+            margin-top: 16px;
+        }
+
+        .basic-information {
+            .el-form-item__label {
+                font-size: 14px;
+                font-size: var(--fontSize);
+                font-weight: 400;
+            }
+
+            .el-select .el-input .el-select__caret {
+                color: #567FFD !important;
+            }
+        }
+    }
+}
+
+.add-calibrator .el-dialog__body {
+    padding: 0 !important;
+}
+
+.add-calibrator .el-dialog__footer {
+    border-top: 1px solid #EBEBEB;
+}
+
+.type-name-selete {
+    width: 435px;
+    .el-tooltip {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

@@ -1,0 +1,41 @@
+.instance-list {
+    height: 725px;
+
+    .operation {
+        width: 100%;
+        justify-content: space-between;
+        padding: 4px 0 12px 0;
+
+        .time-label {
+            color: var(--colorTextNormal);
+            padding-right: 4px;
+        }
+
+        .searchDone-ml8 {
+            margin-left: 8px;
+        }
+        .searchDone-ml16 {
+            margin-left: 16px;
+        }
+
+        .searchDone {
+            align-items: center;
+        }
+    }
+
+    .erd-dropdown-link {
+        cursor: pointer;
+        color: var(--colorPrimary);
+    }
+
+    .more-button {
+        span {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+
+.instance-list-dialog.el-dialog.no-footer .el-dialog__body {
+    padding-bottom: 16px;
+}

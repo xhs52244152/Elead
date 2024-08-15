@@ -1,0 +1,27 @@
+.fam-scenario-details-content .fam-scenario-details-content-panel {
+  display: flex;
+  flex-direction: column;
+}
+.fam-scenario-details-content .fam-scenario-details-content-panel .parity-regulator-association {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+}
+.fam-scenario-details-content .fam-scenario-details-content-panel .parity-regulator-association .parity-regulator-association__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.fam-scenario-details-content .fam-scenario-details-content-panel .parity-regulator-association .parity-regulator-association__header .fam-usage-scenario-tree__search {
+  width: 320px;
+}
+.fam-scenario-details-content .fam-scenario-details-content-panel .parity-regulator-association .link {
+  color: var(--colorPrimary);
+  cursor: pointer;
+  margin-right: 10px;
+}
+.fam-scenario-details-content .fam-scenario-details-content-panel .parity-regulator-association .link:last-child {
+  margin: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

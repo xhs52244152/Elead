@@ -1,0 +1,39 @@
+.bpm-user-extend {
+    display: flex;
+    align-items: center;
+
+    .bpm-user-popover-extend {
+        .icon-more-style {
+            position: relative;
+            top: 6px;
+        }
+    }
+}
+
+.bpm-user-popper-extend {
+    .flex-format {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+
+        > * + * {
+            margin-left: 4px;
+        }
+    }
+
+    .icon-circle-border {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+    }
+
+    .primary-color {
+        color: var(--primary-color);
+    }
+
+    > * + * {
+        margin-top: 4px;
+    }
+}

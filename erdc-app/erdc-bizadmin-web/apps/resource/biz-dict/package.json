@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/biz-dict",
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat",
+  "description": "字典配置",
+  "dependencies": {}
+}

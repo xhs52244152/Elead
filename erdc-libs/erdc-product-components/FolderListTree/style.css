@@ -1,0 +1,61 @@
+#FolderListTree .FolderListTree {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#FolderListTree .FolderListTree .typelist li {
+  padding: 10px 0 10px 20px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+}
+#FolderListTree .FolderListTree .typelist li:hover {
+  background-color: #ebf1ff;
+  color: #6c6fff;
+  cursor: pointer;
+}
+#FolderListTree .FolderListTree .typelist li.active {
+  background-color: #ebf1ff;
+  color: #6c6fff;
+}
+#FolderListTree .FolderListTree .el-scrollbar {
+  flex-grow: 1;
+}
+#FolderListTree .FolderListTree .el-tree-node__content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+#FolderListTree .FolderListTree .el-tree-node__content .tree-content {
+  display: inline-block;
+  width: calc(100% - 25px);
+  position: relative;
+}
+#FolderListTree .FolderListTree .el-tree-node__content .tree-content .tree-operation {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#FolderListTree .FolderListTree .custom-tree-node {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+}
+#FolderListTree .FolderListTree .custom-tree-node .tree-operation {
+  display: flex;
+  align-items: center;
+}
+#FolderListTree .FolderListTree .custom-tree-node .tree-operation .edit-hover {
+  display: flex;
+  align-items: center;
+}
+#FolderListTree .FolderListTree .tree-text {
+  flex: 1;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+}
+#FolderListTree .FolderListTree .tree-text .erd-iconfont {
+  font-size: var(--fontSizeBig);
+}/*# sourceMappingURL=style.css.map */

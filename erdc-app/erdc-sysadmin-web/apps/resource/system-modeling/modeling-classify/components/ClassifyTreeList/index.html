@@ -1,0 +1,76 @@
+<div
+    id="classify_tree_list"
+    class="h-100p"
+>
+    <fam-tree
+        ref="famTree"
+        :title="i18n.classifyDefinition"
+        :placeholder="i18n.pleaseEnterKeywords"
+        node-key="oid"
+        :data="treeData"
+        :props="defaultProps"
+        :default-expanded-keys="defaultExpandedKeys"
+        :filter-node-method="filterSearch"
+        :highlight-current="true"
+        :expand-on-click-node="false"
+        :default-expand-all="true"
+        @node-click="onCheck"
+    >
+        <template #search-operation>
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-import"
+                @click="onImport"
+            ></erd-button>
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-export"
+                @click="onExport"
+            ></erd-button>
+        </template>
+        <template #node-operation="scope">
+            <erd-button
+                v-if="isApp(scope.data)"
+                type="icon"
+                icon="erd-iconfont erd-icon-export"
+                size="mini"
+                @click="onExportBtn(scope.data, scope.node)"
+            ></erd-button>
+            <erd-button
+                v-if="scope.data.isSubType"
+                type="icon"
+                icon="erd-iconfont erd-icon-add-document"
+                size="mini"
+                @click.stop="onCreate(scope.data, scope.node)"
+            ></erd-button>
+            <erd-button
+                v-if="scope.data.hasModify"
+                type="icon"
+                icon="erd-iconfont erd-icon-edit3"
+                size="mini"
+                @click="onEdit(scope.data, scope.node)"
+            ></erd-button>
+            <erd-button
+                v-if="scope.data.hasDelete"
+                type="icon"
+                icon="erd-iconfont erd-icon-delete2"
+                size="mini"
+                @click.stop="onDelete(scope.data, scope.node)"
+            ></erd-button>
+        </template>
+    </fam-tree>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="ClassifyBizImport"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="ClassifyBizExport"
+        :request-config="requestConfig"
+    ></fam-export>
+</div>

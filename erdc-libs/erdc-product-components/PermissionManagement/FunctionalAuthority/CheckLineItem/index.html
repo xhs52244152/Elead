@@ -1,0 +1,27 @@
+<div class="check-line-item flex" 
+:class="{'hasChecked': hasChecked}">
+    <template>
+        <div class="check-line-all flex">
+            <erd-checkbox
+                :indeterminate="isIndeterminate"
+                v-model="isCheckAll"
+                @change="handlerChangeCheckAll"
+                >{{lineItem.name}}</erd-checkbox
+            >
+        </div>
+        <div class="check-line-split">
+            <erd-checkbox-group
+                v-model="checkedOptionsArr"
+                @change="handlerCheckOption"
+            >
+                <erd-checkbox
+                    v-for="childrenLine in getShowChildList(childList)"
+                    :label="childrenLine.oid"
+                    :key="childrenLine.oid"
+                >
+                    {{childrenLine.name}}
+                </erd-checkbox>
+            </erd-checkbox-group>
+        </div>
+    </template>
+</div>

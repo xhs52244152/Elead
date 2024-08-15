@@ -1,0 +1,18 @@
+#RoleList .RoleList_header {
+    padding-top: 4px;
+    padding-bottom: 12px;
+    justify-content: space-between;
+    align-items: center;
+}
+#RoleList .titleName {
+    height: 24px;
+    line-height: 22px;
+    font-weight: 700;
+}
+#RoleList .link-text {
+    cursor: pointer;
+    color: var(--colorPrimary);
+}
+#RoleList .operation {
+    padding-bottom: 12px;
+}

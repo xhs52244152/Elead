@@ -1,0 +1,110 @@
+<div class="fam-action-list-table">
+    <div class="fam-action-list-table-panel">
+        <erd-contraction-panel
+            :unfold.sync="unfold.basicInform"
+            :title="i18nMappingObj.basicInform"
+        >
+            <template v-slot:content>
+                <div class="basic-information">
+                    <FamDynamicForm
+                        ref="dynamicForm"
+                        :form.sync="formData"
+                        :data="data"
+                        :readonly="readonly"
+                        label-position="right"
+                        :validate-on-rule-change="false"
+                    >
+                    </FamDynamicForm>
+                </div>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :unfold.sync="unfold.parityRegulator"
+            :title="i18nMappingObj.parityRegulator"
+        >
+            <template #header-right>
+                <erd-button
+                    v-if="!readonly"
+                    @click="setDialogObj({visible: true, type: 'add'})"
+                >
+                    {{ i18nMappingObj.add }}
+                </erd-button>
+            </template>
+            <template v-slot:content>
+                <div class="parity-regulator-association">
+                    <erd-table
+                        border
+                        max-height="230"
+                        :row-config="{isCurrent: true, isHover: true}"
+                        :column-config="{resizable: true}"
+                        align="left"
+                        :data="tableData"
+                        :column="column"
+                        show-overflow
+                        :max-line="10"
+                        ref="erdTable"
+                    >
+                        <template #column:default:operation="{ data }">
+                            <erd-dropdown
+                                trigger="click"
+                                @visible-change="(visible) => visibleChange(visible, data.row)"
+                                @command="(type) => handleCommand(type, data.row, data.$rowIndex)"
+                            >
+                                <erd-button
+                                    type="text"
+                                    class="text-normal"
+                                >
+                                    <span class="color-primary">操作</span>
+                                    <i
+                                        :class="['color-primary', data.row.visible ? 'erd-iconfont erd-icon-arrow-down' : 'erd-iconfont erd-icon-arrow-right']"
+                                    ></i>
+                                </erd-button>
+                                <erd-dropdown-menu slot="dropdown">
+                                    <erd-dropdown-item command="config">配置</erd-dropdown-item>
+                                    <erd-dropdown-item command="remove">{{ i18nMappingObj.remove }}</erd-dropdown-item>
+                                    <erd-dropdown-item command="moveUp">上移</erd-dropdown-item>
+                                    <erd-dropdown-item command="moveDown">下移</erd-dropdown-item>
+                                </erd-dropdown-menu>
+                            </erd-dropdown>
+                        </template>
+                    </erd-table>
+                </div>
+            </template>
+        </erd-contraction-panel>
+    </div>
+    <!--新增校验器-->
+    <erd-ex-dialog
+        ref="dialog"
+        v-if="dialogObj.visible"
+        :visible.sync="dialogObj.visible"
+        :size="dialogObj.type === 'groovyConfig' ? 'meduim' : 'large'"
+        :title="dialogObj.title"
+        custom-class="add-calibrator"
+        @close="setDialogObj({visible: false})"
+    >
+        <checker
+            v-if="dialogObj.type === 'add'"
+            ref="checker"
+            :multiple-selection="multipleSelection"
+            @short-name="updateShortName"
+        ></checker>
+        <groovy-filter
+            v-if="dialogObj.type === 'config'"
+            ref="groovyFilter"
+            :dialogType="dialogObj.type"
+            :row="currentRow"
+            :single-button="singleButton"
+        ></groovy-filter>
+        <template #footer>
+            <div>
+                <erd-button
+                    type="primary"
+                    :loading="dialogObj.loading"
+                    @click="fnOnSubmit()"
+                    >{{ i18nMappingObj.ok }}
+                </erd-button>
+                <erd-button @click="setDialogObj({visible: false})">{{ i18nMappingObj.cancel }} </erd-button>
+            </div>
+        </template>
+    </erd-ex-dialog>
+</div>

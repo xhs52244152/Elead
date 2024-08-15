@@ -1,0 +1,21 @@
+<div class="w-100p">
+    <div class="pl-16 flex align-items-center">
+        <erd-button
+            type="text"
+            @click="addFilters"
+        >
+            {{i18nMappingObj.addFiltersBasicAttr}}
+        </erd-button>
+        <span class="ml-8 font-12 text-gray-45">{{i18nMappingObj.addFiltersAttrTips}}</span>
+    </div>
+    <add-timeline-dialog
+        :dialogTitle="dialogTitle"
+        :formConfigs="formConfigs"
+        :visible.sync="dialogVisible"
+        :selectedTimeline.sync="activedFiltersIds"
+    ></add-timeline-dialog>
+    <horizontal-timeline
+        :originDragData="activedFiltersData"
+        :activedDragData.sync="activedFiltersIds"
+    ></horizontal-timeline>
+</div>

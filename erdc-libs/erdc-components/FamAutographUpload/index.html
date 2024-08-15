@@ -1,0 +1,57 @@
+<div
+    id="FamAutographUpload"
+    class="fam-autograph-upload flex align-items-center"
+>
+    <span
+        v-if="value"
+        class="position-relative"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+    >
+        <erd-image
+            v-if="innerValue"
+            :src="innerValue"
+            :preview-src-list="[innerValue]"
+            :style="imageStyle"
+        >
+        </erd-image>
+        <transition
+            v-if="clearable"
+            name="el-fade-in"
+        >
+            <span
+                v-show="showRemoveButton"
+                class="fam-autograph-upload__delete-button text-white cursor-pointer position-absolute w-100p h-100p left-0 top-0 align-items-center justify-center text-lg"
+                @click="handleRemove"
+            >
+                <erd-icon icon="el-icon-close"></erd-icon>
+            </span>
+        </transition>
+    </span>
+    <span
+        v-else
+        class="notImageBack"
+    ></span>
+    <fam-upload
+        class="flex align-items-center ml-8"
+        :action="action"
+        accept="image/*"
+        :headers="requestHeader"
+        :on-change="handleChange"
+        :show-file-list="false"
+    >
+        <erd-button
+            v-show="!readonly"
+            type="text"
+        >
+            {{ buttonText || i18n.replace }}
+        </erd-button>
+        <span
+            slot="tip"
+            class="el-upload__tip ml-8 mt-0"
+            :tips="tip"
+        >
+            {{ tip }}
+        </span>
+    </fam-upload>
+</div>

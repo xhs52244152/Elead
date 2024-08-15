@@ -1,0 +1,118 @@
+.fam-advanced-table-component {
+    .my-link-btn {
+        color: var(--buttonTextColor);
+        cursor: pointer;
+    }
+
+    .my-drag-icon {
+        cursor: move;
+        vertical-align: middle;
+    }
+
+    .toolbar-search-component-label {
+        font-size: 14px;
+        font-size: var(--fontSize);
+        margin-right: 4px;
+    }
+
+    .el-pagination {
+        margin-top: var(--largeSpace);
+    }
+
+    .viewtable-body-container {
+        .load-more-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #e8eaec;
+            border-top: none;
+            height: var(--famTableRowHeight);
+            line-height: var(--famTableRowHeight);
+            > span {
+                line-height: normal !important;
+            }
+        }
+    }
+
+    &.adaptive-height {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .viewtable-body-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+
+            .fam-erd-table-container {
+                position: relative;
+                flex-grow: 1;
+
+                > #ComponentWapper-erdTable {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            > .el-pagination {
+                height: 28px;
+                margin-bottom: var(--largeSpace);
+            }
+        }
+    }
+
+    .fam-icon-container {
+        .fam-icon-width-style {
+            i {
+                font-size: var(--fontSizeBig)
+            }
+        }
+    }
+
+    .fam-advanced-table__footer-row {
+        height: var(--famTableRowHeight);
+        font-size: var(--fontSize);
+
+        &.fam-advanced-table__footer-row--loading {
+            .vxe-cell--item::before {
+                display: inline-flex;
+                content: '\e716';
+                width: 16px;
+                height: 16px;
+                font-size: 16px;
+                margin-right: 4px;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                animation: loading-rotate 2s linear infinite;
+                font-family: erd-iconfont, serif !important;
+            }
+        }
+        .vxe-cell {
+            position: relative;
+            height: 22px;
+        }
+
+        .vxe-cell--item {
+            line-height: 22px;
+            color: var(--colorBan);
+        }
+
+        &.fam-advanced-table__footer-row--link {
+            .vxe-cell--item {
+                color: var(--colorPrimary);
+                cursor: pointer;
+                &:hover {
+                    color: var(--colorPrimaryLighter);
+                }
+                &:active {
+                    color: var(--colorPrimaryDark);
+                }
+            }
+        }
+    }
+    .fam-basicfilter-container .fam-form-item-width-value .fam-participant-select .component-show-body {
+        height: var(--famBasicfilterParticipantHeight);
+    }
+}

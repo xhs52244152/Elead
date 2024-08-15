@@ -1,0 +1,92 @@
+<div id="AssociatedProcess">
+    <erd-ex-dialog
+        custom-class="associated-process-dialog"
+        :title="i18nMappingObj.selectProcess"
+        :visible.sync="innerVisible"
+        size="large"
+    >
+        <div class="associated-process">
+            <resizable-container>
+                <template slot="left">
+                    <div class="tree-management">
+                        <div
+                            ref="AssociatedProcessHeader"
+                            class="tree-header"
+                        >
+                            <div class="tree-title">{{i18nMappingObj.processType}}</div>
+                            <div class="search">
+                                <erd-input
+                                    v-model="searchVal"
+                                    :placeholder="i18nMappingObj.pleaseEnter"
+                                    suffix-icon="el-input__icon erd-iconfont erd-icon-search"
+                                    clearable
+                                ></erd-input>
+                            </div>
+                        </div>
+                        <erd-scrollbar :style="{height: treeHeight}">
+                            <erd-ex-tree
+                                ref="tree"
+                                node-key="oid"
+                                :data="treeList"
+                                :props="defaultProps"
+                                :filter-node-method="filterSearch"
+                                :highlight-current="true"
+                                :expand-on-click-node="false"
+                                default-expand-all
+                                @node-click="onCheck"
+                            >
+                                <template v-slot="scope">
+                                    <div class="tree-content">
+                                        <div class="tree-text">
+                                            <i
+                                                v-if="scope.data.icon"
+                                                :class="scope.data.icon"
+                                                aria-hidden="true"
+                                            ></i>
+                                            <template v-if="isApplication(scope.node.data) && scope.node.data.icon">
+                                                <img
+                                                    v-if="scope.node.data.icon"
+                                                    style="top: -1px; width: 1em; height: 1em"
+                                                    class="inline-block position-relative"
+                                                    :src="scope.node.data.icon"
+                                                    alt=""
+                                                />
+                                                <erd-icon
+                                                    v-else
+                                                    icon="loading"
+                                                    style="animation: loading-rotate 2s linear infinite"
+                                                ></erd-icon>
+                                            </template>
+                                            {{scope.node.label}}
+                                        </div>
+                                    </div>
+                                </template>
+                            </erd-ex-tree>
+                        </erd-scrollbar>
+                    </div>
+                </template>
+                <template slot="right">
+                    <div class="process-right ptrl-normal h-100p">
+                        <fam-advanced-table
+                            ref="famAdvancedTable"
+                            :view-table-config="viewTableConfig"
+                            is-adaptive-height
+                            app-name="ALL"
+                        ></fam-advanced-table>
+                    </div>
+                </template>
+            </resizable-container>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button
+                type="primary"
+                @click="onSubmit"
+                >{{i18nMappingObj.confirm}}</el-button
+            >
+            <el-button @click="toogleShow">{{i18nMappingObj.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

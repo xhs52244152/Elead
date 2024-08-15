@@ -1,0 +1,92 @@
+<div
+    v-loading="loading"
+    class="fam-organization-tree tree-management"
+>
+    <div
+        class="fam-organization-tree__header tree-header"
+        ref="header"
+    >
+        <div class="search">
+            <erd-input
+                :placeholder="i18n.enterKeyword"
+                class="fam-organization-tree__search"
+                v-model="searchStr"
+                clearable
+                suffix-icon="erd-iconfont erd-icon-search"
+                @keydown.enter.native="fnSearch"
+                @clear="init"
+            ></erd-input>
+        </div>
+    </div>
+    <erd-scrollbar :style="{ height: treeHeight }" wrap-style="overflow: hidden auto;">
+        <!-- 搜索结果 -->
+        <erd-ex-tree
+            v-show="treeType == 'search'"
+            ref="orgComponentTreeSearch"
+            node-key="key"
+            :data="treeData"
+            class="tree-list"
+            :props="{ label: 'name', children: 'children'}"
+            :highlight-current="true"
+            :expand-on-click-node="false"
+            @node-click="onNodeClick"
+        >
+            <template v-slot="scope">
+                <div
+                    :class="{ 'tree-node-content': true, 'special-font-color': specialOrg.indexOf(scope.data?.identifierNo) != -1}"
+                >
+                    <span class="tree-node-title">{{ scope.node.label }}</span>
+                    <div
+                        class="tree-node-operator"
+                        v-if="$scopedSlots['node-operator']"
+                    >
+                        <slot
+                            name="node-operator"
+                            v-bind="scope"
+                        ></slot>
+                    </div>
+                </div>
+            </template>
+        </erd-ex-tree>
+
+        <!-- 懒加载树 -->
+        <erd-ex-tree
+            v-show="treeType == 'lazy'"
+            ref="orgComponentTree"
+            node-key="key"
+            class="tree-list"
+            :props="{ label: 'name', children: 'children', isLeaf: 'leaf' }"
+            :load="loadOrganization"
+            :highlight-current="true"
+            :expand-on-click-node="false"
+            :default-expanded-keys="defaultExpandedKeys"
+            lazy
+            @node-click="onNodeClick"
+        >
+            <template v-slot="scope">
+                <div
+                    :class="{ 'tree-node-content': true, 'special-font-color': specialOrg.indexOf(scope.data?.identifierNo) != -1}"
+                >
+                    <!-- <erd-tooltip placement="top-start" :content="scope.node.label">
+                        <span class="tree-node-title">{{ scope.node.label }} ({{scope.data.linkCount || 0}})</span>
+                    </erd-tooltip> -->
+                    <div
+                        class="tree-node-title"
+                        :title="`${scope.node.label} (${scope.data.linkCount || 0})`"
+                    >
+                        {{ `${scope.node.label} ${showCount ? ` (${scope.data.linkCount || 0}) ` : ''}` }}
+                    </div>
+                    <div
+                        class="tree-node-operator"
+                        v-if="$scopedSlots['node-operator']"
+                    >
+                        <slot
+                            name="node-operator"
+                            v-bind="scope"
+                        ></slot>
+                    </div>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

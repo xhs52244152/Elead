@@ -1,0 +1,14 @@
+.el-select-dropdown__item.dict-select {
+    height: auto;
+    // min-height: 40px;
+    max-height: 300px;
+    background-color: white;
+    padding: 0;
+    .erd-iconfont {
+        height: auto;
+        width: auto;
+    }
+}
+.erd-tree-select {
+    display: block;
+}

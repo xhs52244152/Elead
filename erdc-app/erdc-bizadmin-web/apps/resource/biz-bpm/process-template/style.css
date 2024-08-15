@@ -1,0 +1,37 @@
+#bpm-template-content {
+  background-color: #ffffff;
+  position: relative;
+}
+#bpm-template-content .erd-ex-tree-content {
+  height: 100%;
+}
+#bpm-template-content .erd-ex-tree-content .el-tree-node__content .edit-hover,
+#bpm-template-content .erd-ex-tree-content .el-tree-node__content .el-input + .edit-hover {
+  display: none;
+}
+#bpm-template-content .erd-ex-tree-content .el-tree-node__content:hover .el-input + .edit-hover {
+  display: none;
+}
+#bpm-template-content .erd-ex-tree-content .el-tree-node__content:hover .edit-hover {
+  display: flex;
+}
+#bpm-template-content .erd-ex-tree-content .custom-tree-node {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fontSize);
+}
+#bpm-template-content #FamViewTable .fam-base-info-title {
+  padding-top: 16px;
+  background-color: #FFFFFF;
+}
+#bpm-template-content #FamViewTable .fam-view-navbar-component {
+  background-color: #FFFFFF;
+}
+#bpm-template-content #FamViewTable .fam-view-navbar-component .el-menu {
+  background-color: #FFFFFF !important;
+}
+
+/*# sourceMappingURL=style.css.map */

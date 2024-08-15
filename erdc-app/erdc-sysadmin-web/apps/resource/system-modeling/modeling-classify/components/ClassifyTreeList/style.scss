@@ -1,0 +1,37 @@
+#classify_tree_list {
+    .classifyTreeList {
+        margin-bottom: 8px;
+        .classifyTreeList-search {
+            justify-content: space-between;
+        }
+        .classifyTreeList-title {
+            padding: 8px 0;
+            font-size: 16px;
+            color: var(--colorTextNormal);
+            font-weight: 700;
+        }
+        .classifyTreeList-header {
+            margin-bottom: 8px;
+        }
+    }
+
+    .el-tree-node__content {
+        display: flex;
+        width: 100%;
+        .tree-content {
+            display: flex;
+            width: calc(100% - 25px);
+            position: relative;
+            justify-content: space-between;
+            align-items: center;
+
+            .tree-text {
+                flex: 1;
+                width: calc(100% - 35px);
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}

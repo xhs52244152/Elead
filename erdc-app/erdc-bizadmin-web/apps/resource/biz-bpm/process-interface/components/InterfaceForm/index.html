@@ -1,0 +1,58 @@
+<div class="oper-interface-obj-content">
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form.sync="form"
+        :data="fromList"
+        :readonly="readonly"
+        label-position="right"
+    >
+        <template #tableComponent="scope">
+            <erd-button @click="dialogVisible = true">添加</erd-button>
+            <erd-button @click="form.rpcInterface = ''">移除</erd-button>
+        </template>
+    </FamDynamicForm>
+
+    <erd-ex-dialog
+        :title="i18nMappingObj['Dubbo接口']"
+        :visible.sync="dialogVisible"
+        width="1200px"
+    >
+        <resizable-container :left="{ width: '260px' }">
+            <template #left>
+                <checker-tree
+                    ref="checkerTree"
+                    @nodeClick="onNodeClick"
+                ></checker-tree>
+            </template>
+            <template #right>
+                <div style="position: relative">
+                    <fam-erd-table
+                        ref="interfaceTable"
+                        :data="interfaceList"
+                        :column="interfaceColumn"
+                        :column-config="{resizable: true}"
+                        :row-config="{isCurrent: true, isHover: true}"
+                        border
+                        show-overflow
+                        align="left"
+                        height="500"
+                    ></fam-erd-table>
+                    <!--小于等于一页不展示-->
+                    <erd-pagination
+                        style="margin-top:16px;"
+                        :current-page.sync="pagination.pageIndex"
+                        :page-size.sync="pagination.pageSize"
+                        :total="pagination.total"
+                        @current-change="handlePageChange"
+                        @size-change="handleSizeChange"
+                    ></erd-pagination>
+                </div>
+            </template>
+        </resizable-container>
+
+        <template #footer>
+            <erd-button type="primary" @click="confirmDialog">{{i18nMappingObj['确定']}}</erd-button>
+            <erd-button @click="dialogVisible = false;">{{i18nMappingObj['取消']}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

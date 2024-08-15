@@ -1,0 +1,48 @@
+<div id="variableTranConfig">
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form="formData"
+        :data="formConfig"
+    >
+        <template v-slot:variableComponent="scope">
+            <erd-select v-model="scope.data[scope.formConfig.field]">
+                <erd-option
+                    v-for="item in variableData"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.displayName"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template v-slot:typeComponent="scope">
+            <erd-radio
+                v-model="scope.data[scope.formConfig.field]"
+                label="map"
+                @change="onChange('map')"
+                >{{i18n.simpleMapping}}</erd-radio
+            >
+            <erd-radio
+                v-model="scope.data[scope.formConfig.field]"
+                label="javascript"
+                @change="onChange('javascript')"
+                >{{i18n.scripting}}</erd-radio
+            >
+        </template>
+        <template v-slot:contentComponent="scope">
+            <erd-input
+                v-model="scope.data[scope.formConfig.field]"
+                type="textarea"
+                rows="10"
+                :placeholder="placeholder"
+            ></erd-input>
+        </template>
+    </FamDynamicForm>
+    <div class="help">{{i18n.clickView}}<a @click="help">{{i18n.detailsHelp}}</a></div>
+    <erd-ex-dialog
+        :visible.sync="helpVisible"
+        size="small"
+        :title="i18n.variableConversionHelp"
+    >
+        <variable-tran></variable-tran>
+    </erd-ex-dialog>
+</div>

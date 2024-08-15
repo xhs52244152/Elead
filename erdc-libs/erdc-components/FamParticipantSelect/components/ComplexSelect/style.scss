@@ -1,0 +1,38 @@
+#MultitermSelect {
+    position: relative;
+    color: var(--colorTextPlaceholder);
+    &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        background-color: var(--tabsItemNavWrap__after);
+        margin: 0 auto;
+    }
+    .innerShowCheckbox .el-tree-node__content {
+        .is-leaf {
+            display: none;
+        }
+        padding-left: 0 !important;
+    }
+    .el-input__suffix {
+        display: flex;
+        .el-input__suffix-inner {
+            align-items: center;
+            font-size: 16px;
+        }
+    }
+    .w-50p {
+        width: 50%;
+    }
+    .el-tree-node__content {
+        width: 100%;
+        .tree-content {
+            width: 100%;
+            overflow: hidden;
+        }
+    }
+}

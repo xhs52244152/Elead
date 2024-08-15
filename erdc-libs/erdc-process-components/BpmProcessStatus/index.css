@@ -1,0 +1,20 @@
+.bpm-process-status-content .circle {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.bpm-process-status-content .LIFECYCLE_RUNNING {
+  background-color: #00A854;
+}
+.bpm-process-status-content .LIFECYCLE_COMPLETED {
+  background-color: #567FFD;
+}
+.bpm-process-status-content .LIFECYCLE_SUSPENDED {
+  background-color: #FFBF00;
+}
+.bpm-process-status-content .LIFECYCLE_EXCEPTION {
+  background-color: #f04134;
+}
+
+/*# sourceMappingURL=index.css.map */

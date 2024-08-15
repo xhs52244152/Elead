@@ -1,0 +1,35 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    width="600px"
+>
+    <erd-upload
+        class="upload-demo"
+        :action="uploadUrl"
+        accept=".zip,.tgz"
+        :headers="CONST.defaultHeaders"
+        :auto-upload="true"
+        :on-remove="handleRemove"
+        :limit="1"
+        :on-exceed="handleExceed"
+        :file-list="fileList"
+        :before-upload="onBeforeUpload"
+        :on-success="handleSuccess"
+    >
+        <erd-button size="small">点击上传</erd-button>
+        <div
+            slot="tip"
+            class="el-upload__tip"
+        >
+            zip或者tgz格式
+        </div>
+    </erd-upload>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submitSource"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancelSource">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

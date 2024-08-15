@@ -1,0 +1,24 @@
+<div
+    id="associated-users"
+    class="associated-users"
+>
+    <div class="left-main-container">
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form.sync="formData"
+            :data="dynamicFormData"
+        >
+            <template v-slot:memberComponent="scope">
+                <FamParticipantSelect
+                    ref="famParticipantSelect"
+                    v-model.sync="formData.members"
+                    query-scope="fullTenant"
+                    :show-type="showType"
+                    :default-value="defaultMemebr"
+                    multiple
+                    @change="changeMember"
+                ></FamParticipantSelect>
+            </template>
+        </FamDynamicForm>
+    </div>
+</div>

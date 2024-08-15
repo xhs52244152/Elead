@@ -1,0 +1,29 @@
+.doc-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    .back-btn {
+        color: #666;
+        padding: 0px 16px;
+        cursor: pointer;
+    }
+    .back-btn:hover {
+        color: #567FFD;
+    }
+    .title {
+        display: inline-block;
+        .main-title {
+            font-size: var(--fontSizeLarge);
+            color: rgba($color: #000000, $alpha: 0.85);
+            line-height: 28px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    }
+    .title::before {
+        content: '|';
+        color: #d9d9d9;
+        margin-right: 16px;
+    }
+}

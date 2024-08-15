@@ -1,0 +1,48 @@
+<div v-if="buttonConfig.length || pulldownConfig.length" id="fam_action_button">
+    <template v-for="(item, index) in innerButtonGroup">
+        <fam-action-pulldown
+            v-if="item[buttonProp.children] && item[buttonProp.children].length"
+            class="action-pulldown"
+            :is-operation="false"
+            :action-data="actionData"
+            :buttons="pulldownGroup(item, index)"
+            :button-props="buttonProp"
+            :args="args"
+            :is-action-button="true"
+            :extend-disabled-validate="extendDisabledValidate"
+            :popover-placement="popoverPlacement"
+            :skip-validator="innerSkipValidator"
+            @pulldown-click="onClick"
+        ></fam-action-pulldown>
+        <erd-show-tooltip
+            v-else
+            placement="top"
+            class="action-button"
+            :key="item.key"
+            :content="item.displayDesc"
+            :titleText="item[buttonProp.label] + item[buttonProp.label]"
+            :customMouseOver="(el, dom, callback) => handleMouseOver(el, dom, callback, index)"
+        >
+            <template #show-tooltip-title>
+                <erd-button
+                    ref="button"
+                    v-bind="item"
+                    :key="item.key || index"
+                    :size="item.size"
+                    :type="type(item.type, index)"
+                    :plan="item.plan"
+                    :loading="item.loading"
+                    :disabled="!transformBoolean(item.enabled, true)"
+                    :icon="item.icon"
+                    :autofocus="item.autofocus"
+                    :native-type="item['native-type']"
+                    :class="[item.class, 'title_text', 'truncate']"
+                    @click="onClick(item, innerButtonGroup, actionDataDtos)"
+                    ><span class="title_text"
+                        >{{item[buttonProp.label]}}</span
+                    ></erd-button
+                >
+            </template>
+        </erd-show-tooltip>
+    </template>
+</div>

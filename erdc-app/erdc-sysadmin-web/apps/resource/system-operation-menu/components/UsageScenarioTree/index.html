@@ -1,0 +1,55 @@
+<div
+    v-loading="loading"
+    class="fam-usage-scenario-tree flex flex-column"
+>
+    <FamInfoTitle :title="i18nMappingObj.usageScenario"></FamInfoTitle>
+    <div
+        class="fam-usage-scenario-tree__header"
+        ref="header"
+    >
+        <erd-input
+            :placeholder="i18n.placeholder"
+            class="fam-usage-scenario-tree__search"
+            suffix-icon="el-input__icon erd-iconfont erd-icon-search"
+            v-model="keyword"
+            clearable
+            @change="init"
+        ></erd-input>
+    </div>
+    <erd-scrollbar :style="{ height: '100%' }">
+        <erd-ex-tree
+            ref="componentTreeSearch"
+            node-key="oid"
+            :data="treeData"
+            :props="{ label: 'displayName', children: 'childList'}"
+            :highlight-current="true"
+            :default-expanded-keys="defaultExpandedKeys"
+            @node-click="onNodeClick"
+        >
+            <template v-slot="scope">
+                <div class="erd-tree-node__label inline-flex h-100p">
+                    <erd-show-tooltip
+                        class="w-100p"
+                        :content="scope.node.label"
+                    >
+                        <template v-if="isApplication(scope.node.data)">
+                            <img
+                                v-if="scope.node.data.icon"
+                                alt=""
+                                style="top: -1px; width: 1em; height: 1em"
+                                class="inline-block position-relative"
+                                :src="scope.node.data.icon"
+                            />
+                            <erd-icon
+                                v-else
+                                icon="loading"
+                                style="animation: loading-rotate 2s linear infinite"
+                            ></erd-icon>
+                        </template>
+                        {{scope.node.label}}
+                    </erd-show-tooltip>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

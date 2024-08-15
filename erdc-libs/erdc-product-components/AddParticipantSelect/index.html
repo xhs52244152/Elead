@@ -1,0 +1,34 @@
+<div
+    id="AddParticipantSelect"
+    class="add-participant-select"
+>
+    <div class="header-container">
+        <erd-row
+            :gutter="8"
+            type="flex"
+            align="middle"
+        >
+            <erd-col
+                :span="leftSpan"
+                v-if="labelVisible"
+                class="form-item-title"
+            >
+                <span>{{ i18nMappingObj.principal }}</span>
+            </erd-col>
+            <erd-col :span="rightSpan">
+                <FamParticipantSelect
+                    ref="famParticipantSelect"
+                    width="100p"
+                    v-if="visible"
+                    v-model.sync="participantVal"
+                    :query-params="innerQueryParams"
+                    :multiple="multiple"
+                    :autoHeight="autoHeight"
+                    :three-member-env="threeMemberEnv"
+                    v-bind="$attrs"
+                    v-on="$listeners"
+                ></FamParticipantSelect>
+            </erd-col>
+        </erd-row>
+    </div>
+</div>

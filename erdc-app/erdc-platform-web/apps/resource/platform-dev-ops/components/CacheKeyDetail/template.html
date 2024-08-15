@@ -1,0 +1,25 @@
+<div v-loading="loading">
+    <div class="flex justify-between mb-12 align-items-center text-lg text-gray-85 font-bold">
+        {{ currentCacheKey || '--' }}
+    </div>
+
+    <fam-dynamic-form
+        ref="dynamicForm"
+        :form.sync="form"
+        :data="data"
+        readonly
+    >
+        <template #cache-level-readonly>
+            <span>{{ translateCacheLevel(form.level) || '--' }}</span>
+        </template>
+
+        <template #cache-value-content>
+            <fam-monaco-editor
+                ref="famMonacoEditor"
+                :data="form.valueJson"
+                :editorConfig="monacoEditorConfig"
+                :minHeight="350"
+            ></fam-monaco-editor>
+        </template>
+    </fam-dynamic-form>
+</div>

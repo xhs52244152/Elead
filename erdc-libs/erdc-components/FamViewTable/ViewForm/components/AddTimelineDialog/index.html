@@ -1,0 +1,24 @@
+<div>
+    <erd-ex-dialog
+        append-to-body
+        :title="dialogTitle"
+        :visible.sync="showDialog"
+    >
+        <div>
+            <FamDynamicForm
+                :form="form"
+                :data="formConfigs"
+            >
+            </FamDynamicForm>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="onSave"
+            >
+                {{i18nMappingObj.confirm}}
+            </erd-button>
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

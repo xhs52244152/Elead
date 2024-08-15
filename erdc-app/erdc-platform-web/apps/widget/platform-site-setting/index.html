@@ -1,0 +1,20 @@
+<div
+    class="doc-site-setting"
+    v-if="isShowSite"
+>
+    <site-list
+        ref="siteRef"
+        @confirm="handleSiteConfirm"
+    ></site-list>
+    <erd-tooltip
+        class="doc-site-setting--button flex align-items-center"
+        :content="siteTip"
+    >
+        <erd-button
+            type="text"
+            class="layout-component__plain-button"
+            icon="erd-iconfont erd-icon-location2"
+            @click="handleToggleSite"
+        ></erd-button>
+    </erd-tooltip>
+</div>

@@ -1,0 +1,125 @@
+<div
+    id="MultitermSelect"
+    class="flex ptb-16 h-100p"
+>
+    <div class="left flex flex-column h-100p overflow-hidden w-50p">
+        <div class="plr-16 mb-8">{{leftTitle}}</div>
+        <div class="mb-8 plr-16">
+            <erd-input
+                v-model="leftSearchValue"
+                :placeholder="leftPlaceholder"
+                ref="input"
+                clearable
+            >
+                <template
+                    slot="suffix"
+                    class="flex"
+                >
+                    <erd-icon
+                        class="align-items-center cursor-pointer"
+                        icon="search"
+                        @click="onSearchLeft"
+                    >
+                    </erd-icon>
+                </template>
+            </erd-input>
+        </div>
+        <erd-scrollbar class="grow-1">
+            <erd-ex-tree
+                ref="treeLeftRef"
+                v-bind="leftConfig"
+                :data="leftTreeData"
+                :props="leftProps"
+                :node-key="leftNodeKey"
+                :filter-node-method="leftFilterNodeMethod"
+                :default-expanded-keys="leftDefaultExpandedKeys"
+                :expand-on-click-node="false"
+                highlight-current
+                check-on-click-node
+                @current-change="leftCheckChange"
+            >
+                <template slot-scope="{node, data}">
+                    <div class="tree-content">
+                        <erd-show-tooltip
+                            placement="top"
+                            :key="data[leftNodeKey]"
+                            :content="node.label"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <span class="title_text"> {{node.label}} </span>
+                            </template>
+                        </erd-show-tooltip>
+                    </div>
+                </template>
+            </erd-ex-tree>
+        </erd-scrollbar>
+    </div>
+    <div class="right flex flex-column h-100p overflow-hidden w-50p">
+        <div class="title plr-16 flex justify-between mb-8">
+            <span>{{rightTitle}}</span>
+            <erd-checkbox
+                v-if="innerShowCheckbox"
+                v-model="checkAll"
+                @change="onCheckAll"
+            >
+                {{i18n.selectedAll}}
+            </erd-checkbox>
+        </div>
+
+        <div class="mb-8 plr-16">
+            <erd-input
+                v-model="rightSearchValue"
+                :placeholder="placeholder"
+                clearable
+            >
+                <template
+                    slot="suffix"
+                    class="flex"
+                >
+                    <erd-icon
+                        class="align-items-center cursor-pointer"
+                        icon="search"
+                        @click="onSearchRight"
+                    >
+                    </erd-icon>
+                </template>
+            </erd-input>
+        </div>
+
+        <erd-scrollbar class="grow-1">
+            <erd-ex-tree
+                ref="treeRightRef"
+                v-bind="rightConfig"
+                :data="rightTreeData"
+                :props="rightProps"
+                :node-key="rightNodeKey"
+                :show-checkbox="innerShowCheckbox"
+                :expand-on-click-node="false"
+                :filter-node-method="rightFilterNodeMethod"
+                :default-expand-all="rightDefaultExpandAll"
+                :default-checked-keys="rightDefaultCheckedKeys"
+                check-on-click-node
+                @check="rightCheckChange"
+            >
+                <template slot-scope="{node, data}">
+                    <div class="tree-content">
+                        <erd-show-tooltip
+                            placement="top"
+                            :key="data[rightNodeKey]"
+                            :content="node.label"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <span
+                                    class="title_text"
+                                    :class="{'color-disabled': data[rightProps.disabled], 'cursor-not-allowed': data[rightProps.disabled]}"
+                                >
+                                    {{type === 'USER' ? node.label + ' ' + data.code : node.label}}
+                                </span>
+                            </template>
+                        </erd-show-tooltip>
+                    </div>
+                </template>
+            </erd-ex-tree>
+        </erd-scrollbar>
+    </div>
+</div>

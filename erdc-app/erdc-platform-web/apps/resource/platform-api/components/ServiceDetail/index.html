@@ -1,0 +1,39 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.view"
+    :visible.sync="visible"
+    :destroy-on-close="true"
+    custom-class="service-detail"
+>
+    <div class="detail-header">
+        <span class="title">{{ serviceInfo.serviceName }}</span>
+        <erd-button
+            class="edit-button"
+            type="primary"
+            @click="toEdit"
+        >
+            {{ i18nMappingObj.edit }}
+        </erd-button>
+    </div>
+    <div class="detail-content">
+        <div class="detail-item">
+            <label>{{ i18nMappingObj.serviceName }}</label>
+            <span>{{ serviceInfo.serviceName }}</span>
+        </div>
+        <div class="detail-item">
+            <label>{{ i18nMappingObj.appName }}</label>
+            <span>{{ serviceInfo.appName }}</span>
+        </div>
+        <div class="detail-item">
+            <label>{{ i18nMappingObj.groupName }}</label>
+            <span>{{ serviceInfo.groupName }}</span>
+        </div>
+        <div class="detail-item">
+            <label>{{ i18nMappingObj.description }}</label>
+            <span>{{ serviceInfo.description }}</span>
+        </div>
+        <div class="detail-item">
+            <label>{{ i18nMappingObj.owner }}</label>
+            <span>{{ serviceInfo?.users?.map(user => user.name).join(',') }}</span>
+        </div>
+    </div>
+</erd-ex-dialog>

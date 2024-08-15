@@ -1,0 +1,26 @@
+#QueueList {
+  padding: var(--famNormalSpace);
+}
+#QueueList .QueueList-header {
+  justify-content: space-between;
+  line-height: 28px;
+}
+#QueueList .QueueList-header .title {
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  color: var(--colorTextNormal);
+}
+#QueueList .operation {
+  width: 100%;
+  justify-content: space-between;
+}
+#QueueList .main {
+  padding-top: 16px;
+}
+
+.erd-dropdown-link-queue {
+  cursor: pointer;
+  color: var(--colorPrimary);
+}
+
+/*# sourceMappingURL=style.css.map */

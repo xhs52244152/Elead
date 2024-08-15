@@ -1,0 +1,18 @@
+.portal-message-container .mod-navbar-title .main {
+  line-height: 40px;
+  min-height: 40px;
+}
+.portal-message-container .mod-navbar-title .main .title {
+  white-space: nowrap;
+  line-height: 100%;
+  max-width: 92%;
+  vertical-align: middle;
+  font-size: 21px;
+  display: inline-block;
+  color: #333;
+  font-weight: 500;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}/*# sourceMappingURL=list.css.map */

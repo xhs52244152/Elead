@@ -1,0 +1,74 @@
+<div class="fam-group-member-table grow-1 ptrl-normal flex flex-column">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        class="grow-1"
+        :view-table-config="viewTableConfig"
+        isAdaptiveHeight
+        @action-click="actionClick"
+    >
+        <!-- 工具栏插槽 -->
+        <template #left:toolbar:first>
+            <div class="toolbar-search-component">
+                <!-- <span class="table_search_title">{{ i18nMappingObj.principal }}</span> -->
+                <FamParticipantSelect
+                    ref="famParticipantSelect"
+                    v-model="searchParticipantVal"
+                    class="search_component"
+                    :isgetdisable="true"
+                    :showType="showParticipantType"
+                    :collapse-tags="true"
+                    :query-params="queryParams"
+                    :query-scope="queryScope"
+                    multiple
+                    width="416px"
+                ></FamParticipantSelect>
+            </div>
+        </template>
+        <template #column:default:linkName:content="{ scope }">
+            <span>{{participantTypesMap[scope?.row?.linkName] || scope?.row?.linkName || '--'}}</span>
+        </template>
+        <!-- 表格列插槽 -->
+        <template #column:default:displayName:content="{ scope }">
+            {{ scope?.row?.roleBObjectRef?.includes('User') ? scope?.row?.userInfo?.displayName :
+            scope.row?.groupDto?.displayName }}
+        </template>
+    </fam-advanced-table>
+
+    <!--增加参与者-->
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="form.visible"
+        :title="i18nMappingObj.addGroupParticipant"
+        :selectedParticipant="selectedParticipant"
+        @close="fnCloseMemberForm"
+        @drag-end="dragEnd"
+    >
+        <AddParticipantSelect
+            v-if="form.visible"
+            ref="groupParticipantSelect"
+            v-model="selectedParticipant"
+            :visible="form.visible"
+            :selectedParticipant="selectedParticipant"
+            :three-member-env="threeMemberEnv"
+            :show-type="showParticipantType"
+            :query-params="queryParams"
+            :query-scope="queryScope"
+            multiple
+        ></AddParticipantSelect>
+        <template #footer>
+            <erd-button
+                v-show="!form.readonly"
+                type="primary"
+                v-loading="form.loading"
+                @click="fnSubmitAddForm"
+                >{{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button
+                v-show="!form.readonly"
+                v-loading="form.loading"
+                @click="fnCloseMemberForm"
+                >{{ i18nMappingObj.cancel }}
+            </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

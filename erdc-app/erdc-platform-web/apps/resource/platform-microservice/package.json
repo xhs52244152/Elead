@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/platform-microservice",
+  "version": "3.1.0",
+  "description": "微服务",
+  "erdcData": {},
+  "appId": "plat"
+}

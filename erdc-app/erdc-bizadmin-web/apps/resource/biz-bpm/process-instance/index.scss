@@ -1,0 +1,40 @@
+.bpm-instance-content {
+    position: relative;
+    background-color: #ffffff;
+
+    .bpm-instance-content-tree {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 16px 12px 12px;
+    }
+
+    .bpm-instance-content-tree-header {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 8px;
+
+        .header-title {
+            font-size: var(--fontSizeLarge);
+            color: var(--colorTextNormal);
+            letter-spacing: 0;
+            line-height: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+    }
+
+    #FamViewTable {
+        .fam-base-info-title {
+            padding-top: 16px;
+            background-color: #FFFFFF;
+        }
+
+        .fam-view-navbar-component {
+            background-color: #FFFFFF;
+            .el-menu {
+                background-color: #FFFFFF !important;
+            }
+        }
+    }
+}

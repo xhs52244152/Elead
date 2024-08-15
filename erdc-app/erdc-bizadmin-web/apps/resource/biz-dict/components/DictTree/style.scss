@@ -1,0 +1,20 @@
+#dictTree {
+    background-color: #fff;
+    .search {
+        .el-input__suffix {
+            cursor: pointer;
+            line-height: 32px;
+        }
+    }
+    .ree-content:hover {
+        color: #567ffd;
+        background: #ebf1ff;
+    }
+    .tree-management {
+        .el-tree-node__content {
+            .tree-content {
+                width: calc(100% - 16px);
+            }
+        }
+    }
+}

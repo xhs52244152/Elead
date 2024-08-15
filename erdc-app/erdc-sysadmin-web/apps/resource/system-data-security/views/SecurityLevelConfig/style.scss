@@ -1,0 +1,16 @@
+#security-level-config {
+    .el-tabs {
+        flex-grow: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        .el-tabs__content {
+            flex-grow: 1;
+            min-height: 0;
+            background-color: #fff;
+            .el-tab-pane {
+                height: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+.fam-classify-search .classify-search-title {
+    position: absolute;
+    left: var(--largePadding);
+    top: -10px;
+}
+.fam-classify-search .condition-row-item-prefix {
+    margin-bottom: var(--formItemMarginBottom);
+}
+.fam-classify-search .condition-row-item-prefix > div {
+    margin-left: var(--normalSpace);
+}
+.fam-classify-search .condition-row-item-prefix > div:first-of-type {
+    margin-left: 0;
+}
+.fam-classify-search .prefix-type-select .el-input__inner {
+    padding-right: 24px;
+}

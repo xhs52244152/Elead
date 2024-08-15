@@ -1,0 +1,59 @@
+<div class="doc-site-manage h_100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <div class="fam-erd-table-container grow-1 ptrl-xl">
+        <fam-advanced-table
+            ref="famAdvancedTable"
+            :view-table-config="viewTableConfig"
+            is-adaptive-height
+        >
+            <template #column:default:health:content="{ scope }">
+                <span :class="['health-common', getHealthClass(scope.row.health)]"></span>
+                {{getHealthTitle(scope.row.health) }}
+            </template>
+
+            <template #column:default:active:content="{ scope }">
+                <span>
+                    {{ scope.row.active ? i18nMappingObj.open : i18nMappingObj.close }}
+                </span>
+            </template>
+
+            <template #column:default:mainCenter:content="{ scope }">
+                {{ isMainCenter(scope.row.mainCenter) }}
+            </template>
+
+            <template #column:default:operation:content="{ scope }">
+                <erd-button type="text" @click="handleEditSite(scope.row)"> {{ i18nMappingObj.edit }}</erd-button>
+                <erd-button type="text" @click="handleDelete(scope.row)"> {{ i18nMappingObj.delete }}</erd-button>
+                <erd-dropdown>
+                    <erd-link :underline="false" style="margin-left: 8px; font-weight: unset;" >更多<i class="el-icon-arrow-down el-icon--right"></i></i> </erd-link>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item  @click.native="handleActiveChange(scope.row)">
+                            {{ scope.row.active ? i18nMappingObj.close : i18nMappingObj.open }}
+                        </erd-dropdown-item>
+
+                        <!-- 只有主站点有同步记录，只有子站点有定时任务 -->
+                        <erd-dropdown-item v-if="scope.row.mainCenter" @click.native="handleSyncRecord(scope.row)">
+                            {{ i18nMappingObj.syncRecord }}
+                        </erd-dropdown-item>
+                        <erd-dropdown-item v-else @click.native="handleTimingTask(scope.row)">
+                            {{ i18nMappingObj.syncStrategy }}
+                        </erd-dropdown-item>
+
+                        <erd-dropdown-item v-if="scope.row.mainCenter" @click.native="getSiteFileList">
+                            {{ i18nMappingObj.siteFiles }}
+                        </erd-dropdown-item>
+
+                        <erd-dropdown-item v-if="scope.row.errMsg" @click.native="handleErrMsg(row)">
+                            {{ i18nMappingObj.exceptionInfo }}
+                        </erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </template>
+        </fam-advanced-table>
+    </div>
+
+    <site-edit ref="editRef" @saved="refreshTable"></site-edit>
+</div>

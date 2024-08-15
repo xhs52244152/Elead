@@ -1,0 +1,19 @@
+.notice-edit .participant-panel {
+  width: 100%;
+}
+.notice-edit .el-upload-list--text {
+  flex-wrap: wrap !important;
+}
+.notice-edit .el-upload-list--text .el-upload-list__item {
+  margin-left: 0px !important;
+}
+.notice-edit .el-form-item__content {
+  width: 0;
+}
+
+.doc-base-upload .uploader-btn {
+  background-color: #fff !important;
+  color: #2779ff !important;
+}
+
+/*# sourceMappingURL=index.css.map */

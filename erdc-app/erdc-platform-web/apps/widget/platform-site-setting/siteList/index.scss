@@ -1,0 +1,37 @@
+.doc-site-list-dialog {
+    .dialog-header {
+        text-align: right;
+        padding: 0px 10px;
+    }
+    .speed-list {
+        padding: 0px 10px;
+        display: flex;
+        .speed-block {
+            margin-right: 10px;
+        }
+    }
+    .speed-common {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .speed-excellent {
+        background-color: rgb(36, 170, 29);
+    }
+    .speed-good {
+        background-color: rgb(66, 221, 63);
+    }
+    .speed-normal {
+        background-color: rgb(190, 246, 99);
+    }
+    .speed-slow {
+        background-color: rgb(240, 167, 50);
+    }
+    .speed-veryslow {
+        background-color: rgb(230, 22, 16);
+    }
+    // .speed-bad {
+    //     background-color: rgb(230, 22, 16);
+    // }
+}

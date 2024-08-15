@@ -1,0 +1,35 @@
+.fam-advanced-conditions .conditions-container {
+  max-height: var(--conditionMaxHeight);
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.fam-advanced-conditions .conditions-container .my-title-label {
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  justify-content: end;
+  float: right;
+}
+.fam-advanced-conditions .conditions-container .el-select, .fam-advanced-conditions .conditions-container .el-input {
+  width: 100%;
+}
+.fam-advanced-conditions .conditions-container .condition-row-item {
+  margin-bottom: 10px;
+}
+.fam-advanced-conditions .el-row .el-col {
+  margin-bottom: 0px !important;
+}
+.fam-advanced-conditions .my-icon-btn .el-icon-plus {
+  font-size: 12px;
+}
+.fam-advanced-conditions .my-icon-btn span {
+  margin-left: 0;
+}
+.fam-advanced-conditions .footer-form-item {
+  margin-bottom: 0;
+}
+.fam-advanced-conditions .footer-form-item .el-form-item__content {
+  text-align: center;
+  justify-content: center;
+}/*# sourceMappingURL=style.css.map */

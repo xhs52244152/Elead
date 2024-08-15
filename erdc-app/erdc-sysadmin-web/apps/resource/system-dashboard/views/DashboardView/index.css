@@ -1,0 +1,42 @@
+.portal-dashboard_render {
+  background-color: var(--colorFullBg);
+}
+.portal-dashboard_render .portal-dashboard_render_head {
+  background-color: #fff;
+  align-items: center;
+  padding: 8px 16px;
+  display: flex;
+  border-radius: 8px;
+  justify-content: space-between;
+}
+.portal-dashboard_render .portal-dashboard_render_head .portal-dashboard_render_title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+.portal-dashboard_render .portal-dashboard_render_head .title-tip {
+  max-width: 200px;
+  display: inline-block;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.portal-dashboard_render .portal-dashboard_render_head_sub {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.portal-dashboard_render .el-divider--horizontal {
+  margin: var(--normalSpace) 0;
+}
+.portal-dashboard_render .portal-dashboard_render_body {
+  border-radius: var(--borderRadius);
+  margin-top: 12px;
+  height: calc(100% - 48px);
+  overflow: auto;
+}
+.portal-dashboard_render .active_layout {
+  background-color: #f0f4fb;
+  color: #2779ff;
+}/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,65 @@
+.received-notice-list_card {
+    .fam-view-table-header-component .viewtable-header-container {
+        padding: 0;
+    }
+
+    .list-group-item {
+        color: var(--colorTextNormal);
+        display: block;
+
+        &:hover {
+            background-color: #eaf1fe;
+            color: var(--colorTextNormal);
+
+            .left-text {
+                color: #2779ff;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .data-list {
+        display: flex;
+        justify-content: space-between;
+        height: 36px;
+        align-items: center;
+        font-size: 14px;
+        min-width: 340px;
+        border-bottom: 1px solid #E9E9E9;
+        padding: 9px 0;
+        margin: 0 16px;
+
+        &-left {
+            width: calc(100% - 100px);
+            color: #000000;
+        }
+
+        &-right {
+            width: 79px;
+            color: #999999;
+        }
+    }
+
+    .left-text {
+        width: calc(100% - 8px);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .title-desc {
+        color: #89919f;
+        font-weight: 400;
+    }
+
+    .spot {
+        width: 8px;
+        height: 8px;
+        background: #f04134;
+        border-radius: 50%;
+    }
+
+    .is-read {
+        visibility: hidden;
+    }
+}

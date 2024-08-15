@@ -1,0 +1,242 @@
+#LifecycleForm {
+  position: relative;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
+  height: 60px;
+  padding: 16px;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title {
+  display: flex;
+  font-size: var(--fontSizeLarge);
+  text-align: center;
+  align-items: center;
+  font-weight: 700;
+  color: var(--colorTextNormal);
+  min-width: 0;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .lifecycleForm-title__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .lifecycleForm-title__button::after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  margin: auto;
+  width: 2px;
+  height: 16px;
+  background-color: #ebebeb;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .callback {
+  padding-right: 16px;
+  position: relative;
+  height: 22px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextExplain);
+  line-height: 22px;
+  font-weight: 400;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .callback i {
+  font-size: 16px;
+  line-height: 16px;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .callback:hover {
+  color: #567ffd;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .displayName {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .lifecycleForm-title .tag {
+  height: 20px;
+  font-size: 12px;
+  color: #f04134;
+  line-height: 20px;
+  background-color: rgba(240, 65, 52, 0.1);
+  align-self: center;
+  margin-left: 8px;
+  padding: 0 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+#LifecycleForm .lifecycleForm-container .lifecycleForm-header .operation {
+  display: flex;
+  padding: 0px;
+  flex-shrink: 0;
+}
+#LifecycleForm .lifecycleForm-container .el-tabs__content {
+  display: none;
+}
+#LifecycleForm .lifecycleForm-container .phase {
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  height: 60px;
+  margin-bottom: 12px;
+}
+#LifecycleForm .lifecycleForm-container .phase .add-phase {
+  margin-right: 12px;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1px;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage div + div {
+  margin-left: 12px;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .state-line {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: rgb(217, 217, 217);
+  height: 2px;
+  margin: auto;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .left {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgb(217, 217, 217);
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .left .connector {
+  position: absolute;
+  right: -15px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgb(217, 217, 217);
+  width: 10px;
+  height: 2px;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .right {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgb(217, 217, 217);
+  background-color: #959aa9;
+  border-radius: 50%;
+  position: relative;
+  margin-left: 0;
+  flex-shrink: 0;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .content {
+  width: 100%;
+  padding-right: 12px;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .content .content-btn {
+  position: relative;
+  white-space: nowrap;
+}
+#LifecycleForm .lifecycleForm-container .phase .detailsStage .content .content-btn .connector {
+  position: absolute;
+  right: -10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgb(217, 217, 217);
+  width: 10px;
+  height: 2px;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag {
+  width: 84px;
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  padding: 0 12px;
+  height: 32px;
+  color: #fff;
+  border-radius: 2px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag .tag-close {
+  display: none;
+  position: absolute;
+  top: -2px;
+  right: -1px;
+  font-size: 16px;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag .drag-icon {
+  position: absolute;
+  top: 8px;
+  left: -2px;
+  font-size: 16px;
+  display: none;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag:hover {
+  background-color: #7395ff;
+  border-color: #7395ff;
+  cursor: pointer;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag:hover .tag-close {
+  display: block;
+  cursor: pointer;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag:hover .drag-icon {
+  display: block;
+  cursor: move;
+}
+#LifecycleForm .lifecycleForm-container .phase .tag .tag-content {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#LifecycleForm .lifecycleForm-container .phase .active-tag {
+  border: 1px solid #567ffd;
+  background-color: #567ffd;
+}
+#LifecycleForm .lifecycleForm-container .main {
+  display: flex;
+  flex-direction: column;
+}
+#LifecycleForm .lifecycleForm-container .main .el-scrollbar > .el-scrollbar__wrap > .el-scrollbar__view {
+  height: calc(100% - 40px);
+}
+#LifecycleForm .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 1;
+  width: 100%;
+  height: 54px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0px -2px 16px 0px rgba(0, 0, 0, 0.15);
+}
+
+.title-item {
+  max-width: 500px;
+}
+
+/*# sourceMappingURL=style.css.map */

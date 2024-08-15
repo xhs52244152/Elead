@@ -1,0 +1,28 @@
+.handler-configure .div-item {
+  line-height: 32px;
+  color: var(--colorTextNormal);
+}
+.handler-configure .div-item .div-item__label {
+  display: inline-block;
+  width: 140px;
+  text-align: right;
+  padding: 0 8px 0 0;
+}
+.handler-configure .div-item .div-item__content {
+  display: inline-block;
+}
+.handler-configure .div-item .div-item__content .el-radio-group {
+  vertical-align: initial;
+}
+.handler-configure .div-item .div-item__content .el-radio {
+  align-items: center;
+  top: 2px;
+}
+.handler-configure .fw-7 {
+  font-weight: 700;
+}
+.handler-configure .grey {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/*# sourceMappingURL=style.css.map */

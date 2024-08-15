@@ -1,0 +1,63 @@
+.process-properties-panel {
+    width: 650px;
+    .erd-ex-dialog__title {
+        padding: 16px 16px 0;
+    }
+    [role="tabpanel"]:first-of-type {
+        padding-right: 0;
+        .el-scrollbar:first-of-type {
+            padding-right: var(--tabsItemContentPadding);
+        }
+    }
+
+    .el-scrollbar {
+        .el-scrollbar__bar.is-vertical {
+            right: -12px;
+        }
+    }
+
+    .el-scrollbar__view {
+        .panelTitle {
+            .panelLeft {
+                .panel-title-icon {
+                    font-size: var(--fontSize);
+                    color: var(--colorPrimary);
+                }
+            }
+
+            .panelRight {
+                padding-right: 0;
+            }
+        }
+
+        .panelContent {
+            .contraction-panel__content {
+                padding: var(--normalPadding) 0;
+            }
+        }
+
+        >div:last-of-type {
+            .panelContent {
+                .contraction-panel__content {
+                    padding-bottom: 0;
+                }
+            }
+        }
+
+        >div + div {
+            margin-top: 16px;
+        }
+    }
+
+    .el-form {
+        .el-form-item {
+            label.el-form-item__label {
+                color: var(--colorTextNormal);
+                padding-right: 8px;
+                div.el-form-item__label {
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}

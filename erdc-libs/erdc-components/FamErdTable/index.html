@@ -1,0 +1,427 @@
+<div
+    id="ComponentWapper-erdTable"
+    :class="[tableStyle, {foldTable: isFoldTable, 'no-border-table': noBorderTable}]"
+    :getTableData="getTableData"
+    @mousewheel="mousewheel"
+>
+    <vxe-table
+        ref="xTable"
+        v-bind="{...$attrs}"
+        v-on="{...$listeners}"
+        :class="[$attrs['data']&&!$attrs['data'].length ? 'NULL-DATA' : '', !this.maxLine && !maxHeight ? 'not-max-height' : ''] "
+        :cell-class-name="tableCellClassName"
+        size="mini"
+        :min-height="minHeight"
+        :max-height="maxHeight"
+        :height="height"
+        :scroll-x="{gt: 100}"
+        :scroll-y="{gt: 250}"
+        :column-config="columnConfig"
+        :edit-config="editConfig"
+        :tooltip-config="tooltipConfig"
+        :tree-config="treeConfig"
+        :rowConfig="rowConfig"
+        :stripe="stripe"
+        :row-class-name="innerRowClassName"
+        :auto-resize="autoResize"
+        :border="border"
+        show-header-overflow="ellipsis"
+        highlight-current-row
+        :showOverflow="showOverflow"
+        @edit-actived="(data)=>(editActived(data))"
+        @edit-closed="handleEditClosed"
+        @resizable-change="(data)=>(resizableChange(data))"
+        @scroll="tableScroll"
+        @radio-change="handleRadioChange"
+    >
+        <template v-if="showColumn">
+            <vxe-column
+                v-for="(item, index) in vxeColumn"
+                :key="item.prop"
+                :field="item.prop"
+                :title="item.title"
+                :min-width="item.minWidth"
+                :width="item.width"
+                :fixed="item.fixed"
+                :type="item.type"
+                :align="item.align"
+                :tree-node="item.treeNode ? true : false"
+                :edit-render="item.editRender"
+                :show-header-overflow="item._showHeaderOverflow"
+                :resizable="!fixedWidthProps.includes(item.prop)"
+                v-bind="item.props"
+            >
+                <!--表头自定义-->
+                <template
+                    #header="data"
+                    v-if="item.treeNode || getScopedSlots('header', item.prop, item) || item.filter || item.tips || item.sort"
+                >
+                    <span
+                        v-if="data.column.treeNode"
+                        :class="['fam-erd-table__tree-icon cursor-pointer', { 'fam-erd-table__tree-icon--expanded': allExpanded } ]"
+                        @click="setAllTreeExpand"
+                    >
+                        <erd-icon :icon="allExpanded ? 'el-icon-minus' : 'el-icon-plus'"></erd-icon>
+                    </span>
+
+                    <slot
+                        :name="getSlotName('header',item.prop, item)"
+                        :data="{'header':data,'item':item}"
+                        >{{item.title}}</slot
+                    >
+                    <!--表头用户未启用自定义单启用了筛选或者提示时需还原内容-->
+                    <!--                <span-->
+                    <!--                    v-if="!getScopedSlots('header',item.prop, item) && (item.filter || item.tips || item.sort)"-->
+                    <!--                >{{item.title}}</span>-->
+                    <span class="custom-box">
+                        <!--筛选器-->
+                        <erd-popover
+                            v-if="item.filter && visibleMap[item.prop]"
+                            v-model="visibleMap[item.prop].visible"
+                            placement="bottom"
+                            popper-class="filters-popClass-custom"
+                            trigger="click"
+                            :ref="`popContral-${[item.prop]}`"
+                            @show="showFilterEvent(item)"
+                        >
+                            <template v-if="visibleMap[item.prop].visible">
+                                <!--自定义筛选组件-->
+                                <slot
+                                    :name="getSlotName('filter',item.prop, item)"
+                                    :data="item"
+                                ></slot>
+
+                                <!--输入框[filterInput]-->
+                                <div
+                                    class="filterInputBox"
+                                    v-if="item.filter.type=='filterInput'"
+                                >
+                                    <erd-input
+                                        v-model="item.filter.value"
+                                        @keyup.enter.native="updateFilterVisible('confirm',item)"
+                                        :placeholder="i18nMappingObj.enter"
+                                        prefix-icon="erd-iconfont erd-icon-search"
+                                        clearable
+                                    ></erd-input>
+                                    <!--确认按钮-->
+                                    <div class="filterBtn">
+                                        <erd-button
+                                            type="primary"
+                                            size="mini"
+                                            @click="updateFilterVisible('confirm',item)"
+                                            >{{i18nMappingObj.confirm}}</erd-button
+                                        >
+                                        <erd-button
+                                            class="cancel"
+                                            size="mini"
+                                            @click="togglePopShow(item)"
+                                            >{{i18nMappingObj.cancel}}</erd-button
+                                        >
+                                    </div>
+                                </div>
+
+                                <!--多选[filterCheckbox]-->
+                                <div
+                                    class="filterCheckbox"
+                                    v-if="item.filter.type=='filterCheckbox'"
+                                >
+                                    <erd-checkbox
+                                        :indeterminate="isIndeterminate"
+                                        v-model="checkAll"
+                                        @change="(value)=>{handleCheckAllChange(value,item)}"
+                                        >{{i18nMappingObj.selectAll}}</erd-checkbox
+                                    >
+                                    <erd-checkbox-group
+                                        class="scroll-custom"
+                                        v-model="item.filter.value"
+                                        @change="(value)=>{handleCheckedChange(value,item)}"
+                                    >
+                                        <erd-checkbox
+                                            v-for="item in item.filter.options"
+                                            :label="item.name"
+                                            :key="item.id"
+                                            >{{item.name}}</erd-checkbox
+                                        >
+                                    </erd-checkbox-group>
+                                    <!--确认按钮-->
+                                    <div class="filterBtn">
+                                        <erd-button
+                                            type="primary"
+                                            size="mini"
+                                            @click="updateFilterVisible('confirm',item)"
+                                            >{{i18nMappingObj.confirm}}</erd-button
+                                        >
+                                        <erd-button
+                                            class="cancel"
+                                            size="mini"
+                                            @click="togglePopShow(item)"
+                                            >{{i18nMappingObj.cancel}}</erd-button
+                                        >
+                                    </div>
+                                </div>
+
+                                <!--单选[filterSelect]-->
+                                <div
+                                    class="filterSelect"
+                                    v-if="item.filter.type=='filterSelect'"
+                                >
+                                    <ul class="box scroll-custom">
+                                        <li
+                                            :class="[item.filter.value==data.name ? 'active' : '']"
+                                            v-for="data in item.filter.options"
+                                            @click="filterSelect(data,item)"
+                                        >
+                                            {{data.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!--选择器+输入框[filterMergeSelect]-->
+                                <div
+                                    class="filterMergeSelect"
+                                    v-if="item.filter.type=='filterMergeSelect'"
+                                >
+                                    <erd-select
+                                        style="width: 100%"
+                                        v-model="item.filter.selectVal"
+                                        placeholder="请选择"
+                                    >
+                                        <erd-option
+                                            v-for="item in item.filter.options"
+                                            :key="item.id"
+                                            :label="item.displayName"
+                                            :value="item.value"
+                                        >
+                                        </erd-option>
+                                    </erd-select>
+                                    <erd-input
+                                        v-model="item.filter.value"
+                                        @keyup.enter.native="updateFilterVisible('confirm',item)"
+                                        :placeholder="i18nMappingObj.enter"
+                                        clearable
+                                    ></erd-input>
+                                    <!--确认按钮-->
+                                    <div class="filterBtn">
+                                        <erd-button
+                                            type="primary"
+                                            size="mini"
+                                            @click="updateFilterVisible('confirm',item)"
+                                            >{{i18nMappingObj.confirm}}</erd-button
+                                        >
+                                        <erd-button
+                                            class="cancel"
+                                            size="mini"
+                                            @click="togglePopShow(item)"
+                                            >{{i18nMappingObj.cancel}}</erd-button
+                                        >
+                                    </div>
+                                </div>
+
+                                <!-- 动态映射字段对应的过滤表单组件 -->
+                                <div
+                                    class="dynamicFilter"
+                                    v-if="item.filter.type=='dynamicFilter'"
+                                >
+                                    <erd-select
+                                        style="width: 100%"
+                                        v-model="item.filter.operVal"
+                                        placeholder="请选择"
+                                    >
+                                        <erd-option
+                                            v-for="ite in item.filter.operationList"
+                                            :key="ite.value"
+                                            :label="ite.displayName"
+                                            :value="ite.value"
+                                        >
+                                        </erd-option>
+                                    </erd-select>
+                                    <!-- 自定义动态组件，根据传入的组件名称显示对应组件，逻辑在组件里面自己判断，
+                              每个字段所有字段都以对象传进去了，这样如果后续有拓展组件，自己写组件判断逻辑就行，组件名称规则 custom-组件名称 -->
+                                    <template
+                                        v-if="isShowFilterComponent(item.filter.componentName, item.filter.operVal)"
+                                    >
+                                        <template
+                                            v-if="['BETWEEN', 'NOT_BETWEEN'].indexOf(item.filter.operVal) !== -1 && !isCustomDate(item)"
+                                        >
+                                            <component
+                                                class="mr12 mt-large"
+                                                data-type="string"
+                                                :is="showComponent(item.filter.componentName)"
+                                                :key="`${item.componentName}-${index}-1`"
+                                                clearable
+                                                filterable
+                                                isFetchValue
+                                                :oper="item.filter?.operVal"
+                                                v-model="item.filter._value1"
+                                                v-bind="additionalConfiguration(item)"
+                                                :value1-index="0"
+                                            ></component>
+                                            <div class="flex w-100p mb-sm justify-center">~</div>
+                                            <component
+                                                data-type="string"
+                                                :is="showComponent(item.filter.componentName)"
+                                                :key="`${item.componentName}-${index}-2`"
+                                                clearable
+                                                filterable
+                                                isFetchValue
+                                                :oper="item.filter?.operVal"
+                                                v-model="item.filter._value2"
+                                                v-bind="additionalConfiguration(item)"
+                                                :value1-index="1"
+                                            ></component>
+                                        </template>
+                                        <component
+                                            v-else
+                                            class="mr12"
+                                            data-type="string"
+                                            :is="showComponent(item.filter.componentName)"
+                                            :key="`${item.componentName}-${index}`"
+                                            clearable
+                                            filterable
+                                            isFetchValue
+                                            :oper="item.filter?.operVal"
+                                            :default-value="item.defaultValue"
+                                            v-model="item.filter.value"
+                                            v-bind="additionalConfiguration(item)"
+                                            @change="(value, data) => handleChange(item, value, data)"
+                                        ></component>
+                                    </template>
+                                    <!--确认按钮-->
+                                    <div class="filterBtn">
+                                        <erd-button
+                                            type="primary"
+                                            size="mini"
+                                            @click="updateFilterVisible('confirm',item)"
+                                            >{{i18nMappingObj.confirm}}</erd-button
+                                        >
+                                        <erd-button
+                                            class="cancel"
+                                            size="mini"
+                                            @click="togglePopShow(item)"
+                                            >{{i18nMappingObj.cancel}}</erd-button
+                                        >
+                                    </div>
+                                </div>
+
+                                <!---清除按钮-->
+                                <div class="paddingClearItem"></div>
+                                <!--占位-->
+                                <div class="clearItem">
+                                    <div class="clearItem-ul">
+                                        <span @click="clearFilter({type:1,item})">{{i18nMappingObj.clearCurrent}}</span>
+                                        <span @click="clearFilter({type:2,item})">{{i18nMappingObj.clearAll}}</span>
+                                    </div>
+                                </div>
+                            </template>
+                            <!--筛选器按钮-->
+                            <em
+                                :class="[isCurrentActive(item) ? 'active' : '']"
+                                class="pointer erd-iconfont erd-icon-filter"
+                                slot="reference"
+                                @click="togglePopShow(item)"
+                            ></em>
+                        </erd-popover>
+                        <!--冒泡提示-->
+                        <erd-tooltip
+                            placement="top"
+                            v-if="item.tips"
+                        >
+                            <span class="el-icon-question"></span>
+                            <div slot="content">
+                                <span v-html="item.tips"></span>
+                               
+                            </div>
+                        </erd-tooltip>
+                    </span>
+
+                    <!--自定义排序-->
+                    <span
+                        class="vxe-cell--sort custom-sort clearfix"
+                        :class="[item.sortFixRight ? 'sortFixRight' : '']"
+                        v-if="item.sort"
+                    >
+                        <em
+                            :title="i18nMappingObj.asc"
+                            :class="[sortMap[item.prop]&&sortMap[item.prop].order=='asc' ? 'sort--active' : '']"
+                            @click="sortEvent('asc',item)"
+                            class="vxe-sort--asc-btn el-icon-arrow-up"
+                        ></em>
+                        <em
+                            :title="i18nMappingObj.desc"
+                            :class="[sortMap[item.prop]&&sortMap[item.prop].order=='desc' ? 'sort--active' : '']"
+                            @click="sortEvent('desc',item)"
+                            class="vxe-sort--desc-btn el-icon-arrow-down"
+                        ></em>
+                    </span>
+                </template>
+
+                <!--内容自定义-->
+                <template
+                    #default="data"
+                    v-if="getScopedSlots('default',item.prop, item)"
+                >
+                    <slot
+                        :name="getSlotName('default',item.prop, item)"
+                        :data="data"
+                    ></slot>
+                </template>
+                <!--表底部自定义-->
+                <template
+                    #footer="data"
+                    v-if="getScopedSlots('footer',item.prop, item)"
+                >
+                    <slot
+                        :name="getSlotName('footer',item.prop, item)"
+                        :data="data"
+                    ></slot>
+                </template>
+                <!-- 表格编辑自定义 -->
+                <template
+                    #edit="data"
+                    v-if="getScopedSlots('edit', item.prop, item)"
+                >
+                    <slot
+                        :name="getSlotName('edit', item.prop, item)"
+                        :data="data"
+                    ></slot>
+                    <erd-tooltip
+                        ref="validateTooltips"
+                        class="item"
+                        :manual="true"
+                        effect="dark"
+                        placement="top-end"
+                        :value="!!data.row[`erd_table-validerror-${data.row.id}-${data.column.property}`]"
+                        popper-class="erd_table-showTooltip"
+                    >
+                        <div slot="content">{{ invalidMessages[data.row.id + '_' + data.column.property] }}</div>
+                        <span class="erd_table-tooltip"></span>
+                    </erd-tooltip>
+                </template>
+                <!--表展开行内容自定义-->
+                <template
+                    #content="data"
+                    v-if="getScopedSlots('content',item.prop, item)"
+                >
+                    <slot
+                        :name="getSlotName('content',item.prop, item)"
+                        :data="data"
+                    ></slot>
+                </template>
+            </vxe-column>
+        </template>
+
+        <!--空数据状态-->
+        <template #empty>
+            <slot name="empty">
+                <div class="erd_table-empty">
+                    <img
+                        v-if="showNoDataImg && !maxLine"
+                        :src="emptyImgSrc"
+                        alt="暂无数据"
+                    />
+                    <span>{{i18nMappingObj.nodata}}</span>
+                </div>
+            </slot>
+        </template>
+    </vxe-table>
+</div>

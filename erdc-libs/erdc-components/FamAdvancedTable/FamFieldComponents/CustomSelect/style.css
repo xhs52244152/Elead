@@ -1,0 +1,33 @@
+#customSelect {
+  display: inline-flex;
+}
+#customSelect .el-select {
+  width: 100%;
+}
+
+.fam-custom-select-popper .el-checkbox,
+.fam-custom-select-popper .el-checkbox__label {
+  width: 100%;
+}
+.fam-custom-select-popper .el-checkbox__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fam-custom-select-popper .el-tree .el-checkbox {
+  width: auto;
+}
+
+.fam-custom-check-all {
+  height: 32px;
+  line-height: 32px;
+}
+.fam-custom-check-all:hover {
+  background-color: var(--selectDropdownSelectedBg);
+}
+
+.tree-select-popper .el-select-dropdown__item {
+  min-width: 12rem !important;
+}
+
+/*# sourceMappingURL=style.css.map */

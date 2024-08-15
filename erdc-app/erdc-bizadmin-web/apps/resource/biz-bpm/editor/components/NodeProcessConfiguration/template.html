@@ -1,0 +1,56 @@
+<div
+    id="process-processing-infos"
+    class="process-processing-infos"
+>
+    <erd-contraction-panel :unfold.sync="expanded">
+        <template #title="scope">
+            <span class="panel-title">{{i18n.routes}}</span>
+            <erd-tooltip
+                effect="dark"
+                placement="top-start"
+                class="ml-4 mr-4 panel-title-icon font-bold"
+                :content="i18n.routesTips"
+            >
+                <em class="erd-iconfont erd-icon-help"></em>
+            </erd-tooltip>
+        </template>
+
+        <template #header-right>
+            <erd-button
+                v-if="!readonly"
+                size="small"
+                @click="addRow"
+                >{{i18n.add}}
+            </erd-button>
+        </template>
+
+        <template #content>
+            <EditableTable
+                ref="table"
+                :data.sync="tableData"
+                :column="column"
+                :rules="rules"
+                :readonly="readonly"
+                keyField="_id"
+            >
+                <template #erd-input-number="scope">
+                    <erd-input
+                        v-model="scope.data.row[scope.data.column.property]"
+                        :maxlength="scope.data.column.editRender.props.maxlength"
+                        :disabled="readonly"
+                        :placeholder="i18n.pleaseFillIn"
+                        oninput="
+                            value = value.replace(/[^\d-]/g, '');
+                            value = value.replace(/-{2,}/g, '-');
+                            value = value.replace(/(\d)-/g, '$1');
+                            value = value.replace(/-(0+)/g, '0');
+                            value = value.replace(/^0+(\d)/, '$1');
+                            value = value.replace(/(-?\d{16})\d*/, '$1');
+                        "
+                        @blur="scope.data.row[scope.data.column.property] = $event.target.value"
+                    ></erd-input>
+                </template>
+            </EditableTable>
+        </template>
+    </erd-contraction-panel>
+</div>

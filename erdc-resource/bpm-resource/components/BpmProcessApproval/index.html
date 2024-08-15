@@ -1,0 +1,63 @@
+<div class="bpm-process-approval">
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form.sync="formData"
+        :data="formConfig"
+    >
+        <template #routerSelect="scope">
+            <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                <erd-radio
+                    v-for="router in routerList"
+                    :key="router.key"
+                    :label="router.key"
+                    @change="routerChange"
+                >{{router.value}}</erd-radio>
+            </erd-radio-group>
+        </template>
+
+        <template #opinion="scope">
+            <div class="opinion-class">
+                <erd-input
+                    v-model="scope.data[scope.formConfig.field]"
+                    type="textarea"
+                    show-word-limit
+                    :maxlength="500"
+                ></erd-input>
+                <erd-tag
+                    v-for="opinion in opinionList"
+                    :key="opinion.value"
+                    class="opinion-tag cursor-pointer mt-4"
+                    @click="opinionChange(opinion.value)"
+                >{{opinion.value}}</erd-tag>
+            </div>
+        </template>
+
+        <template #famParticipantSelect="scope">
+            <fam-participant-select
+                v-model="scope.data[scope.formConfig.field]"
+                multiple
+                isgetdisable
+                collapse-tags
+                :show-type="['USER']"
+                :query-mode="['FUZZYSEARCH']"
+                query-scope="fullTenant"
+                :query-params="queryParams('informed')"
+                :filter-security-label="isSecret"
+                :security-label="securityLabel"
+            ></fam-participant-select>
+        </template>
+
+        <template #skipNodeUser="scope">
+            <fam-participant-select
+                v-model="scope.data[scope.formConfig.field]"
+                multiple
+                isgetdisable
+                collapse-tags
+                :show-type="['USER']"
+                query-scope="fullTenant"
+                :filter-security-label="isSecret"
+                :security-label="securityLabel"
+            ></fam-participant-select>
+        </template>
+    </FamDynamicForm>
+</div>

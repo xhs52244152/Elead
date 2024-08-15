@@ -1,0 +1,77 @@
+<div id="handler-configure" class="handler-configure">
+    <erd-contraction-panel
+        :title="i18nMappingObj.handlerConfigure"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <div class="div-item fw-7">{{i18nMappingObj.addReduceApproval}}</div>
+
+            <div class="div-item">
+                <div class="div-item__label">{{i18nMappingObj.addApproval}}</div>
+                <div class="div-item__content">
+                    <erd-radio-group
+                        v-model="addSignFlag"
+                        :disabled="readonly"
+                    >
+                        <erd-radio :label="addSignFlagSelect">
+                            <erd-ex-select
+                                v-model="addSignFlagSelect"
+                                :disabled="readonly"
+                                @change="addSignFlagChange"
+                            >
+                                <erd-option :value="1" :label="i18n.globalScope"></erd-option>
+                                <erd-option :value="2" :label="i18n.participantsOnly"></erd-option>
+                            </erd-ex-select>
+                        </erd-radio>
+                        <erd-radio :label="0">{{i18n.no}}</erd-radio>
+                    </erd-radio-group>
+                    <span class="grey ml-4">{{addSignFlag ? i18nMappingObj.addApprovalCan : i18nMappingObj.addApprovalCant}}</span>
+                </div>
+            </div>
+
+            <div class="div-item">
+                <div class="div-item__label">{{i18nMappingObj.reduceApproval}}</div>
+                <div class="div-item__content">
+                    <erd-radio
+                        v-model="subSignFlag"
+                        label="true"
+                        :disabled="readonly"
+                    >{{i18nMappingObj.yes}}</erd-radio>
+                    <erd-radio
+                        v-model="subSignFlag"
+                        label="false"
+                        :disabled="readonly"
+                    >{{i18nMappingObj.no}}</erd-radio>
+                    <span class="grey">{{subSignFlag === 'true' ? i18nMappingObj.reduceApprovalCan : i18nMappingObj.reduceApprovalCant}}</span>
+                </div>
+            </div>
+
+            <div class="div-item fw-7 bpm-mb-8">{{i18nMappingObj.jumpApproval}}</div>
+
+            <EditableTable
+                ref="table"
+                :data.sync="tableData"
+                :column="column"
+                keyField="_id"
+                :edit-config="{
+                    mode: 'cell',
+                    disabled: readonly
+                }"
+                @row-change="rowChange"
+            >
+                <template #column:default:operation="{data}">
+                    <erd-button
+                        v-if="btnConfig(data.row, data.rowIndex)"
+                        type="text"
+                        @click="addRow(data.row, data.rowIndex)"
+                    >{{i18n.add}}</erd-button>
+                    <erd-button
+                        v-else
+                        type="text"
+                        @click="deleteRow(data.rowIndex)"
+                    >{{i18n.remove}}</erd-button>
+                </template>
+            </EditableTable>
+        </template>
+    </erd-contraction-panel>
+</div>

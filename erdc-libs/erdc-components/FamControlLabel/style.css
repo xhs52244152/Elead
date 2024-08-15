@@ -1,0 +1,50 @@
+#FamControlLabel {
+  align-items: center;
+}
+#FamControlLabel .el-tag {
+  color: #fff !important;
+  height: 20px;
+  line-height: 18px;
+}
+#FamControlLabel .el-tag i {
+  top: 20%;
+}
+#FamControlLabel .el-tag + .el-tag {
+  margin-left: 2px;
+}
+#FamControlLabel .addFont {
+  position: relative;
+  font-size: var(--formItemHeight);
+  padding: 0 var(--bigPadding) !important;
+  line-height: 1;
+}
+#FamControlLabel .addFont i {
+  font-size: var(--formItemHeight) !important;
+  line-height: 1 !important;
+}
+#FamControlLabel .addFont i:hover {
+  color: #567ffd;
+}
+
+.control-lable.el-dropdown-menu .el-dropdown-menu__item {
+  color: #fff;
+  position: relative;
+}
+.control-lable.el-dropdown-menu .el-dropdown-menu__item.tag-width {
+  min-width: 100px;
+  text-align: center;
+}
+.control-lable.el-dropdown-menu .el-dropdown-menu__item .check-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  font-size: 20px !important;
+}
+.control-lable.el-dropdown-menu .popper__arrow {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

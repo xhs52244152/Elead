@@ -1,0 +1,89 @@
+<div class="change-signature">
+    <erd-ex-dialog
+        :visible.sync="changeSignatureVisible"
+        :title="i18nMappingObj.inputSignature"
+        :append-to-body="true"
+        size="mini"
+        width="800px"
+        @closed="changeSignatureDone"
+        @fullscreen="handleFullscreen"
+    >
+        <FamDynamicForm :data="formConfig" :form="form" @field:change="handleFieldChange">
+            <template #tips="scope">
+                <div class="text-sm color-disabled">
+                    <span>{{form.type === 'write' ? i18nMappingObj.fam_signature_type_write_tips : i18nMappingObj.fam_signature_type_image_tips}}</span>
+                </div>
+            </template>
+            <template #preview="scope">
+                <div class="change-signature-preview">
+                    <template v-if="cropDoneFlag && imgData && imgData.length">
+                        <div
+                            class="signature-preview mlr-auto overflow-hidden"
+                            :style="previewContainerStyle"
+                        >
+                            <img
+                                :src="imgData"
+                                :style="previewStyle"
+                            />
+                        </div>
+                    </template>
+                    <template v-else>
+                        <template v-if="form.type==='write'">
+                            <div class="my_signature-input_container">
+                                <div class="my_signature-input_tools">
+                                    <erd-button @click="writeCrop">裁剪</erd-button>
+                                </div>
+                                <div class="my_signature-input-body"></div>
+                            </div>
+
+                        </template>
+                        <template v-if="form.type==='image'">
+                            <erd-upload
+                                action="/file/file/site/storage/v1/upload"
+                                :auto-upload="false"
+                                :show-file-list="false"
+                                :headers="defaultHeaders"
+                                accept="image/*"
+                                :on-change='fileUploadChange'
+                                :multiple='false'>
+                                    <div class="change-signature-upload">
+                                        <i class="el-icon-plus"></i>
+                                    </div>
+
+                            </erd-upload>
+                        </template>
+                    </template>
+
+                </div>
+            </template>
+        </FamDynamicForm>
+        <template #footer>
+            <erd-button
+                :loading="loading"
+                type="primary"
+                @click="handSubmit"
+            >
+                {{i18nMappingObj.ok}}
+            </erd-button>
+            <erd-button :loading="loading" @click="handReset">{{i18nMappingObj.reset}}</erd-button>
+            <erd-button :loading="loading" @click="handCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :visible.sync="visibleForCrop"
+        :append-to-body="true"
+        title="裁剪"
+        width="1200px"
+        @closed="cropDialogClosed"
+    >
+        <div style="height: 500px;">
+            <FamImgCropTool v-if="visibleForCrop" ref='imgCropTool'
+                            cropHolderBgColor="#fff"
+                            :imgSrc='imgData'
+                            @done='handleCropDone'>
+            </FamImgCropTool>
+        </div>
+
+    </erd-ex-dialog>
+</div>

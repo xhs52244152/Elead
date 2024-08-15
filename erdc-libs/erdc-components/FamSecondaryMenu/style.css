@@ -1,0 +1,123 @@
+#fam-secondary-menu {
+  height: var(--layoutSecondaryMenuHeiht);
+}
+
+.fam-secondary {
+  display: flex;
+  padding-left: var(--normalPadding);
+  padding-right: var(--normalPadding);
+  align-items: center;
+  width: 100%;
+  height: var(--layoutSecondaryMenuHeiht);
+  background: #ffffff;
+  border-bottom: 1px solid var(--colorSplit);
+  overflow: hidden;
+}
+.fam-secondary .fam-secondary-menu-item > span {
+  display: flex;
+  align-items: center;
+}
+.fam-secondary .erd-iconfont {
+  width: var(--fontSizeBig);
+  height: var(--fontSizeBig);
+  margin-right: 4px;
+  color: var(--colorTextNormal);
+  font-size: var(--fontSizeBig);
+  text-align: center;
+}
+.fam-secondary .fam-secondary-logo img {
+  width: var(--layoutHeaderLogoWidth);
+}
+.fam-secondary .fam-secondary-title {
+  padding: 0 16px 0 8px;
+  font-size: var(--fontSizeLarge);
+  font-weight: bold;
+  color: var(--colorTextNormal);
+}
+.fam-secondary .fam-secondary-sub-title {
+  height: 28px;
+  line-height: 28px;
+  border-right: 1px solid #d9d9d9;
+}
+.fam-secondary .fam-secondary-sub-title .fam-space-select {
+  padding-right: 16px;
+}
+.fam-secondary .scroll-container {
+  flex: 1;
+  margin-right: 16px;
+  overflow: hidden;
+}
+.fam-secondary .scroll-container .el-scrollbar__wrap {
+  width: 100%;
+  overflow-y: hidden;
+}
+.fam-secondary .fam-secondary-menu {
+  width: 0;
+  flex-grow: 1;
+  display: flex;
+  margin: 0 4px;
+  height: var(--layoutSecondaryMenuHeiht);
+  border-bottom: 1px solid var(--colorSplit);
+}
+.fam-secondary .fam-secondary-menu .el-menu-item, .fam-secondary .fam-secondary-menu .el-submenu {
+  display: flex;
+  align-items: center;
+  height: var(--layoutSecondaryMenuHeiht);
+  padding: 0;
+  margin: 0 var(--miniSpace) 0 var(--bigSpace);
+}
+.fam-secondary .fam-secondary-menu .el-menu-item,
+.fam-secondary .fam-secondary-menu .el-menu-item.is-active,
+.fam-secondary .fam-secondary-menu .el-menu-item:not(.is-disabled):focus,
+.fam-secondary .fam-secondary-menu .el-menu-item:not(.is-disabled):hover,
+.fam-secondary .fam-secondary-menu .el-submenu,
+.fam-secondary .fam-secondary-menu .el-submenu.is-active,
+.fam-secondary .fam-secondary-menu .el-submenu:not(.is-disabled):focus,
+.fam-secondary .fam-secondary-menu .el-submenu:not(.is-disabled):hover {
+  border-top: none !important;
+  border-bottom-style: solid !important;
+  border-bottom-width: 4px !important;
+  border-bottom-color: transparent;
+}
+.fam-secondary .fam-secondary-menu .el-menu-item.is-active,
+.fam-secondary .fam-secondary-menu .el-menu-item:not(.is-disabled):focus,
+.fam-secondary .fam-secondary-menu .el-menu-item:not(.is-disabled):hover .el-submenu.is-active,
+.fam-secondary .fam-secondary-menu .el-submenu:not(.is-disabled):focus,
+.fam-secondary .fam-secondary-menu .el-submenu:not(.is-disabled):hover {
+  border-top: none !important;
+  border-bottom-style: solid !important;
+  border-bottom-width: 4px !important;
+  border-bottom-color: var(--colorPrimary) !important;
+}
+.fam-secondary .fam-secondary-menu .el-submenu:not(.is-disabled):focus .el-submenu__title,
+.fam-secondary .fam-secondary-menu .el-submenu:not(.is-disabled):hover .el-submenu__title,
+.fam-secondary .fam-secondary-menu .el-submenu.is-active .el-submenu__title {
+  background-color: transparent;
+  border-top-color: transparent;
+}
+.fam-secondary .el-menu--horizontal > .el-submenu .el-submenu__title {
+  display: flex;
+  align-items: center;
+  height: auto;
+  border: none;
+}
+.fam-secondary .el-menu--horizontal > .el-submenu.is-active,
+.fam-secondary .fam-secondary-menu .el-menu-item.is-active {
+  background-color: var(--colorWhite);
+  border-bottom-color: var(--colorPrimary);
+}
+.fam-secondary .fam-secondary-menu li,
+.fam-secondary .fam-secondary-menu .el-submenu__title {
+  font-size: var(--layoutSecondaryMenuFontSize);
+  padding: 0;
+  color: var(--colorTextNormal);
+}
+.fam-secondary .fam-secondary-menu li:hover,
+.fam-secondary .fam-secondary-menu .el-submenu__title:hover {
+  background-color: var(--colorWhite) !important;
+}
+.fam-secondary .el-scrollbar__bar.is-vertical {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,16 @@
+<div class="fam-icon-width-style">
+    <erd-tooltip
+        placement="top"
+        :disabled="!tooltipContent"
+    >
+        <div
+            slot="content"
+            v-text="tooltipContent"
+        ></div>
+        <erd-icon
+            :icon="iconClass"
+            :style="iconStyle"
+            :custom="custom"
+        ></erd-icon>
+    </erd-tooltip>
+</div>

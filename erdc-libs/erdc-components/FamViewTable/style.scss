@@ -1,0 +1,47 @@
+#FamViewTable {
+    .fam-base-info-title {
+        padding: 0 var(--largePadding);
+        background-color: var(--colorFullBg);
+        .fam-base-info-title__title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: var(--fontSizeLarge);
+            letter-spacing: 0;
+            color: var(--colorTextNormal);
+        }
+    }
+    &.adaptive-height {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .fam-view-navbar-component {
+            min-height: var(--tabsItemHeaderTabHeight);
+        }
+        .advanced-table-container {
+            flex-grow: 1;
+        }
+    }
+    .fam-advanced-filter-btn,
+    .fam-classify-search-btn {
+        padding: var(--miniPadding) var(--bigPadding);
+        line-height: 24px;
+    }
+    .fam-advanced-filter-active,
+    .fam-classify-search-btn-active {
+        border-color: var(--tagDefaultLightBorderColor);
+        background-color: #D2E2FC;
+        color: var(--tagDefaultLightColor);
+    }
+    .advanced-table-container {
+        padding: var(--famAdvancedTableContainerPadding);
+    }
+}
+
+// 弹窗里面的表格 去除下内边距
+.el-dialog:has(.fam-view-table-component) {
+    .fam-view-table-component {
+        padding-bottom: 0 !important;
+    }
+}

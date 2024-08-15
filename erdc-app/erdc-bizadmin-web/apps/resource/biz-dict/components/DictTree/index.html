@@ -1,0 +1,69 @@
+<div id="dictTree" class="h-100p">
+    <fam-tree
+        ref="famTree"
+        :title="i18nMappingObj.dataItem"
+        :placeholder="i18nMappingObj.pleaseEnter"
+        :data="treeData"
+        :props="defaultProps"
+        :default-expanded-keys="defaultExpandedKeys"
+        :filter-node-method="filterSearch"
+        @node-click="nodeClick"
+        @node-expand="nodeExpand"
+        @node-collapse="nodeCollapse"
+    >
+        <template #search-operation>
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-import"
+                @click="onImport"
+            ></erd-button>
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-export"
+                @click="onExport"
+            ></erd-button>
+        </template>
+        <template #node-operation="scope">
+            <erd-button
+                type="icon"
+                icon="erd-iconfont erd-icon-add-document fontSize18"
+                v-if="scope.node.level == 1"
+                @click="onCreate(scope)"
+            ></erd-button>
+            <erd-button
+                type="icon"
+                icon="erd-iconfont erd-icon-edit2 fontSize18"
+                @click="onEdit(scope)"
+                v-if="scope.data.edit"
+            ></erd-button>
+            <erd-button
+                type="icon"
+                icon="erd-iconfont erd-icon-delete fontSize18"
+                @click="onDelete(scope)"
+                v-if="scope.data.delete"
+            ></erd-button>
+        </template>
+    </fam-tree>
+    <dict-form
+        v-if="visibleDictForm"
+        :visible.sync="visibleDictForm"
+        :dict-data="dictData"
+        :title="title"
+        :oid="oid"
+        @onsubmit="onSubmit"
+    >
+    </dict-form>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="DictionaryImport"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导入 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="DictionaryExport"
+    ></fam-export>
+</div>

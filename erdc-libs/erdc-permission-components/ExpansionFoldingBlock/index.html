@@ -1,0 +1,13 @@
+<div id="expansion-folding-block">
+    <div class="expansion-folding-block-title">
+        <div class="expansion-folding-block-title-content" @click="changeExpand">{{title}}</div>
+        <div @click="changeExpand">
+            <erd-icon :icon="isExpanded ? 'arrow-down' : 'arrow-up'" 
+                class="expansion-folding-block-title-icon"></erd-icon>
+        </div>
+        <slot name="baseinfo:form:expansion:title"></slot>
+    </div>
+    <div v-if="isExpanded" class="expansion-folding-block-panel">
+        <slot name="baseinfo:form:expansion:panel"></slot>
+    </div>
+</div>

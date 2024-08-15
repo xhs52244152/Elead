@@ -1,0 +1,53 @@
+@charset "UTF-8";
+.import-export-template-history .left-header-contaienr {
+  flex: 1;
+  overflow: hidden;
+}
+.import-export-template-history .custom-left-slot {
+  width: 100%;
+}
+
+.toolbar-search-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.toolbar-search-component .el-select {
+  width: 150px;
+}
+
+.template-list-box .return-icon {
+  font-size: var(--fontSizeLarge);
+}
+.template-list-box .template-list-return {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  display: flex;
+  padding: 10px 0;
+}
+.template-list-box .template-list-return .template-list-return__left {
+  display: flex;
+  cursor: pointer;
+  margin-right: 8px;
+  padding-right: 8px;
+}
+.template-list-box .template-list-return .template-list-return__left:hover {
+  color: var(--buttonTextColor);
+}
+.template-list-box .template-list-return .template-list-return__right {
+  line-height: 20px;
+}
+.template-list-box .head-form-container {
+  margin-bottom: 12px;
+}
+.template-list-box .head-form-container .un-exceed {
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 使用省略号表示被截断的文本 */
+  white-space: nowrap; /* 强制文本在一行内显示，避免换行 */
+}
+
+#fam_import_and_export_template .adaptive-height .viewtable-body-container > .el-pagination {
+  margin-bottom: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

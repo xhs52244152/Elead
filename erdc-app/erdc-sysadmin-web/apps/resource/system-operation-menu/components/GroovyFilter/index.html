@@ -1,0 +1,255 @@
+<div class="groovy-filter p-16">
+    <FamDynamicForm
+        ref="validatorForm"
+        :form="form"
+        :data="formConfig"
+        v-cloak
+    >
+        <template v-slot:typeNameComponent="scope">
+            <erd-table-select
+                v-model="selectTypeList"
+                ref="tableSelect"
+                max-height="200"
+                style="width: 100%"
+                :table-data="verifierTableData"
+                :row-config="{isHover: true}"
+                :checkbox-config="{isHover: true}"
+                :columns="verifierColumns"
+                :multiple="false"
+                clearable
+                @input="changeTypeName"
+            ></erd-table-select>
+        </template>
+
+        <template v-slot:addValidatorLabel="scope">
+            <div
+                class="el-form-item__label fam-dynamic-form__label fam-dynamic-form__label--required fam-dynamic-form__label--right"
+            >
+                <span class="fam-dynamic-form__label--required-identifier">*</span>
+                <span class="fam-dynamic-form__label--label">{{i18nMappingObj['addValidator']}}</span>
+            </div>
+        </template>
+
+        <template v-slot:addvalidator="scope">
+            <div class="w-100p">
+                <div class="flex justify-between mb-12">
+                    <span
+                        class="text-gray-65"
+                        style="line-height: 30px"
+                        >{{i18nMappingObj.scriptExcutesTips}}</span
+                    >
+                    <erd-button @click="onAddScript">{{i18nMappingObj.add}}</erd-button>
+                </div>
+                <div
+                    class="erd-table-container"
+                    v-loading="addedTableLoading"
+                >
+                    <fam-erd-table
+                        border
+                        align="left"
+                        ref="addedTable"
+                        :column-config="{resizable: true}"
+                        :data="addedTableData"
+                        :column="addedColumns"
+                        is-embed-table
+                        show-overflow
+                    >
+                        <template #column:default:operation>
+                            <erd-button
+                                type="text"
+                                @click="onRemove"
+                            >
+                                {{i18nMappingObj.remove}}
+                            </erd-button>
+                        </template>
+                    </fam-erd-table>
+                </div>
+            </div>
+        </template>
+
+        <!-- 规则引擎过滤器 -->
+        <template v-slot:configrule="scope">
+            <fam-rule-engine
+                ref="ruleEngine"
+                :oid="buttonOid"
+                :class-name="className"
+                :is-update="isUpdate"
+                :rule-condition-dto-list="form.ruleConditionDtoList"
+            ></fam-rule-engine>
+        </template>
+
+        <!-- 参与者类型过滤器 -->
+        <template v-slot:participantrule="scope">
+            <div class="flex align-items-center w-100p">
+                <erd-ex-select
+                    v-model="form.participantObj.condition"
+                    :placeholder="i18n.pleaseSelect"
+                    :options="operatorOpts"
+                    class="mr-8"
+                    @change="onConditionChange"
+                ></erd-ex-select>
+                <FamParticipantSelect
+                    ref="famParticipantSelect"
+                    v-model.sync="form.participantObj.participant"
+                    :default-value="form.participantObj.oldParticipant"
+                    query-scope="fullTenant"
+                    :show-type="showType"
+                    :query-mode="queryMode"
+                    :multiple="form.participantObj.condition !== 'EQ'"
+                    :threeMemberEnv="false"
+                    clearable
+                ></FamParticipantSelect>
+            </div>
+        </template>
+
+        <!-- 脚本 -->
+        <template v-slot:configaction="scope">
+            <groovy-filter-config
+                ref="groovyConfig"
+                :dialogType="form.type"
+                :row="row"
+                :businessName="form.businessName"
+                :name="form.name"
+            ></groovy-filter-config>
+        </template>
+
+        <!-- 代码filter -->
+        <template v-slot:custom="scope">
+            <div class="w-100p">
+                <erd-button @click="onConfigCustom"> 配置 </erd-button>
+                <div
+                    v-if="configData"
+                    class="w-100p max-h-min mt-12 p-16 border-1 border-solid border"
+                >
+                    <erd-show-tooltip placement="top">
+                        <template v-slot:show-tooltip-title>
+                            <span class="title_text"> {{ configData }}</span>
+                        </template>
+                    </erd-show-tooltip>
+                </div>
+            </div>
+        </template>
+
+        <!-- 校验结果 true -->
+        <template
+            v-for="item in actionConfigs"
+            v-slot:[item.props.name]="scope"
+        >
+            <div
+                :key="item.field"
+                class="flex align-items-center w-100p"
+            >
+                <span class="mr-16">执行动作</span>
+                <erd-radio-group
+                    v-model="form[item.field]"
+                    class="flex align-items-center"
+                    @change="changeRadio(item.field)"
+                >
+                    <erd-radio label="ENABLED">启用</erd-radio>
+                    <erd-radio label="DISABLED">禁用</erd-radio>
+                    <erd-radio label="HIDDEN">隐藏</erd-radio>
+                </erd-radio-group>
+            </div>
+        </template>
+    </FamDynamicForm>
+
+    <!--新增groovy 校验器-->
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="dialogVisible"
+        size="large"
+        :title="i18nMappingObj['addValidator']"
+        @close="onDialogClose"
+    >
+        <div class="erd-table-dialog-toolbar flex mb-12">
+            <erd-input
+                v-model="dialogForm.searchKey"
+                style="width: 320px"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18nMappingObj['playceholderTips']"
+                class="mr-8"
+                clearable
+                @keyup.enter.native="filterTableData"
+                @blur="filterTableData"
+                @clear="filterTableData"
+            ></erd-input>
+            <custom-select
+                v-model="dialogForm.serviceName"
+                :row="phaseRow"
+                :placeholder="i18nMappingObj['servicePlaceholder']"
+                filterable
+                clearable
+                style="width: 200px"
+                @callback="filterTableData"
+            >
+            </custom-select>
+        </div>
+        <div class="erd-table-container">
+            <fam-erd-table
+                ref="groovyTable"
+                border
+                align="left"
+                :data="groovyTableData"
+                :column="groovyColumns"
+                :column-config="{resizable: true}"
+                :row-config="{isHover: true, keyField: 'id'}"
+                :radio-config="{ checkRowKey: checkRowKey, reserve: true, highlight: true }"
+                show-overflow
+                @radio-change="onRadioChange"
+            >
+                <template
+                    v-for="item in groovyColumns"
+                    v-slot:[item.key]="{data}"
+                >
+                    {{data.row[key]}}
+                </template>
+            </fam-erd-table>
+            <erd-pagination
+                :current-page.sync="pagination.pageIndex"
+                :page-size.sync="pagination.pageSize"
+                :total="pagination.total"
+                class="mt-16"
+                @size-change="onSizeChange"
+                @current-change="onPageChange"
+            >
+            </erd-pagination>
+        </div>
+        <template #footer>
+            <div>
+                <erd-button
+                    type="primary"
+                    :loading="saveBtnLoading"
+                    @click="onSubmit"
+                    >{{ i18nMappingObj.ok }}
+                </erd-button>
+                <erd-button @click="onDialogClose">{{ i18nMappingObj.cancel }} </erd-button>
+            </div>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 配置代码filter -->
+    <erd-ex-dialog
+        ref="dialog"
+        v-if="configVisible"
+        :visible.sync="configVisible"
+        size="large"
+        :title="'配置'"
+    >
+        <code-filter
+            ref="codeFilter"
+            :type="formType"
+            :data.sync="configData"
+        ></code-filter>
+        <template #footer>
+            <div>
+                <erd-button
+                    type="primary"
+                    :loading="saveBtnLoading"
+                    @click="onSubmitConfig"
+                    >{{ i18nMappingObj.ok }}
+                </erd-button>
+                <erd-button @click="configVisible = false">{{ i18nMappingObj.cancel }} </erd-button>
+            </div>
+        </template>
+    </erd-ex-dialog>
+</div>

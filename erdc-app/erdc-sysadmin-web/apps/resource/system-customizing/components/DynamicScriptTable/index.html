@@ -1,0 +1,18 @@
+<div class="h_100p">
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        @action-click="actionClick"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                is-operation
+                @click="actionClick"
+            ></fam-action-pulldown>
+        </template>
+        <template v-slot:[slotName.enabled]="{ scope }"> {{scope.row | filterStatus}} </template>
+    </fam-view-table>
+</div>

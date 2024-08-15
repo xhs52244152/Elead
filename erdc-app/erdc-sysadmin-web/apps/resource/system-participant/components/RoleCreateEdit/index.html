@@ -1,0 +1,28 @@
+<div id="RoleCreateEdit">
+    <erd-ex-dialog :title="roleTitle" :visible.sync="innerVisible" width="1200px">
+        <div class="RoleCreateEdit_content">
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form="formData"
+                :data="data"
+                :readonly="readonly"
+                @form-change="formChange">
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group  v-model="scope.data[scope.formConfig.field]">
+                        <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:readonlyComponent="scope">
+                    <span>{{scope.data[scope.formConfig.field]? i18nMappingObj.yes : i18nMappingObj.no}}</span>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <erd-button type="primary" @click="edit"
+                        v-if="operType=='check' && editPerm">{{i18nMappingObj.edit}}</erd-button>
+            <erd-button type="primary" @click="saveSubmit" :loading="loading" v-else :disabled="disabled">{{i18nMappingObj.confirm}}</erd-button>
+            <erd-button @click="onCancle">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

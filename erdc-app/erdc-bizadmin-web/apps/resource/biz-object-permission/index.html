@@ -1,0 +1,85 @@
+<div
+    id="fam-object-permission-management"
+    class="position-relative"
+>
+    <resizable-container>
+        <template v-slot:left>
+            <div class="left-custom-class tree-management">
+                <div
+                    ref="header"
+                    class="tree-header"
+                >
+                    <div class="tree-title">对象权限</div>
+                    <erd-input
+                        clearable
+                        style="width: 100%"
+                        v-model="searchValue"
+                        :placeholder="i18n['请选择']"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                    >
+                        <custom-select
+                            v-model="searchAppName"
+                            slot="prepend"
+                            :row="appNameRow"
+                        >
+                        </custom-select>
+                    </erd-input>
+                </div>
+                <erd-ex-tree
+                    ref="siteAndOrgTree"
+                    class="site-and-org-tree tree-list"
+                    :data="siteAndOrgTreeData"
+                    :props="treeProps"
+                    :highlight-current="true"
+                    :default-expand-all="true"
+                    :expand-on-click-node="false"
+                    node-key="oid"
+                    @node-collapse="showList = false"
+                    @node-expand="handlerExpandNode"
+                    @node-click="handlerClickTreeNode"
+                >
+                    <template v-slot="scope">
+                        <div :class="['tree-text', scope.node.level === 3 ? 'hide-text' : '']">
+                            {{scope.node.label}}
+                        </div>
+                    </template>
+                </erd-ex-tree>
+                <div ref="virtual-list-split"></div>
+                <fam-virtual-list
+                    v-if="!threeMemberEnv"
+                    v-show="showList"
+                    :container-height="containerHeight"
+                    :select-item="selectedItem"
+                    :show-number="20"
+                    :item-height="28"
+                    :search-value="searchValue"
+                    :app-name="searchAppName"
+                    @handler-change-node="handlerClickTreeNode($event, true)"
+                ></fam-virtual-list>
+            </div>
+        </template>
+        <template v-slot:right>
+            <div class="permission-title-section">
+                <permission-title
+                    :editable="isEditPermission"
+                    :default-current-level="defaultCurrentLevel"
+                    :select-options="selectOptions"
+                    :is-show-returnback="false"
+                    :is-show-read-btn="isShowReadBtn"
+                    @change-organization="handlerChangeOrganization"
+                    @change-edit-permission="handlerChangeEditPermission"
+                ></permission-title>
+            </div>
+            <div class="obj-permission-main-index">
+                <permission-index
+                    ref="objPermissionIndex"
+                    :query-params="queryParams"
+                    :table-height="tableHeight"
+                    :app-name="appName"
+                    :row="row"
+                    :is-basics="isBasics"
+                ></permission-index>
+            </div>
+        </template>
+    </resizable-container>
+</div>

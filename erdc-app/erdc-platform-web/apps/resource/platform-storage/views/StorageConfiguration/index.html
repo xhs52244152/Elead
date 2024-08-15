@@ -1,0 +1,235 @@
+<div class="erdcloud_doc-app grow-1">
+    <div class="app-container">
+        <div class="app-header plr-xl bg-normal pb-lg">
+            <erd-dropdown @command="handleAppChange">
+                <span class="erd-dropdown-link">
+                    <span>{{i18nMappingObj.appManage}} / {{selectedApp.displayName}}</span>
+                    <em class="icon el-icon-arrow-down el-icon--right"></em>
+                </span>
+                <erd-dropdown-menu slot="dropdown">
+                    <erd-dropdown-item
+                        v-for="app in appList"
+                        :key="app.id"
+                        :command="app.id"
+                    >
+                        {{app.displayName}}
+                    </erd-dropdown-item>
+                </erd-dropdown-menu>
+            </erd-dropdown>
+        </div>
+        <div class="app-content ptrl-xl">
+            <el-scrollbar
+                style="height: 100%"
+                wrap-style="height: 100%; width: 100%"
+            >
+                <erd-contraction-panel
+                    class="config-content"
+                    :unfold.sync="basicUnfold"
+                    :title="i18nMappingObj.basicInfo"
+                >
+                    <template #content>
+                        <div class="config-group">
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.appCode}}</label>
+                                <div>{{basic.code}}</div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.appName}}</label>
+                                <div>{{basic.name}}</div>
+                            </div>
+                        </div>
+                    </template>
+                </erd-contraction-panel>
+
+                <erd-contraction-panel
+                    class="config-content"
+                    :unfold.sync="storeUnfold"
+                    :title="i18nMappingObj.storeConfig"
+                >
+                    <template #content>
+                        <FamDynamicForm
+                            ref="storeForm"
+                            labelPosition="right"
+                            :label-width="labelWidth"
+                            :form.sync="store"
+                            :data="storeConfig"
+                        >
+                            <template #storageType="scope">
+                                <erd-select
+                                    v-model="store.storageType"
+                                    style="width: 100%"
+                                >
+                                    <erd-option
+                                        v-for="item in storeTypes"
+                                        :key="item"
+                                        :value="item"
+                                        :label="item"
+                                    ></erd-option>
+                                </erd-select>
+                            </template>
+                        </FamDynamicForm>
+                    </template>
+                </erd-contraction-panel>
+
+                <erd-contraction-panel
+                    class="config-content"
+                    :unfold.sync="toolUnfold"
+                    :title="i18nMappingObj.toolConfig"
+                >
+                    <template #content>
+                        <div class="config-group">
+                            <span class="group-name">OnlyOffice</span>
+                            <FamDynamicForm
+                                ref="form"
+                                labelPosition="right"
+                                :label-width="labelWidth"
+                                :form.sync="onlyoffice"
+                                :data="onlyofficeConfig"
+                            >
+                            </FamDynamicForm>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.func}}</label>
+                                <div>
+                                    <erd-tag
+                                        v-if="onlyoffice.view"
+                                        type="info"
+                                        >{{i18nMappingObj.onlinePreview}}</erd-tag
+                                    >
+                                    <erd-tag
+                                        v-if="onlyoffice.edit"
+                                        type="info"
+                                        >{{i18nMappingObj.onlineEdit}}</erd-tag
+                                    >
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.fileSuffix}}</label>
+                                <div>{{onlyoffice.support}}</div>
+                            </div>
+                        </div>
+                        <div class="config-group">
+                            <span class="group-name">{{i18nMappingObj.videoPlay}}</span>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.func}}</label>
+                                <div>
+                                    <erd-tag
+                                        v-if="video.view"
+                                        type="info"
+                                        >{{i18nMappingObj.onlinePlay}}</erd-tag
+                                    >
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.fileSuffix}}</label>
+                                <div>{{video.support}}</div>
+                            </div>
+                            <FamDynamicForm
+                                ref="form"
+                                labelPosition="right"
+                                :label-width="labelWidth"
+                                :form.sync="video"
+                                :data="commonConfig"
+                            >
+                            </FamDynamicForm>
+                        </div>
+                        <div class="config-group">
+                            <span class="group-name">{{i18nMappingObj.audioPlay}}</span>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.func}}</label>
+                                <div>
+                                    <erd-tag
+                                        v-if="audio.view"
+                                        type="info"
+                                        >{{i18nMappingObj.onlinePlay}}</erd-tag
+                                    >
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.fileSuffix}}</label>
+                                <div>{{audio.support}}</div>
+                            </div>
+                            <FamDynamicForm
+                                ref="form"
+                                labelPosition="right"
+                                :label-width="labelWidth"
+                                :form.sync="audio"
+                                :data="commonConfig"
+                            ></FamDynamicForm>
+                        </div>
+
+                        <div class="config-group">
+                            <span class="group-name">{{i18nMappingObj.imgPreview}}</span>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.func}}</label>
+                                <div>
+                                    <erd-tag
+                                        v-if="image.view"
+                                        type="info"
+                                        >{{i18nMappingObj.onlinePreview}}</erd-tag
+                                    >
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.fileSuffix}}</label>
+                                <div>{{image.support}}</div>
+                            </div>
+                        </div>
+                        <div class="config-group">
+                            <span class="group-name">{{i18nMappingObj.scriptEditTool}}</span>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.func}}</label>
+                                <div>
+                                    <erd-tag
+                                        v-if="script.view"
+                                        type="info"
+                                        >{{i18nMappingObj.onlinePreview}}</erd-tag
+                                    >
+                                    <erd-tag
+                                        v-if="script.edit"
+                                        type="info"
+                                        >{{i18nMappingObj.onlineEdit}}</erd-tag
+                                    >
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.fileSuffix}}</label>
+                                <div>{{script.support}}</div>
+                            </div>
+                        </div>
+                        <div class="config-group">
+                            <span class="group-name">{{i18nMappingObj.pdfPreview}}</span>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.func}}</label>
+                                <div>
+                                    <erd-tag
+                                        v-if="pdf.view"
+                                        type="info"
+                                        >{{i18nMappingObj.onlinePreview}}</erd-tag
+                                    >
+                                    <erd-tag
+                                        v-if="pdf.edit"
+                                        type="info"
+                                        >{{i18nMappingObj.onlineEdit}}</erd-tag
+                                    >
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>{{i18nMappingObj.fileSuffix}}</label>
+                                <div>{{pdf.support}}</div>
+                            </div>
+                        </div>
+                    </template>
+                </erd-contraction-panel>
+            </el-scrollbar>
+        </div>
+    </div>
+
+    <div class="app-footer ptb-xl">
+        <erd-button
+            type="primary"
+            @click="handleApply"
+            >{{i18nMappingObj.save}}</erd-button
+        >
+        <erd-button @click="handleReset">{{i18nMappingObj.reset}}</erd-button>
+    </div>
+</div>

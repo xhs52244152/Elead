@@ -1,0 +1,16 @@
+.UnitMeasureNewEdit {
+    .showUnit {
+        margin-top: 24px;
+    }
+    .content {
+        .measureOper {
+            margin-bottom: 5px;
+        }
+        .required-color {
+            color: #f04134;
+        }
+        .required-error > .el-input__inner {
+            border-color: #f04134;
+        }
+    }
+}

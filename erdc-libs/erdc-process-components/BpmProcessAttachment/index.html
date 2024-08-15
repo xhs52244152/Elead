@@ -1,0 +1,14 @@
+<div class="bpm-process-attachment">
+    <FamUploadFileList
+        ref="uploadTable"
+        :table-data="attachments"
+        :readonly="readonly"
+        :multiple="true"
+        :show-upload="showUpload"
+        :class-name="className"
+        :operation-buttons="operationButtons"
+        :is-need-security="isSecret"
+        :security-label="securityLabel"
+        :reference="reference"
+    ></FamUploadFileList>
+</div>

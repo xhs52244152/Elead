@@ -1,0 +1,184 @@
+<div class="fam-association-object">
+    <erd-ex-dialog
+        :visible.sync="dialogVisible"
+        :title="title"
+        size="large"
+        v-on="$listeners"
+    >
+        <div
+            ref="content"
+            class="flex flex-column"
+        >
+            <erd-ex-transfer
+                :allColumnsList="attrList"
+                class="fam-association-object__transfer grow-1"
+                :defaultSelected="rightTableData"
+                :valueKey="showLabelKey"
+                leftWidth="50%"
+                rightWidth="50%"
+                :rightTableConfig="rightTableColumns"
+                leftShowFormat="table"
+                rightShowFormat="table"
+                :leftTitle="leftTitle"
+                :rightTitle="rightTitle"
+                v-bind="$attrs"
+            >
+                <template slot="left-header-title">
+                    {{leftTitle}}
+                    <span v-if="showCount" class="item-title-sub">({{originRightTableData.length}}/{{ pagination.total }})</span>
+                </template>
+                <template slot="left-search">
+                    <slot name="left-search-main-content">
+                        <slot name="left-search-left"></slot>
+                        <erd-input
+                            :placeholder="i18nMappingObj.searchTips"
+                            v-model="searchLeftKey"
+                            clearable
+                            @clear="getLeftTableData(true)"
+                            @keyup.enter.native="getLeftTableData(true)"
+                        >
+                            <template #suffix>
+                                <i
+                                    class="erd-iconfont erd-icon-search el-input--medium el-input__icon cursor-pointer"
+                                    @click="getLeftTableData(true)"
+                                ></i>
+                            </template>
+                        </erd-input>
+                        <slot name="left-search-right"></slot>
+                    </slot>
+                </template>
+                <template slot="left-content">
+                    <erd-table
+                        auto-resize
+                        :stripe="false"
+                        show-overflow="tooltip"
+                        v-loading="tableLoading"
+                        ref="leftTable"
+                        tooltip-effect="dark"
+                        :row-config="{ keyField: 'oid' }"
+                        :checkbox-config="{ checkField: 'checked', checkMethod: ({row}) => row[leftDisabled] }"
+                        :column="leftTableColumns"
+                        height="auto"
+                        style="width: 100%; height: 100%"
+                        :data="leftTableData"
+                        @scroll="handleScroll"
+                        @checkbox-change="onLeftSelectChange"
+                        @checkbox-all="onLeftCheckAll"
+                    >
+                        <template #column:default:icon="{data}">
+                            <fam-icon
+                                :value="getIcon(data.row)"
+                                class="font-18"
+                            ></fam-icon>
+                        </template>
+                        <template
+                            v-for="(slot, name) in $scopedSlots"
+                            v-slot:[name]="scope"
+                        >
+                            <slot
+                                :name="name"
+                                v-bind="scope"
+                            ></slot>
+                        </template>
+                    </erd-table>
+                </template>
+                <template slot="right-search">
+                    <erd-input
+                        :placeholder="i18nMappingObj.searchTips"
+                        v-model="searchRightKey"
+                        @keyup.enter.native="searchRightTableData"
+                        @blur="searchRightTableData"
+                        clearable
+                    >
+                        <template slot="suffix">
+                            <i
+                                class="erd-iconfont erd-icon-search el-input--medium el-input__icon cursor-pointer"
+                                @click="searchRightTableData"
+                            ></i>
+                        </template>
+                    </erd-input>
+                </template>
+                <template slot="right-content">
+                    <erd-table
+                        ref="rightTable"
+                        auto-resize
+                        :stripe="false"
+                        show-overflow="tooltip"
+                        tooltip-effect="dark"
+                        :row-config="{ keyField: 'oid' }"
+                        :column="rightTableColumns"
+                        height="auto"
+                        style="width: 100%; height: 100%"
+                        :data="rightTableData"
+                    >
+                        <template #column:default:icon="{data}">
+                            <fam-icon
+                                :value="getIcon(data.row)"
+                                class="font-18"
+                            ></fam-icon>
+                        </template>
+                        <template #operation="data">
+                            <em
+                                class="el-icon-close el-icon-hover-class cursor-pointer"
+                                style="font-size: 15px; margin-left: 8px"
+                                @click="onRightClear(data.data.row)"
+                            ></em>
+                        </template>
+                        <template
+                            v-for="(slot, name) in $scopedSlots"
+                            v-slot:[name]="scope"
+                        >
+                            <slot
+                                :name="name"
+                                v-bind="scope"
+                            ></slot>
+                        </template>
+                    </erd-table>
+                </template>
+                <template slot="right-title-sub">
+                    <erd-button
+                        type="text"
+                        @click="onAllDelete"
+                        >{{ i18nMappingObj.deleteAll }}
+                    </erd-button>
+                </template>
+            </erd-ex-transfer>
+            <div style="display: flex; justify-content: right; width: 50%">
+                <erd-pagination
+                    v-if="!enableScrollLoad"
+                    layout="prev, pager, next"
+                    streamline
+                    :current-page.sync="pagination.pageIndex"
+                    :page-size.sync="pagination.pageSize"
+                    :total="pagination.total"
+                    :hide-on-single-page="false"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                >
+                </erd-pagination>
+                    <div
+                        v-if="enableScrollLoad"
+                        class="load-more-container bg-white text-center w-100p mt-normal"
+                    >
+                    <span
+                        type="text"
+                        class="text-sm"
+                        :class="lazy.loading || lazy.completed ? 'color-disabled' : 'color-primary cursor-pointer'"
+                        @click="handleLoadMoreClick"
+                    >
+                        {{ defaultFooterText }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="confirm"
+                >{{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

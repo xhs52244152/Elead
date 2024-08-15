@@ -1,0 +1,67 @@
+$fontColor: var(--buttonTextColor__hover);
+
+.fam-usage-scenario-tree {
+    height: 100%;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+
+    .fam-base-info-title {
+        padding: var(--largePadding) var(--commonPageMargin);
+        .fam-base-info-title__title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: var(--fontSizeLarge);
+            letter-spacing: 0;
+            color: var(--colorTextNormal);
+        }
+    }
+
+    .fam-usage-scenario-tree__title {
+        padding: 12px 12px 0px 12px;
+
+        &>span {
+            font-size: 16px;
+            color: var(--colorTextNormal);
+            line-height: 24px;
+            font-weight: 700;
+        }
+    }
+
+    .fam-usage-scenario-tree__header {
+
+        padding: 0 12px 12px;
+        .fam-usage-scenario-tree__search {
+            width: 100%;
+        }
+    }
+
+    .el-tree-node__content {
+        display: inline-block;
+        width: 100%;
+
+        .tree-node-content {
+            display: inline-block;
+            width: calc(100% - 25px);
+        }
+    }
+
+    .el-scrollbar {
+        height: calc(100%);
+    }
+
+    .el-tree-node {
+        .el-tree-node__children {
+            overflow: initial;
+        }
+    }
+
+    .el-tree-node__content:hover {
+        color: $fontColor;
+    }
+    .el-scrollbar__bar.is-horizontal {
+        display: block;
+    }
+}

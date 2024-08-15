@@ -1,0 +1,13 @@
+<div
+    id="bpm-change-handler-content"
+    class="bg-light"
+    v-cloak
+>
+    <BpmParticipantConfiguration
+        ref="bpmParticipantConfiguration"
+        :handler-configuration="innerHandlerConf"
+        :column="column"
+        :batch-default-select="true"
+        @options-change="optionsChange"
+    ></BpmParticipantConfiguration>
+</div>

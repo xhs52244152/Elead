@@ -1,0 +1,44 @@
+<div class="h-100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-normal bg-normal pb-normal"
+    ></FamPageTitle>
+    <div class="fam-notice-list p-normal">
+        <fam-advanced-table
+            ref="noticeTableRef"
+            :view-table-config="viewTableConfig"
+            :is-adaptive-height="true"
+        >
+            <template #column:default:displayMode:content="{ scope }">
+                <span>{{ displayMode(scope.row.displayMode) }}</span>
+            </template>
+            <template #column:default:noticeState:content="{ scope }">
+                <span>{{ displayState(scope.row.noticeState) }}</span>
+            </template>
+            <template #column:default:createTime:content="{ scope }">
+                <span>{{ dateFormat(scope.row.createTime) }}</span>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <erd-button
+                    type="text"
+                    @click="handleNoticeEdit(scope.row)"
+                >
+                    {{i18nMappingObj.edit}}
+                </erd-button>
+                <erd-button
+                    type="text"
+                    @click="handleNoticeDeleteConfirm(scope.row)"
+                >
+                    {{i18nMappingObj.delete}}
+                </erd-button>
+            </template>
+        </fam-advanced-table>
+
+        <notice-detail ref="noticeRef"></notice-detail>
+        <notice-edit
+            ref="noticeEditRef"
+            :notifySendTypes="notifySendTypes"
+            @save="handleSave"
+        ></notice-edit>
+    </div>
+</div>

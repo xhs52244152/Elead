@@ -1,0 +1,111 @@
+.permission-title-box {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.permission-title-left {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    align-items: center;
+}
+
+.return-icon {
+    font-size: 16px;
+}
+.permission-title-left-content {
+    height: 28px;
+    font-size: var(--fontSizeLarge);
+    color: var(--colorTextNormal);
+    letter-spacing: 0;
+    line-height: 28px;
+    font-weight: 700;
+}
+
+.permission-left-return {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: 14px;
+    font-size: var(--fontSize);
+    cursor: pointer;
+    color: var(--colorTextExplain);
+}
+.permission-left-return:hover {
+    color: var(--colorPrimary);
+}
+.return-content {
+    padding-left: 4px;
+}
+.permission-line-style {
+    width: 1px;
+    height: 16px;
+    background: #999999;
+    margin: 0px 15px;
+}
+.permission-option-icon {
+    color: #567ffd;
+    font-size: 17px;
+    padding-left: 4px;
+    cursor: pointer;
+}
+.permission-title-select-custom {
+    min-width: 50px;
+}
+.permission-title-select-custom .el-input {
+    display: flex;
+    align-items: center;
+}
+.permission-title-select-custom .el-input__prefix {
+    position: relative;
+    left: 0;
+    box-sizing: border-box;
+    padding: 0 40px 0px 20px;
+    border: 1px solid #ffffff00;
+    height: 32px;
+    font-size: var(--fontSizeLarge);
+    text-align: start;
+    visibility: hidden;
+}
+.permission-title-select-custom .el-input__inner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    padding: 0 33px 0 0;
+    border: none;
+    font-size: 16px;
+    color: var(--colorTextNormal) !important;
+    letter-spacing: 0;
+    font-weight: 700;
+}
+.permission-title-select-custom .el-select__caret {
+    font-size: 18px !important;
+}
+.permission-title-select-custom.custom-none-icon .el-input__inner {
+    cursor: default !important;
+    background-color: transparent !important;
+}
+.permission-title-select-custom.custom-none-icon .el-select__caret {
+    display: none !important;
+}
+.no-edit-permission-no-select {
+    font-size: var(--fontSizeLarge);
+    color: #333333;
+    font-weight: bolder;
+    line-height: 28px;
+}
+.no-edit-permission-no-select-tips {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    padding-left: 4px;
+    font-weight: normal;
+}
+.custom-none-icon,
+.custom-none-icon .el-input input {
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: nowrap;
+}

@@ -1,0 +1,45 @@
+<div
+    id="bpm-process-navigation-content"
+    class="bpm-process-navigation-content flex flex-column h-100p"
+    :style="sideMenuStyle"
+    v-cloak
+>
+    <div class="navigation-content_header">
+        <div
+            class="header_text"
+            :style="textStyle"
+        >
+            <span>{{i18n.processNavigation}}</span>
+            <BpmProcessHelp
+                class="ml-4"
+                iconSize="16px"
+            ></BpmProcessHelp>
+        </div>
+        <erd-button
+            type="text"
+            :icon="collapsed ? 'erd-iconfont erd-icon-fold-right' : 'erd-iconfont erd-icon-fold-left'"
+            @click="toggleCollapsed"
+        ></erd-button>
+    </div>
+    <div class="navigation-content_box flex-1">
+        <BpmProcessHorse
+            v-if="!collapsed"
+            :activities="activities"
+            :users="users"
+            :current-activity-id="currentActivityId"
+            :view-activity-id="viewActivityId"
+            :vertical="vertical"
+            :height="height"
+        >
+            <template
+                slot="title"
+                slot-scope="slotProps"
+            >
+                <slot
+                    name="title"
+                    v-bind="slotProps"
+                ></slot>
+            </template>
+        </BpmProcessHorse>
+    </div>
+</div>

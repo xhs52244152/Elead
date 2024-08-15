@@ -1,0 +1,156 @@
+<div
+    id="fam_preference"
+    class="h-100p flex flex-column"
+>
+    <fam-info-title
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-xl"
+    ></fam-info-title>
+    <div class="preference-body grow-1 flex flex-column plr-xl pt-xl">
+        <fam-advanced-table
+            ref="famAdvancedTable"
+            class="grow-1 pb-normal"
+            :view-table-config="viewTableConfig"
+            isAdaptiveHeight
+            @action-click="actionClick"
+        >
+            <template #column:default:nameI18nJson:content="{ scope }">
+                <span :class="dynamicClass(scope.row)">{{scope.row.displayName}}</span>
+            </template>
+            <template #column:default:status:content="{ scope }">
+                <span>{{statusDisableName(scope.row)}}</span>
+            </template>
+            <template #column:default:realType:content="{ scope }">
+                <span>{{scope.row.realTypeDisplayName}}</span>
+            </template>
+            <template #column:default:locked:content="{ scope }">
+                <span>{{lockedDisplayName(scope.row)}}</span>
+            </template>
+            <template #column:default:descriptionI18nJson:content="{ scope }">
+                <span>{{scope.row.displayDesc}}</span>
+            </template>
+            <template #column:default:appName:content="{ scope }">
+                <span>{{scope.row.displayAppName}}</span>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <fam-action-pulldown
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    :args="[_this, scope.row]"
+                    @click="onCommand"
+                ></fam-action-pulldown>
+            </template>
+        </fam-advanced-table>
+    </div>
+    <erd-ex-dialog
+        v-if="visibleGroup"
+        :title="title"
+        :visible="visibleGroup"
+        size="large"
+        @close="closeForm"
+    >
+        <preference-form
+            ref="preferenceForm"
+            :oid="oid"
+            :app-name="appName"
+            :type="groupType"
+            :config-type="configType"
+            :form-data="formData"
+            :readonly="readonly"
+            :is-activate="isActivate"
+            @delete-file="deleteFile"
+            @form-change="formChange"
+        ></preference-form>
+        <template #footer>
+            <erd-button
+                v-if="!readonly"
+                type="primary"
+                :loading="formLoading"
+                @click="formSubmit"
+                >{{i18nMappingObj['confirm']}}</erd-button
+            >
+            <erd-button
+                v-if="!readonly"
+                :loading="formLoading"
+                @click="closeForm"
+                >{{i18nMappingObj['cancel']}}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        v-if="visibleValue"
+        :title="i18nMappingObj['configurationValue']"
+        :visible="visibleValue"
+        size="large"
+        @close="closeForm"
+    >
+        <preference-value-form
+            v-if="visibleValue"
+            ref="preferenceValueForm"
+            :oid="preferencesRefOid"
+            :app-name="appName"
+            :type="groupType"
+            :config-type="configType"
+            :form-data="preferenceValueFormData"
+            :data="preferenceListData"
+            :readonly="readonly"
+            @form-change="formChange"
+        ></preference-value-form>
+        <template #footer>
+            <erd-button
+                v-if="!readonly"
+                type="primary"
+                :loading="formLoading"
+                @click="formValueSubmit"
+                >{{i18nMappingObj['confirm']}}</erd-button
+            >
+            <erd-button
+                v-if="!readonly"
+                @click="closeForm"
+                >{{i18nMappingObj['cancel']}}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        v-if="preferenceVisible"
+        title="添加配置项"
+        :visible.sync="preferenceVisible"
+        size="large"
+    >
+        <FamDynamicForm
+            ref="preferenceForm"
+            :form.sync="preferenceFormData"
+            :data="preferenceFormConfig"
+        >
+            <template #configsComponent="scope">
+                <erd-tree-select
+                    class="w-100p"
+                    v-model="scope.data[scope.formConfig.field]"
+                    node-key="oid"
+                    :data="preferenceData"
+                    :props="{
+                        children: 'childList',
+                        label: 'displayName',
+                        value: 'oid'
+                    }"
+                    defaultExpandAll
+                    multiple
+                >
+                    <template v-slot="{node, data}">
+                        <span :class="[data.category === 'GROUP' ? 'font-bold' : '']"> {{data.displayName}} </span>
+                    </template>
+                </erd-tree-select>
+            </template>
+        </FamDynamicForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="preferenceLoading"
+                @click="addConfig"
+                >{{i18nMappingObj['confirm']}}</erd-button
+            >
+            <erd-button @click="preferenceVisible = false">{{i18nMappingObj['cancel']}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

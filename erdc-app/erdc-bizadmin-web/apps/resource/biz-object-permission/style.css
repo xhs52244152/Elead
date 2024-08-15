@@ -1,0 +1,26 @@
+#fam-object-permission-management {
+  height: 100%;
+}
+#fam-object-permission-management .obj-permission-main-index {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0px 16px 0px 16px;
+}
+#fam-object-permission-management .virtual-list-item {
+  padding-left: 38px;
+}
+#fam-object-permission-management .site-and-org-tree {
+  margin-top: 4px;
+}
+#fam-object-permission-management .tree-text {
+  flex: 1;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+}
+#fam-object-permission-management .el-tree-node__children .el-tree-node__children {
+  display: none !important;
+}
+
+/*# sourceMappingURL=style.css.map */

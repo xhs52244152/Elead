@@ -1,0 +1,49 @@
+.notice-abstract {
+    .abstract-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .abstract-content {
+        height: 324px;
+        .no-content {
+            height: 100%;
+            text-align: center;
+        }
+        .has-content {
+            .list-item {
+                height: 102px;
+                border-bottom: 1px solid #EBEBEB;
+                padding: 12px 20px;
+                &:hover {
+                    background-color: #eaf1fe;
+                    cursor: pointer;
+                }
+
+                &-desc {
+                    p {
+                        margin: 0 !important;
+                    }
+                }
+
+                &-date {
+                    color: #89919F;
+                }
+            }
+        }
+    }
+    .abstract-footer {
+        height: 56px;
+        border-top: 1px solid #EBEBEB;
+        color: #2779FF;
+        font-size: 14px;
+        padding: 0 16px;
+    }
+
+    .text-ellipsis {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,122 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    width="800px"
+    @close="cancel"
+>
+    <FamDynamicForm
+        ref="addForm"
+        :form="formData"
+        :data="formConfigs"
+    >
+        <template #sort>
+            <erd-input-number
+                v-model="formData.sort"
+                class="w-100p"
+                :min="0"
+            >
+            </erd-input-number>
+        </template>
+        <template #group>
+            <erd-select
+                v-model="formData.group"
+                class="w-100p"
+            >
+                <erd-option
+                    v-for="option in groupList"
+                    :key="option.value"
+                    :label="option.name"
+                    :value="option.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #appfile>
+            <fam-upload
+                class="upload-demo"
+                action="/platform/mfe/apps/upload/app"
+                accept=".tgz"
+                :auto-upload="true"
+                :limit="1"
+                :file-list="appFileList"
+                :on-success="handleAppSuccess"
+                :on-remove="handleRemoveApp"
+                :before-upload="onBeforeUploadApp"
+            >
+            </fam-upload>
+        </template>
+        <template #source>
+            <fam-upload
+                class="upload-demo"
+                action="/file/file/site/storage/v1/upload"
+                accept=".zip,.tgz"
+                :auto-upload="true"
+                :limit="1"
+                :file-list="sourceFileList"
+                :on-remove="handleRemoveSource"
+                :on-success="handleSourceSuccess"
+                :before-upload="onBeforeUploadSource"
+            >
+            </fam-upload>
+        </template>
+        <template #icon>
+            <div v-if="!isEdit || formData.icon === ''">
+                <fam-upload
+                    class="upload-demo"
+                    action="/file/file/site/storage/v1/upload"
+                    accept=".ico"
+                    :auto-upload="true"
+                    :limit="1"
+                    :file-list="fileList"
+                    :on-remove="handleRemoveIcon"
+                    :on-success="handleSuccess"
+                    :before-upload="onBeforeUploadIcon"
+                    :tips="i18nMappingObj.imgTips "
+                >
+                </fam-upload>
+            </div>
+            <div
+                v-else
+                class="flex align-items-center"
+            >
+                <div>
+                    <img
+                        :src="getImage"
+                        alt=""
+                        style="width: 64px; height: 64px"
+                    />
+                </div>
+                <div>
+                    <fam-upload
+                        class="upload-demo ml-12"
+                        action="/file/file/site/storage/v1/upload"
+                        accept=".ico"  
+                        :limit="100"
+                        :auto-upload="true"
+                        :show-file-list="false"
+                        :on-success="handleSuccess"
+                        :before-upload="onBeforeUploadIcon"
+                    >
+                        <template #default>
+                            <div class="ml-12 text-left">
+                                <erd-button
+                                    size="small"
+                                    type="text"
+                                    >{{ i18nMappingObj.change }}</erd-button
+                                >
+                            </div>
+                            <div class="el-upload__tip">{{ i18nMappingObj.imgTips }}</div>
+                        </template>
+                    </fam-upload>
+                </div>
+            </div>
+        </template>
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

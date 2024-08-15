@@ -1,0 +1,96 @@
+<div
+    id="singleSelect"
+    class="flex flex-column h-100p"
+>
+    <div class="flex justify-between mb-8 plr-16">
+        <span>{{title}}</span>
+        <erd-checkbox
+            v-if="innerShowCheckbox"
+            v-model="checkAll"
+            @change="onCheckAll"
+        >
+            {{i18n.selectedAll}}
+        </erd-checkbox>
+    </div>
+    <div class="mb-8 plr-16">
+        <erd-input
+            v-model="searchValue"
+            ref="input"
+            :placeholder="placeholder"
+            clearable
+        >
+            <template
+                slot="suffix"
+                class="flex"
+            >
+                <erd-icon
+                    class="align-items-center cursor-pointer"
+                    icon="search"
+                    @click="onSearch"
+                ></erd-icon>
+            </template>
+        </erd-input>
+    </div>
+    <erd-scrollbar class="grow-1">
+        <erd-ex-tree
+            ref="treeRef"
+            v-bind="$attrs"
+            :class="{'innerShowCheckbox': innerShowCheckbox}"
+            :data="treeData"
+            :props="innerProps"
+            :node-key="nodeKey"
+            :show-checkbox="innerShowCheckbox"
+            :expand-on-click-node="false"
+            :filter-node-method="filterNodeMethod"
+            :default-expand-all="defaultExpandAll"
+            :default-expanded-keys="defaultExpandedKeys"
+            check-on-click-node
+            :check-strictly="checkStrictly"
+            @check="handleChange"
+        >
+            <template slot-scope="{node, data}">
+                <div class="flex align-items-center w_100p">
+                    <div
+                        :ref="'treeContent_' + data[nodeKey]"
+                        class="tree-content"
+                        :style="data.style || style"
+                    >
+                        <erd-show-tooltip
+                            placement="top"
+                            :key="data[nodeKey]"
+                            :content="node.label"
+                            @hook:mounted="tooWide(data)"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <span
+                                    :ref="'titleText_' + data[nodeKey]"
+                                    class="title_text"
+                                    :class="{'color-disabled': data[innerProps.disabled], 'cursor-not-allowed': data[innerProps.disabled]}"
+                                >
+                                    {{node.label}}
+                                    <erd-tag
+                                        v-if="!data.tooWide && data.roleLevel && data.roleLevel !== 'NORMAL'"
+                                        class="m-4"
+                                        type="success"
+                                        size="mini"
+                                    >
+                                        {{data.roleLevelDisplayName}}
+                                    </erd-tag>
+                                </span>
+                            </template>
+                        </erd-show-tooltip>
+                    </div>
+                    <erd-tag
+                        v-if="data.tooWide && data.roleLevel && data.roleLevel !== 'NORMAL'"
+                        :ref="'tag_' + data[nodeKey]"
+                        class="m-4"
+                        type="success"
+                        size="mini"
+                    >
+                        {{data.roleLevelDisplayName}}
+                    </erd-tag>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

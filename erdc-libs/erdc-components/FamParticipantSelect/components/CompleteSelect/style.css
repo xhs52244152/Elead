@@ -1,0 +1,28 @@
+#CompleteSelect .el-input__suffix {
+  display: flex;
+}
+#CompleteSelect .el-input__suffix .el-input__suffix-inner {
+  align-items: center;
+  font-size: 16px;
+}
+#CompleteSelect .complete-select {
+  line-height: 32px;
+}
+#CompleteSelect .complete-select:hover {
+  background-color: var(--colorHover);
+}
+#CompleteSelect .complete-select .complete-icon {
+  top: 8px;
+  right: 16px;
+  font-size: 16px;
+}
+#CompleteSelect .complete-select .complete-icon:hover {
+  color: var(--colorPrimary);
+}
+#CompleteSelect .el-tag {
+  margin-left: 8px !important;
+  margin-top: 8px;
+}
+#CompleteSelect .complete-tag {
+  max-width: 100px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,224 @@
+<div
+    id="bpm-template-content"
+    class="bpm-template-content h_100p"
+    v-cloak
+>
+    <fam-resizable-container
+        :left.sync="left"
+        class="h_100p"
+    >
+        <template v-slot:left>
+            <div class="tree-management h_100p flex flex-column">
+                <div class="tree-header">
+                    <div
+                        ref="header"
+                        class="tree-title"
+                    >
+                        {{ i18nMappingObj['流程类型'] }}
+                    </div>
+                    <div class="search">
+                        <erd-input
+                            :placeholder="i18nMappingObj['搜索关键字']"
+                            class="fam-type-tree__search"
+                            v-model="searchValue"
+                            suffix-icon="erd-iconfont erd-icon-search"
+                            clearable
+                            autofocus
+                        ></erd-input>
+                    </div>
+                </div>
+                <erd-scrollbar
+                    class="grow-1"
+                    wrap-style="overflow: hidden auto;"
+                    v-loading="treeLoading"
+                >
+                    <erd-ex-tree
+                        v-if="!treeLoading"
+                        ref="erdExTree"
+                        class="erd-ex-tree-content"
+                        :data="listData"
+                        node-key="oid"
+                        :props="{ label: 'displayName', children: 'childList' }"
+                        :expand-on-click-node="false"
+                        :draggable="true"
+                        default-expand-all
+                        highlight-current
+                        :allow-drop="allowDrop"
+                        :allow-drag="allowDrag"
+                        @node-click="handleNodeClick"
+                        @node-drop="nodeDrop"
+                        @hook:mounted="initErdExTree"
+                        :filter-node-method="filterNode"
+                    >
+                        <span
+                            class="custom-tree-node pr-normal"
+                            slot-scope="{ node, data }"
+                        >
+                            <erd-input
+                                ref="erdInput"
+                                v-if="data.isEdit"
+                                size="mini"
+                                v-model="data.displayName"
+                                autofocus
+                                :maxlength="30"
+                                @click.native.stop
+                                @blur="appendCategory({ node, data })"
+                                @keyup.enter.native="appendCategory({ node, data })"
+                            ></erd-input>
+                            <span
+                                v-else
+                                class="flex align-items-center truncate"
+                                :title="node.label"
+                            >
+                                <template v-if="isApplication(node.data) && node.data.icon">
+                                    <img
+                                        v-if="node.data.icon"
+                                        style="width: 1em; height: 1em"
+                                        class="mr-4"
+                                        :src="node.data.icon"
+                                        alt=""
+                                    />
+                                    <erd-icon
+                                        v-else
+                                        icon="loading"
+                                        style="animation: loading-rotate 2s linear infinite"
+                                    ></erd-icon>
+                                </template>
+                                <span class="truncate">{{node.label}}</span>
+                            </span>
+                            <span class="edit-hover">
+                                <erd-button
+                                    v-if="data.addSub"
+                                    type="text"
+                                    size="mini"
+                                    icon="erd-iconfont erd-icon-add-document"
+                                    @click.stop="handlerClick(node, data, 'create')"
+                                ></erd-button>
+                                <erd-button
+                                    v-if="data.delete"
+                                    type="text"
+                                    size="mini"
+                                    icon="erd-iconfont erd-icon-edit3"
+                                    @click.stop="handlerClick(node, data, 'update')"
+                                ></erd-button>
+                                <erd-button
+                                    v-if="data.edit"
+                                    type="text"
+                                    size="mini"
+                                    icon="erd-iconfont erd-icon-delete2"
+                                    @click.stop="handlerClick(node, data, 'delete')"
+                                ></erd-button>
+                            </span>
+                        </span>
+                    </erd-ex-tree>
+                </erd-scrollbar>
+            </div>
+        </template>
+        <template v-slot:right>
+            <div class="bpm-template-content-table h_100p">
+                <fam-view-table
+                    ref="famViewTable"
+                    :view-table-config="viewTableConfig"
+                    @action-click="actionClick"
+                    @handler-data="handlerData"
+                >
+                    <template #column:default:operation:content="{ scope }">
+                        <fam-action-pulldown
+                            :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                            :is-operation="true"
+                            :action-config="getActionConfig(scope.row)"
+                            :action-data="scope.row"
+                            @click="actionClick"
+                        ></fam-action-pulldown>
+                    </template>
+                </fam-view-table>
+            </div>
+        </template>
+    </fam-resizable-container>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        :show-fullscreen="false"
+        @close="bpmFlowchart.processDefinitionId = ''"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+
+    <!-- 复制流程, 导入流程 -->
+    <erd-ex-dialog
+        :visible.sync="dialogObj.visible"
+        :title="dialogObj.title"
+        ref="erdExDialog"
+    >
+        <componets
+            v-if="dialogObj.visible"
+            v-bind="dialogObj.props"
+            :is="dialogObj.is"
+            :ref="dialogObj.is"
+            :app-name="appName"
+            @on-import-success="onImportSuccess"
+            @on-import-error="onImportError"
+        ></componets>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="dialogObj.loading"
+                @click="!dialogObj.loading && dialogObj.handleClick()"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ visible: false })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 流程设计器 -->
+    <erd-ex-dialog
+        :visible.sync="editorForm.visible"
+        custom-class="bpm-process-editor"
+        fullscreen
+        destroy-on-close
+        :show-close="false"
+        :show-fullscreen="false"
+    >
+        <template #title v-if="editorForm.visible">
+            <div class="bpm-process-editor__title">
+                <div class="bpm-process-editor__title-text erd-ex-dialog__title">
+                    <span class="bpm-process-editor__name">{{ i18n['流程设计'] }}</span>
+                    <erd-tooltip v-if="template" :content="template.name"><span>{{ template.name }}</span></erd-tooltip>
+                </div>
+                <div>
+                    <erd-button
+                        v-if="!editorForm.readonly"
+                        type="primary"
+                        @click="checkIfCheckinNeeded"
+                    >
+                        {{ i18n.save }}
+                    </erd-button>
+                    <erd-button @click="editorForm.visible = false;refreshTable();">
+                        {{ i18n.cancel }}
+                    </erd-button>
+                </div>
+            </div>
+        </template>
+
+        <bpm-process-editor
+            ref="editor"
+            v-if="editorForm.visible"
+            :template-vid="editorForm.templateVId"
+            :template-oid="editorForm.templateId"
+            :process-definition-id.sync="editorForm.processDefinitionId"
+            :categoryRef="editorForm.categoryRef"
+            :app-name="editorForm.appName"
+            :readonly="editorForm.readonly"
+            @create-success="editorForm.visible = false;refreshTable();"
+            @update-success="editorForm.visible = false;refreshTable();"
+            @template-change="template = $event"
+        ></bpm-process-editor>
+    </erd-ex-dialog>
+</div>

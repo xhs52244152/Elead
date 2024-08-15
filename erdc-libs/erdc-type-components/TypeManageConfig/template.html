@@ -1,0 +1,80 @@
+<div id="TypeManageConfig">
+    <erd-ex-dialog
+        size="large"
+        :title="title"
+        :visible.sync="innerVisible"
+        close-on-press-escape
+    >
+        <div class="TypeManageConfig">
+            <FamDynamicForm
+                ref="editForm"
+                :form.sync="formData"
+                :data="formConfig"
+                @form-change="formChange"
+                v-cloak
+            >
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group
+                        style="width: 100%"
+                        v-model="scope.data[scope.formConfig.field]"
+                        :disabled="scope.data[scope.formConfig.field + '_checked']"
+                    >
+                        <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:codeDefCodeComponent="scope">
+                    <component
+                        v-if="isShowCodeDefCodeComponent"
+                        v-model="scope.data[scope.formConfig.field]"
+                        :is="scope.formConfig.component"
+                        :disabled="scope.formConfig.disabled"
+                        :hidden="scope.formConfig.hidden"
+                        :readonly="scope.formConfig.readonly"
+                        :required="scope.formConfig.required"
+                        v-bind="scope.formConfig.props"
+                    ></component>
+                    <erd-button
+                        type="fill-icon"
+                        icon="erd-iconfont erd-icon-create"
+                        :disabled="scope.formConfig.disabled"
+                        @click="createCodeRule"
+                    ></erd-button>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submitEditForm()"
+                :disabled="disabled"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        v-if="visible2"
+        size="large"
+        :visible.sync="visible2"
+        title="创建编码规则"
+    >
+        <code-rule-form
+            ref="codeRuleForm"
+            :app-name="appName"
+            :type-oid="oid"
+        ></code-rule-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="codeRuleSubmit"
+                >确定</erd-button
+            >
+            <erd-button @click="visible2 = false">取消</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,57 @@
+<div id="permissionSettingTable">
+    <expansion-folding-block :title="i18nMappingObj.setPermission">
+        <template #baseinfo:form:expansion:panel>
+            <div class="permission-setting-table-tips color-placeholder">{{i18nMappingObj.setPermissionTips}}</div>
+            <fam-erd-table
+                ref="famAdvancedTable"
+                border
+                :data="tableData"
+                :column="tableColumns"
+                :column-config="{ resizable: true }"
+            >
+                <!-- 表格列插槽 -->
+                <template #column:default:grantPermission="{ data }">
+                    <div class="custom-table-columns-cell">
+                        <erd-radio
+                            v-model="data.row.selectField"
+                            @change="handlerChangeRadio(data, 'grantPermission')"
+                            label="grantPermission"
+                        >
+                            {{ }}
+                        </erd-radio>
+                    </div>
+                </template>
+                <template #column:default:denialOfPermission="{ data }">
+                    <div class="custom-table-columns-cell">
+                        <erd-radio
+                            v-model="data.row.selectField"
+                            @change="handlerChangeRadio(data, 'denialOfPermission')"
+                            label="denialOfPermission"
+                            >{{ }}</erd-radio
+                        >
+                    </div>
+                </template>
+                <template #column:default:absoluteDenialOfPermission="{ data }">
+                    <div class="custom-table-columns-cell">
+                        <erd-radio
+                            v-model="data.row.selectField"
+                            @change="handlerChangeRadio(data, 'absoluteDenialOfPermission')"
+                            label="absoluteDenialOfPermission"
+                            >{{ }}</erd-radio
+                        >
+                    </div>
+                </template>
+                <template #column:default:noPermission="{ data }">
+                    <div class="custom-table-columns-cell">
+                        <erd-radio
+                            v-model="data.row.selectField"
+                            @change="handlerChangeRadio(data, 'noPermission')"
+                            label="noPermission"
+                            >{{ }}</erd-radio
+                        >
+                    </div>
+                </template>
+            </fam-erd-table>
+        </template>
+    </expansion-folding-block>
+</div>

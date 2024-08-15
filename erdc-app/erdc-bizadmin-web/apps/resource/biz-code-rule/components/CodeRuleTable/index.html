@@ -1,0 +1,99 @@
+<div
+    id="CodeRuleTable"
+    class="h_100p"
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        @action-click="actionClick"
+        @basic-filter-change="basicFilterChange"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="onCommand"
+            ></fam-action-pulldown>
+        </template>
+        <template v-slot:[nameSlot]="{ scope }">
+            <span
+                class="my-link-btn"
+                v-if="!scope.row.globalSequence"
+                @click="onDetail(scope.row)"
+            >
+                {{scope.row[$store.getters.className('codeRule') + '#name']}}
+            </span>
+            <span v-else>{{scope.row[$store.getters.className('codeRule') + '#name']}}</span>
+        </template>
+        <template v-slot:[codeSlot]="{ scope }">
+            <span
+                class="my-link-btn"
+                v-if="!scope.row.globalSequence"
+                @click="onDetail(scope.row)"
+            >
+                {{scope.row[$store.getters.className('codeRule') + '#code']}}
+            </span>
+            <span v-else>{{scope.row[$store.getters.className('codeRule') + '#code']}}</span>
+        </template>
+    </fam-view-table>
+
+    <erd-ex-dialog
+        v-if="visibleValue"
+        size="large"
+        :title="title"
+        :visible="visibleValue"
+        @close="closeForm"
+    >
+        <code-rule-form
+            ref="codeRuleForm"
+            :oid="oid"
+        ></code-rule-form>
+
+        <template #footer>
+            <erd-button
+                :loading="ruleLoading"
+                type="primary"
+                @click="onSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="closeForm">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        :title="i18n.setPipelining"
+        :visible.sync="visibleValue2"
+    >
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="formConfig"
+        >
+        </FamDynamicForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="serialCodeLoading"
+                @click="serialCodeSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="visibleValue2 = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="CodeImport"
+        :request-config="importRequestConfig"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        businessName="CodeExport"
+        :visible.sync="exportVisible"
+        :request-config="exportRequestConfig"
+    ></fam-export>
+</div>

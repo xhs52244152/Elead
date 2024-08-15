@@ -1,0 +1,30 @@
+<erd-ex-dialog
+    :visible.sync="innerVisible"
+    :title="title"
+    width="1200px"
+>
+    <!-- 列配置内容组件 -->
+    <erd-ex-transfer
+        v-if="innerVisible"
+        ref="FamColumnSet"
+        :all-columns-list="allColumnsList"
+        :default-selected="defaultColumnsList"
+        :left-title="i18n.optionalFields"
+        :right-title="i18n.selectedFields"
+        v-bind="$attrs"
+        @change="columnsChange"
+    ></erd-ex-transfer>
+    <span
+        slot="footer"
+        class="dialog-footer"
+    >
+        <el-button
+            v-for="(item, index) in buttonsList"
+            :type="item.btnType"
+            :key="item.type"
+            :disabled="item.disabled"
+            @click="buttonClick(item.type)"
+            >{{ item.name }}</el-button
+        >
+    </span>
+</erd-ex-dialog>

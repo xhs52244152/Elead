@@ -1,0 +1,51 @@
+<div
+    id="AttrDefineDetail"
+    ref="AttrDefineDetail"
+    class="p-xl"
+>
+    <div>
+        <div class="flex attr-header">
+            <erd-tooltip
+                class="item"
+                effect="dark"
+                :content="title"
+                placement="top-start"
+                ><div class="title">{{title}}</div>
+            </erd-tooltip>
+
+            <div class="operation">
+                <erd-button
+                    type="primary"
+                    @click="onEdit"
+                >
+                    {{i18nMappingObj.edit}} </erd-button
+                ><erd-button @click="onDelete"> {{i18nMappingObj.delete}} </erd-button>
+            </div>
+        </div>
+        <div class="content">
+            <div>
+                <FamDynamicForm
+                    ref="dynamicForm"
+                    :form="formData"
+                    :data="data"
+                    :readonly="true"
+                >
+                    <template v-slot:radioComponent="scope">
+                        <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                            <erd-radio :label="true">是</erd-radio>
+                            <erd-radio :label="false">否</erd-radio>
+                        </erd-radio-group>
+                    </template>
+                </FamDynamicForm>
+            </div>
+        </div>
+    </div>
+    <basic-infor-config
+        v-if="basicInforConfigVisible"
+        :visible.sync="basicInforConfigVisible"
+        :title="i18nMappingObj.basicConfiguration"
+        :oid="oid"
+        @onsubmit="onSubmit"
+    >
+    </basic-infor-config>
+</div>

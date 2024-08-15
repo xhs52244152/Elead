@@ -1,0 +1,276 @@
+define([], function () {
+    const languageObj = {
+        是否显示工艺符号: { CN: '是否显示工艺符号', EN: 'Show Symbol' },
+        是否显示按钮: { CN: '是否显示按钮', EN: 'Show Button' },
+        数据校验未通过: { CN: '数据校验未通过', EN: 'Failure to pass data validation' },
+        表单布局: { CN: '表单布局', EN: 'Work Area' },
+        创建时间: { CN: '创建时间', EN: 'Created on' },
+        '请从左侧列表中选择一个组件, 然后用鼠标拖动组件放置于此处': {
+            CN: '请从左侧列表中选择一个组件, 然后用鼠标拖动组件放置于此处',
+            EN: 'Please select a component from the list on the left, then drag and drop it here'
+        },
+        组件: { CN: '组件', EN: 'Components' },
+        属性: { CN: '属性', EN: 'Attributes' },
+        基础组件: { CN: '基础组件', EN: 'Basic Components' },
+        高级组件: { CN: '高级组件', EN: 'High-Level Components' },
+        自定义组件: { CN: '自定义组件', EN: 'Custom Components' },
+        请输入: { CN: '请输入', EN: 'Please input' },
+        布局信息: { CN: '布局信息', EN: 'Form Configs' },
+        组件信息: { CN: '组件信息', EN: 'Component Configs' },
+        内部名称: { CN: '内部名称', EN: 'Internal Name' },
+        布局类型: { CN: '布局类型', EN: 'Layout Type' },
+        显示名称: { CN: '显示名称', EN: 'Display Name' },
+        日期绑定值格式: { CN: '日期绑定值格式', EN: 'Date Binding Value Format' },
+        描述: { CN: '描述', EN: 'Description' },
+        栅格: { CN: '栅格', EN: 'Grid' },
+        columnNumberTips: { CN: '组件占宽，填入 1 ~ 24 的整数', EN: 'Column Number([1, 24])' },
+        是否禁用: { CN: '是否禁用', EN: 'Disabled' },
+        是否必填: { CN: '是否必填', EN: 'Required' },
+        defaultValue: { CN: '默认值', EN: 'Default Value' },
+        "仅支持英文字母、数字与'_'、'.'": {
+            CN: "仅支持英文字母、数字与'_'、'.'",
+            EN: "Only letters, numbers and '_', '.' are supported."
+        },
+        内部名称格式不正确: { CN: '内部名称格式不正确', EN: 'Incorrect internal name format' },
+        请选择: { CN: '请选择', EN: 'Please select' },
+        布局信息错误: { CN: '布局信息错误', EN: 'Layout information error' },
+        可清空: { CN: '可清空', EN: 'Clearable' },
+        类型: { CN: '类型', EN: 'Type' },
+        文本框: { CN: '文本框', EN: 'Text' },
+        文本域: { CN: '文本域', EN: 'Textarea' },
+        提示信息: { CN: '提示信息', EN: 'Placeholder' },
+        帮助信息: { CN: '帮助信息', EN: 'Tooltip' },
+        行数: { CN: '行数', EN: 'Rows' },
+        是否多选: { CN: '是否多选', EN: 'Multiple' },
+        未关联属性: { CN: '未关联属性', EN: 'did not associated with internal name' },
+        同步到子布局: { CN: '同步到子布局', EN: 'Sync to Child Layouts' },
+        自动获得焦点: { CN: '自动获得焦点', EN: 'Auto Focus' },
+        是否只读: { CN: '是否只读', EN: 'Readonly' },
+        是否隐藏: { CN: '是否隐藏', EN: 'Hidden' },
+        数据项: { CN: '数据项', EN: 'Dictionary Item' },
+        数据类型: { CN: '数据类型', EN: 'Data Type' },
+        字符串: { CN: '字符串', EN: 'String' },
+        对象: { CN: '对象', EN: 'Object' },
+        数组: { CN: '数组', EN: 'Array' },
+        选项: { CN: '选项', EN: 'Options' },
+        名称: { CN: '名称', EN: 'Name' },
+        数据值: { CN: '数据值', EN: 'Value' },
+        状态: { CN: '状态', EN: 'Status' },
+        是否范围选择: { CN: '是否范围选择', EN: 'Range selection' },
+        默认标签: { CN: '默认标签', EN: 'Label Defaults' },
+        默认图标: { CN: '默认图标', EN: 'Icon' },
+        显示按钮样式: { CN: '显示按钮样式', EN: 'Display button style' },
+        按钮名称: { CN: '按钮名称', EN: 'Button Name' },
+        带有边框: { CN: '带有边框', EN: 'Bordered' },
+        打开时的文字描述: { CN: '打开时的文字描述', EN: 'Text description when opening' },
+        关闭时的文字描述: { CN: '关闭时的文字描述', EN: 'Text description when closing' },
+        打开时的值: { CN: '打开时的值', EN: 'Open value' },
+        关闭时的值: { CN: '关闭时的值', EN: 'Value at close' },
+        打开时的背景色: { CN: '打开时的背景色', EN: 'Background color when open' },
+        关闭时的背景色: { CN: '关闭时的背景色', EN: 'Closing the background color' },
+        分类标题: { CN: '分类标题', EN: 'Classification title' },
+        是否默认展开: { CN: '是否默认展开', EN: 'Auto Expand' },
+        标签页: { CN: '标签页', EN: 'Tabs' },
+        新增标签页: { CN: '新增标签页', EN: 'Add Tabs' },
+        激活: { CN: '激活', EN: 'Active' },
+        操作: { CN: '操作', EN: 'Options' },
+        显示组件: { CN: '显示组件', EN: 'Component' },
+        插槽名称: { CN: '插槽名称', EN: 'Slot Name' },
+        枚举类: { CN: '枚举类', EN: 'Enum Class' },
+        包含停用人员: { CN: '包含停用人员', EN: 'Include Disabled' },
+        搜索范围: { CN: '搜索范围', EN: 'Search Scope' },
+        全局: { CN: '全局', EN: 'Global' },
+        当前租户: { CN: '当前租户', EN: 'Current Tenant' },
+        回显字段: { CN: '回显字段', EN: 'Echo Field' },
+        请求地址: { CN: '请求地址', EN: 'Request Address' },
+        值字段: { CN: '值字段', EN: 'Value Property' },
+        展示字段: { CN: '展示字段', EN: 'Label Property' },
+        附带参数: { CN: '附带参数', EN: 'Payload' },
+        请求方法: { CN: '请求方法', EN: 'Request Method' },
+        请填入显示名称: { CN: '请填入显示名称', EN: 'Please Input Display Name' },
+        长度限制: { CN: '长度限制', EN: 'Max Length' },
+        '限制内容输入长度，填入0代表不作限制': {
+            CN: '限制内容输入长度，填入0代表不作限制',
+            EN: 'Limit the input length of the content, fill in 0 means no limit'
+        },
+        '限制文本域高度，填入0代表不作限制': {
+            CN: '限制文本域高度，填入0代表不作限制',
+            EN: 'Limit the height of the text box, fill in 0 means no limit'
+        },
+        '回显人员信息时所使用的字段，通常这个字段包含用户的所有信息': {
+            CN: '回显人员信息时所使用的字段，通常这个字段包含用户的所有信息',
+            EN: 'The field used when echoing personnel information, usually this field contains all the information of the user'
+        },
+        'widget-field-tooltip': { CN: '填入属性名称', EN: 'Fill in the property name.' },
+        system: { CN: '系统默认', EN: 'System default.' },
+        custom: { CN: '自定义生成', EN: 'Custom generated.' },
+        autoGeneration: { CN: '自动生成', EN: 'Automatic generation.' },
+        codeGenerate: { CN: '编码生成器生成', EN: 'The code generator to generate.' },
+        codingAttr: { CN: '关联编码属性', EN: 'Associated encoding attribute.' },
+        是否可搜索: { CN: '是否可搜索', EN: 'Could you search.' },
+        选中数据类型: { CN: '选中数据类型', EN: 'The selected data type.' },
+        自定义上传地址: { CN: '自定义上传地址', EN: 'Custom Address.' },
+        是否点击名称下载: { CN: '是否点击名称下载', EN: 'Do you want to click on the name to download.' },
+        最大值: { CN: '最大值', EN: 'Max' },
+        最小值: { CN: '最小值', EN: 'Min' },
+        '限制输入最小值，不输入为负无穷大': {
+            CN: '限制输入最小值，不输入为负无穷大',
+            EN: 'Limit the input minimum value, no input is negative infinity.'
+        },
+        '限制输入最大值，不输入为无穷大': {
+            CN: '限制输入最大值，不输入为无穷大',
+            EN: 'Limit the maximum input value to infinity without input.'
+        },
+        计数器步长: { CN: '计数器步长', EN: 'Counter step' },
+        '增加或减小时，每次增加或减小的幅度': {
+            CN: '增加或减小时，每次增加或减小的幅度',
+            EN: 'Increase or decrease in hours, the amount of each increase or decrease.'
+        },
+        数值精度: { CN: '数值精度', EN: 'Numerical accuracy' },
+        视图表格key: { CN: '视图表格key', EN: 'View table key' },
+        视图表格key提示: { CN: '对应的视图表格的key值', EN: 'The key value of the corresponding view table.' },
+        导航栏字段配置: { CN: '导航栏字段配置', EN: 'Navigation bar field configuration' },
+        导航栏字段配置tips: {
+            CN: '导航栏对应后端字段，可以是一个多层级的字段',
+            EN: 'The navigation bar corresponds to the back-end field, which can be a multi-level field.'
+        },
+        是否显示导航栏: { CN: '是否显示导航栏', EN: 'Whether to display the navigation bar.' },
+        是否显示另存为: { CN: '是否显示另存为', EN: 'Whether to hide the navigation bar.' },
+        是否显示序号: { CN: '是否显示序号', EN: 'Whether to add serial number.' },
+        是否显示操作列: { CN: '是否显示操作列', EN: 'Whether to add an action column.' },
+        是否显示单选框: { CN: '是否显示单选框', EN: 'Whether to add an option box.' },
+        是否显示多选框: { CN: '是否显示多选框', EN: 'Whether to add an option box.' },
+        是否超链接: { CN: '是否超链接', EN: 'Hyperlink or not.' },
+        超链接字段: { CN: '超链接字段', EN: 'Hyperlink field.' },
+        超链接字段tips: {
+            CN: '超链接字段，整个视图表格只能有一个超链接字段',
+            EN: 'Hyperlink field: There can only be one hyperlink field in the entire view table.'
+        },
+        是否显示分页器: { CN: '是否显示分页器', EN: 'Display page or not.' },
+        分页器下标字段: { CN: '分页器下标字段', EN: 'Page subscript field.' },
+        分页器下标字段tips: { CN: '接口接收分页器下标传参字段', EN: 'Interface paging table parameter field.' },
+        分页器页码字段: { CN: '分页器页码字段', EN: 'Pager page number field.' },
+        分页器页码字段tips: {
+            CN: '接口接收分页器页码传参字段',
+            EN: 'The interface receives pager page number parameter field.'
+        },
+        是否显示操作列配置: { CN: '是否显示操作列配置', EN: 'Whether to display the operation column configuration.' },
+        是否显示刷新按钮: { CN: '是否显示刷新按钮', EN: 'Whether to display a refresh button.' },
+        是否显示搜索: { CN: '是否显示搜索', EN: 'Show search or not.' },
+        搜索栏提示: { CN: '搜索栏提示', EN: 'Search bar prompt.' },
+        搜索栏提示tips: { CN: '显示搜索的时候配置生效', EN: 'Search bar prompt.' },
+        是否显示基础筛选: { CN: '是否显示基础筛选', EN: 'Whether to display base filters.' },
+        基础筛选显示最大数量: { CN: '基础筛选显示最大数量', EN: 'Base filter shows the maximum number.' },
+        是否显示高级筛选: { CN: '是否显示高级筛选', EN: 'Whether to display advanced filtering.' },
+        表头按钮配置名称: { CN: '表头按钮配置名称', EN: 'Table header button configuration name.' },
+        表头按钮配置容器oid: { CN: '表头按钮配置容器oid', EN: 'Header button configuration container oid.' },
+        操作按钮配置名称: { CN: '操作按钮配置名称', EN: 'Action button configuration name.' },
+        displayView: { CN: '显示视图', EN: 'Display view.' },
+        variables: { CN: '变量', EN: 'Variables' },
+        config: { CN: '配置', EN: 'Config' },
+        formConfigurations: { CN: '方法&变量', EN: 'Methods and Variables' },
+        formConfigurationsTips: {
+            CN: '通过代码定制表单交互逻辑',
+            EN: 'Customize form interaction logic through code\n'
+        },
+        methodDefinition: { CN: '方法定义', EN: 'Methods' },
+        variableDefinition: { CN: '变量定义', EN: 'Variables' },
+        delete: { CN: '删除', EN: 'Delete' },
+        edit: { CN: '编辑', EN: 'Edit' },
+        create: { CN: '创建', EN: 'Create' },
+        confirm: { CN: '确定', EN: 'Confirm' },
+        cancel: { CN: '取消', EN: 'Cancel' },
+        'confirm-delete-method': { CN: '确认删除此方法？', EN: 'Confirm delete this method.' },
+        'confirm-delete-variable': { CN: '确认删除此变量？', EN: 'Confirm delete this variable.' },
+        nameRule: {
+            CN: '唯一，且遵循 JavaScript 变量命名语法',
+            EN: 'Unique, and follow javascript variable naming syntax'
+        },
+        yes: { CN: '是', EN: 'Yes' },
+        no: { CN: '否', EN: 'No' },
+        editSourceCode: { CN: '编辑方法体', EN: 'Edit Function' },
+        invalidFunction: {
+            CN: '方法/变量数据不合法，请检查数据',
+            EN: 'Method variable data is invalid, please check the data'
+        },
+        alert: { CN: '提示', EN: 'Alert' },
+        slotComponent: { CN: '插槽实现', EN: 'Slot Component' },
+        slotComponentTips: {
+            CN: '绑定的方法应当返回一个 Vue 能识别的同步/异步组件',
+            EN: 'The bound method should return a synchronous and asynchronous component that vue can recognize.'
+        },
+        container: { CN: '容器团队', EN: 'Container team' },
+        associatedAttribute: { CN: '关联属性', EN: 'Associated attribute' },
+        relationView: { CN: '是否关系视图', EN: 'Relation view' },
+        viewTableKey: { CN: '视图表格key', EN: 'View table key' },
+        supportImageFormats: { CN: '支持图片格式', EN: 'Support image formats' },
+        supportImageCount: { CN: '支持图片数量', EN: 'Number of supported images' },
+        previewOrNot: { CN: '是否预览', EN: 'Preview or not' },
+        supportImageSize: { CN: '图片最大(M/张)', EN: 'Maximum image (M/ photo)' },
+        tips: { CN: '提示信息', EN: 'Prompt message' },
+        thumbnailSize: { CN: '展示图片大小', EN: 'Thumbnail Size' },
+        imageLimtTips: {
+            CN: '限制上传图片数量, 最大支持10张',
+            EN: 'Limit the number of uploaded images to a maximum of 10'
+        },
+        imageSizeTips: {
+            CN: '限制上传图片大小, 最大支持10MB',
+            EN: 'Limit the size of uploaded images to a maximum of 10MB'
+        },
+        tipsTooltip: {
+            CN: '请输入显示在图片上传组件旁边的提示信息, 最多50个字符',
+            EN: 'Please enter the prompt displayed next to the image upload component Up to 50 characters'
+        },
+        thumbnailSizeTips: {
+            CN: '展示图片宽高 例:(100px*100px)',
+            EN: 'Example of displaying image width and height: (100px * 100px)'
+        },
+        viewHeight: { CN: '视图高度', EN: 'View height' },
+        viewHeightTooltip: {
+            CN: '输入正整数，设置表格固定高度，0表示自适应',
+            EN: "Enter a positive integer to set the table's fixed height. 0 indicates adaptive."
+        },
+        maxLine: { CN: '最大显示数量', EN: 'Max line' },
+        maxLineTooltip: {
+            CN: '输入正整数，设置表格最大显示数据数量，0表示自动撑开',
+            EN: 'Enter a positive integer to set the maximum amount of data displayed in the table. 0 indicates that the table is automatically opened.'
+        },
+
+        USER: { CN: '用户', EN: 'USER' },
+        ROLE: { CN: '角色', EN: 'ROLE' },
+        GROUP: { CN: '群组', EN: 'GROUP' },
+        ORG: { CN: '部门', EN: 'ORG' },
+        FUZZYSEARCH: { CN: '模糊搜索', EN: 'Fuzzy search' },
+        RECENTUSE: { CN: '最近使用', EN: 'Recent use' },
+        queryTarget: { CN: '查询目标对象', EN: 'Query target object' },
+        setQueryTarget: { CN: '设置查询目标方式', EN: 'Set the query target mode' },
+        defaultMode: { CN: '默认方式', EN: 'Default mode' },
+        defaultLookupMode: { CN: '默认查找方式', EN: 'Default lookup mode' },
+        isSearchByPath: { CN: '是否按路径查找', EN: 'Whether to search by path' },
+        queryMode: { CN: '查询方式', EN: 'Query mode' },
+        queryScope: { CN: '查询范围', EN: 'Query scope' },
+        global: { CN: '全局', EN: 'Global' },
+        fullTenant: { CN: '全租户', EN: 'Full tenant' },
+        team: { CN: '团队', EN: 'Team' },
+        teamRole: { CN: '团队角色', EN: 'Team role' },
+        dataSource: { CN: '数据来源', EN: 'Data source' },
+        appName: { CN: '所属应用', EN: 'App Name' },
+        unitMeasurement: { CN: '测量单位', EN: 'Unit of measurement' },
+        unitPrefix: { CN: '单位前置', EN: 'Unit prefix' },
+        refreshTab: { CN: '是否重复加载', EN: 'Reloading or not' },
+        path: { CN: '链接', EN: 'Link' },
+        pathTips: {
+            CN: '链接路径规则：xxxx#/xxx/${oid}?xxx=${xxx}，其中${}中的内容是表单对应的属性名称，如果使用外网，需要填写完整http/https',
+            EN: 'Link path rule: xxxx#/xxx/${oid}? xxx=${xxx}, where ${} is the property name corresponding to the form, If the Internet is used, enter http/https'
+        },
+        default: { CN: '默认', EN: 'Defult' },
+        card: { CN: '选项卡样式', EN: 'TAB style' },
+        borderCard: { CN: '卡片化', EN: 'Carding' },
+        className: { CN: '业务className', EN: 'Busiznee ClassName' },
+        filterSecurityLabel: { CN: '过滤用户密级', EN: 'Filter security label' }
+    };
+
+    return {
+        i18n: languageObj
+    };
+});

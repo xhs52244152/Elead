@@ -1,0 +1,63 @@
+<div
+    id="portal-message"
+    class="portal-message-container"
+>
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :table-height="tableHeight"
+        :view-table-config="viewTableConfig"
+    >
+        <template #left:toolbar:first>
+            <erd-select
+                v-model="curState"
+                @change="handleStateChange"
+            >
+                <erd-option
+                    v-for="(option, index) in states"
+                    :key="index"
+                    :label="option.text"
+                    :value="option.value"
+                >
+                </erd-option>
+            </erd-select>
+        </template>
+        <template #column:default:title:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="handleMsgDetail(scope.row)"
+            >
+                {{ scope.row.subjectTitle }}
+            </erd-button>
+        </template>
+        <template #column:default:state:content="{ scope }">
+            <erd-tag
+                type="danger"
+                v-if="scope.row.readed === '1'"
+            >
+                未读
+            </erd-tag>
+            <erd-tag
+                type="success"
+                v-else-if="scope.row.readed === '2'"
+            >
+                已读
+            </erd-tag>
+        </template>
+        <!-- <template #column:default:operate:content="{ scope }">
+                        <erd-button
+                            type="text"
+                            @click="hanldeMsgReadConfirm(scope.row)"
+                            >{{ i18nMappingObj.markRead }}</erd-button
+                        >
+                        <erd-button
+                            type="text"
+                            @click="handleMsgDeleteConfirm(scope.row)"
+                            >{{ i18nMappingObj.delete }}</erd-button
+                        >
+                    </template> -->
+    </fam-advanced-table>
+    <message-content
+        ref="msgContent"
+        @readed="handleMsgRead"
+    ></message-content>
+</div>

@@ -1,0 +1,6 @@
+.groovy-filter .erd-table-select__list {
+    width: 100%;
+}
+.groovy-filter .fam-dynamic-form .fam-dynamic-form__item .el-form-item__content {
+    overflow: visible;
+}

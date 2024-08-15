@@ -1,0 +1,73 @@
+<div id="signatrueForm">
+    <div class="content">
+        <div>
+            <span class="title">{{i18n.codeRule}}</span>
+            <span>{{i18n.codeRuleTips}}</span>
+        </div>
+        <erd-scrollbar>
+            <div class="feature-code">
+                <div
+                    class="feature-code-item"
+                    v-for="item in codeRuleTable"
+                    :style="style(item.color)"
+                >
+                    <div
+                        class="right-semicircle"
+                        :class="{'active-semicircle': item.activeSemicircle}"
+                        :style="style(item.color)"
+                    ></div>
+                    <div
+                        class="right-semicircle-half"
+                        :style="style(item.color)"
+                    ></div>
+                    <!-- 组件 -->
+                    <div v-if="item.key === 'CONSTANT' || item.key === 'SERIAL_NUM'">
+                        <erd-input
+                            v-model="item.valueCode"
+                            :disabled="item.key !== 'SERIAL_NUM' || type === 'code'"
+                            @input="(data) => onInput(data, item)"
+                        ></erd-input>
+                    </div>
+                    <div v-else-if="item.key === 'DATE'">
+                        <erd-select v-model="item.value" :disabled="true">
+                            <erd-option-group
+                                v-for="(option, k) in item.options"
+                                :key="k"
+                                :label="option.label"
+                            >
+                                <erd-option
+                                    v-for="i in option.children"
+                                    :value="i.value"
+                                    :key="i.value"
+                                    :label="i.label"
+                                ></erd-option>
+                            </erd-option-group>
+                        </erd-select>
+                    </div>
+                    <div v-else>
+                        <erd-tree-select
+                            v-if="item.treeData"
+                            v-model="item.valueCode"
+                            clearable
+                            default-expand-all
+                            node-key="value"
+                            :data="item.treeData"
+                            :props="propsData"
+                            @input="(data) => onChange(data, item)"
+                        >
+                        </erd-tree-select>
+                        <erd-input
+                            v-else
+                            v-model="item.valueCode"
+                            @input="(data) => onChange(data, item)"
+                        ></erd-input>
+                    </div>
+                </div>
+            </div>
+        </erd-scrollbar>
+    </div>
+    <div class="preview">
+        <div>{{i18n.dpreviewate}}</div>
+        <div class="preview-code">{{featureCode}}</div class="">
+    </div>
+</div>

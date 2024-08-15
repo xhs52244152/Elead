@@ -1,0 +1,30 @@
+{
+  "metadata": [
+    {
+      "key": "ELCONF.layout.erdc-bizadmin-web",
+      "name": {
+        "zh_cn": "布局配置",
+        "en_us": "Layout configuration"
+      },
+      "description": {
+        "zh_cn": "布局和应用的适配关系",
+        "en_us": "The fit between layout and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    },
+    {
+      "key": "ELCONF.theme.erdc-bizadmin-web",
+      "name": {
+        "zh_cn": "主题配置",
+        "en_us": "Theme configuration"
+      },
+      "description": {
+        "zh_cn": "主题和应用的适配关系",
+        "en_us": "The fit between theme and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    }
+  ]
+}

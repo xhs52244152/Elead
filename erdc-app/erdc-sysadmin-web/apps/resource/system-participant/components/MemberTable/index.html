@@ -1,0 +1,190 @@
+<div class="fam-member-table ptrl-normal h-100p">
+    <fam-advanced-table
+        :i18n="i18n"
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        isAdaptiveHeight
+        @action-click="actionClick"
+    >
+        <template #column:default:code:content="{ scope }">
+            <span
+                class="vxe-cell--label fontWeightNormal link-text"
+                @click="fnViewMemberDetail(scope.row)"
+            >
+                {{ scope.row.code }}
+            </span>
+        </template>
+        <template #column:default:operation:content="{scope}">
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :extendHideValidate="extendHideValidate"
+                @click="rowActionClick"
+            ></fam-action-pulldown>
+        </template>
+    </fam-advanced-table>
+
+    <!--新增、编辑、查看用户-->
+    <erd-ex-dialog
+        ref="dialog"
+        width="800px"
+        :visible.sync="form.visible"
+        :title="form.editable ? i18nMappingObj.editMember : form.readonly ? i18nMappingObj.readonlyMember : i18nMappingObj.addMember"
+        @close="fnCloseMemberForm"
+    >
+        <MemberForm
+            v-if="form.visible"
+            ref="memberForm"
+            :oid="form.oid"
+            :default-value="form.defaultValue"
+            :editable="form.editable"
+            :readonly="form.readonly"
+            :password-validators="passwordValidators"
+            class="memberForm"
+            @callback="callback"
+        ></MemberForm>
+        <template #footer>
+            <div v-if="form.readonly">
+                <erd-button
+                    v-for="item in viewOperBtnList(currentOperMemberRow)"
+                    v-if="fnIsShowBtn(currentOperMemberRow, item)"
+                    :type="item.type"
+                    :key="item.key"
+                    :class="item.class"
+                    :icon="item.icon"
+                    :disabled="item.disable || false"
+                    @click="item.onclick(currentOperMemberRow, item.clickParams || {})"
+                >
+                    {{item.label}}
+                </erd-button>
+            </div>
+            <div v-else>
+                <erd-button
+                    type="primary"
+                    :loading="form.loading"
+                    @click="fnOnSubmit('memberForm')"
+                    >{{ i18nMappingObj.ok }}
+                </erd-button>
+                <erd-button @click="fnCloseMemberForm">{{ i18nMappingObj.cancel }}</erd-button>
+            </div>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 加入部门 -->
+    <erd-ex-dialog
+        custom-class="joinOrgDialog"
+        ref="joinOrgDialog"
+        :visible.sync="joinOrgForm.joinOrgVisible"
+        :title="i18nMappingObj.joinOrgTitle"
+    >
+        <join-member-select
+            v-if="joinOrgForm.joinOrgVisible"
+            ref="joinMemberSelect"
+            :three-member-env="threeMemberEnv"
+            org-id="orgId"
+        ></join-member-select>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="joinOrgForm.loading"
+                @click="fnSubmitJoinMember"
+                >{{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button @click="joinOrgForm.joinOrgVisible = false">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 离职 -->
+    <erd-ex-dialog
+        ref="dimissionHandoverDialog"
+        :visible.sync="dimission.visible"
+        :title="i18nMappingObj.dimissionTips"
+    >
+        <dimission-handover
+            v-if="dimission.visible"
+            ref="dimissionHandover"
+            org-id="orgId"
+            :multiple="dimission.multiple"
+            :dimission-member-list="dimission.dimissionMember"
+        ></dimission-handover>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="dimission.loading"
+                @click="fnOnSubmitDimission"
+                >{{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button @click="fnCloseDimissionDialog">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 重置密码 -->
+    <erd-ex-dialog
+        ref="resetPasswordDialog"
+        :visible.sync="resetPassword.visible"
+        :title="i18nMappingObj.resetPassword"
+    >
+        <FamDynamicForm
+            v-if="resetPassword.visible"
+            ref="resetPassDynamicForm"
+            :data="formItemData"
+            :validators="passwordValidators"
+            @submit.native.prevent="() => resetPasswordSubmit()"
+        >
+            <template #password-tooltip="scope">
+                <erd-tooltip
+                    :disabled="!passwordRules || !passwordRules.length"
+                    placement="top"
+                    :tabindex="-1"
+                >
+                    <template #content>
+                        <div>
+                            <!-- <p>{{i18n}}</p> -->
+                            <ul>
+                                <li
+                                    v-for="(rule, idx) in passwordRules"
+                                    :key="idx"
+                                >
+                                    {{rule.desc}}
+                                </li>
+                            </ul>
+                        </div>
+                    </template>
+                    <erd-button
+                        type="text"
+                        icon="erd-iconfont erd-icon-help"
+                    ></erd-button>
+                </erd-tooltip>
+            </template>
+        </FamDynamicForm>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="resetPassword.loading"
+                @click="resetPasswordSubmit"
+            >
+                {{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button @click="()=>{resetPassword.visible=false;resetPassword.loading=false;}">
+                {{ i18nMappingObj.cancel }}
+            </erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="UserImport"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!--  导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        :businessName="businessName"
+        :requestConfig="requestConfig"
+    ></fam-export>
+</div>

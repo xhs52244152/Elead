@@ -1,0 +1,41 @@
+<div
+    class="erdc-type-select inline-flex"
+    :class="{ 'erdc-type-select--has-app': showApplicationSelect }"
+>
+    <erd-ex-select
+        v-show="showApplicationSelect"
+        v-model="appValue"
+        class="erdc-type-select__app-select"
+        style="width: 90px"
+        @change="handleApplicationChange"
+    >
+        <erd-option
+            v-for="item in appList"
+            :key="item.oid"
+            :value="item[appValueKey]"
+            :label="item.displayName"
+        ></erd-option>
+    </erd-ex-select>
+
+    <erd-tree-select
+        :value="typeValue"
+        class="erdc-type-select__type-select grow-1"
+        :data="typeTree"
+        node-key="typeOid"
+        :props="{
+            children: 'childList',
+            label: 'displayName',
+            value: 'typeOid'
+        }"
+        :check-relation="checkRelation"
+        :placeholder="placeholder"
+        :clearable="clearable"
+        :disabled="disabled"
+        :multiple="multiple"
+        :filterable="filterable"
+        :default-expand-all="defaultExpandAll"
+        :collapse-tags="collapseTags"
+        @change="handleTypeChange"
+        @clear="handleTypeChange([])"
+    ></erd-tree-select>
+</div>

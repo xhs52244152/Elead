@@ -1,0 +1,139 @@
+<div
+    id="fam-menuSetting"
+    class="bg-normal flex flex-column h_100p"
+>
+    <fam-resizable-container :left="{ width: '240px' }">
+        <template slot="left">
+            <fam-tree
+                ref="fam-tree"
+                title="微应用"
+                node-key="oid"
+                :data="treeData"
+                :current-node-key="preSelectData.oid"
+                :props="defaultProps"
+                :expand-on-click-node="false"
+                default-expand-all
+                highlight-current
+                @node-click="onCheck"
+            ></fam-tree>
+        </template>
+        <template slot="right">
+            <FamInfoTitle class="pt-xl bg-white"></FamInfoTitle>
+            <div class="plr-xl pb-xl bg-white grow-1 flex flex-column">
+                <div class="toolbar-area">
+                    <div class="search-area">
+                        <erd-input
+                            v-model="searchValue"
+                            clearable
+                            style="width: 280px"
+                            suffix-icon="erd-iconfont erd-icon-search"
+                            :placeholder="i18nMappingObj.searchTips"
+                        ></erd-input>
+                    </div>
+                    <div class="btn-area">
+                        <fam-action-button
+                            :action-config="actionConfig"
+                            @click="actionClick"
+                        ></fam-action-button>
+                    </div>
+                </div>
+
+                <div class="fam-erd-table-container">
+                    <erd-table
+                        ref="erdTable"
+                        v-bind="tableConfig"
+                        :data="tableData"
+                        height="100%"
+                        :column="column"
+                    >
+                        <!--name-->
+                        <template #column:default:name="{data}">
+                            <erd-button
+                                type="text"
+                                @click="onCommand({ name: 'RESOURCE_EDIT' }, data, 'read')"
+                                >{{data.row.name}}</erd-button
+                            >
+                        </template>
+
+                        <!--appName-->
+                        <template #column:default:appName="{data}">
+                            <span>{{data.row.appDisplayName || data.row.appName || '--'}}</span>
+                        </template>
+
+                        <!--number-->
+                        <template #column:default:number="{data}">
+                            <span v-if="data.row.number">{{data.row.number}}</span>
+                            <span v-else>—</span>
+                        </template>
+
+                        <!--level-->
+                        <template #column:default:sort="{data}">
+                            <span>{{data.row.level}}-{{data.row.sort}}</span>
+                        </template>
+
+                        <!--href-->
+                        <template #column:default:href="{data}">
+                            <span v-if="data.row.href">{{data.row.href}}</span>
+                            <span v-else>—</span>
+                        </template>
+
+                        <!--icon-->
+                        <template #column:default:icon="{data}">
+                            <span
+                                class="font-18"
+                                :class="data.row.icon"
+                                v-if="data.row.icon"
+                            ></span>
+                        </template>
+
+                        <!--isShow-->
+                        <template #column:default:isShow="{data}">
+                            <span v-if="data.row.isShow!=undefined"
+                                >{{data.row.isShow ? i18nMappingObj.yes : i18nMappingObj.no}}</span
+                            >
+                            <span v-else>—</span>
+                        </template>
+
+                        <!--操作-->
+                        <template #column:default:operation="{data}">
+                            <fam-action-pulldown
+                                :is-operation="true"
+                                :action-config="getActionConfig(data.row)"
+                                :action-data="data"
+                                @click="onCommand"
+                            ></fam-action-pulldown>
+                        </template>
+                    </erd-table>
+                </div>
+            </div>
+        </template>
+    </fam-resizable-container>
+
+    <!--创建菜单弹窗-->
+    <creat-menu
+        :parent-oid="parentRefOid"
+        :app-name="appName"
+        :oid="eidtOid"
+        :menu-level="menuLevel"
+        v-if="visibleCreatMenu"
+        :visible.sync="visibleCreatMenu"
+        @success="onSuccess()"
+    ></creat-menu>
+
+    <!--更新菜单弹窗-->
+    <update-menu
+        v-if="visibleUpdateMenu"
+        :visible.sync="visibleUpdateMenu"
+        :menu-id="menuId"
+        :oid="eidtOid"
+        :readonly="readonly"
+        :look-menu="lookMenu"
+        :menu-level="menuLevel"
+        :menu-name="menuName"
+        :is-show-menu="isShowMenu"
+        :parent-oid="parentRefOid"
+        :query-params="queryParams"
+        :add-power-type="addPowerType"
+        @success="onSuccess()"
+    ></update-menu>
+</div>

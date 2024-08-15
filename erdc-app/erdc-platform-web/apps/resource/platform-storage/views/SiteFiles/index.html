@@ -1,0 +1,44 @@
+<div class="doc-site-files bg-white flex flex-column grow-1 ptrl-xl">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        class="grow-1"
+        isAdaptiveHeight
+    >
+        <template #left:toolbar:first>
+            <FamPageTitle
+                :title="i18nMappingObj.siteFiles"
+                show-back-button
+                staticTitle
+                @back="goBack"
+            >
+            </FamPageTitle>
+        </template>
+
+        <template #right:toolbar:first>
+            <fam-upload
+                    ref="famUpload"
+                    :btnConfig="{type: 'primary'}"
+                    :need-content-id="false"
+                    :multiple="true"
+                    :show-file-list="false"
+                    :on-success="onUploadSuccess"
+            >
+            </fam-upload>
+        </template>
+
+
+
+        <template #column:default:size:content="{ scope }"> {{ getFileSize(scope.row.size) }} </template>
+
+        <template #column:default:site:content="{ scope }"> {{ getFileSites(scope.row) }} </template>
+
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="download(scope.row)"
+                >{{ i18nMappingObj.download }}</erd-button
+            >
+        </template>
+    </fam-advanced-table>
+</div>

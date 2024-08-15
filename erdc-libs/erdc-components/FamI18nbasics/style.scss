@@ -1,0 +1,60 @@
+.i18nRoleName {
+    position: relative;
+    width: 100%;
+
+    .intermation {
+        position: absolute !important;
+        bottom: 0px !important;
+        right: 1px !important;
+        cursor: pointer;
+        display: flex;
+        width: 30px;
+        height: 100%;
+        border: 1px solid var(--inputBorderColor);
+        background-color: var(--colorFullBg);
+        color: var(--colorPrimary) !important;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            color: var(--colorPrimary) !important;
+            border-color: var(--colorPrimary);
+        }
+    }
+    .is-active {
+        color: var(--colorPrimary) !important;
+        border-color: var(--colorPrimary) !important;
+    }
+    .is-disabled {
+        cursor: not-allowed !important;
+        color: var(--colorDisabledIcon) !important;
+        &:hover {
+            color: var(--colorDisabledIcon) !important;
+            border-color: var(--borderColorDisabled);
+        }
+    }
+}
+
+.tableReadOnly {
+    width: 100%;
+    justify-content: space-between;
+
+    .text-content {
+        color: var(--colorTextPlaceholder);
+    }
+    .intermation {
+        cursor: pointer;
+    }
+
+    .intermation:hover {
+        color: var(--colorPrimary);
+    }
+
+    .is-disabled {
+        cursor: not-allowed !important;
+    }
+}
+
+.el-form-item.is-error .i18nRoleName .intermation {
+    border-color: var(--errorBorderColor) !important;
+    box-shadow: 1px 0px 0px var(--errorBorderColor);
+}

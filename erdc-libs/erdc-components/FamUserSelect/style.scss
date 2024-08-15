@@ -1,0 +1,25 @@
+#FamUserSelect {
+    width: 100%;
+    .userSelect .el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
+        display: none;
+    }
+
+    .el-checkbox__original {
+        width: 0;
+        height: 0;
+    }
+
+    .my-multiple-select .el-select__tags-text {
+        display: inline-block;
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .el-checkbox__input.is-disabled + span.el-checkbox__label {
+        color: #c0c4cc;
+    }
+    .userSelect{
+        width: 100%;
+    }
+}

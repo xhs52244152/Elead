@@ -1,0 +1,12 @@
+<erd-scrollbar style="height: 100%; padding: 6px 12px;">
+    <ul class="doc-catlog">
+        <li
+            class="catlog-item"
+            v-for="(item, index) in catelog"
+            :key="index"
+            @click="handleClick(item)"
+        >
+            <a :class="[`catlog_level_${item.level}`, { 'anchor-selected':  selected === item.id }]" :title="`${item.index} ${item.title}`" > {{ item.index }} {{ item.title}}</a>
+        </li>
+    </ul>
+</erd-scrollbar>

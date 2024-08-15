@@ -1,0 +1,67 @@
+#FamTypeTree .fam-type-tree {
+  background-color: #ffffff;
+  padding-top: var(--bigPadding);
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs {
+  display: block;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .tabIcon {
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .tabIcon i {
+  font-size: 16px;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .isActive {
+  background: #ebf1ff;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .el-tabs__item {
+  padding: 0 12px;
+  height: 36px;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .el-tabs__item.is-top:nth-child(2) {
+  padding-left: 0;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__btns {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .fam-type-tree__btns .fam-type-tree__typeName {
+  width: 94px;
+  height: 22px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  line-height: 22px;
+  font-weight: 600;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__header .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+#FamTypeTree .fam-type-tree .fam-type-tree__search {
+  width: 100%;
+}
+#FamTypeTree .fam-type-tree .el-scrollbar {
+  height: 100%;
+}
+#FamTypeTree .fam-type-tree .el-tree-node .el-tree-node__children {
+  overflow: initial;
+}
+#FamTypeTree .fam-type-tree .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+  background-color: #ebf1ff;
+}
+#FamTypeTree #fam_attrPermissionSetting {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+#FamTypeTree #fam_attrPermissionSetting .fam-resizable-container {
+  flex-grow: 1;
+}/*# sourceMappingURL=style.css.map */

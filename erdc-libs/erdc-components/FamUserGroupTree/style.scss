@@ -1,0 +1,51 @@
+$fontColor: var(--buttonTextColor__hover);
+.fam-user-group-tree {
+    // padding: 12px;
+    background-color: #ffffff;
+
+    .fam-user-group-tree__header {
+        // margin-bottom: 12px;
+        .fam-user-group-tree__search {
+            width: 100%;
+        }
+    }
+
+    .el-tree-node__content {
+        width: 100%;
+
+        .tree-node-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+            .tree-content {
+                display: flex;
+                min-width: calc(100% - 66px);
+                justify-content: space-between;
+                align-items: center;
+                .tree-node-title {
+                    width: 100%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+            .tree-node-operator {
+                padding: 0;
+            }
+        }
+    }
+
+    .el-scrollbar {
+        height: calc(100%);
+    }
+
+    .el-tree-node {
+        .el-tree-node__children {
+            overflow: initial;
+        }
+    }
+    .el-tree-node__content:hover {
+        color: $fontColor;
+    }
+}

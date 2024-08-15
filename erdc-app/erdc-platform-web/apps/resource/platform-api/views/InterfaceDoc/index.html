@@ -1,0 +1,235 @@
+<div class="interface-doc doc-common">
+    <doc-header
+        :doc="currentInstance"
+        :versionArr="versionArr"
+        :selectedVersion="curVersion"
+        @download="download"
+        @versionChange="handleVersionChange"
+        @versionCompare="handleCompare"
+    ></doc-header>
+    <div
+        class="doc-common-content"
+        v-if="curVersion && !noData"
+    >
+        <div
+            id="offlineMarkdownShow"
+            class="content-document api-common"
+        >
+            <erd-scrollbar class="api-common-scrollbar">
+                <div class="base-info">
+                    <p>
+                        <span class="label">描述</span>
+                        {{ currentInstance.description }}
+                    </p>
+                    <p>
+                        <span class="label">发布时间</span>
+                        {{ currentInstance.createTime }}
+                    </p>                    
+                </div>
+
+                <div
+                    v-for="(tag, index) in currentInstance.tags"
+                    :key="`tag_${index}`"
+                >
+                    <s v-if="tag.deprecated">
+                        <h1>{{ tag.name }}</h1>
+                    </s>
+                    <h1 v-else>{{ tag.name }}</h1>
+                    <div
+                        v-for="(path, idx) in tag.children"
+                        :key="`path_${idx}`"
+                        class="info-block"
+                    >
+                        <s v-if="path.deprecated">
+                            <h2><strong>{{path.summary}}</strong></h2>
+                        </s>
+                        <h2 v-else>
+                            <strong>{{path.summary}}</strong>
+                        </h2>
+
+                        <p class="block-title">请求说明:</p>
+                        <table class="table border-table description">
+                            <tr v-if="path.description">
+                                <th align="left">接口描述</th>
+                                <td align="left">{{ path.description }}</td>
+                            </tr>
+
+                            <tr>
+                                <th align="left">接口地址</th>
+                                <td align="left">{{ path.showUrl }}</td>
+                            </tr>
+                            <tr>
+                                <th align="left">请求方式</th>
+                                <td align="left">{{ path.methodType }}</td>
+                            </tr>
+                            <tr>
+                                <th align="left">consumes</th>
+                                <td align="left">{{ path.consumes || 'application/json' }}</td>
+                            </tr>
+
+                            <tr>
+                                <th align="left">produces</th>
+                                <td align="left">{{ path.produces || 'application/json' }}</td>
+                            </tr>
+                        </table>
+
+                        <div v-if="path.requestValue">
+                            <p>请求示例：</p>
+                            <pre><code class="json language-json" style="color: rgb(102, 102, 153);">{{ path.requestValue }}</code></pre>
+                        </div>
+
+                        <p class="block-title">请求参数：</p>
+                        <table
+                            v-if="path.parameters && path.parameters.length"
+                            class="table border-table"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>参数名称</th>
+                                    <th>参数说明</th>
+                                    <th>请求类型</th>
+                                    <th>是否必须</th>
+                                    <th>数据类型</th>
+                                    <th>schema</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(param, i) in path.parameters"
+                                    :key="i"
+                                >
+                                    <td>{{param.name}}</td>
+                                    <td>{{param.description}}</td>
+                                    <td>{{param.in}}</td>
+                                    <td>{{param.require}}</td>
+                                    <td>{{param.type}}</td>
+                                    <td>{{param.schemaValue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-else>暂无</p>
+
+                        <div v-if="path.multipartResponseSchema">
+                            <div
+                                v-for="(rcode, i) in path.responseCodes"
+                                :key="i"
+                            >
+                                <div v-if="rcode.schema">
+                                    <div v-if="rcode.responseValue">
+                                        <p class="block-title">{{rcode.code}}响应示例:</p>
+                                        <pre><code class="json language-json" style="color: rgb(102, 102, 153);">{{rcode.responseValue}}</code></pre>
+                                    </div>
+                                    <div
+                                        v-if="Array.isArray(rcode.responseParameters) && rcode.responseParameters.length"
+                                    >
+                                        <p class="block-title">{{rcode.code}}响应参数:</p>
+                                        <table class="table border-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>参数名称</th>
+                                                    <th>参数说明</th>
+                                                    <th>类型</th>
+                                                    <th>schema</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    v-for="(param, j) in rcode.responseParameters"
+                                                    :key="j"
+                                                >
+                                                    <td>{{param.name}}</td>
+                                                    <td>{{param.description}}</td>
+                                                    <td>{{param.type}}</td>
+                                                    <td>{{param.schemaValue}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div v-if="path.responseValue">
+                                <p class="block-title">响应示例:</p>
+                                <pre><code class="json language-json" style="color: rgb(102, 102, 153);">{{path.responseValue}}</code></pre>
+                            </div>
+                            <div v-if="Array.isArray(path.responseParameters) && path.responseParameters.length">
+                                <table class="table border-table">
+                                    <thead>
+                                        <tr>
+                                            <th>参数名称</th>
+                                            <th>参数说明</th>
+                                            <th>类型</th>
+                                            <th>schema</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="(param, i) in path.responseParameters"
+                                            :key="i"
+                                        >
+                                            <td>{{param.name}}</td>
+                                            <td>{{param.description}}</td>
+                                            <td>{{param.type}}</td>
+                                            <td>{{param.schemaValue}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    v-for="(ref, index) in currentInstance.difArrs"
+                    :key="index"
+                >
+                    <div v-if="Array.isArray(ref.properties) && ref.properties.length">
+                        <h2 style="color: rgb(112, 128, 144)">{{ref.name}}</h2>
+                        <table class="table border-table">
+                            <thead>
+                                <tr>
+                                    <th>参数名称</th>
+                                    <th>参数说明</th>
+                                    <th>数据类型</th>
+                                    <th>schema</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(rp, idx) in ref.properties"
+                                    :key="idx"
+                                >
+                                    <td>{{rp.name}}</td>
+                                    <td>{{rp.description}}</td>
+                                    <td>{{rp.type}}</td>
+                                    <td>{{rp.schemaValue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </erd-scrollbar>
+        </div>
+        <div class="content-catelog">
+            <doc-catlog
+                :catelog="catelog"
+                @menuClick="menuClick"
+            ></doc-catlog>
+        </div>
+    </div>
+
+    <div
+        class="doc-common-nodata"
+        v-else
+    >
+        <span>暂无数据</span>
+    </div>
+
+    <!-- 版本对比 -->
+    <version-compare-select
+        ref="compareRef"
+        :list="versionList"
+        :currentId="currentId"
+    ></version-compare-select>
+</div>

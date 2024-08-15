@@ -1,0 +1,19 @@
+.fam-object-select__table {
+    margin-top: var(--bigSpace);
+}
+
+.fam-object-select__setting {
+    margin-left: auto;
+}
+
+.fam-object-select__search-btn {
+    cursor: pointer;
+}
+
+.fam-object-select__header {
+    display: flex;
+}
+.fam-filter-combination-advanced + .fam-object-select__setting {
+    position: absolute;
+    right: var(--largeSpace);;
+}

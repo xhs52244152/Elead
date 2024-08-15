@@ -1,0 +1,18 @@
+<div>
+    <erd-contraction-panel
+        :title="i18nMappingObj.errorEvent"
+        :unfold.sync="expanded"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="errorForm"
+                :data="formConfigs"
+                label-width="120px"
+                :readonly="readonly"
+                @field:change="onFieldChange"
+            >
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

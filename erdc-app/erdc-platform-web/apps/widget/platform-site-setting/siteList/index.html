@@ -1,0 +1,51 @@
+<erd-ex-dialog
+    custom-class="doc-site-list-dialog"
+    :visible.sync="visible"
+    :lock-scroll="true"
+    :title="i18nMappingObj.switchSite"
+>
+    <div class="dialog-header">
+        <erd-button type="primary" @click="handleTestSpeed">测速</erd-button>
+    </div>
+
+    <div class="speed-list">
+        <div class="speed-block" v-for="(item, index) in speedClassify">
+            <span :class="['speed-common', item.className]"></span>
+            <span class="speed-block">{{ item.description }}</span>
+        </div>
+    </div>
+
+    <erd-table
+        ref="tableRef"
+        :view-toolbar="false"
+        :search-toolbar="false"
+        :refresh-toolbar="false"
+        :column-toolbar="false"
+        :pagination="false"
+        :hide-index="true"
+        :hideMultiple="true"
+        :hide-multiple="true"
+        :height="500"
+        :radio-config="radioConfig"
+        :loading="loading"
+        :scroll-y="scrollY"
+        :column="columns"
+        :row-config="rowConfig"
+        :data="siteData"
+    >
+        <template #column:default:avgSpeed="{ data }">
+            <span> {{ data.row.avgSpeed }}</span>
+            <span :class="['speed-common', getSpeedClass(data.row.avgSpeed)]"></span>
+        </template>
+    </erd-table>
+
+    <!-- <erd-select style="width: 100%" v-model="selectedSite" filterable>
+        <erd-option v-for="item in siteAll" :key="item.code" :label="item.name" :value="item.code"> </erd-option>
+    </erd-select> -->
+    <template #footer>
+        <div style="text-align: right">
+            <erd-button type="primary" @click="confirm">{{ i18nMappingObj.confirm  }}</erd-button>
+            <erd-button @click="cancel">{{ i18nMappingObj.cancel  }}</erd-button>
+        </div>
+    </template>
+</erd-ex-dialog>

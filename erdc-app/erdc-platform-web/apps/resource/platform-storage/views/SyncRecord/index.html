@@ -1,0 +1,30 @@
+<div
+    id="doc-manage-site-sync-record"
+    class="flex flex-column grow-1 ptrl-xl"
+>
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        class="grow-1"
+        isAdaptiveHeight
+    >
+        <template #left:toolbar:first>
+            <FamPageTitle
+                :title="i18nMappingObj.syncRecord"
+                show-back-button
+                staticTitle
+                @back="goBack"
+            >
+            </FamPageTitle>
+        </template>
+
+        <template #column:default:state:content="{ scope }">
+            <erd-tag
+                style="width: 65px; text-align: center; padding: 0px 8px"
+                :type="stateTag[scope.row.state]"
+            >
+                {{ stateMap[scope.row.state] }}
+            </erd-tag>
+        </template>
+    </fam-advanced-table>
+</div>

@@ -1,0 +1,59 @@
+<div id="applicationTenantTable">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        :table-height="tableHeight"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="handlerEdit(scope.row)"
+                >{{i18nMappingObj.edit}}</erd-button
+            >
+            <erd-button
+                v-if="!scope.row.isDefault"
+                type="text"
+                @click="hanlderChangeState(scope.row)"
+                >{{scope.row.enabled ? i18nMappingObj.disabled : i18nMappingObj.enabled}}</erd-button
+            >
+            <erd-button
+                v-if="!scope.row.isDefault"
+                type="text"
+                @click="handlerEditApplication(scope.row)"
+                >{{i18nMappingObj.applcationMaintance}}</erd-button
+            >
+        </template>
+    </fam-advanced-table>
+    <erd-ex-dialog
+        v-if="dialogVisiable"
+        :title="dialogTitle"
+        :visible.sync="dialogVisiable"
+        width="1200px"
+        @close="handlerCloseDialog"
+    >
+        <div class="dialog-main-content">
+            <component
+                v-if="dialogVisiable"
+                :is="activeCompnenet"
+                :ref="activeCompnenet"
+                :defaultValue="formData"
+                :readonly="isReadonly"
+                :isEditForm="isEditForm"
+                @handlerValidSuccess="handlerValidSuccess"
+            ></component>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+            v-if="!isReadonly && activeCompnenet === 'TenantForm'"
+        >
+            <erd-button
+                type="primary"
+                @click="onHandlerConfirm"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onHandlerCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

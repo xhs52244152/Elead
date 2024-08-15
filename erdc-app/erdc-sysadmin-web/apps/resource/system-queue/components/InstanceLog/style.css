@@ -1,0 +1,11 @@
+.dataLog {
+  border: 1px solid #eee;
+  padding: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.dataLog .dataLogItem + .dataLogItem {
+  padding-top: 12px;
+}
+
+/*# sourceMappingURL=style.css.map */

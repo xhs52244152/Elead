@@ -1,0 +1,30 @@
+<div
+    id="openGlobalAttributes"
+>
+    <resizable-container v-show="!isSetting">
+        <template v-slot:left>
+            <div class="fam-type-tree h-100p flex flex-column">
+                <template v-for="item in tabList">
+                    <component
+                        :is="activeTab.left"
+                        v-if="activeTab.left === item.left"
+                        :ref="item.left"
+                        @node-type-click="(data)=>(onCheck(data, item.right))"
+                    ></component>
+                </template>
+            </div>
+        </template>
+        <template v-slot:right>
+            <template v-for="item in tabList">
+                <component
+                    :is="activeTab.right"
+                    v-if="activeTab.right === item.right"
+                    :ref="item.right"
+                    @onsubmit="(data)=>(onSubmit(data, item.left))"
+                    @radioSelectChange="(data)=>(onChangeRadio(data))"
+                    @refresh-tree="(data, methodName)=>(refreshTree(data, methodName, item.left))"
+                ></component>
+            </template>
+        </template>
+    </resizable-container>
+</div>

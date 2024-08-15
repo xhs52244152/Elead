@@ -1,0 +1,218 @@
+<div
+    id="ComponentWapper-famMemberSelect"
+    :recordsComputed="recordsComputed"
+    :multipleComputed="multipleComputed"
+>
+    <div class="inputBox flex">
+        <erd-popover
+            :placement="placement"
+            :trigger="trigger"
+            :disabled="disabled"
+            v-model="visiblePou"
+            :popper-class="`famMemberSelect-popClass-custom box_${type} box_${trigger} ${popperClass}`"
+            ref="Popu-famMemberSelect"
+            :width="getTableWidth ? getTableWidth : ''"
+        >
+            <erd-table
+                class="vxe-table--ignore-clear"
+                v-loading="loading"
+                border
+                :popper-class="popperClass"
+                :max-height="fixedHeight ? 0 : tableHeight"
+                :max-line="6"
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :data="tableData"
+                :column="innerColumn"
+                show-overflow
+                ref="erdTable"
+                :checkbox-config="{checkField: 'checked', trigger: 'row', checkMethod }"
+                @cell-click="cellClick"
+                @checkbox-all="selectAllEvent"
+                @checkbox-change="selectChangeEvent"
+            >
+                <!--空数据状态 多选才客制化提示-->
+                <template #empty>
+                    <div
+                        class="emptyBox"
+                        v-if="inputValue && errorMsg && type==2"
+                    >
+                        <span>{{i18nMappingObj.userNoFound}}</span>
+                        <!-- <div class="t">{{i18nMappingObj.notFind}}</div>
+                        <span>{{errorMsg}}</span> -->
+                    </div>
+                    <span
+                        class="nodata"
+                        v-else
+                        >{{i18nMappingObj.nodata}}</span
+                    >
+                </template>
+            </erd-table>
+
+            <div
+                class="wapperInput"
+                slot="reference"
+            >
+                <div
+                    class="selectBox"
+                    ref="selectBox"
+                    v-if="records.length&&type==2"
+                    :class="[
+                    type==1&&inputValue ? 'HAS-VAL' : '' , 
+                    (type==2&&records.length || type==2&&inputValue) ? 'HAS-VAL' : '',
+                    showWordLimit ? 'showWordLimit' : ''
+                    ]"
+                >
+                    <!--多选 默认展示-->
+                    <div
+                        class="itemBox"
+                        v-if="!showWordLimit"
+                        @click="togglePopShow(true)"
+                    >
+                        <el-tooltip
+                            :content="`${item.displayName}-${item.code}`"
+                            placement="top"
+                            v-for="(item,index) in records"
+                            :key="index"
+                        >
+                            <div class="item flex">
+                                <div class="l flex">
+                                    <label class="n">{{item.displayName}}</label>
+                                    <label class="c">{{item.code}}</label>
+                                </div>
+                                <i
+                                    v-if="!disabled"
+                                    @click="removeSelect(item.id,index)"
+                                    class="icon el-icon-close"
+                                ></i>
+                            </div>
+                        </el-tooltip>
+                    </div>
+                    <!--多选 字数统计-->
+                    <div
+                        class="itemBox once flex"
+                        v-else
+                    >
+                        <template v-if="records.length<3">
+                            <el-tooltip
+                                :content="`${item.displayName}-${item.code}`"
+                                placement="top"
+                                v-for="(item,index) in records"
+                                :key="index"
+                            >
+                                <div class="item flex">
+                                    <div class="l flex">
+                                        <label class="n">{{item.displayName}}</label>
+                                        <label class="c">{{item.code}}</label>
+                                    </div>
+                                    <i
+                                        v-if="!disabled"
+                                        @click="removeSelect(item.id,index)"
+                                        class="icon el-icon-close"
+                                    ></i>
+                                </div>
+                            </el-tooltip>
+                        </template>
+                        <template v-else>
+                            <el-tooltip
+                                :content="`${records[0].displayName}-${records[0].code}`"
+                                placement="top"
+                            >
+                                <div class="item flex">
+                                    <div class="l flex">
+                                        <label class="n">{{records[0].displayName}}</label>
+                                        <label class="c">{{records[0].code}}</label>
+                                    </div>
+                                    <i
+                                        v-if="!disabled"
+                                        @click="removeSelect(records[0].id, 0)"
+                                        class="icon el-icon-close"
+                                    ></i>
+                                </div>
+                            </el-tooltip>
+                            <div
+                                class="moreBox pointer flex align-items-center"
+                                @click="showDetail"
+                                :title="i18nMappingObj.showAll"
+                            >
+                                <span>{{records.length}}</span>
+                                <i class="icon el-icon-check"></i>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <el-tooltip
+                    v-model="showTooltip"
+                    manual
+                    placement="top-end"
+                    popper-class="error-popper-class"
+                >
+                    <div slot="content">{{i18nMappingObj.errorMsg}}</div>
+                    <div
+                        ref="searchInputWapper"
+                        class="searchInputWapper flex"
+                        :class="[
+                            type==1&&inputValue ? 'HAS-VAL' : '' , 
+                            (type==2&&records.length || type==2&&inputValue) ? 'HAS-VAL' : '',
+                            showTooltip ? 'error' : '',
+                            disabled ? 'wrap-input-disabled' : '',
+                            isFocus ? 'is-focus' : ''
+                            ]"
+                    >
+                        <erd-input
+                            ref="searchInput"
+                            :placeholder="i18nMappingObj[`placeholder_${type}`]"
+                            :type="inputType"
+                            v-model="inputValue"
+                            :disabled="disabled"
+                            :autofocus="autofocus"
+                            @input="searchInput(inputValue,'search')"
+                            @focus="onInputFocus"
+                            @blur="onInputBlur"
+                            @clear="clearInput"
+                            @hook:mounted="getInputWidth"
+                        >
+                            <template #prefix>
+                                <slot name="prefix"></slot>
+                            </template>
+                        </erd-input>
+
+                        <!-- 增加隐藏表单项 避免回车跳转到首页 -->
+                        <erd-input v-show="false" />
+                        <div
+                            ref="covertextarea"
+                            v-if="!showWordLimit"
+                            id="covertextarea"
+                        ></div>
+
+                        <span class="el-input__suffix">
+                            <span class="el-input__suffix-inner">
+                                <i
+                                    v-if="!disabled && clearable"
+                                    class="el-input__icon el-icon-circle-close icon icon-close pointer"
+                                    @click="clearInput"
+                                ></i>
+                            </span>
+                        </span>
+                        <i
+                            class="erd-iconfont icon"
+                            :class="{
+                                focus: isFocus,
+                                'erd-icon-user': !multiple,
+                                'erd-icon-group': multiple
+                            }"
+                            @click="searchInput"
+                        ></i>
+                    </div>
+                </el-tooltip>
+            </div>
+        </erd-popover>
+    </div>
+    <!--全展开模式占位高度-->
+    <div
+        class="paddingTable"
+        v-if="trigger=='manual'"
+        :style="`height:${tableHeight+8}px`"
+    ></div>
+</div>

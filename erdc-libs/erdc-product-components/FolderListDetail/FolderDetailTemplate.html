@@ -1,0 +1,14 @@
+<erd-ex-dialog
+    :visible.sync="innerVisible"
+    :title="row.name"
+    size="large"
+>
+    <FamAdvancedForm
+        v-if="innerVisible"
+        :model="row"
+        :objectOid="row.oid"
+        :className="row.idKey"
+        :containerRef="containerRef"
+        :formType="formType"
+    ></FamAdvancedForm>
+</erd-ex-dialog>

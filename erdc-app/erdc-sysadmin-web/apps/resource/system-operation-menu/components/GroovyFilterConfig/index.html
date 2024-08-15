@@ -1,0 +1,72 @@
+<div class="p-16 w-100p" style="padding-bottom: 4px;">
+    <erd-form
+        ref="form"
+        :model="form"
+        label-width="120px"
+        label-position="right"
+    >
+        <erd-row>
+            <erd-col :span="12">
+                <erd-form-item
+                    prop="typeName"
+                    label=""
+                >
+                    <div class="flex align-items-center">
+                        <span style="width: 150px">当校验结果 False</span>
+                    </div>
+                </erd-form-item>
+            </erd-col>
+            <erd-col :span="12">
+                <erd-form-item
+                    prop="typeName"
+                    label=""
+                >
+                    <div class="flex align-items-center">
+                        <div class="flex align-items-center">
+                            <span class="mr-8">执行动作</span>
+                            <div class="flex">
+                                <erd-radio
+                                    v-model="form.status"
+                                    :label="0"
+                                >
+                                    禁用
+                                </erd-radio>
+                                <erd-radio
+                                    v-model="form.status"
+                                    :label="1"
+                                >
+                                    隐藏
+                                </erd-radio>
+                            </div>
+                        </div>
+                    </div>
+                </erd-form-item>
+            </erd-col>
+        </erd-row>
+        <erd-row>
+            <erd-col :span="12">
+                <erd-form-item
+                    prop="typeName"
+                    label=""
+                >
+                    <div class="flex align-items-center">
+                        <span style="width: 150px">当校验结果 True</span>
+                    </div>
+                </erd-form-item>
+            </erd-col>
+            <erd-col :span="12">
+                <erd-form-item
+                    prop="typeName"
+                    label=""
+                >
+                    <div class="flex align-items-center">
+                        <div>
+                            <span class="mr-8">执行动作</span>
+                            <span>启用</span>
+                        </div>
+                    </div>
+                </erd-form-item>
+            </erd-col>
+        </erd-row>
+    </erd-form>
+</div>

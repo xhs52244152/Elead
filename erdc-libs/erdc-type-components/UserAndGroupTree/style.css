@@ -1,0 +1,45 @@
+#userAndGroupTree {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #fff;
+}
+
+#userAndGroupTree .el-scrollbar {
+    height: 0;
+    flex-grow: 1
+}
+#userAndGroupTree .el-tree-node__content {
+    display: flex;
+    width: 100%;
+}
+#userAndGroupTree .el-tree-node__content .tree-content {
+    display: inline-block;
+    width: calc(100% - 25px);
+    position: relative;
+}
+#userAndGroupTree .el-tree-node__content .tree-content .tree-operation {
+    position: absolute;
+    right: 0;
+    top: -5px;
+}
+#userAndGroupTree .el-tree-node__content .tree-content .tree-operation .el-button {
+    line-height: 0 !important;
+}
+#userAndGroupTree .ree-content:hover {
+    color: #567ffd;
+    background: #ebf1ff;
+}
+.custom-tree-node {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+}
+.tree-text {
+    flex: 1;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+} /*# sourceMappingURL=style.css.map */

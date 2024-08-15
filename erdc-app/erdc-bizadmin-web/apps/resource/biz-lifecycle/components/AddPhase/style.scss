@@ -1,0 +1,27 @@
+#add-phase-dialog {
+    .fam-dynamic-form {
+        padding-bottom: calc(var(--largePadding) * 2);
+        .el-form-item--medium {
+            .el-form-item__content {
+                overflow: visible;
+            }
+        }
+    }
+
+    .phase-tips {
+        position: absolute;
+        bottom: -20px;
+        font-size: 12px;
+        height: 20px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.45);
+
+        a {
+            color: #567ffd;
+
+            &:hover {
+                color: #7395ff;
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/biz-import-export",
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat",
+  "description": "操作记录:导入导出",
+  "dependencies": {}
+}

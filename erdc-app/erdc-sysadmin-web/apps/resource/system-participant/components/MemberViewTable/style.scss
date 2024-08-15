@@ -1,0 +1,19 @@
+.fam-member-table {
+    height: 100%;
+    padding: 15px 0px 0px 0px;
+    .fontWeightNormal{
+        font-weight: normal;
+    }
+    .link-text{
+        color: var(--buttonTextColor);
+        cursor: pointer;
+    }
+    .vxe-table--body-wrapper.fixed-left--wrapper{
+        width: auto;
+        overflow-y: hidden;
+    }
+}
+
+.joinOrgDialog .el-dialog__body{
+    padding: 0 !important;
+}

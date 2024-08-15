@@ -1,0 +1,12 @@
+.bpm-interface-records #FamViewTable .fam-base-info-title {
+  padding-top: 16px;
+  background-color: #FFFFFF;
+}
+.bpm-interface-records #FamViewTable .fam-view-navbar-component {
+  background-color: #FFFFFF;
+}
+.bpm-interface-records #FamViewTable .fam-view-navbar-component .el-menu {
+  background-color: #FFFFFF !important;
+}
+
+/*# sourceMappingURL=index.css.map */

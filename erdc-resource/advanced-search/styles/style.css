@@ -1,0 +1,34 @@
+.history-filters-container li {
+  width: 25%;
+}
+.history-filters-container li .history-item {
+  font-size: var(--fontSize);
+  line-height: var(--normalLineHeight);
+  color: rgba(0, 0, 0, 0.65);
+}
+.history-filters-container li .history-item .el-icon-close {
+  font-size: 14px;
+  width: 14px;
+  cursor: pointer;
+}
+.history-filters-container li .history-item .el-icon-close:hover {
+  color: var(--colorPrimary);
+}
+
+.search-input-box .erd-tree-select .el-select {
+  width: 130px;
+}
+
+.global-search-conditions {
+  width: 800px;
+  position: relative;
+}
+
+.search-list-conditions .more-conditions {
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  padding: 4px 16px 16px;
+  box-shadow: var(--popoverShadow);
+  background-color: #fff;
+}/*# sourceMappingURL=style.css.map */

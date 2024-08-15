@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 5</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.1-ERDP登录" transform="translate(-860.000000, -612.000000)">
+            <g id="编组-13" transform="translate(40.000000, 80.000000)">
+                <g id="编组-17" transform="translate(720.000000, 130.000000)">
+                    <g id="编组-18" transform="translate(100.000000, 48.000000)">
+                        <g id="编组-5" transform="translate(0.000000, 354.000000)">
+                            <g id="编组-10" fill="#2779FF">
+                                <circle id="椭圆形" cx="12" cy="12" r="12"></circle>
+                            </g>
+                            <text id="AD" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" letter-spacing="0.5" fill="#FFFFFF">
+                                <tspan x="3.5" y="16.5">AD</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

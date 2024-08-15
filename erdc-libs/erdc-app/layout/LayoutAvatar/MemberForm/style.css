@@ -1,0 +1,47 @@
+#fam-member-form .avatar .shade {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+#fam-member-form .avatar .el-icon-camera {
+  display: none;
+}
+#fam-member-form .avatar:hover {
+  cursor: pointer;
+}
+#fam-member-form .avatar:hover .shade {
+  display: flex;
+}
+#fam-member-form .avatar:hover .el-icon-camera {
+  display: block;
+  color: var(--colorWhite);
+}
+#fam-member-form .sign-img {
+  width: 160px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.change-signature-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  flex-grow: 1;
+  border: 1px solid var(--colorBorder);
+}
+.change-signature-preview .imgPreview {
+  height: 250px;
+}
+.change-signature-preview .change-signature-upload {
+  border: 3px dashed var(--colorBorder);
+  padding: 60px;
+}
+.change-signature-preview .my_signature-input_container {
+  position: relative;
+  flex-grow: 1;
+}
+.change-signature-preview .my_signature-input_container .my_signature-input_tools {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+}/*# sourceMappingURL=style.css.map */

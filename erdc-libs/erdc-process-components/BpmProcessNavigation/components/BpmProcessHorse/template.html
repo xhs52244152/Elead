@@ -1,0 +1,50 @@
+<div
+    id="bpm-process-horse-content"
+    class="bpm-process-horse-content h-100p"
+    v-cloak
+>
+    <erd-scrollbar
+        :wrap-style="wrapStyle"
+        class="h-100p"
+    >
+        <div>
+            <erd-steps
+                align-center
+                :active="active"
+                :direction="vertical ? 'vertical' : 'horizontal'"
+            >
+                <erd-step
+                    v-for="(activities, idx) in nodeList"
+                    :key="idx"
+                    class="plr-16 process-horse-content-step"
+                    :class="{'is-active': viewActivityId === activities[0].activityId}"
+                >
+                    <template v-slot:icon>
+                        <BpmProcessIcon
+                            :type="activities[0].thumbnailType"
+                            :activity="activities[0]"
+                            :placement="vertical ? 'bottom-end' : 'top-start'"
+                        ></BpmProcessIcon>
+                    </template>
+                    <template v-slot:title>
+                        <BpmProcessTitle
+                            :activities="activities"
+                            :vertical="vertical"
+                            :view-activity-id="viewActivityId"
+                        >
+                            <template
+                                slot="title"
+                                slot-scope="slotProps"
+                            >
+                                <slot
+                                    name="title"
+                                    v-bind="slotProps"
+                                ></slot>
+                            </template>
+                        </BpmProcessTitle>
+                    </template>
+                </erd-step>
+            </erd-steps>
+        </div>
+    </erd-scrollbar>
+</div>

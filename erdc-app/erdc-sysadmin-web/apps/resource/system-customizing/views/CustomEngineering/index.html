@@ -1,0 +1,194 @@
+<div
+    id="fam-engineering-management"
+    class="h-100p flex flex-column overflow-hidden"
+>
+    <div class="mb-xl bg-normal">
+        <fam-page-title
+            v-if="showTitle"
+            class="pl-xl pb-xl"
+        ></fam-page-title>
+    </div>
+    <div class="grow-1 plr-xl">
+        <fam-advanced-table
+            ref="famAdvancedTable"
+            :view-table-config="viewTableConfig"
+            is-adaptive-height
+        >
+            <template #left:toolbar:first>
+                <div class="flex justify-center align-items-center">
+                    <erd-input
+                        v-model="searchKey"
+                        :placeholder="i18n.enterKeyword"
+                        clearable
+                        class="fuzzy-search"
+                        style="width: 170px"
+                        @blur="handleFilterChange"
+                        @keyup.enter.native="handleFilterChange"
+                        @clear="handleFilterChange"
+                    ></erd-input>
+                    <erd-select
+                        v-for="item in selectList"
+                        v-model="item.model"
+                        :placeholder="item.placeholder"
+                        clearable
+                        class="ml-8"
+                        style="width: 170px"
+                        @change="handleFilterChange"
+                        @clear="handleFilterChange"
+                    >
+                        <erd-option
+                            v-for="subItem in item.options"
+                            :key="subItem.value"
+                            :label="subItem.label"
+                            :value="subItem.value"
+                        >
+                        </erd-option>
+                    </erd-select>
+                </div>
+            </template>
+            <template #right:toolbar:end>
+                <div class="flex justify-center align-items-center">
+                    <erd-button
+                        type="primary"
+                        icon="erd-iconfont erd-icon-create"
+                        class="title_text truncate"
+                        @click="onCreate"
+                    >
+                        <span class="title_text">{{i18n.create}}</span>
+                    </erd-button>
+                    <erd-button
+                        icon="erd-iconfont erd-icon-upload-to-cloud"
+                        class="title_text truncate"
+                        @click="onUploadJar"
+                    >
+                        <span class="title_text">{{i18n.uploadJar}}</span>
+                    </erd-button>
+                </div>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <erd-button
+                    v-if="showRelease(scope.row)"
+                    type="text"
+                    @click="onRelease(scope.row)"
+                >
+                    {{i18n.release}}
+                </erd-button>
+                <erd-button
+                    v-if="showDownLine(scope.row)"
+                    type="text"
+                    @click="onDownLine(scope.row)"
+                >
+                    {{i18n.deactivate}}
+                </erd-button>
+                <erd-button
+                    v-if="showDownloadJar(scope.row)"
+                    type="text"
+                    @click="onDownloadJar(scope.row)"
+                >
+                    {{i18n.downloadJar}}
+                </erd-button>
+                <erd-button
+                    v-if="showUploadSourceCode(scope.row)"
+                    type="text"
+                    @click="onUploadSource(scope.row)"
+                >
+                    {{i18n.uploadSourceCode}}
+                </erd-button>
+                <erd-button
+                    v-if="showUpdateSource(scope.row)"
+                    type="text"
+                    @click="onUpdateSource(scope.row)"
+                >
+                    {{i18n.updateSourceCode}}
+                </erd-button>
+                <erd-button
+                    v-if="showDownLoadSource(scope.row)"
+                    type="text"
+                    @click="onDownLoadSource(scope.row)"
+                >
+                    {{i18n.downloadSourceCode}}
+                </erd-button>
+                <erd-button
+                    v-if="showDelete(scope.row)"
+                    type="text"
+                    @click="onDelete(scope.row)"
+                >
+                    {{i18n.delete}}
+                </erd-button>
+            </template>
+        </fam-advanced-table>
+    </div>
+
+    <erd-ex-dialog
+        :title="i18n.creationProject"
+        :visible.sync="projectVisible"
+        size="large"
+    >
+        <PluginForm
+            v-if="projectVisible"
+            ref="pluginForm"
+        ></PluginForm>
+
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                :loading="projectLoading"
+                type="primary"
+                @click="onSubmitCreate"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="projectVisible = !projectVisible">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :title="i18n.uploadJar"
+        :visible.sync="uploadJarVisible"
+        size="large"
+    >
+        <UploadJar
+            v-if="uploadJarVisible"
+            ref="uploadJar"
+        ></UploadJar>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="onSubmitJar"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="uploadJarVisible = !uploadJarVisible">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :title="i18n.uploadSource"
+        :visible.sync="uploadSourceCodeVisible"
+    >
+        <FamDynamicForm
+            v-if="uploadSourceCodeVisible"
+            ref="dynamicForm"
+            :form="formData"
+            :data="dataConfig"
+        >
+        </FamDynamicForm>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="onUploadSourceCode"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="uploadSourceCodeVisible = !uploadSourceCodeVisible">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

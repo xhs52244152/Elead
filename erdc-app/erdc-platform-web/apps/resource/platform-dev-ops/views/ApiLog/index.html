@@ -1,0 +1,69 @@
+<div
+    id="fam-api-log-list"
+    class="h-100p flex flex-column"
+>
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <div class="grow-1 ptrl-xl">
+        <fam-advanced-table
+            ref="famAdvancedTable"
+            :view-table-config="viewTableConfig"
+            is-adaptive-height
+            enableScrollLoad
+            async-query-key="scrollId"
+        >
+            <template #left:toolbar:end>
+                <div class="toolbar-search-component flex justify-center align-items-center">
+                    <erd-input
+                        v-model="searchKey"
+                        :placeholder="i18nMappingObj.fuzzySearchTip"
+                        class="fuzzy-search"
+                        clearable
+                        @blur="handleFilterChange"
+                        @keyup.enter.native="handleFilterChange"
+                        @clear="handleFilterChange"
+                    ></erd-input>
+                    <erd-input
+                        v-model="takeTime"
+                        :placeholder="i18nMappingObj.takeTimeTip"
+                        class="ml-8"
+                        clearable
+                        @blur="handleFilterChange"
+                        @keyup.enter.native="handleFilterChange"
+                        @clear="handleFilterChange"
+                    ></erd-input>
+                    <erd-select
+                        v-model="status"
+                        :placeholder="i18nMappingObj.statusTip"
+                        class="ml-8"
+                        clearable
+                        @change="handleFilterChange"
+                        @clear="handleFilterChange"
+                    >
+                        <erd-option
+                            v-for="item in statusEnum"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        >
+                        </erd-option>
+                    </erd-select>
+                </div>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <el-button
+                    type="text"
+                    @click="showDetail(scope.row)"
+                >
+                    {{ i18nMappingObj.detail }}
+                </el-button>
+            </template>
+        </fam-advanced-table>
+    </div>
+    <api-log-detail
+        :dialogVisible.sync="dialogVisible"
+        :currentRow="currentRow"
+    ></api-log-detail>
+</div>

@@ -1,0 +1,54 @@
+#Product {
+  padding: 12px;
+}
+#Product .product {
+  background: #f1f1f1;
+  height: calc(100vh - 104px);
+}
+#Product .product .product-box {
+  background: #fff;
+}
+#Product .product .product-box .product-header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0 16px;
+}
+#Product .product .product-box .product-header .product-tabs {
+  height: 100%;
+  overflow: hidden;
+}
+#Product .product .product-box .product-header .line {
+  display: inline-block;
+  width: 1px;
+  height: 24px;
+  margin: 8px 16px;
+  border-left: 1px solid rgb(217, 217, 217);
+}
+#Product .product .product-box .product-header .el-tabs--border-card {
+  border: none;
+  box-shadow: none;
+}
+#Product .product .product-box .product-header .el-tabs--border-card > .el-tabs__header {
+  background-color: #fff;
+  border-bottom: none;
+}
+#Product .product .product-box .product-header .el-tabs--border-card > .el-tabs__header .el-tabs__item {
+  border: none;
+  border-top: 3px solid transparent;
+}
+#Product .product .product-box .product-header .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
+  background-color: #f6f6f7;
+  border: none;
+  border-top: 3px solid #567ffd;
+}
+#Product .product .product-box .product-header .el-tabs--border-card > .el-tabs__content {
+  display: none;
+}
+#Product .product .product-content {
+  background: #fff;
+  overflow: hidden;
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

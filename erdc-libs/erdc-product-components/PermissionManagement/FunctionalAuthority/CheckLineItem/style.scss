@@ -1,0 +1,29 @@
+.check-line-item {
+    border-bottom: 1px solid rgba(233, 233, 233, 1);
+    font-size: 14px;
+    font-size: var(--fontSize);
+    font-weight: 400;
+    .check-line-all {
+        width: 140px;
+        padding: 8px;
+        border-right: 1px solid rgba(233, 233, 233, 1);
+        align-items: center;
+    }
+    .check-line-split {
+        padding: 8px 12px;
+        flex: 1;
+        label {
+            width: 158px;
+            height: 28px;
+        }
+        .el-checkbox__label {
+            height: 20px;
+        }
+    }
+    .flex {
+        display: flex;
+    }
+    &.hasChecked {
+        background: #f8f8f8;
+    }
+}

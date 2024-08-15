@@ -1,0 +1,11 @@
+#CodeRuleForm .seqCharsMsg {
+    padding-left: 8px;
+}
+
+#CodeRuleForm .btn-left {
+    margin-left: 8px;
+}
+#CodeRuleForm .help {
+    color: var(--buttonTextColor);
+    font-size: 16px;
+}

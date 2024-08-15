@@ -1,0 +1,68 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.interfaceFileImport"
+    :visible.sync="visible"
+    :destroy-on-close="true"
+>
+    <!-- <div style="padding: 16px 0px;">
+        {{ i18nMappingObj.uploadTip }}
+    </div> -->
+    <FamDynamicForm
+        ref="form"
+        labelPosition="right"
+        label-width="130px"
+        :form.sync="formData"
+        :data="formConfig"
+        >
+        <template #service="scope">
+            <erd-select
+                v-model="formData.service"
+                style="width: 100%"
+            >
+                <erd-option
+                    v-for="option in serviceList"
+                    :key="option.id"
+                    :label="option.serviceName"
+                    :value="option.id"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #type="scope">
+            <erd-select
+                v-model="formData.interfaceType"
+                style="width: 100%"
+            >
+                <erd-option
+                    v-for="option in interfaceType"
+                    :key="option.value"
+                    :label="option.label"
+                    :value="option.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #upload>
+            <fam-upload
+                class="upload-demo"
+                action="/file/file/site/storage/v1/upload"
+                accept=".json"
+                :auto-upload="true"
+                :limit="1"
+                :file-list="fileList"
+                :on-remove="handleRemove"
+                :before-upload="onBeforeUpload"
+                :on-success="handleAppSuccess"
+                :tips="i18nMappingObj.uploadTip"
+            >
+            </fam-upload>
+        </template>
+    </FamDynamicForm>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18nMappingObj.confirm }}
+        </erd-button>
+        <erd-button @click="cancel"> {{ i18nMappingObj.cancel }} </erd-button>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,26 @@
+<div>
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form="formData"
+        :data="formConfig"
+        :editable-attr="['status', 'appName']"
+        :readonly="readonly"
+        @form-change="formChange"
+    >
+    </FamDynamicForm>
+    <erd-contraction-panel
+        v-if="properties && properties.length"
+        class="mt-24"
+        :unfold.sync="componentConfigUnfold"
+        :title="'组件配置'"
+    >
+        <template #content>
+            <FamComponentConfigurationForm
+                ref="componentConfigForm"
+                :data.sync="formData"
+                :form.sync="componentJson"
+                :properties="properties"
+            ></FamComponentConfigurationForm>
+        </template>
+    </erd-contraction-panel>
+</div>

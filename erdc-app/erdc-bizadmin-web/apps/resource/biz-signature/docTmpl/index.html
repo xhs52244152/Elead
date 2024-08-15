@@ -1,0 +1,39 @@
+<div
+    id="SignatureDocTmpl"
+    class="h_100p"
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        @action-click="actionClick"
+    >
+        <template
+            slot="column:default:operation:content"
+            slot-scope="{scope}"
+        >
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="{
+                    name: CONST.operationKey.docTmpl.row,
+                    objectOid: scope.row.oid,
+                    className: CONST.className.docTmpl,
+                }"
+                :action-data="scope.row"
+                @click="onCommand"
+                :default-btn-config="defaultBtnConfig"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+
+    <DocTmplForm
+        ref="docTmplForm"
+        @done="refreshTable"
+    ></DocTmplForm>
+    <!-- 导入 -->
+    <import-dialog
+        ref="importModal"
+        :action="'/file/signature/v1/tmpl/import'"
+        @submitSucess="refreshTable"
+    ></import-dialog>
+</div>

@@ -1,0 +1,89 @@
+<div id="TypeAttrConfig">
+    <erd-ex-dialog
+        :title="i18nMappingObj.permission"
+        :visible.sync="dialogVisiable"
+        close-on-press-escape
+        :before-close="beforeClose"
+        width="1200px"
+    >
+        <p class="attr-setting-title">{{i18nMappingObj.attr}}：{{ attrName }}</p>
+        <div class="dialog-permission-table">
+            <erd-table
+                border
+                :column="permissionColumns"
+                :data="permissionTableData"
+                :edit-config="{trigger: 'click', mode: 'cell'}"
+                @edit-actived="editActived"
+                ref="permissionSettingTable"
+                :edit-rules="validRules"
+            >
+                <template #column:default:createAccess="{data}">
+                    <span>{{accessValueMapping[data.row[data.column.property]]}}</span>
+                </template>
+                <template #column:edit:createAccess="{data}">
+                    <erd-select
+                        ref="permissionSelect"
+                        v-model="data.row.createAccess"
+                        popper-class="vxe-table--ignore-clear"
+                        @change="(val)=>(customEditorChange(val, data))"
+                    >
+                        <erd-option
+                            v-for="option in optionList"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></erd-option>
+                    </erd-select>
+                </template>
+                <template #column:default:updateAccess="{data}">
+                    <span>{{accessValueMapping[data.row[data.column.property]]}}</span>
+                </template>
+                <template #column:edit:updateAccess="{data}">
+                    <erd-select
+                        ref="permissionSelect"
+                        v-model="data.row.updateAccess"
+                        popper-class="vxe-table--ignore-clear"
+                        @change="(val)=>(customEditorChange(val, data))"
+                    >
+                        <erd-option
+                            v-for="option in optionList"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></erd-option>
+                    </erd-select>
+                </template>
+                <template #column:default:viewAccess="{data}">
+                    <span>{{accessValueMapping[data.row[data.column.property]]}}</span>
+                </template>
+                <template #column:edit:viewAccess="{data}">
+                    <erd-select
+                        ref="permissionSelect"
+                        v-model="data.row.viewAccess"
+                        popper-class="vxe-table--ignore-clear"
+                        @change="(val)=>(customEditorChange(val, data))"
+                    >
+                        <erd-option
+                            v-for="option in optionList"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></erd-option>
+                    </erd-select>
+                </template>
+            </erd-table>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="hanlerSettingPermission"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="hanlderCancelPermission">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

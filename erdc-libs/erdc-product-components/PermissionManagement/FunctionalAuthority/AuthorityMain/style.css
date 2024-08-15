@@ -1,0 +1,28 @@
+#authority-main {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+#authority-main .authority-main-title {
+  height: 56px;
+  line-height: 56px;
+  font-size: var(--fontSizeLarge);
+  color: var(--colorTextNormal);
+  font-weight: 700;
+  border-bottom: 1px solid #ebebeb;
+  padding-left: 16px;
+}
+#authority-main .authority-main-content {
+  flex-grow: 1;
+}
+#authority-main #left-box-tabs .tab-panel {
+  padding: 0;
+}
+#authority-main #left-box-tabs .tab-panel .tab-panel-search {
+  padding: 16px 12px 8px;
+}
+
+/*# sourceMappingURL=style.css.map */

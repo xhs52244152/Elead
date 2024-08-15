@@ -1,0 +1,46 @@
+.thumbnail-help-content {
+  display: flex;
+  flex-direction: column;
+}
+.thumbnail-help-content .thumbnail-help-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.thumbnail-help-content .thumbnail-help-item .thumbnail-help-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+}
+.thumbnail-help-content .thumbnail-help-item .thumbnail-help-item-icon .workflow-thumbnail-icon-default {
+  background-color: #BEBEBE;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+.thumbnail-help-content .thumbnail-help-item .thumbnail-help-item-icon .workflow-thumbnail-icon-abnormal {
+  background-color: #F5222D;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+.thumbnail-help-content .thumbnail-help-item .thumbnail-help-item-icon .item-icon-i-pending {
+  color: #F5222D;
+}
+.thumbnail-help-content .thumbnail-help-item .thumbnail-help-item-icon .theme-font-color {
+  color: var(--primary-color);
+}
+.thumbnail-help-content .thumbnail-help-item .item-icon-default {
+  border: 2px solid #BEBEBE;
+}
+.thumbnail-help-content .thumbnail-help-item .item-icon-pending {
+  border: 2px solid #F5222D;
+}
+
+.el-icon-question {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,8 @@
+#showTooltip .el-tooltip {
+  display: flex;
+}
+#showTooltip .el-tooltip .title_text {
+  text-wrap: nowrap;
+}
+
+/*# sourceMappingURL=style.css.map */

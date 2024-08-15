@@ -1,0 +1,129 @@
+<div
+    id="fam_import_and_export_template"
+    class="h-100p flex flex-column"
+>
+    <FamPageTitle
+        v-if="showTitle && currentTable === 'templateCategory'"
+        class="plr-normal bg-normal pb-normal"
+    ></FamPageTitle>
+    <div
+        class="h-100p p-normal"
+        :class="{ 'import-export-template-history': currentTable !== 'templateCategory' }"
+    >
+        <div
+            class="template-sences-list-box h_100p"
+            v-show="currentTable === 'templateCategory'"
+        >
+            <fam-advanced-table
+                v-if="currentTable === 'templateCategory'"
+                ref="templateCategoryTable"
+                :view-table-config="templateCategoryTableConfig"
+                :is-adaptive-height="true"
+                @action-click="actionClickCategory"
+            >
+                <template #left:toolbar:first>
+                    <div class="toolbar-search-component">
+                        <div class="toolbar-search-component-label">所属应用</div>
+                        <erd-select
+                            v-model="selectedAppName"
+                            filterable
+                            @change="changeAppName"
+                        >
+                            <erd-option
+                                v-for="option in appNameOptionsList"
+                                :key="option.identifierNo"
+                                :label="option.displayName"
+                                :value="option.identifierNo"
+                            ></erd-option>
+                        </erd-select>
+                    </div>
+                </template>
+                <template #column:default:operation:content="{ scope }">
+                    <fam-action-pulldown
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row, 'ExportBusinessInfo_ROW_ACTION')"
+                        :action-data="scope.row"
+                        :extend-disabled-validate="() => scope.row.tenantId !== tenantId"
+                        :action-pulldown-tip="getActionPullTip(scope.row)"
+                        @click="onCategoryCommand"
+                    ></fam-action-pulldown>
+                </template>
+            </fam-advanced-table>
+        </div>
+        <div
+            v-if="currentTable !== 'templateCategory'"
+            class="template-list-box h-100p flex flex-column"
+            :class="{ 'h-100p': currentTable !== 'templateCategory' }"
+        >
+            <fam-advanced-table
+                v-if="currentTable !== 'templateCategory'"
+                ref="templateListTable"
+                class="grow-1"
+                heigt="100%"
+                isAdaptiveHeight
+                :view-table-config="templateTableConfig"
+                @action-click="actionClick"
+            >
+                <template #left:toolbar:first>
+                    <FamPageTitle
+                        :title="editRowName + ' (' + editRowCode + ')'"
+                        show-back-button
+                        staticTitle
+                        @back="gotoTemplateList(null, 'templateCategory')"
+                    ></FamPageTitle>
+                </template>
+                <template #column:default:operation:content="{ scope }">
+                    <fam-action-pulldown
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row, 'ExportTemplate_ROW_ACTION')"
+                        :action-data="scope.row"
+                        @click="onCommand"
+                    ></fam-action-pulldown>
+                </template>
+            </fam-advanced-table>
+        </div>
+        <erd-ex-dialog
+            v-if="dialogVisiable"
+            width="1000px"
+            :title="dialogTitle"
+            :visible.sync="dialogVisiable"
+            @close="onHandlerCancel"
+        >
+            <div class="dialog-main-content">
+                <create-or-edit-form
+                    ref="createOrEditForm"
+                    :readonly="isReadonly"
+                    :editRow="editRow"
+                    :edit-template="editTemplate"
+                    :formType="currentTable"
+                    @handler-submit="handlerFormSubmit"
+                ></create-or-edit-form>
+            </div>
+            <span
+                slot="footer"
+                class="dialog-footer"
+                v-if="!isReadonly"
+            >
+                <erd-button
+                    type="primary"
+                    @click="onHandlerConfirm"
+                    :loading="loading"
+                >
+                    {{i18n.confirm}}
+                </erd-button>
+                <erd-button @click="onHandlerCancel">{{i18n.cancel}}</erd-button>
+            </span>
+        </erd-ex-dialog>
+    </div>
+
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        accept=".zip"
+        businessName="ExportTemplateImport"
+        :request-config="requestConfig"
+        :is-show-template="false"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+</div>

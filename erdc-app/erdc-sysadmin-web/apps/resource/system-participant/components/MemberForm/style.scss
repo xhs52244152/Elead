@@ -1,0 +1,48 @@
+#fam-member-form {
+    .avatar {
+        .shade {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        &:hover {
+            .shade {
+                display: flex;
+            }
+            cursor: pointer;
+        }
+    }
+
+    .sign-img {
+        width: 160px;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+}
+
+.change-signature-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    flex-grow: 1;
+    border: 1px solid var(--colorBorder);
+    .imgPreview {
+        height: 250px;
+    }
+    .change-signature-upload {
+        border: 3px dashed var(--colorBorder);
+        padding: 60px;
+    }
+    .my_signature-input_container {
+        position: relative;
+        flex-grow: 1;
+        .my_signature-input_tools {
+            position: absolute;
+            top: 3px;
+            right: 1px;
+        }
+    }
+}
+
+
+

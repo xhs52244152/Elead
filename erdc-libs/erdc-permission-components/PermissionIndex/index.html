@@ -1,0 +1,156 @@
+<div
+    id="fam_objectPermission"
+    class="flex flex-column grow-1"
+    v-loading="pageLoading"
+>
+    <div class="permission-table-option-section">
+        <div class="flex align-items-center">
+            <erd-form
+                v-if="showSearch"
+                class="flex"
+                :mode.sync="searchConditionsObj"
+                style="gap: var(--normalSpace)"
+                size="mini"
+            >
+                <ComponentWidthLabel
+                    v-for="item in filterConfigs"
+                    v-model="searchConditionsObj[item.field]"
+                    class="flex mb-0"
+                    :key="item.field"
+                    :isRender="item.component"
+                    :label="item.label"
+                    :removeable="false"
+                    :options="item.options"
+                    :row="item"
+                    v-bind="item.props"
+                    v-on="item.listeners"
+                >
+                    <template
+                        v-if="item.field === 'typeSelected'"
+                        #component
+                    >
+                        <TypeTreeSelect
+                            ref="permissionTypeSelect"
+                            :default-value="searchConditionsObj.typeSelected"
+                            :app-name="appName"
+                            :is-basics="isBasics"
+                            @handler-change-type-select="handlerChangeTypeSelect"
+                        >
+                            <template #prefix>
+                                <span>{{i18nMappingObj.type}}</span>
+                            </template>
+                        </TypeTreeSelect>
+                    </template>
+
+                    <template
+                        v-else-if="item.field === 'status'"
+                        #component
+                    >
+                        <status-select
+                            ref="permissionStatusSelect"
+                            :default-value="searchConditionsObj.statusValue"
+                            @handler-change-status-select="handlerChangeStatusSelect"
+                        >
+                            <template #prefix>
+                                <span>{{i18nMappingObj.state}}</span>
+                            </template>
+                        </status-select>
+                    </template>
+                </ComponentWidthLabel>
+            </erd-form>
+        </div>
+        <div
+            class="permission-table-option-right"
+            v-if="isEditPermission"
+        >
+            <erd-button
+                type="primary"
+                @click="handlerCreateObjPermission"
+            >
+                {{i18nMappingObj.add}}
+            </erd-button>
+            <erd-button @click="handlerMenuClick('handleBatchDelete')"> {{i18nMappingObj.delete}}</erd-button>
+            <erd-pulldown
+                v-if="false"
+                :right="true"
+                :left="true"
+            >
+                {{i18nMappingObj.moreOperation}}
+                <template #pulldown>
+                    <erd-pulldown-menu>
+                        <erd-pulldown-menu-item
+                            v-for="menuItem in moreOperateList"
+                            :key="menuItem.name"
+                            @click="handlerMenuClick(menuItem.clickFnName)"
+                        >
+                            {{menuItem.name}}
+                        </erd-pulldown-menu-item>
+                    </erd-pulldown-menu>
+                </template>
+            </erd-pulldown>
+        </div>
+    </div>
+    <div class="erd-table-container grow-1">
+        <fam-erd-table
+            ref="permissionMainTable"
+            border
+            height="100%"
+            show-overflow
+            :column="objPermissionTableColumns"
+            :data="objPermissionTableData"
+            :column-config="{ resizable: true }"
+            :checkbox-config="tableCheckboxConfig"
+            @checkbox-all="handlerCheckboxChange"
+            @checkbox-change="handlerCheckboxChange"
+        >
+            <template #column:default:containerName="{ data }">
+                <erd-icon
+                    v-if="data.row.isExtends"
+                    class="erd-iconfont erd-icon-reference-object"
+                ></erd-icon>
+                {{data.row.containerName}}
+            </template>
+            <template #column:default:operation="{ data }">
+                <div class="custom-table-columns-cell">
+                    <erd-button
+                        v-if="!data.row.isExtends"
+                        type="text"
+                        @click="editRow(data)"
+                    >
+                        {{i18nMappingObj.edit}}
+                    </erd-button>
+                    <erd-button
+                        v-if="!data.row.isExtends"
+                        type="text"
+                        @click="deleteRow(data)"
+                    >
+                        {{i18nMappingObj.delete}}
+                    </erd-button>
+                </div>
+            </template>
+        </fam-erd-table>
+    </div>
+    <erd-pagination
+        v-if="isEditPermission"
+        class="permission-custom-pagination ptb-normal"
+        :current-page="pageInfo.currentPage"
+        :page-sizes="[5, 10, 20, 50, 100]"
+        :page-size="pageInfo.pageSize"
+        :total="pageInfo.total"
+        :hide-on-single-page="false"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+    >
+    </erd-pagination>
+    <add-or-edit-permission
+        ref="addOrEditPermissionDialog"
+        :query-params="queryParams"
+        :dialog-title="dialogTitle"
+        :query-scope="queryScope"
+        :app-name="appName"
+        :isContext="isContext"
+        :is-basics="isBasics"
+        v-bind="$attrs"
+        @operationsuccess="operationSuccess"
+    ></add-or-edit-permission>
+</div>

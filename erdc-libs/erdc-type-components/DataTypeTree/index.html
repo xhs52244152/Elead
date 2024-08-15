@@ -1,0 +1,97 @@
+<div
+    id="DataTypeTree"
+    class="flex-1"
+>
+    <div class="dataTypeTree h-100p flex flex-column">
+        <div
+            class="tree-header"
+            ref="header"
+        >
+            <div class="tree-title">{{i18nMappingObj.dataType}}</div>
+            <div class="search">
+                <erd-input
+                    v-model="searchValue"
+                    :placeholder="i18nMappingObj.searchKeyword"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                >
+                </erd-input>
+                <!-- <erd-button @click="onExportAll" icon="erd-iconfont erd-icon-checkout" type="fill-icon"></erd-button> -->
+            </div>
+            <!-- <div class="flex operation">
+                <erd-tooltip class="item" effect="dark" :content="i18nMappingObj.componentManagement" placement="top-start">
+                    <erd-button icon="el-icon-edit" @click="onOrgManagement">{{i18nMappingObj.componentManagement}}</erd-button>
+                </erd-tooltip>
+                <erd-dropdown trigger="click" :hide-on-click="false" @command="onCommand" style="margin-left: 8px;">
+                    <erd-button>
+                      {{i18nMappingObj.moreActions}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </erd-button>
+                    <erd-dropdown-menu slot="dropdown">
+                      <erd-dropdown-item command="import">{{i18nMappingObj.completeImport}}</erd-dropdown-item>
+                      <erd-dropdown-item command="export">{{i18nMappingObj.completeExport}}</erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </div> -->
+        </div>
+        <erd-scrollbar
+            class="flex-1"
+            style="min-height: 0"
+            wrap-style="overflow: hidden auto;"
+        >
+            <erd-ex-tree
+                :data="treeData"
+                :props="defaultProps"
+                class="tree-list"
+                @node-click="onCheck"
+                :filter-node-method="filterSearch"
+                :highlight-current="true"
+                node-key="key"
+                default-expand-all
+                :default-expanded-keys="defaultExpandedKeys"
+                :expand-on-click-node="false"
+                ref="tree"
+            >
+                <template v-slot="scope">
+                    <div
+                        class="tree-content"
+                        @mouseenter="mouseenter(scope)"
+                        @mouseleave="mouseleave(scope)"
+                    >
+                        <div class="tree-text">{{scope.node.label}}</div>
+                        <div
+                            class="tree-operation"
+                            v-show="scope.data.show"
+                            @click.stop
+                        >
+                            <erd-button
+                                type="icon"
+                                icon="erd-iconfont erd-icon-add-document fontSize18"
+                                v-if="scope.node.level == 1 && scope.data.dataType == 'component'"
+                                size="mini"
+                                class="drag"
+                                @click="onCreate"
+                            >
+                            </erd-button>
+                        </div>
+                    </div>
+                </template>
+            </erd-ex-tree>
+        </erd-scrollbar>
+    </div>
+    <component-management
+        v-if="ComponentManagementVisible"
+        :visible.sync="ComponentManagementVisible"
+        :title="i18nMappingObj.componentManagement"
+    >
+    </component-management>
+
+    <new-edit-component
+        v-if="NewEditComponentVisible"
+        :visible.sync="NewEditComponentVisible"
+        :title="componentTitle"
+        :oid="oid"
+        :type="componentType"
+        @onsubmit="getTreeList()"
+    >
+    </new-edit-component>
+</div>

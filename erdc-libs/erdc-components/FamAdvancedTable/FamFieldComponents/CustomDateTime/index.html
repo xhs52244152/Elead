@@ -1,0 +1,25 @@
+<div
+    id="customDateTime"
+    class="custom-date-time"
+    style="width: 100%; display: flex"
+>
+    <erd-ex-date-picker
+        ref="datePicker"
+        v-if="showDateTimePicker"
+        class="w-100p"
+        v-model="dateValue"
+        :type="type"
+        :key="'customDateTime' + type"
+        :format="dateFormat"
+        :value-format="dateFormat"
+        :range-separator="separator"
+        :start-placeholder="startPlaceholder"
+        :end-placeholder="endPlaceholder"
+        :placeholder="placeholder"
+        :picker-options="pickerOptions"
+        :clearable="clearable"
+        :disabled="disabled"
+        v-on="$listeners"
+    >
+    </erd-ex-date-picker>
+</div>

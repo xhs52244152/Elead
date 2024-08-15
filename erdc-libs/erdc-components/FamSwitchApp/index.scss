@@ -1,0 +1,141 @@
+// 搜索框
+// .fam-switch-app_body_search {
+//     input {
+//         border-radius: 20px;
+//     }
+// }
+//搜索框结束
+
+.fam-switch-app-popover {
+    padding: 0;
+}
+.fam-switch-app-body {
+    margin-bottom: 10px;
+    .chosen {
+        border: 1px solid var(--colorPrimary);
+    }
+    .erd-icon-double-drag {
+        cursor: move;
+    }
+    .fam-switch-app-body-sort-edit-icon {
+        padding: 3px;
+        position: absolute;
+        right: 14px;
+        top: 3px;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+    .fam-switch-app_tag {
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .fam-switch-app_tag_content {
+            .fam-switch-app_popover_item {
+                position: relative;
+                cursor: pointer;
+                padding-top: 10px;
+                width: 120px;
+                height: 80px;
+                border-radius: 5px;
+                .erd-icon-double-drag {
+                    position: absolute;
+                    left: 5px;
+                    top: 5px;
+                    cursor: move;
+                }
+                .el-icon-close {
+                    display: none;
+                    position: absolute;
+                    right: 5px;
+                    top: 5px;
+                    &:hover {
+                        color: #0a84ff;
+                    }
+                }
+                img {
+                    transition: all .2s ease-out;
+                    width: 40px;
+                    height: 40px;
+                }
+                &:nth-child(3n + 1) {
+                    margin-left: 0;
+                }
+                &:nth-child(-n + 3) {
+                    margin-top: 0;
+                }
+                &:hover{
+                    background-color: #f5f5f5;
+                    img {
+                        transform: translateY(-3px);
+                    } 
+                }
+                &.isDragging:hover{
+                    background-color: inherit;
+                    .el-icon-close {
+                        display: inline;
+                        color: #0a84ff;
+                    }
+                }
+            }
+            .popover-item {
+                width: 90px !important;
+            }
+            .fam-switch-app_popover_item_rectangle {
+                cursor: pointer;
+                display: flex;
+                width: 150px;
+                padding: 8px 0;
+                border-radius: 5px;
+                transition: background-color .3s ease;
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+                span {
+                    flex-grow: 1;
+                    color: #141C28;
+                }
+                .erd-iconfont {
+                    color: var(--colorPrimary);
+                    font-size: 20px;
+                }
+                &:hover{
+                    background-color: #f5f5f5;
+                    .star-off {
+                        color: #2779ff;
+                    }
+                }
+                &.isDragging:hover{
+                    background-color: inherit;
+                }
+                &:nth-child(2n + 2) {
+                    // margin-left: 20px;
+                }
+                .star-on {
+                    color: #2779ff;
+                    width: 44px;
+                    text-align: right;
+                }
+                .star-off {
+                    color: #A8AEBA;
+                    width: 44px;
+                    text-align: right;
+                    padding: 2px;
+                }
+            }
+        }
+        & + .fam-switch-app_tag {
+            margin-top: var(--superSpace);
+        }
+
+    }
+
+}
+
+
+
+

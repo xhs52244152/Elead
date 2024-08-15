@@ -1,0 +1,23 @@
+<erd-drawer
+    :with-header="false"
+    :visible.sync="drawer"
+    size="40%"
+>
+    <FamDynamicForm
+        :form="formData"
+        :data="formConfigs"
+        class="file-form mt-16"
+        :labelWidth="labelWidth"
+        ref="taskDetailForm"
+    >
+        <template #taskParams>
+            <erd-input
+                v-model="formData.taskParams"
+                type="textarea"
+                autosize
+                disabled
+                placeholder="请输入"
+            />
+        </template>
+    </FamDynamicForm>
+</erd-drawer>

@@ -1,0 +1,108 @@
+<div
+    id="QueueList"
+    class="flex flex-column h-100p"
+>
+    <div class="QueueList-header flex mb-xl">
+        <div class="title">{{title}}</div>
+    </div>
+    <div class="operation flex">
+        <div>
+            <erd-input
+                v-model="searchVal"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+                style="width: 300px"
+                :placeholder="i18n.searchTips"
+                @input="onInput"
+            ></erd-input>
+        </div>
+        <div>
+            <erd-button
+                v-if="oid !== '-1'"
+                type="primary"
+                @click="onCreate"
+                >{{i18n.create}}
+            </erd-button>
+        </div>
+    </div>
+    <div
+        class="main grow-1 flex flex-column"
+        style="min-height: 0"
+    >
+        <erd-table
+            ref="aclTable"
+            border
+            class="grow-1"
+            v-loading="loading"
+            :data="listData"
+            :column="columns"
+            height="100%"
+            style="min-height: 0"
+            show-overflow
+        >
+            <template #column:default:oper="{data}">
+                <erd-dropdown
+                    @command="(value)=>(onCommand(value, data))"
+                    trigger="click"
+                    @visible-change="(visible)=>(visibleChange(visible, data))"
+                >
+                    <span class="el-dropdown-link">
+                        <erd-link
+                            type="primary"
+                            :underline="false"
+                            >{{i18n.operation}}
+                            <i
+                                class="erd-iconfont erd-icon-arrow-up"
+                                v-if="data.row.visibleDropdown"
+                            ></i>
+                            <i
+                                class="erd-iconfont erd-icon-arrow-down"
+                                v-else
+                            ></i>
+                        </erd-link>
+                    </span>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item
+                            v-for="item in data.row.pulldownList"
+                            v-if="!item.hide"
+                            :key="item.actionName"
+                            :command="item.actionName"
+                            :disabled="item.disabled"
+                            :divided="item.divided"
+                        >
+                            {{item.label}}
+                        </erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </template>
+        </erd-table>
+        <erd-pagination
+            :total="total"
+            :page-size="pageSize"
+            :current-page="currentPage"
+            :hide-on-single-page="false"
+            class="mt-xl"
+            @size-change="sizeChange"
+            @current-change="currentChange"
+        >
+        </erd-pagination>
+    </div>
+
+    <queue-form
+        v-if="visible"
+        :visible.sync="visible"
+        :title="formTitle"
+        :queueData="formData"
+        :jobId="jobId"
+        :type="type"
+        @onsubmit="onSubmit"
+    >
+    </queue-form>
+
+    <instance-list
+        v-if="visibleInstanceList"
+        :visible.sync="visibleInstanceList"
+        :data="instanceData"
+    >
+    </instance-list>
+</div>

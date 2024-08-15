@@ -1,0 +1,21 @@
+<erd-popover
+    v-model="visible"
+    popper-class="fam-switch-app-popover"
+    placement="bottom"
+    :width="400"
+    :offset="16"
+    @show="initData"
+>
+    <template #reference>
+        <div class="collapsed-button flex justify-center align-items-center text-center cursor-pointer">
+            <img
+                :src="icon"
+                alt=""
+            />
+        </div>
+    </template>
+    <FamSwitchBody
+        ref="body"
+        @switch="visible = false"
+    ></FamSwitchBody>
+</erd-popover>

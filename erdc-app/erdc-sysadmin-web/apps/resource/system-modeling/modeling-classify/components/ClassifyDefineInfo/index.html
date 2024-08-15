@@ -1,0 +1,39 @@
+<div id="classify_define_info">
+    <erd-contraction-panel
+        :title="i18n.basicInformation"
+        :unfold.sync="unfold"
+    >
+        <template v-slot:header-right>
+            <erd-tooltip
+                v-if="isShare"
+                content="非当前租户数据禁止操作"
+                placement="top"
+            >
+                <erd-button
+                    type="primary"
+                    @click="onEdit"
+                    :disabled="isShare"
+                    v-if="!isApplication"
+                >
+                    {{i18n.edit}}
+                </erd-button>
+            </erd-tooltip>
+
+            <template v-else>
+                <erd-button
+                    type="primary"
+                    :disabled="isShare"
+                    @click="onEdit"
+                    v-if="!isApplication"
+                >
+                    {{i18n.edit}}
+                </erd-button>
+            </template>
+        </template>
+        <template v-slot:content>
+            <div>
+                <classify-define-info-form v-bind="{...$attrs, ...$props}"></classify-define-info-form>
+            </div>
+        </template>
+    </erd-contraction-panel>
+</div>

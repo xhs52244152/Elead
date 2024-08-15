@@ -1,0 +1,32 @@
+<div id="SequenceChars">
+    <div class="codeChars">
+        <span>{{i18n.character}}</span>
+    </div>
+    <div class="charType">
+        <vue-draggable
+            v-model="charTypes"
+            group="codeChars"
+        >
+            <transition-group>
+                <div
+                    v-for="item in charTypes"
+                    :key="item.id"
+                    class="char-type char drag"
+                    :class="{'char-checked': item.isChecked}"
+                    @click="onClickType(item)"
+                >
+                    {{item.name}}
+                </div>
+            </transition-group>
+        </vue-draggable>
+    </div>
+    <div class="charItems">
+        <span
+            v-for="item in charArr"
+            class="char char-item"
+            :class="{'char-checked': item.isChecked}"
+            @click="onClickChar(item)"
+            >{{item.name}}</span
+        >
+    </div>
+</div>

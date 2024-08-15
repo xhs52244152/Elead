@@ -1,0 +1,36 @@
+{
+  "name": "@erdc-libs/erdc-plat-icon",
+  "version": "3.1.0",
+  "description": "平台图标库",
+  "erdcData": {
+    "icons": [
+      {
+        "key": "plat-iconfont",
+        "group": "plat-iconfont",
+        "displayName": "平台图标",
+        "styleHref": "lib/erd-iconfont.css",
+        "definitionUrl": "lib/erd-iconfont.json"
+      },
+      {
+        "key": "resource-iconfont",
+        "group": "resource-iconfont",
+        "displayName": "平台菜单图标",
+        "styleHref": "lib/erd-iconfont.css",
+        "definitionUrl": "lib/erd-iconfont.json"
+      },
+      {
+        "key": "file-format-iconfont",
+        "group": "file-format-iconfont",
+        "displayName": "文件格式",
+        "styleHref": "lib/erd-iconfont.css",
+        "definitionUrl": "lib/erd-iconfont.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node ./build.js"
+  },
+  "devDependencies": {
+    "@erdcloud/erdcloud-icon": "^1.6.0"
+  }
+}

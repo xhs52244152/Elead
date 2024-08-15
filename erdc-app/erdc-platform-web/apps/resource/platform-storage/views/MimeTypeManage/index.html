@@ -1,0 +1,19 @@
+<div class="flex flex-column h_100p">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        class="grow-1 ptrl-xl"
+        is-adaptive-height
+    ></fam-advanced-table>
+
+    <type-edit
+        ref="editRef"
+        :baseType="baseType"
+        :fileTypes="fileTypes"
+        @saveSuccess="handleSaveSuccess"
+    ></type-edit>
+</div>

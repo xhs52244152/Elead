@@ -1,0 +1,17 @@
+.left-custom-class .fam-sidemenu__header {
+    font-size: var(--fontSize);
+    font-weight: bolder;
+    color: var(--colorTextNormal);
+}
+.left-custom-class .fam-sidemenu__header .fam-sidemenu__header-toggle {
+    font-weight: normal;
+    color: var(--colorTextExplain);
+}
+.left-is-collapsed .fam-resizable-container__left {
+    width: 40px !important;
+}
+#attrPermissionManage #fam_attrPermissionSetting {
+    margin-top: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

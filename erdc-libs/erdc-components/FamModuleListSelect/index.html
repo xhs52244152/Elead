@@ -1,0 +1,28 @@
+<div id="FamModuleListSelect">
+    <erd-select
+    v-model="selectModule"
+    popper-class="module-select"
+    @change="toProduct">
+        <erd-option class="module-input" disabled label=" " value=" ">
+            <span style="margin: 8px 0;">
+                <erd-input
+                v-model="searchValue"
+                clearable
+                @input="search"
+                @keyup.native.enter="search"
+                :placeholder="i18nMappingObj.enter"
+                suffix-icon="el-input__icon erd-iconfont erd-icon-search"></erd-input>
+            </span>
+        </erd-option>
+        <erd-option-group v-for="item in viewData" :label="item.label">
+            <erd-option 
+            v-for="item1 in item.children"
+            :value="item1[valueKey]"
+            :label="item1[labelKey]"></erd-option>
+        </erd-option-group>
+        <erd-button type="text" @click="toJump">
+            <span>{{ jumpName }}</span>
+            <i class="erd-iconfont erd-icon-arrow-right"></i>
+        </erd-button>
+    </erd-select>
+</div>

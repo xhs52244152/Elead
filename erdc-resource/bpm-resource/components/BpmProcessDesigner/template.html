@@ -1,0 +1,9 @@
+<div id="process-editor" class="process-editor">
+    <BpmnDesigner
+        ref="bpmnDesigner"
+        :value="xml"
+        :readonly="readonly"
+        v-bind="controlForm"
+        v-on="$listeners"
+    ></BpmnDesigner>
+</div>

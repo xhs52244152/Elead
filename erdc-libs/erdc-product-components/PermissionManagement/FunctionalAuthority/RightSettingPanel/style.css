@@ -1,0 +1,79 @@
+.authority-main-content .fam-resizable-container__right {
+  position: relative;
+}
+
+#right-setting-panel {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+#right-setting-panel .setting-panel-content {
+  padding: 0 16px;
+  flex-grow: 1;
+}
+#right-setting-panel .setting-panel-content .setting-panel-content-scroll {
+  border: 1px solid rgb(233, 233, 233);
+}
+#right-setting-panel .setting-panel-content .setting-panel-content-scroll .check-line-item:last-child {
+  border-bottom: none !important;
+}
+#right-setting-panel .setting-panel-title,
+#right-setting-panel .setting-panel-footer {
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+#right-setting-panel .setting-panel-title {
+  padding: 0 16px;
+  justify-content: space-between;
+}
+#right-setting-panel .setting-panel-title .setting-panel-title-left {
+  display: flex;
+  justify-content: center;
+}
+#right-setting-panel .setting-panel-title .setting-panel-title-left .title-left-main {
+  max-width: 300px;
+  font-size: 16px;
+  color: var(--colorTextNormal);
+  line-height: 24px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+}
+#right-setting-panel .setting-panel-title .setting-panel-title-left .title-left-tips {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 24px;
+  font-weight: 400;
+  padding-left: 6px;
+}
+#right-setting-panel .setting-panel-title .setting-panel-title-right {
+  display: flex;
+  justify-content: center;
+}
+#right-setting-panel .setting-panel-title .setting-panel-title-right .title-right-search {
+  padding-left: 16px;
+}
+#right-setting-panel .setting-panel-title .setting-panel-title-right .title-right-checkbox {
+  line-height: 26px;
+}
+#right-setting-panel .setting-panel-footer {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #ebebeb;
+}
+#right-setting-panel .setting-panel-role-check label {
+  width: 158px;
+  height: 28px;
+}
+
+.custom-confirm-cancel .el-message-box__message {
+  font-size: 14px;
+  font-size: var(--fontSize);
+}
+
+/*# sourceMappingURL=style.css.map */

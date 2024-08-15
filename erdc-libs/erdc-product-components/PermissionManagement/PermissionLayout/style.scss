@@ -1,0 +1,13 @@
+#PermissionLayout {
+    background: var(--colorFullBg);
+
+    .left-custom-class,
+    .fam-sidemenu {
+        height: 100%;
+    }
+
+    .fam-sidemenu__search {
+        padding: var(--largePadding);
+    }
+}
+

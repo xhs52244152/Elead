@@ -1,0 +1,52 @@
+#FamControlLabel {
+    align-items: center;
+    .el-tag {
+        color: #fff !important;
+        height: 20px;
+        line-height: 18px;
+        i {
+            top: 20%;
+        }
+    }
+    .el-tag + .el-tag {
+        margin-left: 2px;
+    }
+
+    .addFont {
+        position: relative;
+        font-size: var(--formItemHeight);
+        padding: 0 var(--bigPadding) !important;
+        line-height: 1;
+
+        i {
+            font-size: var(--formItemHeight) !important;
+            line-height: 1 !important;
+
+            &:hover {
+                color: #567ffd;
+            }
+        }
+    }
+}
+.control-lable.el-dropdown-menu {
+    .el-dropdown-menu__item {
+        color: #fff;
+        &.tag-width {
+            min-width: 100px;
+            text-align: center;
+        }
+        position: relative;
+        .check-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            font-size: 20px !important;
+        }
+    }
+    .popper__arrow {
+        display: none;
+    }
+}

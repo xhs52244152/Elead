@@ -1,0 +1,80 @@
+.bpm-process-horse-content {
+  display: flex;
+  flex-direction: column;
+}
+.bpm-process-horse-content .el-step .el-step__head.is-wait {
+  border-color: #bebebe;
+}
+.bpm-process-horse-content .el-step .el-step__head.is-process {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+.bpm-process-horse-content .el-step .el-step__head.is-finish .el-step__line {
+  background-color: currentColor;
+}
+.bpm-process-horse-content .el-step .el-step__icon {
+  width: 20px;
+  height: 20px;
+}
+.bpm-process-horse-content .el-step .el-step__line {
+  background-color: #bebebe;
+  height: 50px;
+}
+.bpm-process-horse-content .el-step .el-step__title {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  line-height: var(--navMenuItemHeight);
+  height: var(--navMenuItemHeight);
+}
+.bpm-process-horse-content .el-step .el-step__title.is-finish {
+  color: #000000;
+}
+.bpm-process-horse-content .el-step .el-step__title.is-process {
+  font-weight: normal;
+  color: var(--primary-color);
+}
+.bpm-process-horse-content .el-step.is-horizontal .el-step__line {
+  top: 8px;
+}
+.bpm-process-horse-content .el-step.is-vertical .el-step__line {
+  left: 9px;
+}
+.bpm-process-horse-content .el-step.is-vertical .el-step__head {
+  width: 1em;
+}
+.bpm-process-horse-content .el-step.is-vertical .el-button--text {
+  line-height: 32px;
+}
+.bpm-process-horse-content .el-step .el-step__icon.is-text {
+  border: none;
+}
+.bpm-process-horse-content .el-steps .el-step:first-child .el-step__head .el-step__line {
+  top: 20px;
+}
+.bpm-process-horse-content .el-step.is-vertical .el-step__main {
+  padding-left: 14px;
+}
+.bpm-process-horse-content .el-step__title {
+  line-height: var(--navMenuItemHeight);
+  height: var(--navMenuItemHeight);
+}
+.bpm-process-horse-content .is-active {
+  background-color: #f0f4fb;
+}
+.bpm-process-horse-content .is-active::after {
+  content: " ";
+  width: 3px;
+  height: 100%;
+  background-color: var(--colorPrimary);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.bpm-process-horse-content .process-horse-content-step {
+  height: var(--navMenuItemHeight);
+  flex-basis: auto !important;
+}
+.bpm-process-horse-content .process-horse-content-step .el-step__icon {
+  top: 50%;
+  transform: translateY(-50%);
+}/*# sourceMappingURL=index.css.map */

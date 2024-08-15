@@ -1,0 +1,28 @@
+<div class="object-common-space">
+    <FamSecondaryMenu
+        v-if="showSecondaryMenu"
+        :isTemplate="readonly"
+        :outerRootResource="rootResource"
+        :outerResources="secondaryResources"
+    >
+        <component
+            :is="defaultComponent"
+            :type-name="typeName"
+            :extend-params="extendParams"
+            :readonly="readonly"
+            :space-detail="spaceDetail"
+            @changeSpace="onObjectChange"
+            @clickItem="gotoObjectList"
+        ></component>
+    </FamSecondaryMenu>
+    <FamThirdMenu
+        v-if="showThirdMenu"
+        :outerResources="thirdResources"
+    ></FamThirdMenu>
+    <keep-alive :include="cachedViews">
+        <router-view
+            :key="routerViewKey"
+            class="router-view-conatainer flex flex-column grow-1 m-lg"
+        ></router-view>
+    </keep-alive>
+</div>

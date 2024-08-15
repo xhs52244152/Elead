@@ -1,0 +1,203 @@
+#DictList {
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
+    height: 100%;
+
+    .DictList-title {
+        line-height: 28px;
+        padding: 0 16px;
+        color: var(--colorTextNormal);
+        font-size: var(--fontSizeLarge);
+        font-weight: 700;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        width: 100%;
+        padding: 0 16px 16px 16px;
+        .operation {
+            display: flex;
+            padding: 16px 0;
+            justify-content: flex-end;
+        }
+    }
+
+    .DictList-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        background-color: #fff;
+        border-top: 1px solid #ebebeb
+    }
+
+    .vxe-input--inner {
+        appearance: none;
+        background-color: #fff;
+        border-radius: 0px;
+        border: 1px solid #dcdfe6;
+        box-sizing: border-box;
+        color: #606266;
+        display: inline-block;
+        font-size: inherit;
+        height: 28px;
+        line-height: 28px;
+        outline: 0;
+        padding: 0 15px;
+        transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        width: 100%;
+    }
+
+    .vxe-input {
+        height: auto;
+    }
+
+    .vxe-input .vxe-input--suffix {
+        height: 28px;
+    }
+
+    table {
+        border-collapse: collapse;
+
+        tbody tr {
+            td {
+                position: relative;
+
+                &.editCell {
+                    .vxe-cell--tree-node {
+                        padding-left: 0 !important;
+
+                        .vxe-tree-cell {
+                            padding-left: 0;
+                        }
+
+                        .vxe-tree--btn-wrapper {
+                            display: none;
+                        }
+                    }
+                }
+
+                .vxe-input {
+                    line-height: 0;
+                }
+
+                .vxe-cell {
+                    position: relative;
+                }
+                // 编辑状态提示信息
+                .tooltip {
+                    position: absolute;
+                    top: 0px;
+                    right: 4px;
+                }
+
+                .more-button {
+                    span {
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+                .el-button--text {
+                    max-width: 60px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    display: inline-block;
+                }
+            }
+
+            .editIcon::after {
+                content: '';
+                border-top: 4px solid #00a854;
+                border-bottom: 4px solid transparent;
+                border-right: 4px solid #00a854;
+                border-left: 4px solid transparent;
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            .erd-table-valid-error {
+                &.editIcon {
+                    &::after {
+                        border-top: 4px solid #f04134;
+                        border-right: 4px solid #f04134;
+                    }
+                }
+
+                .el-input__inner {
+                    border-color: #f04134 !important;
+                    border: 1px solid #f04134;
+                }
+
+                .vxe-input--inner {
+                    border-color: #f04134 !important;
+                    border: 1px solid #f04134;
+                }
+
+                .intermation {
+                    border-color: #f04134 !important;
+                    // color: #f04134 !important;
+                }
+            }
+        }
+    }
+
+    .newEdit {
+        color: #999999;
+    }
+
+    .vxe-table--render-default {
+        .vxe-cell {
+            padding: 4px;
+        }
+
+        .vxe-body--column.col--valid-error .vxe-cell--valid .vxe-cell--valid-msg {
+            display: none;
+        }
+    }
+
+    .vxe-table--render-default .is--checked.vxe-cell--checkbox .vxe-checkbox--icon:before,
+    .vxe-table--render-default .is--indeterminate.vxe-cell--checkbox .vxe-checkbox--icon:before {
+        background: none !important;
+        border: none;
+    }
+    .vxe-table--render-default .is--checked.vxe-cell--checkbox .vxe-checkbox--icon:before,
+    .vxe-table .vxe-checkbox--icon:before {
+        border: none !important;
+    }
+}
+
+.showTooltip {
+    display: block;
+
+    &.is-dark {
+        background-color: #ff7875 !important;
+    }
+
+    .popper__arrow {
+        border-bottom-color: transparent !important;
+        border-top-color: #ff7875 !important;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+
+        &::after {
+            border-bottom-color: transparent !important;
+            border-top-color: #ff7875 !important;
+            border-left-color: transparent !important;
+            border-right-color: transparent !important;
+        }
+    }
+}
+
+.hideTooltip {
+    display: none;
+}

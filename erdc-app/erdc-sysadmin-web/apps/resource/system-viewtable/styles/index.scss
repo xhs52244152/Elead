@@ -1,0 +1,44 @@
+.fam-viewtable-container {
+    .fam-view-manager-container {
+        padding: 16px;
+    }
+    height: 100%;
+    .link {
+        color: #567ffd;
+        cursor: pointer;
+        margin-right: 10px;
+        &:last-child {
+            margin: 0;
+        }
+    }
+    .edit-default {
+        color: #9b9b9b;
+        cursor: pointer;
+    }
+
+    .title {
+        color: var(--colorTextNormal);
+        padding-bottom: 8px;
+
+        .callback {
+            color: var(--colorTextNormal);
+
+            &:hover {
+                color: #567ffd;
+            }
+        }
+    }
+    .footer-container{
+        margin: 0 -16px -16px -16px !important;
+
+    }
+}
+
+.view-table-dialog {
+    .el-dialog__body {
+        padding-bottom: 4px;
+    }
+    .last-line-bottom {
+        margin-bottom: 12px;
+    }
+}

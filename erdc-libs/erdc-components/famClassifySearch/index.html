@@ -1,0 +1,83 @@
+<div class="fam-classify-search w-100p position-relative">
+    <fam-advanced-group
+        v-model="conditionsList"
+        ref="FamAdvancedGroup"
+        is-classify-search
+        :can-add-condition="false"
+        :can-add-condition-group="false"
+        class="pl-xl pr-0"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
+        <template #condition-row-prefix="{model, index}">
+            <erd-row
+                class="condition-row-item-prefix pl-4 pr-4 ml-n-8"
+                :key="'prefix' + index"
+                :gutter="8"
+                type="flex"
+                align="middle"
+            >
+                <custom-select
+                    v-model="model.prefixType"
+                    treeSelect
+                    :treeProps="typeTreeProps"
+                    :row="{
+                        componentName: 'constant-select',
+                        referenceList: model.referenceList
+                    }"
+                    filterable
+                    :style="{width: typeSelectWidth}"
+                    class="prefix-type-select"
+                    @change="value => onTypeChange(value, model)"
+                    @visible-change="visible => onVisibleChange(visible, model)"
+                ></custom-select>
+                <erd-ex-select
+                    :value="prefixAttrName"
+                    :options="attrOptions"
+                    :style="{width: attrSelectWidth}"
+                ></erd-ex-select>
+                <erd-ex-select
+                    value="EQ"
+                    :options="operOptions"
+                    :style="{width: operSelectWidth}"
+                ></erd-ex-select>
+                <custom-select
+                    v-model="model.prefixClassify"
+                    treeSelect
+                    :placeholder="i18n.pleaseSelect"
+                    :treeProps="classifyTreeProps"
+                    :row="{
+                        componentName: 'constant-select',
+                        referenceList: classifyReferenceList
+                    }"
+                    :style="{width: componentWidth}"
+                    filterable
+                    clearable
+                    @change="value => onClassifyChange(value, model)"
+                ></custom-select>
+                <erd-button
+                    v-show="index === conditionsList.length -1 && showAddClassifyBtn"
+                    type="text"
+                    class="my-icon-btn ml-normal"
+                    icon="el-icon-plus"
+                    @click="addClassifySearchGroup"
+                >
+                    {{ i18n['addClassify'] }}
+                </erd-button>
+            </erd-row>
+        </template>
+        <template #advanced-search-title>
+            <div class="classify-search-title bg-white">
+                <span>{{i18n.classifySearch}}</span>
+                <erd-tooltip
+                    effect="dark"
+                    placement="top-start"
+                    class="mr-4 color-placeholder"
+                    :content="i18n.classifySearchTip"
+                >
+                    <i class="erd-iconfont erd-icon-help"></i>
+                </erd-tooltip>
+            </div>
+        </template>
+    </fam-advanced-group>
+</div>

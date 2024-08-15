@@ -1,0 +1,67 @@
+<div class="bpm-batch-approval">
+    <erd-button @click="removeSelectClick()">{{i18nMappingObj['移除']}}</erd-button>
+    <fam-erd-table
+        style="margin-top: 16px"
+        border
+        :span-method="spanMethod"
+        :row-config="{isCurrent: true, isHover: true}"
+        :column-config="{resizable: true}"
+        align="left"
+        :data="tableData"
+        :column="column"
+        show-overflow
+        ref="erdTable"
+        :row-style="tableRowClassName"
+        @checkbox-change="checkboxChange"
+        @checkbox-all="checkboxAll"
+    >
+        <!-- 工具栏插槽 -->
+        <template #column:default:operation="{ data: { row } }">
+            <erd-button
+                type="text"
+                @click="removeClick([row])"
+                >{{ i18nMappingObj['移除'] }}</erd-button
+            >
+        </template>
+
+        <template #column:default:route="{ data: { row } }">
+            <template v-if="row.formDataMapList.length">
+                <erd-select
+                    v-model="row.route"
+                    :placeholder="i18n.pleaseSelectRoute"
+                    @change="approvalResultsRoute(row)"
+                >
+                    <erd-option
+                        v-for="(item, index) in row.formDataMapList"
+                        :key="index"
+                        :label="item.value"
+                        :value="item.key"
+                    >
+                    </erd-option>
+                </erd-select>
+            </template>
+        </template>
+
+        <template #column:default:assignee="{ data: { row, column } }">
+            <BpmAvatar :users="row.processPromoterInfo"></BpmAvatar>
+        </template>
+    </fam-erd-table>
+    <FamDynamicForm
+        style="margin-top: 12px"
+        ref="famDynamicForm"
+        :form.sync="form"
+        :data="dataList"
+        :readonly="readonly"
+        label-width="90px"
+        label-position="right"
+    >
+        <template #approvalOpinion="scope">
+            <erd-button
+                v-for="(item, index) in textareaList"
+                :key="index"
+                @click="form.textarea = item.value"
+                >{{item.value}}
+            </erd-button>
+        </template>
+    </FamDynamicForm>
+</div>

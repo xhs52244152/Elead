@@ -1,0 +1,17 @@
+#singleSelect {
+  padding: 16px 0;
+}
+#singleSelect .el-input__suffix {
+  display: flex;
+}
+#singleSelect .el-input__suffix .el-input__suffix-inner {
+  align-items: center;
+  font-size: 16px;
+}
+#singleSelect .el-tree-node__content {
+  width: 100%;
+}
+#singleSelect .el-tree-node__content .tree-content {
+  width: 100%;
+  overflow: hidden;
+}/*# sourceMappingURL=style.css.map */

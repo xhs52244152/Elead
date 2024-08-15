@@ -1,0 +1,49 @@
+#fam_calendar {
+    position: relative;
+    .fc .fc-toolbar.fc-header-toolbar {
+        margin-bottom: 0.5em;
+    }
+    .top-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    .right-content {
+        margin-left: 12px;
+        .rightHeader {
+            color: var(--colorTextNormal);
+            padding: 8px 0;
+            border-bottom: 1px solid transparent;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+        .calendar-legend-container {
+            display: flex;
+            justify-content: space-around;
+            cursor: default;
+            .calendar-legend {
+                display: inline-block;
+                width: 80px;
+            }
+        }
+        .calendar-legend {
+            border: 1px solid #eee;
+            width: 30%;
+            height: 28px;
+            text-align: center;
+            line-height: 28px;
+            border-radius: 4px;
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .rightTips {
+            color: var(--colorTextPlaceholder);
+        }
+    }
+}
+.fam-calendar-select .erd-tree-node__label {
+    color: var(--colorTextNormal);;
+}

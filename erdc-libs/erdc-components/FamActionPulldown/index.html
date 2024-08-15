@@ -1,0 +1,104 @@
+<div id="fam_action_pulldown">
+    <erd-show-tooltip
+        placement="top"
+        popperClass="fam-tooltip-max-width fam-action-pulldown-tip"
+        :content="actionPulldownTip"
+        :enterable="false"
+        :open-delay="300"
+        :flex="false"
+        :customMouseOver="(el, dom, callback) => callback(Boolean(actionPulldownTip))"
+    >
+        <erd-dropdown
+            ref="actionPulldown"
+            class="action_pulldowm_item"
+            v-for="(items, index) in buttonList"
+            :placement="placement"
+            :key="items.key + '-' + index"
+            :visible="transformBoolean(items.visible, false)"
+            :trigger="items.trigger || 'click'"
+            :hide-on-click="false"
+            v-bind="items"
+            @click.native="open(items)"
+            @visible-change="(visible) => visibleChange(visible, items)"
+        >
+            <slot name="customLabel">
+                <erd-button
+                    :loading="loading"
+                    class="erd-dropdown-link"
+                    :type="items.type"
+                    :size="items.size"
+                    :disabled="items.disabled"
+                >
+                    <span>{{items[buttonProps.label] || i18n.operation}}</span>
+                    <erd-icon :icon="items.visible ? 'arrow-up' : 'arrow-down'"></erd-icon>
+                </erd-button>
+            </slot>
+
+            <erd-dropdown-menu
+                slot="dropdown"
+                class="fam_action_pulldown ptb-8"
+            >
+                <erd-show-tooltip
+                    ref="dropdown-popover-tooltip"
+                    v-for="(item, i) in items[buttonProps.children]"
+                    :class="[{'popover-disabled': disabledValidate(item.enabled, true, item)}]"
+                    :key="item.key || i"
+                    placement="top"
+                    :content="item[buttonProps.label]"
+                    :enterable="false"
+                    :flex="false"
+                    padding-width="32"
+                    :custom-mouse-over="(el, dom, callback) => handleMouseOver(el, dom, callback, i)"
+                >
+                    <template v-slot:show-tooltip-title>
+                        <erd-dropdown-item
+                            :key="item?.key || i"
+                            :disabled="disabledValidate(item.enabled, true, item)"
+                            :class="{
+                                [items.class]: items.class,
+                                'popover-active': item.isPopoverShow,
+                                'popover-right': item[buttonProps.children],
+                                'truncate': !item[buttonProps.children],
+                                'popover-disabled': disabledValidate(item.enabled, true, item)
+                            }"
+                            @click.native="onClick(item, items[buttonProps.children], items)"
+                        >
+                            <popover
+                                ref="showOnly"
+                                v-if="item[buttonProps.children] || buttonSlots.includes(item.name)"
+                                :button="item"
+                                :button-props="buttonProps"
+                                :button-slots="buttonSlots"
+                                class-name="pulldown-popover"
+                                @click="(value) => popoverClick(value, item)"
+                                @popover="onPopover"
+                                :extend-disabled-validate="extendDisabledValidate"
+                                :popover-placement="popoverPlacement"
+                            >
+                                <template v-slot:[item.name]="data">
+                                    <slot
+                                        :name="item.name"
+                                        :data="data"
+                                    ></slot>
+                                </template>
+                            </popover>
+                            <span
+                                v-else
+                                :ref="'titleText' + i"
+                                class="title_text"
+                            >
+                                <i :class="item.icon"></i>{{item[buttonProps.label]}}
+                            </span>
+                        </erd-dropdown-item>
+                    </template>
+                </erd-show-tooltip>
+                <erd-dropdown-item
+                    v-if="isOperation && !items[buttonProps.children].length"
+                    class="no-right-item"
+                >
+                    {{i18n.noOperRight}}
+                </erd-dropdown-item>
+            </erd-dropdown-menu>
+        </erd-dropdown>
+    </erd-show-tooltip>
+</div>

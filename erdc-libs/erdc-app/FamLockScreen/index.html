@@ -1,0 +1,72 @@
+<div
+    id="fam-lock-screen"
+    :style="{'background': 'url(' + imageUrl + ') center 0', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+>
+    <div class="lock-screen-content">
+        <div class="user-profile">
+            <img
+                :src="userAvatar"
+                :alt="user.displayName"
+            />
+        </div>
+
+        <div class="user-name">{{ user.displayName }}</div>
+
+        <div
+            v-if="passwordError"
+            class="password-error"
+        >
+            <div style="margin-bottom: 20px">{{errorMsg || i18nMappingObj['passwordError']}}</div>
+            <erd-button
+                ref="confirmFocus"
+                @click="currentError"
+                >{{i18nMappingObj['confirm']}}</erd-button
+            >
+        </div>
+        <div
+            v-else
+            class="user-password text-center"
+        >
+            <erd-form
+                :model="form"
+                ref="form"
+                @keyup.enter.native="login"
+                @submit.native.prevent
+            >
+                <erd-form-item>
+                    <erd-input
+                        v-model="form.password"
+                        size="large"
+                        :placeholder="i18nMappingObj['pleaseEnterPassword']"
+                        show-password
+                        autofocus
+                    ></erd-input>
+                    <div
+                        class="submit-btn"
+                        @click="login"
+                    >
+                        <i
+                            class="el-icon-right"
+                            aria-hidden="true"
+                        ></i>
+                    </div>
+                </erd-form-item>
+            </erd-form>
+        </div>
+    </div>
+
+    <div class="lock-screen-footer">
+        <div
+            class="exit"
+            @click="onLogout"
+        >
+            <div class="exit-btn text-center">
+                <i
+                    class="el-icon-close"
+                    aria-hidden="true"
+                ></i>
+            </div>
+            <p>{{i18nMappingObj['signOut']}}</p>
+        </div>
+    </div>
+</div>

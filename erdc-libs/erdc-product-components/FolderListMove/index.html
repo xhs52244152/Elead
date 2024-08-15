@@ -1,0 +1,62 @@
+<div class="folder-list-move">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        size="large"
+    >
+        <vxe-table
+            ref="famErdTable"
+            border
+            resizable
+            show-overflow
+            align="center"
+            :data="tableData"
+            :edit-config="{trigger: 'click', mode: 'cell'}"
+        >
+            <vxe-column type="seq" title=" " width="48" align="center"></vxe-column>
+            <vxe-column field="name" width="120" :title="i18n.name"></vxe-column>
+            <vxe-column field="identifierNo" width="120" :title="i18n.code"></vxe-column>
+            <vxe-colgroup :title="i18n.context">
+                <vxe-column field="containerName" :title="i18n.before"></vxe-column>
+                <vxe-column field="newContainerRef" :title="i18n.after" :edit-render="{}">
+                    <template #default="{ row }">
+                        <span>{{row.newContainerName}}</span>
+                    </template>
+                    <template #edit="{ row }">
+                        <custom-select
+                            v-model="row.newContainerRef"
+                            clearable
+                            filterable
+                            popper-class="vxe-table--ignore-clear"
+                            :row="containerRow"
+                            @change="(...args) => newContainerRefChange(row, ...args)"
+                        ></custom-select>
+                    </template>
+                </vxe-column>
+            </vxe-colgroup>
+            <vxe-colgroup :title="i18n.folder">
+                <vxe-column field="folderRefName" :title="i18n.before"></vxe-column>
+                <vxe-column field="newFolderRef" :title="i18n.after" :edit-render="{}">
+                    <template #default="{ row }">
+                        <span>{{row.newFolderRefName}}</span>
+                    </template>
+                    <template #edit="{ row }">
+                        <erd-cascader
+                            ref="newFolderRef"
+                            v-model="row.newFolderRef"
+                            clearable
+                            :props="treeProps"
+                            :options="row.treeData"
+                            @change="newFolderRefChange(row)"
+                        ></erd-cascader>
+                    </template>
+                </vxe-column>
+            </vxe-colgroup>
+        </vxe-table>
+
+        <span slot="footer" class="dialog-footer">
+            <erd-button type="primary" :loading="loading" @click="onSubmit">{{i18n.confirm}}</erd-button>
+            <erd-button @click="onCancel">{{i18n.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

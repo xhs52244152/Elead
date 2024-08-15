@@ -1,0 +1,214 @@
+<div
+    id="FamViewTableHeader"
+    class="fam-view-table-header-component"
+>
+    <div class="viewtable-header-container">
+        <div
+            v-if="!showAdvancedFilter && !showClassifySearch"
+            class="left-header-contaienr"
+        >
+            <div
+                v-if="$scopedSlots['left:table:toolbar:first']"
+                class="custom-left-slot mb-xl"
+            >
+                <slot name="left:table:toolbar:first"></slot>
+            </div>
+            <erd-input
+                v-if="fuzzySearchVisible"
+                :value="searchStr"
+                class="fam-fuzzy-search mb-xl"
+                :style="{ width: fuzzySearch?.width + 'px' || '200px'}"
+                :clearable="fuzzySearchClearable"
+                :placeholder="fuzzySearchPlaceholder"
+                v-bind="toolbarConfig.fuzzySearch || {}"
+                @input="handleFuzzySearchInput"
+                @keyup.enter.native="fnSearch"
+                @clear="fnRefreshTable"
+            >
+                <template #suffix>
+                    <erd-icon
+                        icon="search"
+                        class="el-input__icon search-suffix-icon"
+                        @click.native="fnSearch"
+                    ></erd-icon>
+                </template>
+            </erd-input>
+
+            <!-- 基础筛选 -->
+            <fam-basic-filter
+                v-if="useBasicFilter"
+                v-show="showBasicFilter"
+                :columnsList="innerConditionColumnsList"
+                :show-data="basicFilterData"
+                :main-model-type="basicFilterClassName"
+                :max-number="basicFilterLength"
+                :view-ref="viewRef"
+                :table-key="tableKey"
+                @condition-change="onBasicFilterChange"
+                class="mb-xl"
+            >
+                <template
+                    v-if="$scopedSlots['table:toolbar:basicfilter:first']"
+                    #table:toolbar:basicfilter:first
+                >
+                    <slot name="table:toolbar:basicfilter:first"></slot>
+                </template>
+            </fam-basic-filter>
+            <div
+                v-if="$scopedSlots['left:table:toolbar:end']"
+                class="custom-left-slot mb-xl"
+            >
+                <slot name="left:table:toolbar:end"></slot>
+            </div>
+        </div>
+        <div
+            v-else
+            class="w-1 h-1 mb-xl"
+        ></div>
+
+        <!-- TODO fix typo -->
+        <div class="right-header-contaienr flex align-items-center">
+            <div
+                v-if="$scopedSlots['right:table:toolbar:first']"
+                class="custom-right-slot mb-xl"
+            >
+                <slot name="right:table:toolbar:first"></slot>
+            </div>
+            <erd-button
+                v-if="mainBtn"
+                :type="mainBtn.type || 'primary'"
+                class="mb-xl"
+                :class="mainBtn.class"
+                :icon="mainBtn.icon"
+                @click="mainBtn.onclick"
+                :disabled="mainBtn.disabled || (mainBtn.disabledBySelect && !tableSelectList.length > 0)"
+                >{{mainBtn.label}}</erd-button
+            >
+            <erd-button
+                v-for="(sBtn,index) in secondaryBtn"
+                :key="index"
+                :type="sBtn.type || 'default'"
+                class="mb-xl"
+                :class="sBtn.class"
+                :icon="sBtn.icon"
+                :disabled="sBtn.disable || (sBtn.disabledBySelect && !tableSelectList.length > 0) || false"
+                @click="sBtn.onclick"
+                >{{sBtn.label}}</erd-button
+            >
+            <erd-pulldown
+                v-if="moreOperList && moreOperList.length > 0"
+                class="mb-xl"
+            >
+                {{ i18nMappingObj.moreActions }}
+                <template #pulldown>
+                    <erd-pulldown-menu>
+                        <erd-pulldown-menu-item
+                            v-for="item in moreOperList"
+                            :key="item.label"
+                            :class="item.class"
+                            :icon="item.icon"
+                            :disabled="item.disable || (item.disabledBySelect && !tableSelectList.length > 0) || false"
+                            @click="item.onclick"
+                        >
+                            {{item.label}}
+                        </erd-pulldown-menu-item>
+                    </erd-pulldown-menu>
+                </template>
+            </erd-pulldown>
+
+            <!-- 功能按钮 -->
+            <fam-action-button
+                v-if="showActionButton"
+                class="toolbar-action-button mb-xl"
+                :before-validator-query="beforeValidatorQuery"
+                :action-data="tableSelectData"
+                :action-config="actionConfig"
+                :is-default-btn-type="isDefaultBtnType"
+                :args="args"
+                @click="actionClick"
+                @loaded="loaded"
+                ref="famActionButton"
+            ></fam-action-button>
+            <div
+                v-if="$scopedSlots['right:table:toolbar:end']"
+                class="custom-right-slot-end mb-xl"
+            >
+                <slot name="right:table:toolbar:end"></slot>
+            </div>
+            <erd-tooltip
+                v-if="showRefresh"
+                placement="top"
+                :content="i18n.refresh"
+            >
+                <erd-button
+                    class="table-control-icon mb-xl"
+                    icon="el-icon-refresh"
+                    @click="!fnControlIcon('refresh') && fnRefreshTable()"
+                ></erd-button>
+            </erd-tooltip>
+            <erd-tooltip
+                v-if="configColVisible"
+                placement="top"
+                :content="i18n.fieldConfig"
+            >
+                <erd-button
+                    class="table-control-icon mb-xl"
+                    @click="!fnControlIcon('setting') && fnShowColSetting()"
+                    icon="el-icon-setting"
+                ></erd-button>
+            </erd-tooltip>
+        </div>
+
+        <!-- 高级筛选 -->
+        <fam-advanced-group
+            v-if="showAdvancedFilter"
+            class="mb-xl pr-0"
+            ref="advancedGroup"
+            :main-model-type="mainModelType"
+            :requestConfig="toolbarConfig.requestConfig"
+            is-panel
+            show-advanced-history
+            @height-change="onAdvancedHeightChange"
+            @onsubmit="onAdvancedFilterSubmit"
+        >
+            <template #advanced-search-title>
+                <div class="advanced-search-title bg-white">
+                    <span>高级搜索</span>
+                    <erd-tooltip
+                        effect="dark"
+                        placement="top-start"
+                        class="mr-4 color-placeholder"
+                        :content="i18n.advancedSearchTip"
+                    >
+                        <i class="erd-iconfont erd-icon-help"></i>
+                    </erd-tooltip>
+                </div>
+            </template>
+        </fam-advanced-group>
+
+        <!-- 分类搜索 -->
+        <fam-classify-search
+            v-if="showClassifySearch"
+            class="mb-xl"
+            ref="classifySearch"
+            :view-info="viewInfo"
+            :table-views-info="tableViewsInfo"
+            is-panel
+            show-advanced-history
+            @height-change="onAdvancedHeightChange"
+            @onsubmit="onClassifySearchSubmit"
+        ></fam-classify-search>
+    </div>
+
+    <!-- 列配置 -->
+    <fam-table-col-set
+        :visible.sync="colSettingVisible"
+        :title="i18nMappingObj['字段设置']"
+        :columns-list="columnSetList"
+        :default-columns="defaultColumns"
+        show-label="label"
+        :value-key="valueKey"
+        type="colSet"
+        @onsubmit="fnColSettingSubmit"
+    ></fam-table-col-set>
+</div>

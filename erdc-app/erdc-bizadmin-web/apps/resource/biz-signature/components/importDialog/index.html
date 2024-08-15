@@ -1,0 +1,26 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.import"
+    :visible.sync="visible"
+    width="600px"
+    @close="cancel"
+>
+    <fam-upload
+        :auto-upload="false"
+        action="*"
+        :limit="1"
+        accept=".zip"
+        :on-exceed="handleExceed"
+        :on-remove="handleRemove"
+        :on-change="handleChange"
+        :file-list="fileList"
+    >
+    </fam-upload>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

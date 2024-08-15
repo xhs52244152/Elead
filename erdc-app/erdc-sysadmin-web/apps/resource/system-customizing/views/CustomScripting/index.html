@@ -1,0 +1,33 @@
+<div class="h_100p bg-white">
+    <system-dynamic-table
+        ref="systemDynamicTable"
+        @changeDialogStatus="changeDialogStatus"
+    >
+    </system-dynamic-table>
+    <erd-ex-dialog
+        :visible.sync="dialogVisible"
+        :title="dialogTitle"
+        custom-class="dynamic-script-dialog"
+    >
+        <div class="bg-normal text-sm ptb-8 prl-16 mb-16">
+            注意：首次导入成功后内部名称不能修改，导入后已启用的脚本，再次导入则自动升级版本，默认状态为：草稿。
+        </div>
+        <system-dynamic-form
+            v-if="dialogVisible"
+            ref="systemDynamicForm"
+            :dialogType="dialogType"
+            :detailInfo="detailInfo"
+            @changeDialogStatus="changeDialogStatus"
+        ></system-dynamic-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="isLoading"
+                @click="submit"
+            >
+                {{ i18n.confirm }}
+            </erd-button>
+            <erd-button @click="dialogVisible = false"> {{ i18n.cancel }} </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

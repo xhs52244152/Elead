@@ -1,0 +1,100 @@
+<div
+    v-loading="loading"
+    class="bpm-process-editor__content flex flex-column"
+>
+    <div class="grow-1 flex h-0">
+        <BpmProcessDesigner
+            ref="designer"
+            v-model="xml"
+            :readonly="readonly"
+            class="h-100p"
+            @validate-xml="validateXml"
+            @bpmn-element-changed="onElementChanged"
+            @bpmn-selection-changed="onSelectionChange"
+            @bpmn-import-done="onImportDone"
+            @init-finished="onInitFinished"
+            @bpmn-shape-added="onShapeAdded"
+        ></BpmProcessDesigner>
+
+        <div class="bpm-process-editor__panel h-100p">
+            <div
+                :class="{ 'bpm-process-editor__collapsed-button': true, 'bpm-process-editor__collapsed-button--collapsed': collapsed }"
+                @click="collapsed = !collapsed"
+            >
+                <erd-tooltip
+                    placement="top"
+                    :content="contentPropertiesPanel"
+                >
+                    <erd-icon
+                        v-if="collapsed"
+                        icon="double-arrow-left"
+                    ></erd-icon>
+                    <erd-icon
+                        v-else
+                        icon="double-arrow-right"
+                    ></erd-icon>
+                </erd-tooltip>
+            </div>
+            <transition name="el-fade-in">
+                <PropertiesPanel
+                    ref="panel"
+                    v-if="activeElement"
+                    v-show="!collapsed"
+                    :template.sync="template"
+                    :templateOid="templateOid"
+                    :class="{ collapsed: collapsed }"
+                    :active-element="activeElement"
+                    :bpmnModeler="bpmnModeler"
+                    :categoryRef="categoryRef"
+                    :appName="appName"
+                    :readonly="readonly"
+                    @hook:mounted="onPropertiesPanelMounted"
+                ></PropertiesPanel>
+            </transition>
+        </div>
+    </div>
+
+    <erd-ex-dialog
+        :visible.sync="saveDialog.visible"
+        :title="i18nMappingObj.save"
+        custom-class="bpm-process-editor__save-dialog"
+    >
+        <erd-form>
+            <erd-form-item>
+                <div class="save-tips">
+                    <erd-radio
+                        v-model="saveDialog.checkIn"
+                        label="false"
+                        :disabled="!innerTemplateVId"
+                    >
+                        {{ i18nMappingObj.save }}
+                    </erd-radio>
+                    <span class="tips">{{ i18nMappingObj.saveDescribe }}</span>
+                </div>
+            </erd-form-item>
+            <erd-form-item>
+                <div class="save-tips">
+                    <erd-radio
+                        v-model="saveDialog.checkIn"
+                        label="true"
+                    >
+                        {{ i18nMappingObj.checkin }}
+                    </erd-radio>
+                    <span class="tips">{{ i18nMappingObj.checkinDescribe }}</span>
+                </div>
+            </erd-form-item>
+        </erd-form>
+        <template #footer>
+            <div>
+                <erd-button
+                    type="primary"
+                    :loading="saveDialog.loading"
+                    @click="saveProcess"
+                >
+                    {{ i18nMappingObj.confirm }}
+                </erd-button>
+                <erd-button @click="saveDialog.visible = false"> {{ i18nMappingObj.cancel }}</erd-button>
+            </div>
+        </template>
+    </erd-ex-dialog>
+</div>

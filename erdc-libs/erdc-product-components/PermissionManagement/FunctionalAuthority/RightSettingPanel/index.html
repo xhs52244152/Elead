@@ -1,0 +1,78 @@
+<div id="right-setting-panel">
+    <div class="setting-panel-title">
+        <div class="setting-panel-title-left">
+            <erd-tooltip
+                class="item"
+                effect="dark"
+                :content="typeName"
+                placement="top-start"
+            >
+                <div class="title-left-main">{{ panelTitle }}</div>
+            </erd-tooltip>
+            <div class="title-left-tips">{{ panelTitleTips }}</div>
+        </div>
+        <div class="setting-panel-title-right">
+            <div class="title-right-checkbox">
+                <erd-checkbox
+                    v-model="isCheckAll"
+                    @change="handlerChangeCheckAll"
+                    >全选</erd-checkbox
+                >
+            </div>
+            <div class="title-right-search">
+                <erd-input
+                    v-model="searchValue"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    style="width: 100%"
+                    clearable
+                    placeholder="请输入"
+                    @input="handlerSearch"
+                >
+                </erd-input>
+            </div>
+        </div>
+    </div>
+    <div class="setting-panel-content">
+        <erd-scrollbar>
+            <div :class="[activeTab === 'role' ? 'setting-panel-content-scroll' : '']">
+                <div v-if="activeTab === 'role'">
+                    <template v-for="line in getShowData(optionSettingList)">
+                        <check-line-item
+                            :lineData="line"
+                            :active-tab="activeTab"
+                            :checked-options="line.checkedOptions"
+                            @handler-check-option="($event) => {handlerCheckOption($event, line)}"
+                            @handler-check-role="($event) => {handlerCheckRole($event, line)}"
+                        ></check-line-item>
+                    </template>
+                </div>
+                <div
+                    v-else-if="activeTab !== 'role' && selectNodeKey > 1"
+                    class="setting-panel-role-check"
+                >
+                    <erd-checkbox-group
+                        v-model="roleCheckboxData.checkedRoles"
+                        @change="handlerCheckRole"
+                    >
+                        <erd-checkbox
+                            v-for="role in getShowCheckChildList(roleCheckboxData)"
+                            :label="role.roleCode"
+                            :key="role.roleCode"
+                        >
+                            {{role.roleName}}
+                        </erd-checkbox>
+                    </erd-checkbox-group>
+                </div>
+            </div>
+        </erd-scrollbar>
+    </div>
+    <div class="setting-panel-footer">
+        <erd-button
+            type="primary"
+            :disabled="disabled"
+            @click="handlerSave"
+            >保存</erd-button
+        >
+        <erd-button @click="handlerReset">重置</erd-button>
+    </div>
+</div>

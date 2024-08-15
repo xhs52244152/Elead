@@ -1,0 +1,22 @@
+<div
+    id="typeTreeSelect"
+    class="flex align-items-center"
+>
+    <erd-tree-select
+        v-model="selectedValue"
+        default-expand-all
+        clearable
+        filterable
+        :node-key="typeNodeKey"
+        :placeholder="i18nMappingObj.pleaseSelect"
+        :disabled="disabled"
+        :data="typeTreeData"
+        :props="typeTreeProps"
+        :default-display-data="defaultDisplayData"
+        @clear="handlerClearSelections"
+    >
+        <template #prefix>
+            <slot name="prefix"></slot>
+        </template>
+    </erd-tree-select>
+</div>

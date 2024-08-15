@@ -1,0 +1,40 @@
+.process-properties-panel {
+  width: 650px;
+}
+.process-properties-panel .erd-ex-dialog__title {
+  padding: 16px 16px 0;
+}
+.process-properties-panel [role=tabpanel]:first-of-type {
+  padding-right: 0;
+}
+.process-properties-panel [role=tabpanel]:first-of-type .el-scrollbar:first-of-type {
+  padding-right: var(--tabsItemContentPadding);
+}
+.process-properties-panel .el-scrollbar .el-scrollbar__bar.is-vertical {
+  right: -12px;
+}
+.process-properties-panel .el-scrollbar__view .panelTitle .panelLeft .panel-title-icon {
+  font-size: var(--fontSize);
+  color: var(--colorPrimary);
+}
+.process-properties-panel .el-scrollbar__view .panelTitle .panelRight {
+  padding-right: 0;
+}
+.process-properties-panel .el-scrollbar__view .panelContent .contraction-panel__content {
+  padding: var(--normalPadding) 0;
+}
+.process-properties-panel .el-scrollbar__view > div:last-of-type .panelContent .contraction-panel__content {
+  padding-bottom: 0;
+}
+.process-properties-panel .el-scrollbar__view > div + div {
+  margin-top: 16px;
+}
+.process-properties-panel .el-form .el-form-item label.el-form-item__label {
+  color: var(--colorTextNormal);
+  padding-right: 8px;
+}
+.process-properties-panel .el-form .el-form-item label.el-form-item__label div.el-form-item__label {
+  padding-right: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

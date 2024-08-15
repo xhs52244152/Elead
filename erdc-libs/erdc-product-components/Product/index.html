@@ -1,0 +1,13 @@
+<div id="Product">
+    <div class="product">
+        <div class="product-content">
+            <template v-for="item in menuList">
+                <component
+                :product-oid="productOid"
+                :is="activeName"
+                v-if="activeName === item.component"
+                :ref="item.refName"></component>
+            </template>
+        </div>
+    </div>
+</div>

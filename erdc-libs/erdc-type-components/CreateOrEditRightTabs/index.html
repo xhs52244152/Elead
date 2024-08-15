@@ -1,0 +1,207 @@
+<div
+    id="createOrEditRightTabs"
+>
+    <div style="height: 40px">
+        <erd-tabs
+            v-model="currentTab"
+            :before-leave="leaveTab"
+            @tab-click="handleChangeTab"
+        >
+            <erd-tab-pane
+                v-for="(tab, index) in tabs"
+                :key="index"
+                :label="i18nMappingObj[tab.label]"
+                :name="tab.name"
+            >
+                <slot></slot>
+            </erd-tab-pane>
+        </erd-tabs>
+    </div>
+    <div id="createPermission">
+        <div class="create-permission-panel-title">
+            <div class="create-permission-panel-title-left">
+                <span class="main-title">{{nodeDisplayName}}</span>
+                <span>{{i18nMappingObj.teamMembersTips}}</span>
+            </div>
+            <div class="create-permission-panel-title-right">
+                <erd-input
+                    :placeholder="i18nMappingObj.searchAttr"
+                    class="fam-type-tree__search"
+                    @input="handlerSearchPermission"
+                    v-model="searchValue"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                    autofocus
+                ></erd-input>
+            </div>
+        </div>
+        <div class="itxst">
+            <div :class="['draggable-custom-box', firstActivce ? 'draggable-active' : '']" v-fam-fs="{ marginBottom: 86 }">
+                <div class="draggable-custom-box-title">
+                    <span class="draggable-custom-box-title-main">{{i18nMappingObj.readAndWrite}}</span>
+                    <span>( {{readAndWriteArr.length}} )</span>
+                </div>
+                <erd-scrollbar
+                    ref="firstScrollbar"
+                >
+                    <vue-draggable
+                        v-model="readAndWriteArr"
+                        :scroll="true"
+                        :group="{name: 'grpupReadAndWrite', pull: true, put: checkCanPutInReadAndWriteArr}"
+                        dragClass="custom-drag-class"
+                        chosenClass="custom-chosen-class"
+                        ghostClass="custom-ghost-class"
+                        :move="onMoveFirstCol"
+                        @change="handleReadAndWriteArrChange"
+                        @choose="(event) => {chooseFirstCol(event, 'readAndWriteArr')}"
+                        @start="onStart"
+                        @end="onEnd"
+                    >
+                        <transition-group
+                            class="transition-group-custom-class first-col-class"
+                        >
+                            <template v-for="item in readAndWriteArr">
+                                <div
+                                    class="item-first-box"
+                                    :key="item.id"
+                                    v-if="item.isFilterShow"
+                                >
+                                    <erd-show-tooltip 
+                                    :flex="false"
+                                    placement="top"
+                                    :custom-mouse-over="handleMouseOver" 
+                                    :content="item.displayName">
+                                        <template v-slot:show-tooltip-title>
+                                            <erd-icon
+                                                class="fam-widget-panel__drag-handler"
+                                                icon="double-drag"
+                                            ></erd-icon>
+                                            <span class="title_text">{{item.displayName}}</span>
+                                        </template>
+                                    </erd-show-tooltip>
+                                </div>
+                            </template>
+                        </transition-group>
+                    </vue-draggable>
+                </erd-scrollbar>
+            </div>
+            <div :class="['draggable-custom-box', secondActive ? 'draggable-active' : '']" v-fam-fs="{ marginBottom: 86 }">
+                <div class="draggable-custom-box-title">
+                    <span class="draggable-custom-box-title-main">{{i18nMappingObj.onlyRead}}</span>
+                    <span>( {{onlyReadArr.length}} )</span>
+                </div>
+                <erd-scrollbar
+                    ref="secondScrollbar"
+                >
+                    <vue-draggable
+                        v-model="onlyReadArr"
+                        :scroll="true"
+                        :group="{
+                            name: 'groupOnlyRead',
+                            pull: true,
+                            put: checkCanPutInReadonlyArr
+                        }"
+                        animation="100"
+                        dragClass="custom-drag-class"
+                        chosenClass="custom-chosen-class"
+                        ghostClass="custom-ghost-class"
+                        :move="onMoveFirstCol"
+                        @change="handleReadAndWriteArrChange"
+                        @choose="(event) => {chooseFirstCol(event, 'onlyReadArr')}"
+                        @start="onStart"
+                        @end="onEnd"
+                    >
+                        <transition-group
+                            class="transition-group-custom-class second-col-class"
+                        >
+                            <template v-for="item in onlyReadArr">
+                                <div
+                                    class="item-second-box"
+                                    v-if="item.isFilterShow"
+                                    :key="item.id"
+                                >
+                                    <erd-show-tooltip 
+                                    :flex="false"
+                                    placement="top"
+                                    :custom-mouse-over="handleMouseOver" 
+                                    :content="item.displayName">
+                                        <template v-slot:show-tooltip-title>
+                                            <erd-icon
+                                                class="fam-widget-panel__drag-handler"
+                                                icon="double-drag"
+                                            ></erd-icon>
+                                            <span class="title_text">{{item.displayName}}</span>
+                                        </template>
+                                    </erd-show-tooltip>
+                                </div>
+                            </template>
+                        </transition-group>
+                    </vue-draggable>
+                </erd-scrollbar>
+            </div>
+            <div :class="['draggable-custom-box', thirdClass ? 'draggable-active' : '']" v-fam-fs="{ marginBottom: 86 }">
+                <div class="draggable-custom-box-title">
+                    <span class="draggable-custom-box-title-main">{{i18nMappingObj.hidden}}</span>
+                    <span>( {{hiddenArr.length}} )</span>
+                </div>
+                <erd-scrollbar
+                    ref="thirdScrollbar"
+                >
+                    <vue-draggable
+                        v-model="hiddenArr"
+                        animation="100"
+                        dragClass="custom-drag-class"
+                        chosenClass="custom-chosen-class"
+                        ghostClass="custom-ghost-class"
+                        :scroll="true"
+                        :group="groupHidden"
+                        :move="onMoveFirstCol"
+                        @change="handleReadAndWriteArrChange"
+                        @choose="(event) => {chooseFirstCol(event, 'hiddenArr')}"
+                        @start="onStart"
+                        @end="onEnd"
+                    >
+                        <transition-group
+                            class="transition-group-custom-class third-col-class"
+                        >
+                            <template v-for="item in hiddenArr">
+                                <div
+                                    class="item-third-box"
+                                    v-if="item.isFilterShow"
+                                    :key="item.id"
+                                >
+                                    <erd-show-tooltip 
+                                    :flex="false"
+                                    placement="top"
+                                    :custom-mouse-over="handleMouseOver" 
+                                    :content="item.displayName">
+                                        <template v-slot:show-tooltip-title>
+                                            <erd-icon
+                                                class="fam-widget-panel__drag-handler"
+                                                icon="double-drag"
+                                            ></erd-icon>
+                                            <span class="title_text">{{item.displayName}}</span>
+                                        </template>
+                                    </erd-show-tooltip>
+                                </div>
+                            </template>
+                        </transition-group>
+                    </vue-draggable>
+                </erd-scrollbar>
+            </div>
+        </div>
+        <div class="create-permission-options-section">
+            <erd-button
+                class="create-permission-options-section-btn"
+                type="primary"
+                @click="handlerCreateAttrPermission"
+                >{{i18nMappingObj.save}}</erd-button
+            >
+            <erd-button
+                class="create-permission-options-section-btn"
+                @click="handlerRestAttrPermission"
+                >{{i18nMappingObj.reset}}</erd-button
+            >
+        </div>
+    </div>
+</div>

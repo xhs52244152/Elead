@@ -1,0 +1,9 @@
+#FuzzySearchSelect {
+    .el-input__suffix {
+        display: flex;
+        .el-input__suffix-inner {
+            align-items: center;
+            font-size: 16px;
+        }
+    }
+}

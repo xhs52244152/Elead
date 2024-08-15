@@ -1,0 +1,81 @@
+<div
+    id="GlobalAttributesDetail"
+    class="ptrl-xl pb-normal h-100p flex flex-column"
+>
+    <div
+        class="flex measure-header mb-xl"
+        v-if="!typeAttrGlobal"
+    >
+        <div class="global-left">{{ detailTitle }}</div>
+    </div>
+    <div class="content flex-1">
+        <!-- <div ref="header" class="global-search">
+            <erd-input :placeholder="i18nMappingObj.pleaseEnter" class="fam-global-tree__search" @input="search"
+                v-model="searchValue" suffix-icon='erd-iconfont erd-icon-search' clearable></erd-input>
+            <div style="display: inline-block;" v-if="!typeAttrGlobal">
+                <erd-button type="primary" :disabled="isDisabled" icon="el-icon-plus" @click="onCreate">{{i18nMappingObj.create}}</erd-button>
+                <erd-button @click="onMove">{{i18nMappingObj.move}}</erd-button>
+            </div>
+        </div> -->
+        <div class="global-table h-100p">
+            <fam-advanced-table
+                border
+                ref="famAdvancedTable"
+                isAdaptiveHeight
+                :view-table-config="viewTableConfig"
+            >
+                <!-- <template #right:toolbar:end  v-if="!typeAttrGlobal">
+                    <erd-button type="primary" :disabled="isDisabled" icon="el-icon-plus" @click="onCreate">{{i18nMappingObj.create}}</erd-button>
+                    <erd-button @click="onMove">{{i18nMappingObj.move}}</erd-button>
+                </template> -->
+                <template #column:default:operation:content="{ scope }">
+                    <erd-button
+                        type="text"
+                        @click="onEdit(scope.row)"
+                        >{{ i18nMappingObj.edit }}</erd-button
+                    >
+                    <erd-button
+                        type="text"
+                        @click="onDelete(scope.row)"
+                        >{{ i18nMappingObj.delete }}</erd-button
+                    >
+                </template>
+                <template #column:default:displayName:content="{ scope }">
+                    <a
+                        href="javascript:;"
+                        @click="onDetail(scope.row)"
+                        >{{ scope.row.displayName }}</a
+                    >
+                </template>
+            </fam-advanced-table>
+
+            <!--小于等于一页不展示-->
+            <!-- <erd-pagination
+                style="margin-top:15px;"
+                :current-page.sync="pagination.currentPage" 
+                :page-size.sync="pagination.pageSize"
+                :total="pagination.total"
+                @size-change="PageSizeChange"
+                @current-change="CurrentPageChange">
+            </erd-pagination> -->
+        </div>
+    </div>
+    <global-attributes-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="title"
+        :oid="oid"
+        :row-data="rowData"
+        :app-name="appName"
+        :open-type="openType"
+        @onsubmit="onSubmit"
+    >
+    </global-attributes-config>
+    <property-mobile-node
+        :visible.sync="moveVisible"
+        :data-list="treeSelectList"
+        :select-list="selectChangeArr"
+        @onsubmit="onMobileSubmit"
+    >
+    </property-mobile-node>
+</div>

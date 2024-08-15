@@ -1,0 +1,13 @@
+.fam-association-object__transfer .el-scrollbar__bar {
+    width: 0 !important;
+}
+.fam-association-object__transfer .setting-middle-item,
+.fam-association-object__transfer .setting-middle-item-box {
+    display: flex;
+    flex-direction: column;
+}
+.fam-association-object__transfer .setting-middle-item-box,
+.fam-association-object__transfer .setting-middle-item-box-select {
+    flex-grow: 1;
+}
+

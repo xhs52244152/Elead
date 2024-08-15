@@ -1,0 +1,15 @@
+<div class='signature-manage-history p-16'>
+    <FamPageTitle
+        :title="i18nMappingObj.history"
+        show-back-button
+        @back="goBack"
+    ></FamPageTitle>
+    <el-scrollbar noresize class="mt-12" :style="{height: containerHeight}" wrap-class="h-100p">
+        <div class='signature-manage-history_content'>
+            <template v-for='history in histories'>
+                <SignatureHistoryItem :key="history.oid" :history='history'></SignatureHistoryItem>
+            </template>
+        </div>
+    </el-scrollbar>
+
+</div>

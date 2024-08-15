@@ -1,0 +1,73 @@
+<div class="bpm-participant-select-content">
+    <FamErdTable
+        ref="erdTable"
+        align="left"
+        border
+        show-overflow
+        :data="tableData"
+        :column="column"
+        :row-config="{ isHover: false }"
+        :column-config="{resizable: true}"
+        :is-embed-table="true"
+    >
+        <!-- 工具栏插槽 -->
+        <template #column:default:participantRef="{ data: { row, column, rowid } }">
+            <template
+                v-if="_.isFunction(column.params.disabled) ? column.params.disabled({ row, column }) : column.params.disabled"
+            >
+                <span
+                    >{{ column.formatter({ row, column, cellValue: _.isArray(row[column.field]) ?
+                    _.map(row[column.field], item => item) : row[column.field] }) }}</span
+                >
+            </template>
+            <template v-else>
+                <fam-participant-select
+                    v-model="row[column.field]"
+                    isFetchValue
+                    :default-value="row.participantRefList"
+                    :props="_.isFunction(column.params.props) ? column.params.props({ row, column }) : column.params.props"
+                    :multiple="_.isFunction(column.params.multiple) ? column.params.multiple({ row, column }) : column.params.multiple"
+                    :placeholder="_.isFunction(column.params.placeholder) ? column.params.placeholder({ row, column }) : column.params.placeholder"
+                    :show-type="_.isFunction(column.params.showType) ? column.params.showType({ row, column }) : column.params.showType"
+                    :query-scope="_.isFunction(column.params.queryScope) ? column.params.queryScope({ row, column }) : column.params.queryScope"
+                    :query-params="_.isFunction(column.params.queryParams) ? column.params.queryParams({ row, column }) : column.params.queryParams"
+                    @change="optionsChange(...arguments, { row, column })"
+                ></fam-participant-select>
+                <erd-select
+                    v-if="false"
+                    :class="['erd-participant-select', _.isFunction(column.params.className) ? column.params.className({ row, column }) : column.params.className]"
+                    :ref="'participantSelect' + '_' + rowid"
+                    @hook:mounted="initTagNumber({ row, column, rowid })"
+                    :key="rowid"
+                    v-model="row[column.field]"
+                    @visible-change="visibleChange(...arguments, { row, column })"
+                    @change="optionsChange(...arguments, { row, column })"
+                    :filterable="_.isFunction(column.params.filterable) ? column.params.filterable({ row, column }) : column.params.filterable"
+                    :clearable="_.isFunction(column.params.clearable) ? column.params.clearable({ row, column }) : column.params.clearable"
+                    :collapse-tags="_.isFunction(column.params['collapse-tags']) ? column.params['collapse-tags']({ row, column }) : column.params['collapse-tags']"
+                    :multiple="_.isFunction(column.params.multiple) ? column.params.multiple({ row, column }) : column.params.multiple"
+                    :remote-method="_.isFunction(column.params['remote-method']) ? column.params['remote-method']({ row, column }) : column.params['remote-method']"
+                    :remote="_.isFunction(column.params.remote) ? column.params.remote({ row, column }) : column.params.remote"
+                    :placeholder="column.params.placeholder"
+                >
+                    <template
+                        v-if="_.isFunction(column.params.prefix) ? column.params.prefix({ row, column }) : column.params.prefix"
+                        slot="prefix"
+                        style="height: 100%; display: flex; align-items: center; justify-content: center"
+                    >
+                        <i
+                            :class="['erd-iconfont', 'el-input__icon', (_.isFunction(column.params.multiple) ? column.params.multiple({ row, column }) : column.params.multiple) ? 'erd-icon-group' : 'erd-icon-user']"
+                        ></i>
+                    </template>
+                    <erd-option
+                        v-for="item in row[column.field + 'List']"
+                        :key="item.value"
+                        :disabled="item.disabled"
+                        :label="item.label"
+                        :value="item.value"
+                    ></erd-option>
+                </erd-select>
+            </template>
+        </template>
+    </FamErdTable>
+</div>

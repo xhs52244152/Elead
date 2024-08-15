@@ -1,0 +1,55 @@
+<div id="FamUserSelect">
+    <erd-tooltip
+        placement="top"
+        :disabled="selectUser.length>1&&configInfo.collapseTags?false:true"
+    >
+        <div slot="content">
+            <div v-for="(item, index) in seleceUserDetail">{{index+1}}、{{item[labelKey]}}</div>
+        </div>
+        <erd-select
+            v-model="selectUser"
+            v-bind="$attrs"
+            :placeholder="placeholderText"
+            :multiple="configInfo.multiple"
+            @change="handleSelect"
+            class="userSelect"
+            :filter-method="searchDone"
+            :filterable="configInfo.filterable"
+            :collapse-tags="configInfo.collapseTags"
+            style="min-width: 190px"
+            :class="selectUser.length>1&&configInfo.collapseTags?'my-multiple-select': ''"
+        >
+            <erd-checkbox-group
+                v-model="selectUser"
+                v-if="configInfo.multiple"
+            >
+                <erd-option
+                    v-for="item in options"
+                    :key="item[valueKey]"
+                    :label="item[labelKey]"
+                    :value="item[valueKey]"
+                    :disabled="item[configInfo.disabled]"
+                >
+                    <erd-checkbox
+                        :label="item[valueKey]"
+                        v-if="configInfo.multiple"
+                        style="pointer-events: none"
+                        :disabled="item[configInfo.disabled]"
+                    >
+                        {{item[labelKey]}}
+                    </erd-checkbox>
+                </erd-option>
+            </erd-checkbox-group>
+            <template v-else>
+                <erd-option
+                    v-for="item in options"
+                    :key="item[valueKey]"
+                    :label="item[labelKey]"
+                    :value="item[valueKey]"
+                    :disabled="item[configInfo.disabled]"
+                >
+                </erd-option>
+            </template>
+        </erd-select>
+    </erd-tooltip>
+</div>

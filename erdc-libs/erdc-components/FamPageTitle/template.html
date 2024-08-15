@@ -1,0 +1,56 @@
+<div class="fam-page-title">
+    <slot>
+        <div
+            class="fam-page-title__button"
+            v-if="showBackButton"
+        >
+            <slot name="back">
+                <erd-button
+                    type="text"
+                    icon="el-icon-back"
+                    @click="handleBack"
+                >
+                    <span class="return-content">{{i18nMappingObj.back}}</span>
+                </erd-button>
+            </slot>
+        </div>
+        <div class="fam-page-title__title flex flex-1 overflow-hidden align-items-center">
+            <slot
+                name="icon"
+                :icon="icon"
+            >
+                <div
+                    v-if="icon"
+                    class="mr-8 text-xl"
+                    :style="{...iconStyle, fontSize: 'var(--fontSizeSupper)'}"
+                >
+                    <erd-icon :icon="icon"></erd-icon>
+                </div>
+            </slot>
+            <slot
+                name="title"
+                :title="innerTitle"
+            >
+                <el-tooltip
+                    v-if="isTextOverflow"
+                    :content="innerTitle"
+                    placement="top"
+                >
+                    <div
+                        class="fam-page-title__title-text text-xl font-t-bold color-normal truncate"
+                        :class="[{ 'pl-16': showBackButton  }, titleClass]"
+                    >
+                        {{ innerTitle }}
+                    </div>
+                </el-tooltip>
+                <div
+                    v-else
+                    class="fam-page-title__title-text text-xl font-bold color-normal truncate"
+                    :class="[{ 'pl-16': showBackButton  }, titleClass]"
+                >
+                    {{ innerTitle }}
+                </div>
+            </slot>
+        </div>
+    </slot>
+</div>

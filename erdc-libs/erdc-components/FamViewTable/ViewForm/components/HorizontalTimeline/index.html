@@ -1,0 +1,38 @@
+<div
+    class="horizontal-timeline w-100p mb-4"
+    :class="{'icons-up': dragData.length > 11}"
+>
+    <div v-show="dragData.length">
+        <div class="flex align-items-center pt-16 pl-16">
+            <div class="timeline-icon start"></div>
+            <vue-draggable
+                v-model="dragData"
+                animation="300"
+                scroll
+                class="vue-drag-container"
+            >
+                <transition-group class="item-container flex erd-scollbar overflow-x-auto pb-8">
+                    <div
+                        v-for="(item, index) in dragData"
+                        :key="item.value"
+                        :title="item.label"
+                        class="item flex align-items-center position-relative"
+                    >
+                        <i class="erd-iconfont erd-icon-double-drag icon position-absolute drag-icon"></i>
+                        <div
+                            v-if="index === 0"
+                            class="divider"
+                        ></div>
+                        <div class="text truncate pointer align-items-center pl-16 pr-16">{{ item.label }}</div>
+                        <div class="divider"></div>
+                        <i
+                            class="erd-iconfont erd-icon-error icon position-absolute tag-close"
+                            @click.stop="deleteDragItem(item)"
+                        ></i>
+                    </div>
+                </transition-group>
+            </vue-draggable>
+            <div class="timeline-icon end"></div>
+        </div>
+    </div>
+</div>

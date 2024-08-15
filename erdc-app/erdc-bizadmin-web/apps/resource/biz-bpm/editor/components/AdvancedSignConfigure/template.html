@@ -1,0 +1,52 @@
+<div id="sign-configure" class="sign-configure">
+    <erd-contraction-panel
+        :unfold.sync="expanded"
+    >
+        <template #title="scope">
+            <span class="panel-title">{{i18n.signConfigure}}</span><erd-tooltip
+                effect="dark"
+                placement="top-start"
+                class="ml-4 mr-4 panel-title-icon font-bold"
+                :content="i18n.signConfigureTips"
+            >
+                <i class="erd-iconfont erd-icon-help"></i>
+            </erd-tooltip>
+        </template>
+
+        <template #content>
+            <EditableTable
+                ref="table"
+                :data.sync="tableData"
+                :column="column"
+                :rules="rules"
+                keyField="_id"
+                :readonly="readonly"
+            >
+                <template #sign-template-key="scope">
+                    <erd-popover
+                        placement="top-start"
+                        width="120"
+                        trigger="click"
+                        popper-class="sign-configure-popover"
+                        :visible-arrow="false"
+                        @after-enter="handleAfterEnter(scope.data.row)"
+                        @hide="onEditClosed"
+                    >
+                        <erd-input
+                            v-model="scope.data.row[scope.data.column.property]"
+                            :ref="'textareaRef_' + scope.data.row.fieldKey"
+                            type="textarea"
+                            rows="5"
+                            class="textarea-placeholder"
+                            :placeholder="i18n.signTemplateTips"
+                        ></erd-input>
+                        <div slot="reference" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                            <span v-if="scope.data.row[scope.data.column.property]">{{scope.data.row[scope.data.column.property]}}</span>
+                            <span v-else class="text-placeholder">{{i18n.signTemplateVariableTips}}</span>
+                        </div>
+                    </erd-popover>
+                </template>
+            </EditableTable>
+        </template>
+    </erd-contraction-panel>
+</div>

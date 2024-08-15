@@ -1,0 +1,93 @@
+<div id="ShowDayList">
+    <div class="dayHeader">
+        <span
+            class="dayTitle"
+            :title="title"
+            >{{title}}</span
+        >
+        <template v-if="!visibleBtn">
+            <erd-tooltip
+                effect="dark"
+                placement="top-start"
+                :content="disabledTips"
+                :disabled="!isContextCalendar"
+            >
+                <erd-button
+                    :title="i18nMappingObj.add"
+                    type="fill-icon"
+                    icon="el-icon-plus"
+                    :disabled="isContextCalendar"
+                    @click="setHoliday"
+                    class="calendar-holiday-add btn-warning"
+                >
+                </erd-button>
+            </erd-tooltip>
+
+            <erd-tooltip
+                effect="dark"
+                placement="top-start"
+                :content="disabledTips"
+                :disabled="!isContextCalendar"
+            >
+                <erd-button
+                    :title="i18nMappingObj.delete"
+                    type="fill-icon"
+                    icon="el-icon-minus"
+                    :disabled="isContextCalendar || checkList.length == 0"
+                    class="calendar-holiday-add btn-danger"
+                    @click="delHoliday"
+                >
+                </erd-button>
+            </erd-tooltip>
+        </template>
+    </div>
+    <div class="dayBody">
+        <div v-if="tableData.length > 0">
+            <fam-erd-table
+                :data="tableData"
+                :max-height="tableHeight"
+                :column-config="{ resizable: true }"
+                v-bind="tableConfig"
+                @checkbox-change="changeCheck"
+                @checkbox-all="changeCheck"
+                ref="holidayTable"
+            >
+                <template #column:header:name="{data}">
+                    <erd-icon icon="edit"></erd-icon>
+                    <span>{{i18n.name}}</span>
+                </template>
+                <template #column:default:name="{data}">
+                    <erd-tooltip
+                        placement="top-start"
+                        :content="i18nMappingObj.regularWork"
+                    >
+                        <div slot="content">
+                            <span>{{i18n.name}}：{{data.row.name.value}}</span><br />
+                            <span>{{i18n.type}}：{{filterDay(data.row.dayType)}}</span><br />
+                            <span>{{i18n.startDate}}：{{data.row.startTime}}</span><br />
+                            <span>{{i18n.endDate}}：{{data.row.finishTime}}</span><br />
+                        </div>
+                        <a
+                            href="javascript:void(0)"
+                            @click="editHoliday(data.row)"
+                            :style="{'color': data.row.dayType == '0' ? '#F5BB00' : '#1abc9c'}"
+                            >{{ data.row.name.value }}</a
+                        >
+                    </erd-tooltip>
+                </template>
+            </fam-erd-table>
+        </div>
+        <div
+            class="dayEmpty"
+            v-else
+        >
+            <erd-icon
+                class="emptyText"
+                icon="clock"
+                style="font-size: 90px"
+            ></erd-icon>
+            <br />
+            <span class="emptyText">{{i18nMappingObj.emptyTip}}</span>
+        </div>
+    </div>
+</div>

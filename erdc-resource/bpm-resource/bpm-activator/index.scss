@@ -1,0 +1,12 @@
+.bpm-activator-content {
+    display: flex;
+
+    .bpm-activator-content__left {
+
+    }
+
+    .bpm-activator-content__right {
+        margin: var(--bigSpace) var(--largeSpace);
+        transition: all .25s linear;
+    }
+}

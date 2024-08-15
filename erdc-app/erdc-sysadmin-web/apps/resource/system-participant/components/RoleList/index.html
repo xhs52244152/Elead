@@ -1,0 +1,97 @@
+<div
+    id="RoleList"
+    class="p-lg w-100p h-100p flex flex-column"
+    v-loading="loading"
+>
+    <div class="RoleList_header">
+        <div class="titleName">{{roleName}}</div>
+    </div>
+    <div class="operation flex justify-between">
+        <div class="search">
+            <erd-input
+                v-model="searchVal"
+                placeholder="请输入"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+            >
+            </erd-input>
+        </div>
+        <erd-button
+            v-if="role.level != 0 && createPrem"
+            type="primary"
+            @click="onCreate"
+            >{{i18nMappingObj.create}}</erd-button
+        >
+    </div>
+
+    <div class="RoleList_content grow-1 position-relative">
+        <FamErdTable
+            ref="erdTable"
+            class="h-100p position-absolute w-100p h-100p"
+            :column="columns"
+            :data="dataList"
+            height="100%"
+            border
+            show-overflow
+        >
+            <template v-slot:[identifierNo]="{data}">
+                <span
+                    class="vxe-cell--label link-text"
+                    @click="checkDetail(data.row)"
+                >
+                    {{data.row[data.column.property]}}
+                </span>
+            </template>
+            <template #column:default:oper="{data}">
+                <!-- <erd-button
+                    type="text"
+                    @click="onEdit(data.row)"
+                    >{{i18nMappingObj.edit}}</erd-button
+                >
+                <erd-tooltip
+                    effect="dark"
+                    placement="top"
+                    :disabled="!data.row.status"
+                >
+                    <template slot="content">
+                        <span>{{i18nMappingObj.delTips}}</span>
+                    </template>
+                    <erd-button
+                        type="text"
+                        :disabled="!!data.row.status"
+                        @click="onDelete(data.row)"
+                        >{{i18nMappingObj.delete}}</erd-button
+                    >
+                </erd-tooltip> -->
+
+                <fam-action-pulldown
+                    :is-operation="true"
+                    :action-config="getActionConfig(data.row)"
+                    :action-data="data.row"
+                    @click="rowActionClick"
+                ></fam-action-pulldown>
+            </template>
+        </FamErdTable>
+    </div>
+    <!--小于等于一页不展示-->
+    <erd-pagination
+        ref="pagination"
+        class="pt-lg"
+        :current-page.sync="pagination.pageIndex"
+        :page-size.sync="pagination.pageSize"
+        :total="pagination.total"
+        :hide-on-single-page="false"
+        @size-change="handleSizeChange"
+        @current-change="handelCurrentChange"
+    >
+    </erd-pagination>
+    <role-create-edit
+        v-if="createEditVisible"
+        :visible.sync="createEditVisible"
+        :title="title"
+        :oid="oid"
+        :role-data="role"
+        :type="createEditType"
+        @onsubmit="onSubmit"
+    ></role-create-edit>
+</div>

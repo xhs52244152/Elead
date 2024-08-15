@@ -1,0 +1,106 @@
+<!-- 任务中心 -->
+<div
+    id="signature-task-center"
+    class="w-100p h-100p flex flex-column"
+>
+    <FamPageTitle
+        :title="i18nMappingObj.taskCenter"
+        :show-back-button="false"
+        v-if="showTitle && showPageTitle"
+        class="plr-normal bg-normal pb-normal"
+    ></FamPageTitle>
+    <div class="center-table mt-normal grow-1 plr-normal">
+        <fam-advanced-table
+            ref="importAndExportTaskTable"
+            :view-table-config="viewTableConfig"
+            :is-adaptive-height="true"
+        >
+            <template #column:default:name:content="{ scope }">
+                {{ i18nMappingObj[taskTypeList[scope.row?.name]] }}
+            </template>
+            <template #column:default:errorMessage:content="{ scope }">
+                <erd-button
+                    v-if="scope.row.status === 4 && !!scope.row.errorMsg"
+                    type="text"
+                    @click="handlerReviewError(scope.row)"
+                    >{{ i18nMappingObj.view }}
+                </erd-button>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <erd-dropdown
+                    trigger="click"
+                    @command="command => handleCommand(command, scope.row)"
+                >
+                    <span class="erd-dropdown-link">
+                        <span>{{ i18nMappingObj.operate }}</span><i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item
+                            v-if="scope.row.isSupport"
+                            command="preview"
+                            >{{ i18nMappingObj.preview }}</erd-dropdown-item
+                        >
+                        <erd-dropdown-item command="retry">{{ i18nMappingObj.retry }}</erd-dropdown-item>
+                        <erd-dropdown-item command="download">{{ i18nMappingObj.download }}</erd-dropdown-item>
+                        <erd-dropdown-item command="delete">{{ i18nMappingObj.delete }}</erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </template>
+        </fam-advanced-table>
+    </div>
+    <erd-ex-dialog
+        v-if="dialogVisiable"
+        :title="i18nMappingObj.errorLog"
+        :visible.sync="dialogVisiable"
+        width="1200px"
+        custom-class="import-export-error-dialog"
+        class="import-export-error-dialog"
+    >
+        <div class="error-dialog-main-content">
+            <div class="flex dialog-error-title">
+                <i class="el-icon-error text-18"></i>
+                <span class="dialog-error-title-content ml-8">{{ i18nMappingObj.viewLog }}</span>
+            </div>
+            <div
+                v-if="isTextErrorMsgType"
+                class="dialog-error-content"
+            >
+                {{errorMsg4Text}}
+            </div>
+            <div v-else>
+                <erd-table
+                    border
+                    :column="errorTableColumns"
+                    :data="errorMsg4Table"
+                >
+                </erd-table>
+            </div>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer import-export-error-dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="downloadLog"
+                >{{ i18nMappingObj.download }}</erd-button
+            >
+            <erd-button @click="dialogVisiable = false">{{ i18nMappingObj.close }}</erd-button>
+        </span>
+    </erd-ex-dialog>
+
+    <TaskCreate
+        ref="taskCreateModal"
+        @submitTask="submitTask"
+    ></TaskCreate>
+
+    <TaskFrom
+        ref="taskFormDrawer"
+        :rowList="rowList"
+    ></TaskFrom>
+
+    <FamFilePreview
+        ref="filePreview"
+        staticClassName="erd.cloud.signature.entity.SignatureTmpl"
+    ></FamFilePreview>
+</div>

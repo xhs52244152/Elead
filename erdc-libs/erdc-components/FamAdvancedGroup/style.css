@@ -1,0 +1,174 @@
+.fam-advanced-group .conditions-container {
+    max-height: var(--conditionMaxHeight);
+    width: 100%;
+}
+.fam-advanced-group .conditions-container .my-title-label {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    justify-content: end;
+    float: right;
+}
+.fam-advanced-group .conditions-container .el-select,
+.fam-advanced-group .conditions-container .el-input {
+    width: 100%;
+}
+.fam-advanced-group .el-row .el-col {
+    margin-bottom: 0px !important;
+}
+.fam-advanced-group .my-icon-btn .el-icon-plus {
+    font-size: 12px;
+}
+.fam-advanced-group .my-icon-btn span {
+    margin-left: 0;
+}
+
+.fam-advanced-group-container {
+    border: 1px dashed transparent;
+    background: var(--dashed-background);
+    padding: var(--bigSpace);
+    margin-bottom: var(--bigSpace);
+}
+.fam-advanced-not-group-container {
+    display: flex;
+}
+.fam-advanced-ralation {
+    margin-bottom: var(--formItemMarginBottom);
+}
+.fam-advanced-remove-btn {
+    width: 32px;
+    margin-bottom: var(--formItemMarginBottom);
+}
+#FamAdvancedGroup .fam-advanced-remove-btn > i {
+    font-size: (--fontSizeBig);
+    color: var(--colorArrow);
+}
+.fam-advanced-relation-select {
+    width: 54px;
+    margin-right: var(--normalSpace);
+}
+.fam-advanced-field {
+    width: 160px;
+}
+.fam-advanced-oper {
+    width: 110px;
+}
+.fam-advanced-component {
+    min-width: 240px;
+}
+.fam-advanced-component:has(.custom-date-time .el-date-editor--daterange) {
+    width: 250px;
+}
+.fam-advanced-field + .fam-advanced-oper,
+.fam-advanced-oper + .fam-advanced-component {
+    margin-left: var(--normalSpace);
+}
+
+.fam-advanced-component .el-date-editor.el-range-editor,
+.fam-advanced-component #ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper {
+    height: var(--formItemHeight);
+}
+
+.fam-advanced-component .custom-date-time .el-range-editor input {
+    padding-left: 0;
+}
+.fam-advanced-component .custom-date-time .el-range-editor input:nth-of-type(2) {
+    margin-left: 8px;
+}
+
+.fam-advanced-group .fam-advanced-conditions-add,
+.fam-advanced-group .footer-form-item .el-form-item__content {
+    margin-left: 86px;
+}
+.fam-advanced-group .fam-advanced-conditions-add > .el-button + .el-button {
+    margin-left: var(--largeSpace);
+}
+.remove-btn-hidden {
+    visibility: hidden;
+}
+.advanced-ralation-hidden {
+    visibility: hidden;
+}
+.fam-advanced-group-panel {
+    width: 100%;
+    border: 1px solid;
+    border-color: var(--colorSplit);
+    padding: var(--largeSpace);
+    margin-top: var(--largeSpace);
+    position: relative;
+    transition: height 0.3s;
+}
+.fam-advanced-group .conditions-container .condition-row-item {
+    margin-bottom: 0;
+    margin-right: 0 !important;
+}
+#FamAdvancedGroup .el-form-item--medium {
+    margin-bottom: var(--formItemMarginBottom);
+}
+#FamAdvancedGroup.fam-advanced-group .footer-form-item {
+    margin-bottom: 0;
+    margin-top: var(--bigSpace);
+}
+.fam-advanced-group-expand-btn {
+    position: absolute;
+    bottom: 4px;
+    font-size: var(--fontSize);
+    color: rgba(0, 0, 0, 0.447058823529412);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.fam-advanced-group-expand-btn-notexpand {
+    position: static;
+}
+.fam-advanced-group-expand-btn > i {
+    transition: all 0.3s;
+}
+.fam-advanced-group-expand-btn-notexpand > i {
+    transform: rotate(180deg);
+}
+.fam-advanced-group-panel-hidden .fam-advanced-group-history {
+    top: -32px;
+    left: 0;
+}
+.fam-advanced-group-history {
+    position: absolute;
+    top: -40px;
+    left: -1px;
+}
+.fam-advanced-group-panel-hidden {
+    padding: 0;
+    border: none;
+    margin: 0;
+}
+.condition-group-type-select {
+    padding: 0 0 12px 25px;
+    display: flex;
+    align-items: center;
+}
+.condition-group-type-select > .type-select {
+    width: 130px;
+}
+.condition-group-type-select > span {
+    font-size: 12px;
+    color: var(--colorTextExplain);
+    margin-left: var(--normalSpace);
+}
+.fam-advanced-group .fam-advanced-group-type-tips {
+    position: absolute;
+    top: 19px;
+    left: 146px;
+    z-index: 1;
+    cursor: help;
+}
+.fam-advanced-group .fam-advanced-group-type-tips > i {
+    font-size: var(--fontSizeLarge);
+}
+.conditions-scroll-contianer.el-scrollbar .el-scrollbar__wrap {
+    max-height: 430px;
+    overflow-x: hidden;
+}
+.fam-dynamic-form .fam-dynamic-form__item .fam-advanced-group .el-form-item__content {
+    width: auto;
+}
+/*# sourceMappingURL=style.css.map */

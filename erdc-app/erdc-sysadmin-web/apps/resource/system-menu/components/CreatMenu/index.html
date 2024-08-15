@@ -1,0 +1,77 @@
+<div
+    id="ComponentWapper-CreatMenu"
+    :dialogVisible="dialogVisible"
+>
+    <erd-ex-dialog
+        :title="i18nMappingObj.creatMenu"
+        @close="close"
+        :visible.sync="visibleDialog"
+        width="1200px"
+    >
+        <!-- 创建菜单 -->
+        <!--表单-->
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="formConfig"
+            id="custom-from"
+        >
+            <template #creatmenuisshow="scope">
+                <el-select
+                    v-model="formData.isShow"
+                    :placeholder="i18nMappingObj.pleaseSelet"
+                >
+                    <el-option
+                        v-for="item in isShowOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    >
+                    </el-option>
+                </el-select>
+            </template>
+
+            <template #creatmenutarget="scope">
+                <el-select
+                    v-model="formData.target"
+                    class="w-100p"
+                    :placeholder="i18nMappingObj.pleaseSelet"
+                >
+                    <el-option
+                        v-for="item in targetOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    >
+                    </el-option>
+                </el-select>
+            </template>
+
+            <template #menuApp="scope">
+                <el-select
+                    v-model="formData.appName"
+                    :placeholder="i18nMappingObj.pleaseSelet"
+                >
+                    <el-option
+                        v-for="item in appList"
+                        :key="item.id"
+                        :label="item.displayName"
+                        :value="item.identifierNo"
+                    ></el-option>
+                </el-select>
+            </template>
+        </FamDynamicForm>
+
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submit"
+                :loading="loading"
+                >{{i18nMappingObj.submit}}</erd-button
+            ><erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

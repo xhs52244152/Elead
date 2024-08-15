@@ -1,0 +1,147 @@
+<div class="system-notify_list h_100p flex flex-column">
+    <FamPageTitle
+        class="plr-normal bg-normal pb-normal"
+        v-if="showTitle"
+    ></FamPageTitle>
+    <div class="operation flex plr-normal pt-normal">
+        <div>
+            <erd-input
+                v-model="searchVal"
+                :placeholder="i18nMappingObj.searchTips"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+                style="width: 300px;"
+                @input="onInput"
+            >
+            </erd-input>
+        </div>
+        <div style="font-size: 0;">
+            <erd-button
+                type="primary"
+                @click="onCreate"
+            >
+                {{i18nMappingObj.create}}
+            </erd-button>
+            <erd-button @click="uploadVisible = true">
+                {{i18nMappingObj.importTmpl}}
+            </erd-button>
+            <erd-dropdown style="margin-left: var(--buttonApposeSpace);vertical-align: bottom;" @command="downloadFile">
+                <erd-button
+                >{{i18nMappingObj.exportTmpl}}<i class="el-icon-arrow-down el-icon--right"></i></erd-button>
+                <erd-dropdown-menu slot="dropdown">
+                    <erd-dropdown-item command="0">{{i18nMappingObj.exportAllTmpl}}</erd-dropdown-item>
+                    <erd-dropdown-item command="1">{{i18nMappingObj.exportUseTmpl}}</erd-dropdown-item>
+                    <erd-dropdown-item command="2">{{i18nMappingObj.exportUnUseTmpl}}</erd-dropdown-item>
+                </erd-dropdown-menu>
+            </erd-dropdown>
+
+        </div>
+    </div>
+    <div class="main flex flex-column grow-1 plr-normal pb-normal">
+        <div class="fam-erd-table-container grow-1 position-relative">
+            <fam-erd-table
+                ref="erdTable"
+                v-loading="loading"
+                :data="listData"
+                :column="columns"
+                :column-config="{resizable: true}"
+                border
+                show-overflow
+                height="100%"
+                class="position-absolute w-100p h-100p"
+                @checkbox-change="handleCheckboxChange"
+                @checkbox-all="handleCheckAll"
+            >
+                <template #column:default:status="{data}">
+                    {{data.row.status == 1 ? i18nMappingObj.enable : i18nMappingObj.disable}}
+                </template>
+    
+                <template #column:default:operation="{data}">
+                    <erd-button
+                        type="text"
+                        @click="onUpdate(data.row.oid)">
+                        {{i18nMappingObj.edit}}
+                    </erd-button>
+                    <erd-button
+                        type="text"
+                        @click="$emit('switch-component', 'NotDisturb', data.row)"
+                    >
+                        {{ i18nMappingObj.dndMode }}
+                    </erd-button>
+                    <erd-button
+                        type="text"
+                        @click="gotoTmpl(data.row)"
+                    >
+                        {{ i18nMappingObj.template }}
+                    </erd-button>
+                </template>
+            </fam-erd-table>
+        </div>
+        <erd-pagination
+            style="padding-top: 16px"
+            :total="total"
+            :page-size.sync="pageSize"
+            :current-page.sync="currentPage"
+            :hide-on-single-page="false"
+            @size-change="sizeChange"
+            @current-change="currentChange"
+        >
+        </erd-pagination>
+    </div>
+    <erd-ex-dialog
+        width="1200px"
+        :title="dialogTitle"
+        @close="close"
+        :visible.sync="visibleDialog"
+        size="large"
+    >
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="formConfig"
+        >
+            <template #param="scope">
+               <div class="system-notify_form_param" ref="system-notify_form_param"></div>
+            </template>
+        </FamDynamicForm>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="save"
+            >{{i18nMappingObj.save}}</erd-button
+            ><erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <fam-erd-upload-tmpl
+        @submit="handleSave"
+        @cancel="uploadVisible = false"
+        @closed="handleUploadClosed"
+        :title="i18nMappingObj.importTmpl"
+        :visible.sync="uploadVisible"
+    >
+        <template #tips>
+            <span>{{i18nMappingObj.HalfCoverDetail}}</span><br/>
+            <span>{{i18nMappingObj.NoCoverDetail}}</span><br/>
+            <span>{{i18nMappingObj.FullCoverDetail}}</span>
+        </template>
+        <div class="block system-notify_import_mode">
+            <span >{{i18nMappingObj.importMode}}</span>
+            <erd-select v-model="uploadType" class="system-notify_import_mode_select">
+                <erd-option
+                    v-for="option in importModeOptions"
+                    :key="option.value"
+                    :label="option.label"
+                    :value="option.value"
+                ></erd-option>
+            </erd-select>
+        </div>
+        <div class="system-notify_import_upload">
+            <el-upload v-bind="uploadProps" ref="upload">
+                <erd-button size="small" type="primary">{{i18nMappingObj.upload}}</erd-button>
+            </el-upload>
+        </div>
+    </fam-erd-upload-tmpl>
+</div>

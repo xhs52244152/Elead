@@ -1,0 +1,94 @@
+<div class="doc-site-bind-department bg-white flex flex-column grow-1 m-normal p-normal">
+    <div class="content-opea flex pb-normal">
+        <FamPageTitle
+            :title="i18nMappingObj.bindDepartments"
+            show-back-button
+            @back="goBack"
+        >
+        </FamPageTitle>
+        <erd-button
+            style="flex: 0 0 auto"
+            type="primary"
+            @click="handleBatchBindSite"
+        >
+            {{ i18nMappingObj.batchBindSite }}
+        </erd-button>
+    </div>
+    <erd-table
+        :border="true"
+        ref="tableRef"
+        :view-toolbar="false"
+        :search-toolbar="false"
+        :refresh-toolbar="false"
+        :column-toolbar="false"
+        :pagination="false"
+        :hide-index="true"
+        class="grow-1"
+        :loading="loading"
+        :scroll-y="scrollY"
+        :tree-config="treeConfig"
+        :row-config="rowConfig"
+        :checkbox-config="checkboxConfig"
+        :column="columns"
+        :data="orgData"
+        @checkbox-change="handleSelectChange"
+    >
+        <template #column:default:operation="{ data }">
+            <erd-button
+                type="text"
+                @click="handleBindSite(data.row)"
+            >
+                {{ i18nMappingObj.bindSite }}
+            </erd-button>
+            <erd-button
+                type="text"
+                v-if="data.row.linkSiteCode"
+                @click="handleUnbindSite(data.row)"
+            >
+                {{ i18nMappingObj.unbindSite }}
+            </erd-button>
+        </template>
+    </erd-table>
+
+    <erd-ex-dialog
+        :visible.sync="bindVisible"
+        :title="i18nMappingObj.bindSite"
+        size="mini"
+        @closed="closed"
+        width="600px"
+    >
+        <erd-row>
+            <erd-col :span="3">
+                <div
+                    style="font-size: 14px;font-size: var(--fontSize); color: var(--colorTextNormal) line-height: 32px; text-align: right; padding-right: 8px;"
+                >
+                    站点
+                </div>
+            </erd-col>
+            <erd-col :span="21">
+                <erd-select
+                    style="width: 100%"
+                    v-model="selectedSite"
+                    filterable
+                >
+                    <erd-option
+                        v-for="item in allSites"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code"
+                    >
+                    </erd-option>
+                </erd-select>
+            </erd-col>
+        </erd-row>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="confirmBind"
+                >{{ i18nMappingObj.confirm }}</erd-button
+            >
+            <erd-button @click="cancelBind">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

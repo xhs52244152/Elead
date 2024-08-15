@@ -1,0 +1,34 @@
+<div
+    id="AddParticipantSelect"
+    class="add-participant-select"
+>
+    <div class="header-container">
+        <erd-row
+            :gutter="8"
+            type="flex"
+            align="middle"
+        >
+            <erd-col
+                :span="leftSpan"
+                v-if="labelVisible"
+                class="form-item-title"
+            >
+                <span>{{ i18nMappingObj.principal }}</span>
+            </erd-col>
+            <erd-col :span="rightSpan">
+                <FamParticipantSelect
+                    ref="famParticipantSelect"
+                    v-if="visible"
+                    class="w-100p"
+                    v-model="participantVal"
+                    :collapse-tags="true"
+                    :query-params="queryParams"
+                    :query-scope="queryScope"
+                    :app-name="appName"
+                    v-bind="$attrs"
+                    v-on="$listeners"
+                ></FamParticipantSelect>
+            </erd-col>
+        </erd-row>
+    </div>
+</div>

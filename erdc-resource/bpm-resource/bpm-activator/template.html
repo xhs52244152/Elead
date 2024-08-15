@@ -1,0 +1,50 @@
+<div
+    id="bpm-activator-content"
+    class="bpm-activator-content"
+    v-if="isShowBpmActivator"
+    v-bpm-height
+    v-cloak
+>
+    <div class="bpm-activator-content__left">
+        <BpmProcessNavigation
+            :activities="activities"
+            :current-activity-id="currentActivityId"
+            :view-activity-id="viewActivityId"
+            :users="users"
+            :collapsed.sync="collapsed"
+            :height="navHeight"
+        >
+            <template #title="scope">
+                <span
+                    style="max-width: 10em; cursor: pointer"
+                    class="p-0 text-left"
+                    :style="{ 'color': scope.activity.thumbnailType === 'FINISHED' ? '#000000' : 'inherit' }"
+                    :title="scope.activity.properties.name"
+                    @click="switchWorkshopView(scope.activity)"
+                    v-fam-clamp
+                >
+                    {{scope.activity.properties.name}}
+                </span>
+            </template>
+        </BpmProcessNavigation>
+    </div>
+    <div
+        class="bpm-activator-content__right"
+        :style="collapsedStyle"
+    >
+        <BpmProcessDetails
+            ref="bpmProcessDetails"
+            :process-instance-o-id="processInstanceOId"
+            :task-def-key="taskDefKey"
+            :task-o-id="taskOId"
+            :readonly="readonly"
+            :height="detailHeight"
+            :current-node-name="currentNodeName"
+            @update-node-map="updateNodeMapChange"
+            @update-task-defKey-users="updateTaskDefKeyUsersChange"
+            @update-process-definition-key="updateProcessDefinitionKey"
+            @update-activity-id="updateActivityId"
+            @has-security-label="hasSecurityLabel"
+        ></BpmProcessDetails>
+    </div>
+</div>

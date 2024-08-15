@@ -1,0 +1,10 @@
+.view-task-content {
+  background-color: #ffffff;
+}
+.view-task-content .fam-view-table-header-component .viewtable-header-container .left-header-contaienr,
+.view-task-content .fam-view-table-header-component .viewtable-header-container .right-header-contaienr {
+  margin: 0;
+}
+.view-task-content .fam-view-table-component .advanced-table-container {
+  padding: 0;
+}/*# sourceMappingURL=index.css.map */

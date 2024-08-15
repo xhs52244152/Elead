@@ -1,0 +1,13 @@
+<div
+    id="bpm-drafts-content"
+    class="h-100p flex flex-column"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        class="bg-white grow-1"
+        :view-table-config="viewTableConfig"
+        @action-click="actionClick"
+        @handler-data="handlerData"
+    ></fam-view-table>
+</div>

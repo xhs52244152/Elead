@@ -1,0 +1,86 @@
+<div id="type-set-icon">
+    <erd-ex-dialog
+        ref="dialog"
+        :title="i18nMappingObj.configIconRule"
+        :visible.sync="visible"
+        custom-class="type-set-icon-dialog"
+        width="1200px"
+        @close="cancel"
+    >
+        <erd-contraction-panel
+            :title="i18nMappingObj.iconConfig"
+            :unfold.sync="iconExpanded"
+        >
+            <template #content>
+                <erd-form
+                    :model="typeData"
+                    label-position="right"
+                    label-width="70px"
+                    class="form-inline"
+                >
+                    <erd-form-item
+                        :label="i18nMappingObj.icon"
+                        class="icon-select-item"
+                        required
+                    >
+                        <div
+                            v-if="!icon"
+                            class="bg-split mr-8"
+                            style="width: 24px; height: 24px"
+                        ></div>
+                        <fam-icon-select
+                            v-model="icon"
+                            :iconColor="iconColor"
+                            parentComp="iconRule"
+                            visibleBtn
+                        >
+                        </fam-icon-select>
+                    </erd-form-item>
+                    <erd-form-item :label="i18nMappingObj.iconColor" style="margin-bottom: 0">
+                        <ul class="icon-color-list flex align-items-center mb-0">
+                            <li
+                                v-for="item in iconColorList"
+                                :key="item.value"
+                                class="mr-8 color-normal text-center"
+                                :class="{'is-active': iconColor === item.value}"
+                                :style="{backgroundColor: item.value}"
+                                @click="changeColor(item.value)"
+                            >
+                                {{item.nameI18nJson?.value}}
+                            </li>
+                        </ul>
+                    </erd-form-item>
+                </erd-form>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :title="i18nMappingObj.ruleConfig"
+            :unfold.sync="ruleExpanded"
+        >
+            <template #content>
+                <fam-rule-engine
+                    ref="famRuleEngine"
+                    :oid="oid"
+                    :className="className"
+                    :isUpdate="isUpdate"
+                    :ruleConditionDtoList="ruleConditionDtoList"
+                >
+                </fam-rule-engine>
+            </template>
+        </erd-contraction-panel>
+        <div
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                :loading="loading"
+                type="primary"
+                @click.stop="submit"
+            >
+                {{i18nMappingObj.confirm}}
+            </erd-button>
+            <erd-button @click="clearAllConditions">{{i18nMappingObj.clearConditions}}</erd-button>
+            <erd-button @click.stop="cancel"> {{i18nMappingObj.cancel}} </erd-button>
+        </div>
+    </erd-ex-dialog>
+</div>

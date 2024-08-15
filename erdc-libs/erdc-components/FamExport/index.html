@@ -1,0 +1,42 @@
+<div class="FamExport">
+    <erd-ex-dialog
+        :title="i18n.export"
+        :visible.sync="innerVisible"
+        size="small"
+    >
+        <div v-if="showExportTips" class="mb-8 bg-split p-normal rounded color-placeholder">
+            <span>{{i18n.note}}{{i18n.exportTips}}</span>
+        </div>
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="dataConfig"
+        >
+            <template v-slot:radioComponent="scope">
+                <erd-ex-select
+                    v-model="scope.data[scope.formConfig.field]"
+                    :no-data-text="i18n.configureTemplate"
+                    :options="fileList"
+                    class="w-100p"
+                    :default-props="{
+                        label: 'displayName',
+                        value: 'oid',
+                        key: 'oid'
+                    }"
+                    @change="onChange"
+                ></erd-ex-select>
+            </template>
+        </FamDynamicForm>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                :disabled="!(fileList && fileList.length)"
+                @click="onSubmit"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="closeBtn">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,33 @@
+<div class="process-properties-panel h-100p">
+    <PanelTitle
+        :activeElement="activeElement"
+        :bpmnModeler="bpmnModeler"
+    ></PanelTitle>
+    <erd-tabs v-model="activeName">
+        <erd-tab-pane
+            v-for="tab in tabs"
+            :label="translateLabel(tab.label)"
+            :name="tab.name"
+            :key="tab.name + activeElement.id"
+        >
+            <erd-scrollbar :style="{ height: height, overflow: 'inherit' }">
+                <template v-for="component in tab.components">
+                    <component
+                        v-if="activeName === tab.name && isComponent(component)"
+                        :ref="component.name"
+                        :key="component.name"
+                        :is="component.component"
+                        :template.sync="innerTemplate"
+                        :templateOid="templateOid"
+                        :extraInfos="extraInfos"
+                        :activeElement="activeElement"
+                        :bpmnModeler="bpmnModeler"
+                        :isEdit="isEdit"
+                        :readonly="readonly"
+                        @hook:mounted="resetPanelHeight"
+                    ></component>
+                </template>
+            </erd-scrollbar>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

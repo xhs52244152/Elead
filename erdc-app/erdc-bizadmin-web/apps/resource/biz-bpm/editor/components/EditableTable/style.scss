@@ -1,0 +1,15 @@
+.process-editable-table {
+    .vxe-cell--valid-msg {
+        white-space: nowrap;
+        display: inline-block !important;
+    }
+    .vxe-cell:has(.custom-select):has(.el-tag) {
+        height: auto !important;
+        max-height: unset !important;
+        .el-input--suffix {
+            &.is-focus {
+                height: 66px !important;
+            }
+        }
+    }
+}

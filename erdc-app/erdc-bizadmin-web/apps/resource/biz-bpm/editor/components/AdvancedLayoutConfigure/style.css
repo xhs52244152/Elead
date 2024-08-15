@@ -1,0 +1,13 @@
+.form-configure .el-form-item__content .el-select {
+  width: 100%;
+}
+.form-configure .form-configure__layout-select .form-configure__layout-type input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-configure .form-configure__layout-select .form-configure__layout-ref input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

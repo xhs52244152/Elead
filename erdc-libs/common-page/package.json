@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-libs/common-page",
+  "version": "3.1.0",
+  "description": "FAM 通用页面资源",
+  "dependencies": {
+  }
+}

@@ -1,0 +1,33 @@
+<div id="feedbackTitle">
+    <div class="feedback-title-box">
+        <div class="feedback-title-left">
+            <div
+                class="feedback-left-return"
+                v-if="showReturnBack"
+                @click="cancelReadPermission"
+            >
+                <erd-icon
+                    icon="el-icon-back"
+                    class="return-icon"
+                ></erd-icon>
+                <div class="return-content">{{i18nMappingObj.returnback}}</div>
+                <div class="feedback-line-style"></div>
+            </div>
+            <div class="feedback-title-left-content">
+                <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="typeName"
+                    placement="top"
+                >
+                    <div class="feedback-title-left-content-left">{{typeName}}</div>
+                </erd-tooltip>
+
+                <div class="feedback-title-left-content-right">->{{ i18nMappingObj.attrPermissionSetting }}</div>
+            </div>
+        </div>
+        <div class="feedback-title-right">
+            <slot name="feedbackTitle:right:content"></slot>
+        </div>
+    </div>
+</div>

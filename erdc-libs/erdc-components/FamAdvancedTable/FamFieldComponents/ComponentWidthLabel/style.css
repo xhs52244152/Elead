@@ -1,0 +1,187 @@
+:root {
+    --fam-filter-dynamic-margin-left: -50px;
+    --fam-filter-dynamic-label-width: 50px;
+    --fam-filter-dynamic-input-width: 50px;
+}
+.fam-basicfilter-container {
+    .el-form--inline .el-form-item {
+        display: inline-flex;
+    }
+}
+.fam-form-item-width-label__popper {
+    margin-left: var(--fam-filter-dynamic-margin-left);
+}
+.fam-form-item-width-label.fam-form-item-hide-label .el-form-item__content .el-input .el-input__inner {
+    width: calc(var(--fam-filter-dynamic-label-width) + var(--fam-filter-dynamic-input-width));
+    padding-left: 8px;
+}
+.fam-form-item-width-label.fam-form-item-hide-label .el-input .el-input__prefix > span {
+    display: none;
+}
+
+.fam-form-item-width-label {
+    position: relative;
+    width: fit-content;
+    height: var(--inputHeight);
+    border: 1px solid var(--inputBorderColor);
+    border-radius: 2px;
+}
+.fam-form-item-width-label .el-input__inner,
+.fam-form-item-width-label #ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper {
+    border: none;
+}
+.fam-form-item-width-label:has(.el-input__inner:focus),
+.fam-form-item-width-label:has(.el-range-editor.is-active),
+.fam-form-item-width-label:has(.el-range-editor.is-active:hover),
+.fam-form-item-width-label:hover {
+    border-color: var(--inputBorderColor__focus);
+    color: var(--inputTextColor__focus);
+}
+.fam-form-item-width-label .fam-basicfilter-remove {
+    position: absolute;
+    top: -4px;
+    right: -3px;
+    background: #bfbfbf;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    display: none;
+}
+.fam-form-item-width-label:hover .fam-basicfilter-remove,
+.fam-basicfilter-remove:hover {
+    display: inline-block;
+}
+.fam-basicfilter-remove:hover {
+    background: var(--colorPrimary);
+}
+.fam-basicfilter-remove .scale-config {
+    scale: 0.75;
+}
+.fam-form-item-width-label .el-input .el-input__inner {
+    padding-left: 0;
+    padding-right: 4px;
+    border: none;
+    background: transparent;
+    height: var(--formItemHeight);
+}
+.fam-form-item-width-label .el-select .el-input .el-input__inner {
+    margin-top: 0;
+}
+.fam-form-item-width-label .el-input {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.fam-form-item-width-label .el-input .el-input__prefix {
+    position: static;
+    /* line-height: var(--formItemHeight); */
+}
+.fam-form-item-width-label .el-input .el-input__prefix > span {
+    display: inline-block;
+    width: max-content;
+    color: var(--colorTextNormal);
+    padding: 0 8px;
+}
+.fam-form-item-width-label:has(.el-form-item__content > .el-input) > .el-form-item__label,
+.fam-form-item-width-label:has(.el-form-item__content .el-select > .el-input) > .el-form-item__label {
+    display: none;
+}
+.fam-form-item-width-label:has(.el-form-item__content .el-cascader .el-input) > .el-form-item__label {
+    display: inline-block;
+    color: var(--colorTextNormal);
+}
+.fam-form-item-hide-label:has(.el-form-item__content .el-cascader .el-input) > .el-form-item__label {
+    display: none;
+}
+.fam-form-item-hide-form-label .el-form-item__label {
+    display: none !important;
+}
+.fam-form-item-width-label:has(.el-form-item__content > .el-date-editor--datetime) > .el-form-item__label {
+    display: inline-block;
+}
+.fam-form-item-width-label > .el-form-item__label {
+    padding: 0 8px 0;
+}
+.fam-form-item-width-label > .el-form-item__content {
+    width: max-content !important;
+    border-radius: 2px;
+}
+
+.fam-form-item-width-label .el-select .el-input {
+    line-height: var(--famWidthLabelHeight);
+    height: var(--famWidthLabelHeight);
+}
+.fam-form-item-width-label .el-select .el-input .el-select__caret {
+    line-height: var(--formItemHeight);
+}
+.fam-form-item-width-label
+    #ComponentWapper-famMemberSelect
+    .wapperInput
+    .el-tooltip.searchInputWapper
+    .icon.el-icon-circle-close {
+    position: absolute;
+    right: 20px;
+}
+.fam-form-item-width-label .el-date-editor.el-range-editor.el-input__inner {
+    display: flex;
+    align-items: center;
+    height: var(--formItemHeight);
+    background: transparent;
+    padding-left: 0px;
+    padding-right: 32px;
+}
+.fam-form-item-width-label #ComponentWapper-famMemberSelect .el-input .el-input__inner {
+    width: 162px;
+}
+.fam-form-item-width-label .el-date-editor.el-range-editor.el-input__inner .el-range-input {
+    background: transparent;
+    width: 78px;
+    padding: 0;
+    height: var(--formItemHeight);
+}
+.fam-form-item-width-label .el-date-editor.el-range-editor.el-input__inner .el-input__icon.el-range__icon {
+    right: var(--normalSpace);
+}
+.fam-form-item-width-value,
+.fam-form-item-width-value .el-form-item__content,
+.fam-form-item-width-value #ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper {
+    background: var(--colorHover);
+}
+.fam-form-item-width-value .el-form-item__label,
+.fam-form-item-width-value .el-input .el-input__prefix > span {
+    font-weight: 700;
+    color: var(--colorTextNormal);
+    font-size: var(--fontSize);
+    display: flex;
+}
+.fam-form-item-width-value .el-checkbox:last-of-type {
+    margin-right: var(--normalSpace);
+}
+.fam-form-item-width-label.fam-form-item-disabled {
+    cursor: not-allowed;
+}
+
+.fam-component-width-label__popper.el-select-dropdown .el-select-dropdown__item {
+    width: auto !important;
+    min-width: 100%;
+    max-width: 300px;
+}
+
+.fam-form-item-width-label input::-webkit-outer-spin-button,
+.fam-form-item-width-label input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+}
+.fam-form-item-width-label .el-date-editor--datetimerange.el-input,
+.fam-form-item-width-label .el-date-editor--datetimerange.el-input__inner {
+    width: auto;
+}
+.fam-form-item-width-label .el-date-editor.el-input {
+    width: auto;
+}
+.fam-basicfilter-container .fam-participant-select .wapperInput {
+    border: none !important;
+}

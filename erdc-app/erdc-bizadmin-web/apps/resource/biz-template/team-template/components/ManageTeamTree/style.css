@@ -1,0 +1,56 @@
+#ManageTeamTree {
+  background-color: #fff;
+  width: 100%;
+}
+#ManageTeamTree .ManageTeamTree .list_item {
+  padding-left: 40px;
+  height: 40px;
+  line-height: 40px;
+  color: var(--colorTextNormal);
+  font-size: 14px;
+  font-size: var(--fontSize);
+  cursor: pointer;
+}
+#ManageTeamTree .ManageTeamTree .list_item:hover {
+  background-color: #EBF1FF;
+  color: #6C6FFF;
+}
+#ManageTeamTree .ManageTeamTree .ManageTeamTree-header {
+  margin-bottom: 8px;
+  color: red;
+}
+#ManageTeamTree .ManageTeamTree .ManageTeamTree-header .ManageTeamTree-search {
+  justify-content: space-between;
+}
+#ManageTeamTree .ManageTeamTree .ManageTeamTree-header .ManageTeamTree-title {
+  padding: 8px 0;
+  font-size: var(--fontSizeLarge);
+  color: var(--colorTextNormal);
+  font-weight: 700;
+}
+#ManageTeamTree .ManageTeamTree .ManageTeamTree-header .operation {
+  margin: 12px 0;
+}
+#ManageTeamTree .ManageTeamTree .el-button {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#ManageTeamTree .ManageTeamTree .el-tree-node__content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+#ManageTeamTree .ManageTeamTree .el-tree-node__content .tree-content {
+  display: inline-block;
+  width: calc(100% - 25px);
+  position: relative;
+}
+#ManageTeamTree .ManageTeamTree .el-tree-node__content .tree-content .tree-operation {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

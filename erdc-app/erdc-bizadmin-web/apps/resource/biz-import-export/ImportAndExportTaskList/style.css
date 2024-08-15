@@ -1,0 +1,37 @@
+.toolbar-search-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.toolbar-search-component .el-select {
+  width: 150px;
+}
+
+.error-dialog-main-content .dialog-error-icon {
+  font-size: 28px;
+  color: red;
+}
+.error-dialog-main-content .dialog-error-title-content {
+  color: var(--colorTextNormal);
+  font-weight: bolder;
+  padding-left: 8px;
+  font-size: var(--fontSizeLarge);
+}
+.error-dialog-main-content .dialog-error-title {
+  align-items: center;
+  padding-top: 4px;
+  padding-bottom: 12px;
+}
+.error-dialog-main-content .dialog-error-content {
+  padding: 12px;
+  background-color: #f1f1f1;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  line-height: 22px;
+}
+
+.import-export-error-dialog .el-dialog__footer {
+  border-top: none;
+  padding: 4px 16px 20px 16px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,21 @@
+<div
+    id="AddOrganizationRole"
+    class="add-organization-role"
+>
+    <div class="header-container">
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form.sync="formData"
+            :data="formConfigs">
+            <template #participantValComponent> 
+                <FamParticipantSelect
+                    width="100%"
+                    v-model="participantVal"
+                    :disableIds="oldParticipantIds"
+                    :query-params="queryParams"
+                    v-bind="$attrs"
+                ></FamParticipantSelect>
+            </template>
+        </FamDynamicForm>
+    </div>
+</div>

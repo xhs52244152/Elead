@@ -1,0 +1,88 @@
+<div id="fam-type-group">
+    <div class="type-search">
+        <erd-input
+            :placeholder="i18nMappingObj.enter"
+            class="fam-type-tree__search"
+            @input="search"
+            v-model="searchValue"
+            suffix-icon="erd-iconfont erd-icon-search"
+            clearable
+        ></erd-input>
+        <erd-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="onCreate"
+            >{{ i18nMappingObj.create }}</erd-button
+        >
+    </div>
+    <div class="group-table">
+        <erd-table
+            border
+            show-overflow
+            :height="maxHeight"
+            :column="columns"
+            :data="viewData"
+            ref="erdTable"
+        >
+            <template #column:default:oper="{data}">
+                <erd-button
+                    v-if="!data.row?.isExtends"
+                    type="text"
+                    :key="`${data.row.oid}_edit`"
+                    @click="onEdit(data)"
+                >
+                    {{ i18nMappingObj.edit }}
+                </erd-button>
+                <erd-button
+                    v-if="!data.row?.isExtends"
+                    :key="`${data.row.oid}_delete`"
+                    type="text"
+                    @click="onDelete(data)"
+                >
+                    {{ i18nMappingObj.remove }}
+                </erd-button>
+                <erd-button
+                    v-if="data.row?.isExtends"
+                    :key="`${data.row.oid}_copy`"
+                    type="text"
+                    :disabled="data.row?.isShare"
+                    @click="onCopy(data)"
+                >
+                    {{ i18nMappingObj.copyType }}
+                </erd-button>
+            </template>
+            <template #column:default:icon="{data}">
+                <fam-icon
+                    :value="getIconObj(data.row).value"
+                    :tooltipContent="getIconObj(data.row).tooltip"
+                    class="font-18"
+                ></fam-icon>
+            </template>
+            <template #column:default:displayName="{data}">
+                <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="data.row?.displayName"
+                    placement="top"
+                >
+                    <erd-button
+                        type="text"
+                        @click="onDetail(data)"
+                    >
+                        {{data.row?.displayName}}
+                    </erd-button>
+                </erd-tooltip>
+            </template>
+        </erd-table>
+    </div>
+    <type-attr-group-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="title"
+        :oid="oid"
+        :openType="openType"
+        :rowData="rowData"
+        @onsubmit="onSubmit"
+    >
+    </type-attr-group-config>
+</div>

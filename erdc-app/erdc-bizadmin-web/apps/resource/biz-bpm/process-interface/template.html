@@ -1,0 +1,85 @@
+<div
+    id="bpm-interface-content"
+    class="bpm-interface-content h_100p"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        @action-click="actionClick"
+        @handler-data="handlerData"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="actionClick"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+    <!-- 接口详情 -->
+    <erd-ex-dialog
+        size="meduim"
+        :title="interfaceForm.title"
+        :visible.sync="interfaceForm.visible"
+        @close="interfaceForm.oid = ''; interfaceForm.masterRef = ''; interfaceForm.readonly = false;"
+    >
+        <interface-form
+            v-if="interfaceForm.visible"
+            :readonly="interfaceForm.readonly"
+            :oid="interfaceForm.oid"
+            ref="interfaceForm"
+        ></interface-form>
+        <template
+            #footer
+            v-if="!interfaceForm.readonly"
+        >
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="!loading && interfaceCheck()"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'interfaceForm' })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <!-- 关联的流程定义 -->
+    <erd-ex-dialog
+        size="large"
+        :title="associatedProcessDef.title"
+        :visible.sync="associatedProcessDef.visible"
+        @close="associatedProcessDef.masterOId = '', associatedProcessDef.interfaceType = ''"
+    >
+        <associated-process-def
+            v-if="associatedProcessDef.visible"
+            :master-o-id="associatedProcessDef.masterOId"
+            :interface-type="associatedProcessDef.interfaceType"
+            ref="associatedProcessDef"
+        ></associated-process-def>
+    </erd-ex-dialog>
+    <!-- 历史版本 -->
+    <erd-ex-dialog
+        size="large"
+        :title="historicalEdition.title"
+        :visible.sync="historicalEdition.visible"
+        @close="historicalEdition.masterOId = ''"
+    >
+        <historical-edition
+            v-if="historicalEdition.visible"
+            :master-o-id="historicalEdition.masterOId"
+            ref="historicalEdition"
+        ></historical-edition>
+    </erd-ex-dialog>
+    <!-- 导入接口 -->
+    <FamImport
+        v-if="dialogObj.visible"
+        :visible.sync="dialogObj.visible"
+        :is-show-template="false"
+        :class-name="className"
+        accept=".zip"
+        businessName="BusinessInterfaceImport"
+        @submit-success-callback="onImportSuccess"
+    ></FamImport>
+</div>

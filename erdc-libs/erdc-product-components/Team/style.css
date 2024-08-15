@@ -1,0 +1,43 @@
+#fam-team {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+#fam-team .team-search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--largeSpace);
+}
+#fam-team .team-search .fam-team-tree__search {
+  width: 220px;
+  margin-top: 0;
+  vertical-align: middle;
+}
+#fam-team .team-search .refreshBtn {
+  min-width: 32px;
+  padding: 0 8px;
+}
+#fam-team .team-search .team-search-left {
+  display: flex;
+  align-items: center;
+}
+#fam-team .team-search .team-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+#fam-team .team-table {
+  flex-grow: 1;
+}
+#fam-team .team-table .team-responsible {
+  padding: 2px;
+  font-size: 12px;
+  line-height: 30px;
+  color: rgb(255, 187, 150);
+  border: 1px solid rgb(255, 187, 150);
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+/*# sourceMappingURL=style.css.map */

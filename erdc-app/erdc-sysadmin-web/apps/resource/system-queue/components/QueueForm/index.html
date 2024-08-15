@@ -1,0 +1,293 @@
+<div id="QueueForm">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        width="1200px"
+    >
+        <div class="queue-form">
+            <FamDynamicForm
+                ref="dynamicForm"
+                v-loading="loading"
+                :form="formData"
+                :data="data"
+                @form-change="formChange"
+            >
+                <!-- 定时信息 -->
+                <template v-slot:timeLabel="scope">
+                    <div class="el-form-item__label fam-dynamic-form__label fam-dynamic-form__label--right">
+                        <span class="fam-dynamic-form__label--required-identifier">*</span>
+                        <erd-tooltip placement="top">
+                            <span slot="content">{{i18nMappingObj.timingInformation}}</span>
+                            <span class="fam-dynamic-form__label--label">{{i18nMappingObj.timingInformation}}</span>
+                        </erd-tooltip>
+                    </div>
+                </template>
+                <template v-slot:timeComponent="scope">
+                    <erd-row style="width: 100%; height: 32px">
+                        <erd-col :span="6">
+                            <custom-select
+                                v-model="scope.data.timeExpressionType"
+                                :row="timeRow"
+                            ></custom-select>
+                        </erd-col>
+                        <erd-col
+                            :span="18"
+                            style="padding-left: 8px"
+                        >
+                            <div class="timeExpression">
+                                <erd-input
+                                    v-model="scope.data.timeExpression"
+                                    :placeholder="i18nMappingObj.pleaseEnter"
+                                    @focus="scope.onFocus"
+                                ></erd-input>
+                                <i
+                                    v-if="scope.data.timeExpressionType === 'CRON'"
+                                    class="erd-iconfont erd-icon-main-server intermation"
+                                    @click.stop="configExpression(scope)"
+                                ></i>
+                            </div>
+                        </erd-col>
+                    </erd-row>
+                </template>
+
+                <!-- 执行配置 -->
+                <template v-slot:configureLabel="scope">
+                    <div class="el-form-item__label fam-dynamic-form__label fam-dynamic-form__label--right">
+                        <span class="fam-dynamic-form__label--required-identifier">*</span>
+                        <erd-tooltip placement="top">
+                            <span slot="content">{{i18nMappingObj.performConfig}}</span>
+                            <span class="fam-dynamic-form__label--label">{{i18nMappingObj.performConfig}}</span>
+                        </erd-tooltip>
+                    </div>
+                </template>
+                <template v-slot:configureComponent="scope">
+                    <erd-row style="width: 100%; height: 32px">
+                        <erd-col :span="6">
+                            <custom-select
+                                v-model="scope.data.executeType"
+                                :row="executeRow"
+                            ></custom-select>
+                        </erd-col>
+                        <erd-col
+                            :span="18"
+                            style="padding-left: 8px"
+                        >
+                            <erd-input
+                                v-model="scope.data.processorInfo"
+                                :placeholder="i18nMappingObj.pleaseEnter"
+                                @focus="scope.onFocus"
+                            ></erd-input>
+                        </erd-col>
+                    </erd-row>
+                </template>
+
+                <!-- 运行时配置 -->
+                <template v-slot:runtimeComponent="scope">
+                    <erd-row class="componentRow">
+                        <erd-col :span="4">
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.largestTask"
+                            >
+                                <div class="col-label">{{i18nMappingObj.largestTask}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.maxInstanceNum"
+                                @input="(data)=>(onInput(data, 'maxInstanceNum'))"
+                            ></erd-input>
+                        </erd-col>
+                        <erd-col
+                            :span="4"
+                            style="padding-left: 8px"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.singleConcurrency"
+                            >
+                                <div class="col-label">{{i18nMappingObj.singleConcurrency}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.concurrency"
+                                @input="(data)=>(onInput(data, 'concurrency'))"
+                            ></erd-input>
+                        </erd-col>
+                        <erd-col
+                            :span="4"
+                            style="padding-left: 8px"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.runTimeLimit"
+                            >
+                                <div class="col-label">{{i18nMappingObj.runTimeLimit}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.instanceTimeLimit"
+                                @input="(data)=>(onInput(data, 'instanceTimeLimit'))"
+                            ></erd-input>
+                        </erd-col>
+                    </erd-row>
+                </template>
+
+                <!-- 重试配置 -->
+                <template v-slot:retryComponent="scope">
+                    <erd-row class="componentRow">
+                        <erd-col :span="4">
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.instanceRetryCount"
+                            >
+                                <div class="col-label">{{i18nMappingObj.instanceRetryCount}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="12">
+                            <erd-input
+                                v-model="scope.data.instanceRetryNum"
+                                @input="(data)=>(onInput(data, 'instanceRetryNum'))"
+                            ></erd-input>
+                        </erd-col>
+                        <erd-col
+                            style="padding-left: 8px"
+                            :span="4"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.taskRetryCount"
+                            >
+                                <div class="col-label">{{i18nMappingObj.taskRetryCount}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.taskRetryNum"
+                                @input="(data)=>(onInput(data, 'taskRetryNum'))"
+                            ></erd-input>
+                        </erd-col>
+                    </erd-row>
+                </template>
+
+                <!-- 机械配置 -->
+                <template v-slot:layuotComponent="scope">
+                    <erd-row class="componentRow">
+                        <erd-col
+                            :span="4"
+                            class="flex"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.minimumCPU"
+                            >
+                                <div class="col-label">{{i18nMappingObj.minimumCPU}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.minCpuCores"
+                                @input="(data)=>(onInput(data, 'minCpuCores'))"
+                            ></erd-input>
+                        </erd-col>
+                        <erd-col
+                            :span="4"
+                            style="padding-left: 8px"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.minMemory"
+                            >
+                                <div class="col-label">{{i18nMappingObj.minMemory}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.minMemorySpace"
+                                @input="(data)=>(onInput(data, 'minMemorySpace'))"
+                            ></erd-input>
+                        </erd-col>
+                        <erd-col
+                            :span="4"
+                            style="padding-left: 8px"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.minDiskSpace"
+                            >
+                                <div class="col-label">{{i18nMappingObj.minDiskSpace}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.minDiskSpace"
+                                @input="(data)=>(onInput(data, 'minDiskSpace'))"
+                            ></erd-input>
+                        </erd-col>
+                    </erd-row>
+                </template>
+
+                <!-- 集体配置 -->
+                <template v-slot:clusterComponent="scope">
+                    <erd-row class="componentRow">
+                        <erd-col
+                            :span="4"
+                            class="flex"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.performMachineAddress"
+                            >
+                                <div class="col-label">{{i18nMappingObj.performMachineAddress}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="12">
+                            <erd-input
+                                v-model="scope.data.designatedWorkers"
+                                :placeholder="i18nMappingObj.performMachineAddressTip"
+                            ></erd-input>
+                        </erd-col>
+                        <erd-col
+                            style="padding-left: 8px"
+                            :span="4"
+                        >
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18nMappingObj.maxMachineNumber"
+                            >
+                                <div class="col-label">{{i18nMappingObj.maxMachineNumber}}</div>
+                            </erd-tooltip>
+                        </erd-col>
+                        <erd-col :span="4">
+                            <erd-input
+                                v-model="scope.data.maxWorkerCount"
+                                @input="(data)=>(onInput(data, 'maxWorkerCount'))"
+                            ></erd-input>
+                        </erd-col>
+                    </erd-row>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <!-- <erd-button type="primary" @click="onSubmit">编辑</erd-button> -->
+            <erd-button
+                type="primary"
+                :loading="btnLoading"
+                @click="onSubmit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancle">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+
+    <cron-config
+        :visible.sync="configVisible"
+        @onsubmit="configSubmit"
+    >
+    </cron-config>
+</div>

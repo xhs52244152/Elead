@@ -1,0 +1,11 @@
+<div class="bpm-process-basic-info-content">
+    <FamAdvancedForm
+        ref="form"
+        :model.sync="form"
+        :formId="formId"
+        :className="className"
+        :schemaMapper="schemaMapper"
+        :queryLayoutParams="queryLayoutParams"
+        @layout-attribute="getLayoutAttribute"
+    ></FamAdvancedForm>
+</div>

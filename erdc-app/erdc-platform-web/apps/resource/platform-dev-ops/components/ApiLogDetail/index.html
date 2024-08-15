@@ -1,0 +1,17 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.apiLog"
+    :destroy-on-close="true"
+    :visible="showDialog"
+    width="1200px"
+    @close="closeDialog"
+>
+    <FamDynamicForm
+        :form.sync="currentRow"
+        :data="formConfig"
+        readonly
+    >
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button @click="closeDialog"> {{ i18n.cancel }} </erd-button>
+    </template>
+</erd-ex-dialog>

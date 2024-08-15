@@ -1,0 +1,15 @@
+<component
+    v-if="component"
+    ref="businessObject"
+    :is="component"
+    :activity-id="activityId"
+    :custom-form-data="customFormData"
+    :process-infos="processInfos"
+    :task-infos="taskInfos"
+    :draft-infos="draftInfos"
+    :process-step="processStep"
+    :basicInfos.sync="innerBaseInfo"
+    :pbo-data="pboData"
+    :readonly="readonly"
+    @partial-security="getPartialSecurity"
+></component>

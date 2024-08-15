@@ -1,0 +1,43 @@
+<!-- 任务创建弹框 -->
+<erd-ex-dialog
+    :title="i18nMappingObj.createTask"
+    :visible.sync="visible"
+    width="1200px"
+>
+    <erd-contraction-panel
+        :unfold.sync="baseInfoUnfold"
+        :title="i18nMappingObj.type"
+    >
+        <template #content>
+            <FamDynamicForm
+                :form="formData"
+                :data="formConfigs"
+                class="file-form"
+            >
+                <template #fileType>
+                    <erd-select v-model="formData.fileType" class="grow-1">
+                        <erd-option
+                            v-for="option in options"
+                            :key="option.value"
+                            :label="option.label"
+                            :value="option.value"
+                        ></erd-option>
+                    </erd-select>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <component
+        v-if="visible"
+        ref="task"
+        :is="formData.fileType"
+    ></component>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

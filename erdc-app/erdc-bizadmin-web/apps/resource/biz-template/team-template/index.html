@@ -1,0 +1,25 @@
+<div
+    id="fam_team_template"
+    class="h-100p position-relative"
+>
+    <resizable-container>
+        <template slot="left">
+            <div class="team-template-container h-100p">
+                <manage-team-tree
+                    ref="ManageTeamTree"
+                    @onsubmit="onSubmit"
+                >
+                </manage-team-tree>
+            </div>
+        </template>
+        <template slot="right">
+            <manage-team-form
+                ref="ManageTeamForm"
+                :data="data"
+                @onsubmit="onSubmit"
+                @onrefresh="onRefresh"
+            >
+            </manage-team-form>
+        </template>
+    </resizable-container>
+</div>

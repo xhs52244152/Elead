@@ -1,0 +1,62 @@
+<div
+    id="FolderList"
+>
+    <resizable-container
+        v-show="!isSetting"
+    >
+        <template v-slot:left>
+            <div class="h-100p" style="background-color: #FFFFFF">
+                <template v-for="item in tabList">
+                    <component
+                        :is="activeTab.left"
+                        v-if="activeTab.left === item.left"
+                        :ref="item.left"
+                        :container-ref="containerRef"
+                        :toolbar-operation-type="toolbarOperationType"
+                        :row-operation-type="rowOperationType"
+                        :currentFolder="currentFolder"
+                        v-bind="$attrs"
+                        v-on="$listeners"
+                        @node-folder-click="(data)=>(onCheck(data, item.right))"
+                        @refresh-table="refreshTable"
+                    >
+                        <template
+                            v-for="(slot, slotName) in $scopedSlots"
+                            v-slot:[slotName]="slotProps"
+                        >
+                            <slot :name="slotName" v-bind="slotProps"></slot>
+                        </template>
+                    </component>
+                </template>
+            </div>
+        </template>
+        <template v-slot:right>
+            <template v-for="item in tabList">
+                <component
+                    :is="activeTab.right"
+                    v-if="activeTab.right === item.right"
+                    :ref="item.right"
+                    :container-ref="containerRef"
+                    :folderObject="currentFolder"
+                    :bread-label="breadLabel"
+                    :toolbar-operation-type="toolbarOperationType"
+                    :row-operation-type="rowOperationType"
+                    :vm="vm"
+                    :slots-field="slotsField"
+                    v-on="$listeners"
+                    v-bind="$attrs"
+                    @onsubmit="(data)=>(onSubmit(data, item.left))"
+                    @switch-folder="onCheck"
+                    @refresh-tree="(data, methodName)=>(refreshTree(data, methodName, item.left))"
+                >
+                    <template
+                        v-for="(slot, slotName) in $scopedSlots"
+                        v-slot:[slotName]="slotProps"
+                    >
+                        <slot :name="slotName" v-bind="slotProps"></slot>
+                    </template>
+                </component>
+            </template>
+        </template>
+    </resizable-container>
+</div>

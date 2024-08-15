@@ -1,0 +1,72 @@
+<vue-draggable
+    v-model="widgets"
+    tag="erd-row"
+    ref="draggable"
+    class="fam-form-view__content h-100p"
+    group="dragGroup"
+    :component-props="{ gutter: 12, type: 'flex' }"
+    ghost-class="ghost"
+    :animation="120"
+    :delay="0"
+    direction="horizontal"
+    :disabled="readonly"
+    @add="onDragAdd"
+    @end="handleDragEnd"
+>
+    <erd-col
+        v-for="(widget, index) in widgets"
+        :key="widget.id"
+        class="fam-form-view__list-col ptb-sm"
+        :span="widget.block ? 24 : widget.schema.col"
+    >
+        <FormWidget
+            :class="{
+                'fam-form-view__widget': true,
+                'fam-form-view__widget--block': widget.block,
+                'fam-form-view__widget--resizing': resizeData.resizing === widget,
+                'fam-form-view__widget--selected': selected && selected.id === widget.id
+            }"
+            :form="form"
+            :widget="widget"
+            :designer="designer"
+            :readonly="readonly"
+            :form-readonly="formReadonly"
+            :readonly-component="readonlyComponent"
+            :scope="scope"
+            v-bind="scope"
+            :disable-validate="!!designer"
+            :prevent-loading="!!designer"
+            :lastLineChildClass="lastLineChildClass"
+            :is-designer-form="isDesignerForm"
+            @select-widget="setSelected"
+            @container-mousemove="onContainerMouseMove"
+            v-on="$listeners"
+        >
+            <template v-slot:widget-prepend>
+                <span v-show="!readonly">
+                    <erd-icon
+                        class="fam-form-view__drag-handler"
+                        icon="double-drag"
+                    ></erd-icon>
+                </span>
+            </template>
+
+            <template v-slot:widget-append>
+                <span
+                    v-if="!readonly"
+                    @click.stop="removeWidget(index)"
+                >
+                    <erd-icon
+                        class="fam-form-view__close"
+                        icon="el-icon-close"
+                    ></erd-icon>
+                </span>
+                <div
+                    v-if="!widget.block"
+                    class="fam-form-view__widget-resize"
+                    @mousedown.stop.prevent="onResizeMouseDown(widget, $event)"
+                ></div>
+            </template>
+        </FormWidget>
+    </erd-col>
+</vue-draggable>

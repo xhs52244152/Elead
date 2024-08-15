@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-calendar",
+  "version": "3.1.0",
+  "description": "日历",
+  "erdcData": {},
+  "appId": "plat"
+}

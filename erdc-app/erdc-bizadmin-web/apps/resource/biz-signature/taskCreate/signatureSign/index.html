@@ -1,0 +1,167 @@
+<div class="signature-signature-task">
+    <FamDynamicForm
+        ref="layoutForm"
+        :form="formData"
+        :data="formConfigs"
+    >
+        <template #file-slot="scope">
+            <fam-upload
+                :limit="1"
+                :accept="acceptType"
+                :auto-upload="true"
+                :on-success="onFileUploadSuccess"
+                :on-remove="resetFileData"
+                :on-exceed="handleExceed"
+                :headers="defaultHeaders"
+                :before-upload="onBeforeUpload"
+                :file-list="fileList"
+                :multiple="false"
+            >
+            </fam-upload>
+        </template>
+
+        <template #tmpl-slot="scope">
+            <erd-select
+                v-model="formData.docCode"
+                filterable
+                clearable
+                class="grow-1"
+                @change="changeTemp"
+                @clear="changeTemp"
+            >
+                <erd-option
+                    v-for="item in signatureTmplOptions"
+                    :key="item.oid"
+                    :label="item.name"
+                    :value="item.identifierNo"
+                >
+                </erd-option>
+            </erd-select>
+        </template>
+        <template #version-slot="scope">
+            <erd-select
+                v-model="formData.branchId"
+                filterable
+                clearable
+                class="grow-1"
+                @change="changeVersion"
+                @clear="changeVersion"
+            >
+                <erd-option
+                    v-for="item in signatureTmplVersionsOptions"
+                    :key="item['iterationInfo.branchId']"
+                    :label="item.version"
+                    :value="item['iterationInfo.branchId']"
+                >
+                </erd-option>
+            </erd-select>
+        </template>
+
+        <template #watermark-slot="scope">
+            <div class="flex grow-1">
+                <erd-select
+                    class="grow-1"
+                    v-model="formData.watermark"
+                    filterable
+                    clearable
+                    remote
+                    :remote-method="queryWatermark"
+                    v-el-select-selectLazy="selectLazy"
+                >
+                    <erd-option
+                        v-for="item in watermarkOptions"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code"
+                    >
+                    </erd-option>
+                    <erd-option
+                        v-if="!isDefaultValueInOptions"
+                        :class="{none: !isDefaultValueInOptions}"
+                        :label="watermarkForm.name"
+                        :value="watermarkForm.code"
+                        :key="watermarkForm.code"
+                    ></erd-option>
+                </erd-select>
+                <erd-button
+                    :disabled="!formData.watermark"
+                    class="ml-8"
+                    @click="previewWatermark(formData.watermark)"
+                    >{{i18nMappingObj.view}}</erd-button
+                >
+            </div>
+        </template>
+        <template #param-slot="scope">
+            <FamErdTable
+                height="300"
+                min-height="200"
+                class="w-100p"
+                :data="pointsData"
+                :column="pointsColumns"
+            >
+                <template
+                    slot="column:default:type"
+                    slot-scope="scope"
+                >
+                    <span>{{i18nMappingObj[contentTypeMap[scope.data.row.contentType].lang]}}</span>
+                </template>
+                <template
+                    slot="column:default:value"
+                    slot-scope="scope"
+                >
+                    <erd-input
+                        v-if="scope.data.row.contentType === CONST.contentTypes.text"
+                        v-model="scope.data.row.value"
+                    ></erd-input>
+                    <erd-upload
+                        v-else-if="scope.data.row.contentType === CONST.contentTypes.signature_picture"
+                        action="/file/file/site/storage/v1/upload"
+                        :headers="defaultHeaders"
+                        ref="uploadImg"
+                        accept=".jpg,.jpeg,.png,.tif"
+                        :limit="1"
+                        :on-success="handlePositionImgUploadSuccess(scope.data.row)"
+                        :on-remove="handlePositionImgUploadRemove(scope.data.row)"
+                    >
+                        <erd-button
+                            size="small"
+                            type="primary"
+                        >
+                            {{i18nMappingObj.signature_sign_upload_img}}
+                        </erd-button>
+                    </erd-upload>
+
+                    <erd-select
+                        v-else-if="scope.data.row.contentType === CONST.contentTypes.signature_system"
+                        v-model="scope.data.row.value"
+                    >
+                        <erd-option
+                            v-for="st in systemSignatureOptions"
+                            :key="st.code"
+                            :label="st.name"
+                            :value="st.code"
+                        >
+                        </erd-option>
+                    </erd-select>
+                    <fam-member-select
+                        v-else-if="scope.data.row.contentType === CONST.contentTypes.signature_personal"
+                        :multiple="false"
+                        v-model="scope.data.row.value"
+                    ></fam-member-select>
+                </template>
+            </FamErdTable>
+        </template>
+        <template #position-param-slot="scope">
+            <erd-input
+                type="textarea"
+                disabled
+                :rows="10"
+                :value="JSON.stringify(filledMap, null, 2)"
+            ></erd-input>
+        </template>
+    </FamDynamicForm>
+
+    <!-- 参数配置弹框 -->
+    <FormatParams ref="paramsDiolog" @save-params="saveParams"></FormatParams>
+</div>
+

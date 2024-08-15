@@ -1,0 +1,183 @@
+<div class="dubbo-doc doc-common">
+    <doc-header
+        :doc="currentInstance"
+        :versionArr="versionArr"
+        :selectedVersion="curVersion"
+        @download="download"
+        @versionChange="handleVersionChange"
+        @versionCompare="handleCompare"
+    >
+    </doc-header>
+
+    <div
+        class="doc-common-content"
+        v-if=" curVersion && !noData"
+    >
+        <div
+            id="offlineMarkdownShow"
+            class="content-document api-common"
+        >
+            <erd-scrollbar class="api-common-scrollbar">
+                <div class="base-info">
+                    <p>
+                        <span class="label">描述</span>
+                        {{ currentInstance.description }}
+                    </p>
+                    <p>
+                        <span class="label">发布时间</span>
+                        {{ currentInstance.createTime }}
+                    </p>
+                </div>
+
+                <div
+                    v-for="(tag, tagIdx) in currentInstance.tags"
+                    :key="`tag_${tagIdx}`"
+                >
+                    <s v-if="tag.deprecated">
+                        <h1>{{ tag.name }}</h1>
+                    </s>
+                    <h1 v-else>{{ tag.name }}</h1>
+
+                    <div
+                        class="info-item"
+                        v-if="tag.className"
+                    >
+                        全类名: {{ tag.className }}
+                    </div>
+                    <div
+                        class="info-item"
+                        v-if="tag.description"
+                    >
+                        类功能描述: {{ tag.description }}
+                    </div>
+
+                    <div
+                        v-for="(path, pathIdx) in tag.children"
+                        :key="`path_${pathIdx}`"
+                        class="info-block"
+                    >
+                        <s v-if="path.deprecated">
+                            <h2>{{ path.name }}</h2>
+                        </s>
+                        <h2 v-else>{{ path.name }}</h2>
+
+                        <div v-if="path.methodName && path.description">
+                            <p>方法说明：</p>
+                            <table class="table border-table">
+                                <thead>
+                                    <tr>
+                                        <th>方法名称</th>
+                                        <th>方法功能描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{path.methodName}}</td>
+                                        <td>{{path.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div
+                            class="info-item"
+                            v-else-if="path.methodName"
+                        >
+                            方法名称: {{ path.methodName }}
+                        </div>
+                        <div
+                            class="info-item"
+                            v-else-if="path.description"
+                        >
+                            方法功能描述: {{ path.description }}
+                        </div>
+
+                        <p>参数列表：</p>
+                        <table
+                            v-if="path.parameters && path.parameters.length"
+                            class="table border-table"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>参数名称</th>
+                                    <th>参数说明</th>
+                                    <th>数据类型</th>
+                                    <th>schema</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(param, paramIdx) in path.parameters"
+                                    :key="`param_${pathIdx}_${paramIdx}`"
+                                >
+                                    <td>{{param.name}}</td>
+                                    <td>{{param.description}}</td>
+                                    <td>{{param.type}}</td>
+                                    <td>{{param.schemaValue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-else>暂无</p>
+
+                        <p v-if="path.resultDesc">响应: <code>{{ path.resultDesc }}</code></p>
+                    </div>
+                </div>
+
+                <h1>模型列表</h1>
+                <div
+                    v-for="(ref, refIdx) in currentInstance.difArrs"
+                    :key="`ref_${refIdx}`"
+                >
+                    <div v-if="Array.isArray(ref.properties) && ref.properties.length">
+                        <h2 style="color: rgb(112, 128, 144)">{{ref.name}}</h2>
+                        <table class="table border-table">
+                            <thead>
+                                <tr>
+                                    <th>参数名称</th>
+                                    <th>参数说明</th>
+                                    <th>校验</th>
+                                    <th>是否必须</th>
+                                    <th>数据类型</th>
+                                    <th>schema</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(rp, rpIdx) in ref.properties"
+                                    :key="`rp_${refIdx}_${rpIdx}`"
+                                >
+                                    <td>{{rp.name}}</td>
+                                    <td>{{rp.description}}</td>
+                                    <td>{{rp.validations }}</td>
+                                    <td>{{rp.required}}</td>
+                                    <td>{{rp.type}}</td>
+                                    <td>{{rp.schemaValue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </erd-scrollbar>
+        </div>
+
+        <div class="content-catelog">
+            <doc-catlog
+                :catelog="catelog"
+                @menuClick="menuClick"
+            ></doc-catlog>
+        </div>
+    </div>
+
+    <div
+        class="doc-common-nodata"
+        v-else
+    >
+        <span>暂无数据</span>
+    </div>
+
+    <!-- 版本对比 -->
+    <version-compare-select
+        ref="compareRef"
+        :list="versionList"
+        :currentId="currentId"
+    ></version-compare-select>
+</div>

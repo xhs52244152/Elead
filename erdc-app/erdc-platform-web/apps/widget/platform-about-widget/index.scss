@@ -1,0 +1,16 @@
+.help-popover {
+    min-width: 0 !important;
+
+    .erd-pulldown-menu-item__item {
+        min-width: 0 !important;
+    }
+}
+
+.about-popover {
+    height: calc(100% - 43px) !important;
+    width: 536px;
+}
+
+.border-line {
+    border-bottom: 2px dashed var(--colorSplit);
+}

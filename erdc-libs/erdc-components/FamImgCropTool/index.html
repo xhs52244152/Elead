@@ -1,0 +1,72 @@
+<div class="fam-img-crop-tool" :class="{'fullscreen' : fullscreen}">
+    <div
+        class="fam-img-crop-tool_canvas fam-img-crop-tool_move"
+        ref="canvas"
+    >
+        <div class="img-container"></div>
+        <slot name="extend"></slot>
+    </div>
+
+    <div class="fam-img-crop-tool_tools">
+        <slot name="tools">
+            <erd-button-group>
+                <erd-button
+                    v-for="tool of tools"
+                    :type="activeTool === tool.code ? 'primary' : ''"
+                    :key="tool.code"
+                    :icon="tool.icon"
+                    @click="onActiveTool(tool.code, tool)"
+                    >{{tool.name}}</erd-button
+                >
+            </erd-button-group>
+        </slot>
+    </div>
+
+    <erd-popover
+        :title="toolTitle"
+        :width="toolWidth"
+        popper-class="fam-img-crop-tool_popover"
+        trigger="manual"
+        @hide="cancel"
+        v-model="visibleForTool"
+    >
+        <div
+            slot="reference"
+            class="img-crop-popoverPlaceholder"
+            ref="popoverPlaceholder"
+        ></div>
+        <slot name="toolbar">
+            <div class="flex justify-center align-items-center p-8">
+                <slot name="toolbarLeft"></slot>
+                <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    content="保存"
+                    placement="top"
+                >
+                    <erd-button
+                        class="fam-img-crop-tool_btn"
+                        @click.stop="submit"
+                        type="icon"
+                        icon="el-icon-check"
+                    ></erd-button>
+                </erd-tooltip>
+                <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    content="取消"
+                    placement="top"
+                >
+                    <erd-button
+                        class="fam-img-crop-tool_btn"
+                        @click.stop="hideTool"
+                        type="icon"
+                        icon="el-icon-close"
+                        style="color: red"
+                    ></erd-button>
+                </erd-tooltip>
+                <slot name="toolbarRight"></slot>
+            </div>
+        </slot>
+    </erd-popover>
+</div>

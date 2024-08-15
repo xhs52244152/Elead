@@ -1,0 +1,23 @@
+$padding: 12px 16px;
+$paddingBase: 8px;
+$padding12: 12px;
+$margin12: 12px;
+$border: 1px solid var(--colorBorder);
+.dimission-handover{
+    .dimission-member-body{
+        margin-bottom: $margin12;
+    }
+    .cursor-pointer{
+        cursor: pointer;
+    }
+    .left-main-container{
+        border-bottom: $border;
+        padding: $padding;
+    }
+    .fontWeight{
+        opacity: 0.7;
+        font-size: 16px;
+        color: #000000;
+        font-weight: bold;
+    }
+}

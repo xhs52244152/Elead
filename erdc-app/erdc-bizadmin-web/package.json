@@ -1,0 +1,20 @@
+{
+  "name": "@erdc-app/erdc-bizadmin-web",
+  "description": "业务管理",
+  "i18n": {
+    "zh_cn": "业务管理",
+    "en_us": "business management"
+  },
+  "version": "3.1.0",
+  "scripts": {
+    "serve": "npx erdc-cli serve --proxy http://192.168.11.165/",
+    "pack": "npx erdc-cli pack --pack false --license",
+    "clean": "npx erdc-cli clean",
+    "build": "npx erdc-cli build --groupedDest"
+  },
+  "erdcData": {},
+  "appId": "plat",
+  "devDependencies": {
+    "erdc-cli": "workspace:*"
+  }
+}

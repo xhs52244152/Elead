@@ -1,0 +1,25 @@
+<div class="left-container h-100p">
+    <configTree
+        ref="configTree"
+        :title="i18n.optionalModel"
+        :treeList="treeList"
+        :treeConfig="{
+            showCheckbox: true,
+        }"
+    >
+        <template v-slot:applicationSelect="scope">
+            <erd-select
+                v-model="applicationOid"
+                :placeholder="i18n.pleaseSelect"
+                clearable
+            >
+                <erd-option
+                    v-for="item in applicationList"
+                    :key="item.oid"
+                    :label="item.displayName"
+                    :value="item.oid"
+                ></erd-option>
+            </erd-select>
+        </template>
+    </configTree>
+</div>

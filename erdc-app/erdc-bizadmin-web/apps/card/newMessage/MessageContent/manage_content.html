@@ -1,0 +1,16 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    title="消息详情"
+>
+    <div class="msg_content">
+        <h1 class="msg_title">{{msgTitle}}</h1>
+        <p class="sub_title">
+            <span>{{userName}}</span><span>{{sub_name+notify_name}}</span><span>{{updateTime}}</span>
+        </p>
+        <el-divider></el-divider>
+        <p
+            v-html="content"
+            class="msg_detail_content"
+        ></p>
+    </div>
+</erd-ex-dialog>

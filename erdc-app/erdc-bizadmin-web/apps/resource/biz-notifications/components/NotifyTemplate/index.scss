@@ -1,0 +1,57 @@
+.system-notify_tmpl_list {
+    .return-content{
+        margin-left: 4px;
+    }
+    .w_100p {
+        width: 100%;
+    }
+    .operation {
+        margin-top:16px;
+        justify-content: space-between;
+    }
+    .system-notify_status{
+        cursor: pointer;
+    }
+    .main{
+        margin-top: 16px;
+    }
+    .system-notify_tmpl_search {
+        display: flex;
+        align-items: center;
+        .system-notify_tmpl_search_item {
+            display: flex;
+            align-items: center;
+            & + .system-notify_tmpl_search_item{
+                margin-left: 16px;
+            }
+            .table_select_title {
+                font-size: 14px;
+                font-size: var(--fontSize);
+                padding-right: 4px;
+            }
+        }
+    }
+
+    .system-notify_line-style {
+        width: 1px;
+        height: 16px;
+        background: #d9d9d9;
+        margin: 0 16px;
+    }
+    .system-notify_title{
+        font-size: 16px;
+        color: #333333;
+        font-weight: bolder;
+        line-height: 16px;
+    }
+
+}
+.system-notify_tmpl_form_param {
+    width: 100%;
+    min-height: 300px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+}
+.system-notify_tmpl__params textarea{
+    height: 388px;
+}

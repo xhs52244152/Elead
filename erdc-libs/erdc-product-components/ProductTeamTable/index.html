@@ -1,0 +1,94 @@
+<div
+    id="OrganizationRoleTable"
+    class="product-role-table"
+    v-loading="loading"
+>
+    <fam-erd-table
+        v-if="tableVisible"
+        ref="ProRoleTable"
+        :column-config="{ resizable: true }"
+        v-bind="tableConfig"
+        :data="tableData"
+        height="100%"
+        @checkbox-change="changeCheck"
+        @checkbox-all="changeCheck"
+    >
+        <template #column:default:principalTarget="{data}">
+            <span> {{ data.row?.principalTarget | filterType(filterType)}} </span>
+        </template>
+        <!--自定义模板 default[自定义内容] 命名规则: column:slotType:prop-->
+        <template #column:default:operation="{data}">
+            <!-- 合并为更多按钮 -->
+            <fam-action-pulldown
+                :action-config="getActionConfig(data.row)"
+                :action-data="data.row"
+                :args="[vm, data.row]"
+                :button-slots="['ContainerTeam_SETLEVEL']"
+                is-operation
+            >
+                <template :slot="'ContainerTeam_SETLEVEL'">
+                    <ul>
+                        <li
+                            class="flex justify-between"
+                            v-for="level in levelDict"
+                            @click="setLevel(level, data.row)"
+                        >
+                            {{level.displayName}}
+                            <span v-if="data.row.roleLevel === level.identifierNo">
+                                <i class="el-icon-check color-primary"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </template>
+            </fam-action-pulldown>
+        </template>
+        <template #column:default:principalName="{data}">
+            <span :class="{'text-bold': data.row?.children.length > 0}">{{ data.row.principalName }}</span>
+            <erd-tag
+                v-if="data.row.primarily"
+                class="m-4"
+                type="warning"
+                size="mini"
+            >
+                {{i18n.responsible}}
+            </erd-tag>
+            <erd-tag
+                v-if="data.row.roleLevel && data.row.roleLevel !== 'NORMAL'"
+                class="m-4 font-normal"
+                type="success"
+                size="mini"
+            >
+                {{roleLevelName(data.row.roleLevel)}}
+            </erd-tag>
+        </template>
+    </fam-erd-table>
+    <!-- 产品 -> 团队 增加成员 -->
+    <open-create-team
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        type="addMember"
+        :team-oid="teamOid"
+        :role-refer="roleRef"
+        :query-params="queryParams"
+        :title="dialogTitle"
+        :current-row="currentRow"
+        :current-role-data="currentRole"
+        :path-to-current-role="pathToCurrentRole"
+        :class-name="className"
+        :customSubmit="isReplacement ? submitMemberReplacement : null"
+        :is-replacement="isReplacement"
+        :show-participant-type="showParticipantType"
+        :app-name="appName"
+        @onsubmit="onSubmit"
+    >
+    </open-create-team>
+    <!-- 查看成员 -->
+    <view-users
+        v-if="showViewUsersDialog"
+        :title="i18nMappingObj.viewUsers"
+        :visible.sync="showViewUsersDialog"
+        :query-params="queryParams"
+        :current-row="currentRow"
+    >
+    </view-users>
+</div>

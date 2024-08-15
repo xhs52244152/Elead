@@ -1,0 +1,100 @@
+#fam-lock-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+#fam-lock-screen .lock-screen-content {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: 300px;
+}
+#fam-lock-screen .lock-screen-content .user-profile {
+  margin-bottom: 16px;
+  width: 100px;
+  height: 100px;
+}
+#fam-lock-screen .lock-screen-content .user-profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+#fam-lock-screen .lock-screen-content .user-name {
+  margin-bottom: 46px;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+#fam-lock-screen .lock-screen-content .password-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--colorWhite);
+}
+#fam-lock-screen .lock-screen-content .password-error .el-button {
+  width: 120px;
+  color: var(--colorWhite);
+  background-color: rgba(255, 255, 255, 0.25);
+}
+#fam-lock-screen .lock-screen-content .user-password {
+  display: flex;
+}
+#fam-lock-screen .lock-screen-content .user-password .el-input {
+  width: 240px;
+}
+#fam-lock-screen .lock-screen-content .user-password .submit-btn {
+  width: var(--inputHeightLarge);
+  height: var(--inputHeightLarge);
+  background-color: #d9d9d9;
+  cursor: pointer;
+}
+#fam-lock-screen .lock-screen-content .user-password .submit-btn i {
+  line-height: var(--inputHeightLarge);
+  font-size: 32px;
+  color: var(--colorWhite);
+}
+#fam-lock-screen .lock-screen-content .user-password:hover .submit-btn {
+  background-color: #98a6b8;
+}
+#fam-lock-screen .lock-screen-footer {
+  position: absolute;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+#fam-lock-screen .lock-screen-footer .exit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--colorWhite);
+  cursor: pointer;
+}
+#fam-lock-screen .lock-screen-footer .exit .exit-btn {
+  margin-bottom: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+#fam-lock-screen .lock-screen-footer .exit .exit-btn i {
+  margin-top: 10px;
+  font-size: 28px;
+}
+#fam-lock-screen .lock-screen-footer .exit p {
+  font-size: 14px;
+  font-size: var(--fontSize);
+}
+#fam-lock-screen .lock-screen-footer .exit:hover .exit-btn {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/*# sourceMappingURL=style.css.map */

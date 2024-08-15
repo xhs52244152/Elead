@@ -1,0 +1,121 @@
+<div class="fam-common-page__form__section flex flex-column grow-1">
+    <div
+        class="common-page-title bg-normal"
+        :class="{'p-xl': formShowType === 'create' || isNotTabs || isDraftStatus}"
+    >
+        <common-page-title
+            :detail-info="formData"
+            :formShowType="formShowType"
+            :class-name="className"
+            :vm="vm"
+            :containerOid="containerOid"
+            @title-opeartion-btn-click="handlerActionClickInTop"
+            @back="onTitleBack"
+            v-bind="commonPageTitleProps"
+        >
+            <template v-slot:titleBefore="scope">
+                <component
+                    :is="slots.titleBefore"
+                    :formData="scope.data"
+                    v-bind="titleBeforeProps"
+                    :vm="vm"
+                ></component>
+            </template>
+            <template v-slot:titleAfter="scope">
+                <component
+                    :is="slots.titleAfter"
+                    :formData="scope.data"
+                    v-bind="titleAfterProps"
+                    :vm="vm"
+                ></component>
+            </template>
+            <template v-slot:customBtn="scope">
+                <component
+                    :is="slots.customBtn"
+                    :formData="scope.data"
+                    v-bind="customBtnProps"
+                    :vm="vm"
+                ></component>
+            </template>
+        </common-page-title>
+    </div>
+    <div
+        class="fam-common-page__form__section__content grow-1"
+        :class="{ 'bg-white': formShowType === 'create', 'fam-single-tab-container': tabsData.length === 1 }"
+    >
+        <erd-tabs
+            v-model="activeName"
+            class="fam-common-page__top-tab h-100p bg-white flex flex-column"
+            @tab-click="handleTabClick"
+        >
+            <template v-for="(item, index) in Object.values(componentCache)">
+                <erd-tab-pane
+                    v-if="!item.isHide"
+                    :key="item.activeName"
+                    class="bg-white h-100p"
+                    style="padding: 0"
+                    :label="item.name"
+                    :name="item.activeName"
+                    :lazy="true"
+                >
+                    <erd-scrollbar
+                        class="h-100p"
+                        wrapper-class="h-100p"
+                        view-class="h-100p"
+                    >
+                        <component
+                            :ref="item.activeName"
+                            :is="item.component"
+                            v-bind="_.isFunction(item.basicProps) ? item.basicProps(vm) : item.basicProps"
+                            :vm="vm"
+                            class="tab-content-body"
+                            @field:getWidgetList="getWidgetList"
+                            @field:change="handleFieldChange"
+                            @base-form-data="handleFormDataLoaded"
+                            @hook:mounted="famAdvancedFormLoad = true"
+                        ></component>
+                    </erd-scrollbar>
+                </erd-tab-pane>
+            </template>
+        </erd-tabs>
+    </div>
+    <div
+        v-if="activeName === 'detail' && (formShowType === 'create' || formShowType === 'edit')"
+        class="flex fam-common-page__form__section__bottom_operation bg-white"
+    >
+        <erd-button
+            type="primary"
+            :loading="confirmLoading"
+            @click="!confirmLoading && !saveDraftLoading && onHandlerConfirm()"
+            >{{ buttonText.confirmButtonText }}
+        </erd-button>
+        <erd-button
+            :loading="saveDraftLoading"
+            @click="!saveDraftLoading && !confirmLoading && onHandlerSaveDraft()"
+            v-if="isDraftStatus && showDraftBtn"
+            >{{ buttonText.draftButtonText }}
+        </erd-button>
+        <erd-button @click="onHandlerCancel">{{ buttonText.cancelButtonText }}</erd-button>
+    </div>
+
+    <!-- 使用方在afterSubmit中自己实现 -->
+    <!-- <erd-ex-dialog
+        :visible.sync="successDialogVisiable"
+        title="提示"
+        width="450px"
+    >
+        <div class="success__dialog__content flex">
+            <i class="erd-iconfont erd-icon-success-solid success__dialog__content__icon"></i>
+            <div class="success__dialog__content__text">
+                <div class="success__dialog__content__text__title">创建成功</div>
+                <div class="success__dialog__content__text__sub__title">您可以选择以下操作</div>
+                <div class="success__dialog__content__text__btn">
+                    <erd-button @click="gotoDetail">详情页面</erd-button>
+                    <erd-button @click="continueCreate">继续创建</erd-button>
+                    <erd-button @click="gotoListPage">返回列表</erd-button>
+                    <erd-button @click="closePage">关闭</erd-button>
+                </div>
+            </div>
+        </div>
+    </erd-ex-dialog> -->
+</div>

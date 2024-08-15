@@ -1,0 +1,38 @@
+.basic-info-config {
+    .el-form-item__label {
+        justify-content: flex-end !important;
+        align-items: center;
+    }
+    .help-btn {
+        line-height: 32px;
+        font-size: 14px;
+        font-size: var(--fontSize);
+        padding-right: 4px;
+    }
+
+    .el-input {
+        width: 100%;
+
+        input {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    .relative {
+        position: relative;
+        width: 100%;
+        .intermation {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .required-identifier {
+        color: #f04134;
+        color: var(--errorColor);
+        margin: 0 4px;
+    }
+}

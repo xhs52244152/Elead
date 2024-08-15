@@ -1,0 +1,49 @@
+<div
+    id="FamAnchorNavigation"
+    class="h_100p position-relative"
+>
+    <erd-tabs
+        class="position-absolute w-100p bg-white z-199"
+        v-show="innerHoldView"
+        ref="innerHoldView"
+        v-model="selectTab"
+        @tab-click="tabClick"
+    >
+        <erd-tab-pane
+            v-for="item in tabPanelConfig"
+            :key="item.fileId"
+            :label="item.name"
+            :name="item.fileId"
+        ></erd-tab-pane>
+    </erd-tabs>
+    <erd-scrollbar
+        class="fam-anchor-navigation-scrollbar"
+        wrap-class="fam-anchor-navigation-scrollbar_warp"
+        :style="{height: height}"
+        @scroll="handleScroll"
+    >
+        <template v-for="item in innerPanelConfig">
+            <div
+                v-if="item.hasTop"
+                class="navigation-top"
+            ></div>
+            <erd-contraction-panel
+                v-if="!item.customComponent"
+                v-show="!item.isHide"
+                :key="item.fileId"
+                :unfold.sync="item.unfold"
+                :title="item.name"
+                :ref="item.fileId"
+            >
+                <template #header-right>
+                    <slot :name="item.slotHeaderRight"></slot>
+                </template>
+
+                <template #content>
+                    <slot :name="item.slotContent"></slot>
+                </template>
+            </erd-contraction-panel>
+            <slot v-else :name="item.slotContent"></slot>
+        </template>
+    </erd-scrollbar>
+</div>

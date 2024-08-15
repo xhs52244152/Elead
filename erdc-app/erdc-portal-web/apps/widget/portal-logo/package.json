@@ -1,0 +1,9 @@
+{
+  "name": "@erdc-resource/portal-logo",
+  "version": "3.1.0",
+  "description": "系统Logo",
+  "erdcData": {
+    "widget": true,
+    "position": "left"
+  }
+}

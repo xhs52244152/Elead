@@ -1,0 +1,12 @@
+<div>
+    <div class="mt-12 font-14 color-normal">{{i18n.advancedFilter}}</div>
+    <fam-rule-engine
+        v-if="showRuleEngine"
+        ref="famRuleEngine"
+        :oid="mainModelType"
+        :originConditionDtos="originConditionDtos"
+        :className="className"
+        class="mt-12 pl-12"
+    >
+    </fam-rule-engine>
+</div>

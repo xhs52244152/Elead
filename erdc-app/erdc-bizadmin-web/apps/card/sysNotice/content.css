@@ -1,0 +1,53 @@
+.received-notice-list_card .fam-view-table-header-component .viewtable-header-container {
+  padding: 0;
+}
+.received-notice-list_card .list-group-item {
+  color: var(--colorTextNormal);
+  display: block;
+}
+.received-notice-list_card .list-group-item:hover {
+  background-color: #eaf1fe;
+  color: var(--colorTextNormal);
+}
+.received-notice-list_card .list-group-item:hover .left-text {
+  color: #2779ff;
+  font-weight: 700;
+}
+.received-notice-list_card .data-list {
+  display: flex;
+  justify-content: space-between;
+  height: 36px;
+  align-items: center;
+  font-size: 14px;
+  min-width: 340px;
+  border-bottom: 1px solid #E9E9E9;
+  padding: 9px 0;
+  margin: 0 16px;
+}
+.received-notice-list_card .data-list-left {
+  width: calc(100% - 100px);
+  color: #000000;
+}
+.received-notice-list_card .data-list-right {
+  width: 79px;
+  color: #999999;
+}
+.received-notice-list_card .left-text {
+  width: calc(100% - 8px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.received-notice-list_card .title-desc {
+  color: #89919f;
+  font-weight: 400;
+}
+.received-notice-list_card .spot {
+  width: 8px;
+  height: 8px;
+  background: #f04134;
+  border-radius: 50%;
+}
+.received-notice-list_card .is-read {
+  visibility: hidden;
+}/*# sourceMappingURL=content.css.map */

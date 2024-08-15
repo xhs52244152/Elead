@@ -1,0 +1,42 @@
+<div id="applicationForm">
+    <erd-contraction-panel
+        v-if="readonly"
+        :unfold.sync="unfold"
+        :title="i18nMappingObj.baseInfo"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form="formData"
+                :data="formConfig"
+                :readonly="readonly"
+                label-position="right"
+            >
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <FamDynamicForm
+        v-else
+        ref="dynamicForm"
+        :form="formData"
+        :data="formConfig"
+        :readonly="readonly"
+        label-position="right"
+    >
+    </FamDynamicForm>
+    <erd-contraction-panel
+        v-if="readonly"
+        :unfold.sync="unfold2"
+        :title="i18nMappingObj.relatedTenant"
+        style="margin-top: 16px"
+    >
+        <template v-slot:content>
+            <tenant-table
+                :tableType="'readonly'"
+                :baseParams="baseParams"
+                :slotsField="[]"
+                :tableHeight="tableHeight"
+            ></tenant-table>
+        </template>
+    </erd-contraction-panel>
+</div>

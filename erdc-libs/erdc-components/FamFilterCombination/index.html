@@ -1,0 +1,19 @@
+<div :class="['fam-filter-combination-container', {
+    'fam-filter-combination-advanced': currentFilter === 'advancedFilter',
+    'pb-8': currentFilter === 'advancedFilter'
+}]">
+    <a class="fam-filter-combination-switcher" @click="changeCurrentFilter(currentFilter)">{{ switchText }}</a>
+    <fam-basic-filter
+        v-if="currentFilter === 'basicFilter'"
+        :main-model-type="mainModelType"
+        @condition-change="onBasicFilterChange"
+    ></fam-basic-filter>
+    <fam-advanced-group
+        v-else
+        is-panel
+        show-advanced-history
+        :main-model-type="mainModelType"
+        @height-change="onAdvancedHeightChange"
+        @onsubmit="onAdvancedFilterSubmit"
+    ></fam-advanced-group>
+</div>

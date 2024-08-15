@@ -1,0 +1,13 @@
+.bpm-process-record .export {
+  margin-bottom: 8px;
+}
+.bpm-process-record .approval-code-flex {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.bpm-process-record .approval-code-flex > * + * {
+  padding-left: 8px;
+}
+
+/*# sourceMappingURL=style.css.map */

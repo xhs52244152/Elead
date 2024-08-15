@@ -1,0 +1,31 @@
+#FolderListDetail .measure-header {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#FolderListDetail .measure-header .global-left {
+  font-size: var(--fontSizeLarge);
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+}
+#FolderListDetail .global-search {
+  display: flex;
+  justify-content: space-between;
+}
+#FolderListDetail .global-search .fam-global-tree__search {
+  width: 220px;
+  margin-top: 0;
+  vertical-align: middle;
+}
+#FolderListDetail .global-search button {
+  min-width: 80px;
+  overflow: hidden;
+}
+
+.global-table {
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

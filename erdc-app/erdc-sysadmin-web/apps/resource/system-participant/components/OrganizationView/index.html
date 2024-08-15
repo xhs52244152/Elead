@@ -1,0 +1,71 @@
+<div
+    id="organizationView"
+    class="organization-view"
+>
+    <erd-contraction-panel
+        :unfold.sync="unfold1"
+        :title="i18nMappingObj.baseInfo"
+        @onsubmit="(data)=>{onsubmitPanel(1,data)}"
+    >
+        <template v-slot:header-right>
+            <slot name="panelRight"></slot>
+        </template>
+    </erd-contraction-panel>
+    <OrganizationForm
+        ref="orgForm"
+        id="custom-org-form"
+        class="orgForm"
+        :oid="oid"
+        readonly
+    ></OrganizationForm>
+    <!-- <div class="right-operate-btns" v-if="isShowOperBtn">
+        <erd-button type="primary" @click="fnEditOrg">编辑</erd-button>
+    </div> -->
+    <div
+        class="role-table-container"
+        v-if="isShowRole"
+    >
+        <erd-contraction-panel
+            :unfold.sync="unfold2"
+            :title="i18nMappingObj.teamMembers"
+            @onsubmit="(data)=>{onsubmitPanel(2,data)}"
+        ></erd-contraction-panel>
+        <!-- <div class="list-title">{{ i18nMappingObj.teamMembers}}</div> -->
+        <OrganizationRoleTable
+            id="custom-role-table"
+            v-bind="$attrs"
+            :org-oid="currentOrganization?.oid"
+        ></OrganizationRoleTable>
+    </div>
+
+    <!--编辑部门-->
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="form.visible"
+        :title="i18nMappingObj.editOrg"
+    >
+        <OrganizationForm
+            v-if="form.visible"
+            ref="orgForm"
+            :oid="form.oid"
+            :default-value="form.defaultValue"
+            :editable="form.editable"
+            class="orgForm"
+        ></OrganizationForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="form.loading"
+                @click="onSubmit('orgForm')"
+            >
+                {{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button
+                v-loading="form.loading"
+                @click="closeOrganizationForm"
+            >
+                {{ i18nMappingObj.cancel }}
+            </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

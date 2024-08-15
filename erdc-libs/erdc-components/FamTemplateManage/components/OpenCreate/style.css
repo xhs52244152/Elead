@@ -1,0 +1,16 @@
+.panelContent .team-responsible {
+  padding: 2px;
+  font-size: 12px;
+  line-height: 30px;
+  color: rgba(255, 187, 150, 1);
+  border: 1px solid rgba(255, 187, 150, 1);
+  border-radius: 2px;
+  margin-right: 8px;
+}
+.open-create .el-form-item__label {
+  display: block;
+}
+
+.open-create .el-select {
+      width: 100%;
+}

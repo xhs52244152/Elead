@@ -1,0 +1,49 @@
+<erd-ex-dialog
+    v-bind="$attrs"
+    v-on="$listeners"
+    :visible.sync="dialogVisible"
+    size="large"
+    @open="onOpenDialog"
+>
+    <div class="fam-object-select__header">
+        <fam-filter-combination
+            v-if="dialogVisible"
+            :main-model-type="className"
+            @condition-change="onConditionChange"
+        ></fam-filter-combination>
+    </div>
+
+    <fam-advanced-table
+        v-if="dialogVisible"
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        tableHeight="624"
+        enable-scroll-load
+    >
+        <template #icon="scope">
+            <i :class="scope.data.row.icon"></i>
+        </template>
+
+        <!--其它动态插槽-->
+        <template
+            v-for="(slot, name) in $scopedSlots"
+            :slot="name"
+            slot-scope="scope"
+        >
+            <slot
+                :name="name"
+                v-bind="scope"
+            ></slot>
+        </template>
+    </fam-advanced-table>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="onSubmit"
+        >
+            {{ i18n.confirm }}
+        </erd-button>
+        <erd-button @click="dialogVisible = false">{{ i18n.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

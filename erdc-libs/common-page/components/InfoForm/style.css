@@ -1,0 +1,116 @@
+#fam_common_page_info {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.fam-common-page__form__section {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+.fam-common-page__form__section .no-tab-container {
+  margin-bottom: var(--largeSpace);
+}
+.fam-common-page__form__section .fam-common-page__top-tab > .el-tabs__header {
+  background-color: var(--colorFullBg);
+}
+.fam-common-page__form__section .el-tabs__content {
+  flex-grow: 1;
+  padding: var(--largeSpace);
+}
+.fam-common-page__form__section .el-tabs__content .fam-advanced-form .el-row > .el-col:has(.ContractionPanel) {
+  margin-bottom: 0;
+}
+.fam-common-page__form__section .el-tabs__content .fam-advanced-form .el-form-item__content {
+  min-height: auto;
+}
+.fam-common-page__form__section .el-tabs__content .fam-advanced-form .el-form-item__content > div:has(> .ContractionPanel) {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.fam-common-page__form__section .el-tabs__content .fam-advanced-form .el-form-item__content .ContractionPanel .panelLeft {
+  align-self: flex-start;
+}
+.fam-common-page__form__section .fam-common-page__form__baseinfo {
+  padding-top: var(--famCommonPageInfoPadding);
+}
+.fam-common-page__form__section__content {
+  flex: 1;
+  overflow-y: auto;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content {
+  height: 100%;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs {
+  height: calc(100% - 106px);
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content {
+  height: calc(100% - 40px);
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content .el-tab-pane {
+  height: 100%;
+  padding-bottom: 0;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content .el-tab-pane .el-scrollbar {
+  height: 100%;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content .el-tab-pane .el-scrollbar .el-scrollbar__view {
+  height: 100%;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content .el-tab-pane .el-scrollbar .el-scrollbar__view .tab-content-body {
+  padding: 0;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content .el-tab-pane .el-scrollbar .el-scrollbar__view .tab-content-body #FamViewTable .advanced-table-container {
+  padding: 0;
+}
+.fam-common-page__form__section__content__scroll .form__scroll__content .el-tabs .el-tabs__content .el-tab-pane .el-scrollbar .el-scrollbar__view .tab-content-body #FamViewTable .advanced-table-container .viewtable-body-container .el-pagination {
+  margin-bottom: 0;
+}
+.fam-common-page__form__section__content__scroll .common-page-title {
+  margin: 0 var(--largeSpace) var(--largeSpace) var(--largeSpace);
+}
+.fam-common-page__form__section .fam-single-tab-container {
+  background: #fff;
+}
+.fam-common-page__form__section .fam-single-tab-container .el-tabs {
+  height: 100%;
+}
+.fam-common-page__form__section .fam-single-tab-container .el-tabs__header {
+  display: none;
+}
+.fam-common-page__form__section .fam-single-tab-container .form__scroll__content .el-tabs__content {
+  height: 100%;
+}
+.fam-common-page__form__section .fam-single-tab-container .form__scroll__content .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+.fam-common-page__form__section__bottom_operation {
+  align-items: center;
+  justify-content: center;
+  padding: var(--largeSpace);
+  border-top: 1px solid #ebebeb;
+}
+.fam-common-page__form__section .common-page-title {
+  padding-left: var(--famNormalSpace);
+  padding-right: var(--famNormalSpace);
+}
+
+.success__dialog__content i {
+  height: 32px;
+  width: 32px;
+  font-size: 32px;
+  color: #00a854;
+}
+.success__dialog__content__text__title {
+  line-height: 32px;
+  font-size: var(--fontSizeLarge);
+  font-weight: bolder;
+}
+.success__dialog__content__text__sub__title {
+  line-height: 28px;
+  padding-bottom: 12px;
+}
+
+.object-common-space__content > .el-scrollbar__view:has(> #fam_common_page_info) {
+  padding: 0 !important;
+}/*# sourceMappingURL=style.css.map */

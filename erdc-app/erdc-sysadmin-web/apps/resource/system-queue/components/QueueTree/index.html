@@ -1,0 +1,68 @@
+<div
+    id="QueueTree"
+    class="tree-management flex flex-column h-100p"
+>
+    <div
+        class="tree-header"
+        ref="header"
+    >
+        <div class="tree-title">{{ i18n.queue }}</div>
+        <div class="search">
+            <erd-input
+                clearable
+                style="width: 100%"
+                v-model="searchValue"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18n.pleaseEnter"
+            >
+            </erd-input>
+        </div>
+    </div>
+    <erd-scrollbar class="grow-1">
+        <erd-ex-tree
+            ref="tree"
+            class="tree-list"
+            node-key="oid"
+            v-loading="treeLoading"
+            :data="treeList"
+            :props="defaultProps"
+            :filter-node-method="filterSearch"
+            :highlight-current="true"
+            :default-expand-all="true"
+            :expand-on-click-node="false"
+            @node-click="onCheck"
+        >
+            <template v-slot="scope">
+                <span class="erd-tree-node__label">
+                    <template v-if="isApplication(scope.node.data)">
+                        <img
+                            v-if="scope.node.data.icon"
+                            style="top: -1px; width: 1em; height: 1em"
+                            alt=""
+                            class="inline-block position-relative"
+                            :src="scope.node.data.icon"
+                        />
+                    </template>
+                    {{scope.node.label}}
+                </span>
+            </template>
+            <!-- <template v-slot="scope">
+                    <div class="tree-content" @mouseenter="mouseenter(scope)" @mouseleave="mouseleave(scope)">
+                        <div class="tree-text">
+                                <span>{{scope.node.label}}</span>
+                        </div>
+                        <div class="tree-operation" v-show="scope.data.show" @click.stop>
+                            <erd-button
+                            type="icon"
+                            icon="erd-iconfont erd-icon-add-document fontSize18"
+                            v-if="scope.node.level == 1"
+                            size="mini"
+                            class="drag"
+                            @click="onCreate(scope)">
+                            </erd-button>
+                        </div>
+                    </div>
+                </template> -->
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

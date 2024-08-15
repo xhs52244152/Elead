@@ -1,0 +1,29 @@
+<div>
+    <erd-contraction-panel
+        :unfold.sync="expanded"
+    >
+        <template #title="scope">
+            <span class="panel-title">{{i18n.timedEvent}}</span>
+            <erd-tooltip
+                effect="dark"
+                placement="top-start"
+                class="ml-4 mr-4 panel-title-icon font-bold"
+                :content="i18n.timedEventTips"
+            >
+                <i class="erd-iconfont erd-icon-help"></i>
+            </erd-tooltip>
+        </template>
+
+        <template #content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="timeForm"
+                :data="formConfigs"
+                label-width="120px"
+                :readonly="readonly"
+                :hide-error-message="hideErrorMessage"
+                @field:change="onFieldChange"
+            ></FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

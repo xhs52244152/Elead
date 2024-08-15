@@ -1,0 +1,34 @@
+<div class="bpm-participant-configuration">
+    <FamErdTable
+        ref="erdTable"
+        align="left"
+        border
+        show-overflow
+        :data="handlerConfiguration"
+        :column="column"
+        :row-config="{ isHover: false }"
+        :column-config="{resizable: true}"
+        :is-embed-table="true"
+        :span-method="mergeRowMethod"
+    >
+        <!-- 工具栏插槽 -->
+        <template #column:default:participantRef="{ data: { row, column } }">
+            <slot name="participantRef" :data="{ row, column }">
+                <template
+                    v-if="_.isFunction(column.params.disabled) ? column.params.disabled({ row, column }) : column.params.disabled"
+                >
+                <span>{{ column.formatter({ row, column, cellValue: _.isArray(row[column.field]) ?
+                    _.map(row[column.field], item => item) : row[column.field] }) }}</span>
+                </template>
+                <template v-else>
+                    <fam-participant-select
+                        v-model="row[column.field]"
+                        v-bind="getPropsProperty({ row, column })"
+                        :default-value="row.participantRefList"
+                        @change="(...arg) => optionsChange(...arg, { row, column })"
+                    ></fam-participant-select>
+                </template>
+            </slot>
+        </template>
+    </FamErdTable>
+</div>

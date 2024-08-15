@@ -1,0 +1,15 @@
+.FamControlLabelStaticText {
+    align-items: center;
+    .el-tag {
+        color: #fff !important;
+        height: 20px;
+        line-height: 18px;
+        i {
+            top: 20%;
+        }
+        cursor: pointer;
+    }
+    .el-tag + .el-tag {
+        margin-left: 2px;
+    }
+}

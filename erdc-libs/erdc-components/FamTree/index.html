@@ -1,0 +1,106 @@
+<div class="tree-management flex flex-column h-100p bg-white">
+    <div
+        class="tree-header"
+        ref="header"
+    >
+        <div
+            v-if="title"
+            class="tree-title"
+        >
+            {{title}}
+        </div>
+        <div
+            v-if="showSearch"
+            class="search flex"
+        >
+            <erd-input
+                clearable
+                style="width: 100%"
+                v-model="searchValue"
+                :placeholder="placeholderTips"
+            >
+                <template slot="suffix">
+                    <i
+                        class="erd-iconfont erd-icon-search text-16 cursor-pointer fam_tree-icon-search"
+                        aria-hidden="true"
+                        @click="searchFn"
+                    ></i>
+                </template>
+            </erd-input>
+            <div
+                v-if="$scopedSlots['search-operation']"
+                class="flex ml-8"
+            >
+                <slot name="search-operation"></slot>
+            </div>
+        </div>
+        <div
+            v-if="$scopedSlots['tree-operation']"
+            class="tree-operation"
+        >
+            <slot name="tree-operation"></slot>
+        </div>
+    </div>
+    <erd-scrollbar
+        ref="scrollbar"
+        class="grow-1"
+        wrap-style="overflow: hidden auto;"
+    >
+        <erd-ex-tree
+            ref="tree"
+            class="tree-list"
+            v-bind="{...$attrs}"
+            v-on="{...$listeners}"
+            :data="data"
+            :props="props"
+            :filter-node-method="filterSearch"
+            :node-key="nodeKey"
+            :highlight-current="highlightCurrent"
+        >
+            <template v-slot="scope">
+                <div class="tree-content">
+                    <erd-tooltip
+                        :content="scope.node.label"
+                        :open-delay="800"
+                    >
+                        <div class="tree-text">
+                            <i
+                                v-if="scope.data.icon"
+                                :class="scope.data.icon"
+                                aria-hidden="true"
+                            ></i>
+                            <template v-if="isApplication(scope.node.data) && scope.node.data.icon">
+                                <img
+                                    v-if="scope.node.data.icon"
+                                    style="top: -1px; width: 1em; height: 1em"
+                                    class="inline-block position-relative"
+                                    :src="scope.node.data.icon"
+                                    alt=""
+                                />
+                                <erd-icon
+                                    v-else
+                                    icon="loading"
+                                    style="animation: loading-rotate 2s linear infinite"
+                                ></erd-icon>
+                            </template>
+                            {{scope.node.label}}
+                            <span v-if="showLinkCount && scope.data.linkCount">({{scope.data.linkCount}})</span>
+                        </div>
+                    </erd-tooltip>
+
+                    <div
+                        v-if="$scopedSlots['node-operation']"
+                        class="tree-operation"
+                        @click.stop
+                    >
+                        <slot
+                            name="node-operation"
+                            v-bind="scope"
+                        >
+                        </slot>
+                    </div>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

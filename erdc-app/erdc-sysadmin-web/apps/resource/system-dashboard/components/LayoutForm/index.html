@@ -1,0 +1,20 @@
+<FamDynamicForm
+    ref="form"
+    :form="formData"
+    :data="formConfigs"
+>
+    <template #appName="scope">
+        <el-select
+            v-model="formData.appName"
+            style="width: 100%"
+        >
+            <el-option
+                v-for="item in appList"
+                :key="item.identifierNo"
+                :label="item.nameI18nJson && item.nameI18nJson[currentLan] ? item.nameI18nJson[currentLan] : item.displayName"
+                :value="item.identifierNo"
+            >
+            </el-option>
+        </el-select>
+    </template>
+</FamDynamicForm>

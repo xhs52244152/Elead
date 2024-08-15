@@ -1,0 +1,45 @@
+<div
+    id="FamRoleTree"
+    class="h-100p"
+    v-loading="loading"
+>
+    <fam-tree
+        ref="FamTree"
+        :data="listData"
+        class="tree-list h-100p"
+        :props="defaultProps"
+        :current-node-key="current"
+        :expand-on-click-node="false"
+        :filter-node-method="filterSearch"
+        node-key="appNameKey"
+        :highlight-current="true"
+        :default-expanded-keys="defaultExpandedKeys"
+        show-link-count
+        @node-click="nodeClick"
+    >
+        <template v-slot="scope">
+            <span class="erd-tree-node__label">
+                <template v-if="isApplication(scope.node.data)">
+                    <img
+                        v-if="scope.node.data.icon"
+                        style="top: -1px; width: 1em; height: 1em"
+                        class="inline-block position-relative"
+                        :src="scope.node.data.icon"
+                    />
+                    <erd-icon
+                        v-else
+                        icon="loading"
+                        style="animation: loading-rotate 2s linear infinite"
+                    ></erd-icon>
+                </template>
+                {{scope.node.label}}
+            </span>
+        </template>
+        <template #node-operation="scope">
+            <slot
+                name="node-operator"
+                v-bind="scope"
+            ></slot>
+        </template>
+    </fam-tree>
+</div>

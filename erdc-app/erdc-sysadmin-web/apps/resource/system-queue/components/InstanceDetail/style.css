@@ -1,0 +1,13 @@
+.instanceDetail-title {
+  width: 100%;
+  margin-bottom: 16px;
+  justify-content: space-between;
+}
+.instanceDetail-title .title {
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  line-height: 28px;
+  color: var(--colorTextNormal);
+}
+
+/*# sourceMappingURL=style.css.map */

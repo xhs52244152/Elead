@@ -1,0 +1,21 @@
+<div id="showTooltip" class="w-100p">
+    <el-tooltip
+        popper-class="fam-tooltip-max-width"
+        :effect="effect" 
+        :disabled="isDisabledTooltip"
+        :content="content"
+        :tabindex="tabindex"
+        :placement="placement">
+        <div class="ellipsis" @mouseover="onMouseOver">
+            <slot name="show-tooltip-title">
+                <span
+                    class="title_text"
+                    :class="isDisabledTooltip ? '' : 'truncate'"
+                >
+                    {{content || '--'}}
+                </span>
+            </slot>
+        </div>
+        
+    </el-tooltip>
+</div>

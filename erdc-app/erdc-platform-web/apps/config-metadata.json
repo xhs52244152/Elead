@@ -1,0 +1,82 @@
+{
+  "metadata": [
+    {
+      "key": "ELCONF.docsCenter.href",
+      "name": {
+        "zh_cn": "文档中心",
+        "en_us": "Document center"
+      },
+      "description": {
+        "zh_cn": "文档中心地址；设置为空地址则不显示文档中心链接",
+        "en_us": "Document center address; If the address is set to empty, the document center link is not displayed"
+      },
+      "defaultValue": "",
+      "type": "input",
+      "classification": "运维配置"
+    },
+    {
+      "key": "ELCONF.UPLOADER.BIG_FILE_SIZE",
+      "name": {
+        "zh_cn": "大文件阈值",
+        "en_us": "Large file threshold"
+      },
+      "description": {
+        "zh_cn": "上传超出此限制的文件将被视为大文件，将使用分片上传（单位：bit）",
+        "en_us": "Files uploaded beyond this limit will be considered as large files and will be uploaded using shards (unit: bit)."
+      },
+      "defaultValue": "1024 * 1024 * 100",
+      "type": "input",
+      "deprecated": false,
+      "classification": "运维配置",
+      "props": {
+        "maxlength": 28,
+        "show-word-limit": true
+      }
+    },
+    {
+      "key": "ELCONF.UPLOADER.DEFAULT_CHUNK_SIZE",
+      "name": {
+        "zh_cn": "默认文件分片大小",
+        "en_us": "Default file fragment size"
+      },
+      "description": {
+        "zh_cn": "大文件分片上传时的默认分片大小（单位：bit）",
+        "en_us": "Default fragment size for uploading large file fragments (unit: bit)"
+      },
+      "defaultValue": "1024 * 1024 * 10",
+      "type": "input",
+      "deprecated": false,
+      "classification": "运维配置",
+      "props": {
+        "maxlength": 28,
+        "show-word-limit": true
+      }
+    },
+    {
+      "key": "ELCONF.layout.erdc-platform-web",
+      "name": {
+        "zh_cn": "布局配置",
+        "en_us": "Layout configuration"
+      },
+      "description": {
+        "zh_cn": "布局和应用的适配关系",
+        "en_us": "The fit between layout and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    },
+    {
+      "key": "ELCONF.theme.erdc-platform-web",
+      "name": {
+        "zh_cn": "主题配置",
+        "en_us": "Theme configuration"
+      },
+      "description": {
+        "zh_cn": "主题和应用的适配关系",
+        "en_us": "The fit between theme and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+<div class="view-form-container">
+    <FamDynamicForm
+        v-if="showForm"
+        ref="dynamicForm"
+        :form.sync="form"
+        :data="formLayout"
+        v-on="$listeners"
+    >
+        <template v-slot:filters="scope">
+            <filters-config
+                ref="filtersConfig"
+                :typeReference="form.typeNames"
+                :allFilters="allFilters"
+                :selectedFiltersCopy="selectedFiltersCopy"
+                :selectedFilterIds.sync="selectedFilterIds"
+            ></filters-config>
+        </template>
+        <template v-slot:showcolumns="scope">
+            <erd-transfer
+                ref="transfer"
+                v-model="scope.data.showColumns"
+                :default-selected="tableData"
+                left-width="40%"
+                row-column-num="2"
+                height="450px"
+                value-key="attrName"
+                show-label="label"
+                :show-draggable="true"
+                :is-unfixed-source="true"
+                :all-columns-list="fieldList || []"
+                @check="fieldsCheck"
+            >
+                <template slot="left-search">
+                    <erd-input
+                        v-model="leftSideSearchKey"
+                        :placeholder="i18n['请输入']"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                        @input="leftSearchKeyChange"
+                    >
+                        <erd-tooltip
+                            placement="top"
+                            slot="prepend"
+                            :disabled="!selectedTypeDisplayName || selectedTypeDisplayName.length < 6"
+                            :content="selectedTypeDisplayName"
+                        >
+                            <erd-select
+                                v-model="selectValue"
+                                class="view-form-transfer-select"
+                                :placeholder="i18n['请选择']"
+                                @change="selectValueChange"
+                            >
+                                <erd-option
+                                    v-for="button in buttons"
+                                    :key="button.typeName"
+                                    :value="button.typeName"
+                                    :label="button.displayName"
+                                ></erd-option>
+                            </erd-select>
+                        </erd-tooltip>
+                    </erd-input>
+                </template>
+                <template #rightTips>
+                    <div>{{i18n.rightTipSort}}</div>
+                    <div>{{i18n.rightTipTip}}</div>
+                    <div>{{i18n.rightTipDisplay}}</div>
+                    <div>{{i18n.rightTipLock}}</div>
+                </template>
+                <template slot="right-title-sub">
+                    <erd-button
+                        type="text"
+                        class="text-12"
+                        @click="onDeleteAll"
+                    >
+                        {{i18n.deleteAll}}
+                    </erd-button>
+                </template>
+                <template slot="right-search">
+                    <erd-input
+                        v-model="rightSideSearchKey"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                        :placeholder="i18n['请输入']"
+                        clearable
+                        @input="rightSearchKeyChange"
+                    />
+                </template>
+                <template slot="right-content">
+                    <fam-erd-table
+                        ref="erdTable"
+                        border
+                        align="left"
+                        height="100%"
+                        show-overflow
+                        show-overflow="title"
+                        :column-config="{resizable: true}"
+                        :data="filteredTableData"
+                        :column="rightTableColumns"
+                        class="right-content-table h-100p"
+                        :row-class-name="tableRowClassName"
+                        :edit-config="{trigger: 'click', mode: 'cell'}"
+                        :edit-rules="{}"
+                    >
+                        <template #column:header:label>
+                            <span class="pl-16"> {{i18n.name}} </span>
+                        </template>
+                        <template #column:default:label="{data}">
+                            <div class="flex align-items-center">
+                                <i class="erd-iconfont erd-icon-double-drag cursor-move"></i>
+                                <span>{{data.row[data.column.property]}}</span>
+                            </div>
+                        </template>
+                        <template #column:default:width="{data}"> {{data.row[data.column.property]}} </template>
+                        <template #column:edit:width="{data}">
+                            <erd-input
+                                v-model="data.row[data.column.property]"
+                                class="h-100p"
+                                @blur="onWidthBlur(data.row)"
+                            ></erd-input>
+                        </template>
+                        <template #column:default:isHyperlink="{data}">
+                            <div class="hyperLink-col cursor-pointer" @click="openHyperLinkDialog(data.row)">
+                                {{ getFieldLabel( data.row, data.column.property) }}
+                            </div>
+                        </template>
+                        <template #column:edit:isHyperlink="{data}">
+                            <erd-input
+                                :value="getFieldLabel( data.row, data.column.property)"
+                                class="h-100p"
+                                readonly
+                            ></erd-input>
+                        </template>
+                        <template #column:default:sortDescend="{data}">
+                            {{ getFieldLabel( data.row, data.column.property) }}
+                        </template>
+                        <template #column:edit:sortDescend="{data}">
+                            <erd-ex-select
+                                :key="data.column.property"
+                                v-model="data.row[data.column.property]"
+                                automatic-dropdown
+                                :options="sortOptions"
+                            >
+                            </erd-ex-select>
+                        </template>
+                        <template #column:default:toolTipsAble="{data}">
+                            {{ getFieldLabel( data.row, data.column.property) }}
+                        </template>
+                        <template #column:edit:toolTipsAble="{data}">
+                            <erd-ex-select
+                                :key="data.column.property"
+                                v-model="data.row[data.column.property]"
+                                automatic-dropdown
+                                :options="commonOptions"
+                            >
+                            </erd-ex-select>
+                        </template>
+                        <template #column:default:isShow="{data}">
+                            {{ getFieldLabel( data.row, data.column.property) }}
+                        </template>
+                        <template #column:edit:isShow="{data}">
+                            <erd-ex-select
+                                :key="data.column.property"
+                                v-model="data.row[data.column.property]"
+                                automatic-dropdown
+                                :options="commonOptions"
+                            >
+                            </erd-ex-select>
+                        </template>
+                        <template #column:default:operation="{data}">
+                            <erd-tooltip
+                                placement="top"
+                                :content="data.row.locked ? i18n.unlock : i18n.lock"
+                                :open-delay="800"
+                            >
+                                <erd-icon
+                                    :icon="data.row.locked ? 'lock' : 'unlock'"
+                                    class="mr-8 cursor-pointer text-16 color-primary"
+                                    @click="fieldToogleLock(data.row)"
+                                ></erd-icon>
+                            </erd-tooltip>
+                            <erd-tooltip
+                                placement="top"
+                                :content="i18n.remove"
+                                :open-delay="800"
+                            >
+                                <erd-icon
+                                    icon="el-icon-close"
+                                    class="cursor-pointer text-16 color-primary"
+                                    @click="fieldRemove(data.row)"
+                                ></erd-icon>
+                            </erd-tooltip>
+                        </template>
+                    </fam-erd-table>
+                </template>
+            </erd-transfer>
+        </template>
+        <template v-slot:freeze="scope">
+            <div class="flex w-100p">
+                <erd-select
+                    v-model="form.frozenType"
+                    :placeholder="i18n.pleaseEnterTips"
+                    class="freeze-col-select"
+                >
+                    <erd-option
+                        :label="i18n.leftToRight"
+                        value="left"
+                    ></erd-option>
+                    <erd-option
+                        :label="i18n.rightToLeft"
+                        value="right"
+                    ></erd-option>
+                </erd-select>
+                <erd-input-number
+                    v-model="scope.data[scope.formConfig.field]"
+                    :min="0"
+                    :max="form.showColumns?.length"
+                    :placeholder="i18n.pleaseEnterTips"
+                    style="flex-grow: 1"
+                >
+                </erd-input-number>
+            </div>
+        </template>
+        <template v-slot:share="scope">
+            <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                <erd-radio
+                    :label="item.value"
+                    v-for="item in shareEnumList"
+                    :key="item.value"
+                    >{{ item.name || '' }}
+                </erd-radio>
+            </erd-radio-group>
+        </template>
+    </FamDynamicForm>
+
+    <erd-ex-dialog
+        :title="i18n.href"
+        :visible.sync="hyperLinkDialog"
+    >
+        <FamDynamicForm
+            ref="hiperLinkDynamicForm"
+            :form="hiperLinkFormData"
+            :data="hiperLinkFormConfig"
+        >
+            <template v-slot:hyper-link-config="scope">
+                <div class="flex">
+                    <erd-switch v-model="hiperLinkFormData.isHyperlink"></erd-switch>
+                    <span class="ml-16 color-disabled">{{i18n.linkSwitchTip}}</span>
+                </div>
+            </template>
+        </FamDynamicForm>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="onHyperLinkSave"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="hyperLinkDialog = false;">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

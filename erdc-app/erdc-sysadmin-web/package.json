@@ -1,0 +1,19 @@
+{
+  "name": "@erdc-app/erdc-sysadmin-web",
+  "version": "3.1.0",
+  "description": "系统管理",
+  "i18n": {
+    "zh_cn": "系统管理",
+    "en_us": "system management"
+  },
+  "erdcData": {},
+  "appId": "plat",
+  "scripts": {
+    "start": "npx erdc-cli start",
+    "clean": "npx erdc-cli clean",
+    "build": "npx erdc-cli build"
+  },
+  "devDependencies": {
+    "erdc-cli": "workspace:*"
+  }
+}

@@ -1,0 +1,28 @@
+.bpm-todo-content {
+    .left-button-content {
+        display: flex;
+        align-items: center;
+
+        .left-button-content-item {
+            display: flex;
+            align-items: center;
+
+            &>span {
+                font-size: 14px;
+                font-size: var(--fontSize);
+                color: var(--colorTextNormal);
+                margin-right: 4px;
+            }
+        }
+    }
+
+    .detail-layout-class {
+        .advanced-table-container {
+            padding: 0;
+
+            .fam-view-table-header-component {
+                padding: 0 16px;
+            }
+        }
+    }
+}

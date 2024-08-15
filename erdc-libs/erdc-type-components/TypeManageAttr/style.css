@@ -1,0 +1,45 @@
+#fam-type-attr .flex {
+  display: flex;
+  align-items: center;
+}
+#fam-type-attr .type-search {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+#fam-type-attr .type-search .fam-type-tree__search {
+  width: 220px;
+  margin-top: 0;
+  vertical-align: middle;
+}
+#fam-type-attr .type-search .fam-type-tree__search .fam-type-attr-icon-search {
+  line-height: var(--inputHeight);
+}
+#fam-type-attr .type-search button {
+  min-width: 80px;
+  overflow: hidden;
+}
+#fam-type-attr .attr-detail .attr-title {
+  margin-bottom: 8px;
+}
+#fam-type-attr .attr-detail a {
+  text-decoration: none;
+  color: var(--colorTextExplain);
+}
+#fam-type-attr .attr-detail .detail-icon {
+  font-size: 16px;
+}
+#fam-type-attr .attr-detail .detail-line {
+  width: 1px;
+  margin: 0 14px;
+  height: 16px;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+#fam-type-attr .attr-detail .detail-title {
+  font-size: var(--fontSizeLarge);
+  color: #333333;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/*# sourceMappingURL=style.css.map */

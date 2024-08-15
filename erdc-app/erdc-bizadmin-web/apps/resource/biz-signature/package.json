@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/biz-signature",
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat",
+  "description": "签名配置",
+  "dependencies": {}
+}

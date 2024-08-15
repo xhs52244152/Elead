@@ -1,0 +1,8 @@
+#showTooltip {
+    .el-tooltip {
+        display: flex;
+        .title_text {
+            text-wrap: nowrap;
+        }
+    }
+}

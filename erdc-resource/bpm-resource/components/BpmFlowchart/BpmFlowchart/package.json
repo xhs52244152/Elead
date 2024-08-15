@@ -1,0 +1,18 @@
+{
+    "name": "@erdc-resource/bpm_flowchart",
+    "description": "流程图",
+    "version": "3.1.0",
+    "author": {
+      "name": "eRDCloud"
+    },
+    "keywords": [
+      "资源包",
+      "bpm_flowchart",
+      "流程图"
+    ],
+    "license": "eRDCloud",
+    "repository": {
+      "type": "git",
+      "url": "http://gitlab.e-lead.cn:81/erdp_web_apps/workflow_web.git"
+    }
+  }

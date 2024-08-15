@@ -1,0 +1,56 @@
+<div>
+    <erd-contraction-panel
+        :title="i18nMappingObj.flowCondition"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <FamDynamicForm
+                ref="form"
+                :form.sync="flowConditionForm"
+                :data="formConfigs"
+                :readonly="readonly"
+                :schema-mapper="schemaMapper"
+                label-width="120px"
+                @field:change="onFieldChange"
+            >
+                <template #body-label>
+                    <div class="el-form-item__label fam-dynamic-form__label fam-dynamic-form__label--right">
+                        <erd-tooltip
+                            placement="top"
+                            :tabindex="-1"
+                            :openDelay="800"
+                        >
+                            <template #content>
+                                <div class="plr-sm">
+                                    <span class="mr-sm">{{conditionTooltip}}</span>
+                                    <erd-button
+                                        size="sm"
+                                        type="icon"
+                                        icon="erd-iconfont erd-icon-copy"
+                                        @click="handleConditionExpCopy"
+                                    ></erd-button>
+                                </div>
+                            </template>
+                            <erd-button
+                                class="help-btn"
+                                type="text"
+                                icon="erd-iconfont erd-icon-help"
+                            ></erd-button>
+                        </erd-tooltip>
+                        <erd-show-tooltip
+                            placement="top-start"
+                            :content="i18n.conditional"
+                            :tabindex="-1"
+                            class="fam-dynamic-form__label--labelText truncate"
+                            padding-width="12"
+                            :openDelay="800"
+                            flex
+                        >
+                            <span class="w-100p truncate">{{i18n.conditional}}</span>
+                        </erd-show-tooltip>
+                    </div>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+</div>

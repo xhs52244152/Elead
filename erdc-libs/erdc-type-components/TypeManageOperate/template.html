@@ -1,0 +1,43 @@
+<div id="fam-type-operate">
+    <div class="type-search">
+        <erd-input
+            v-model="searchValue"
+            class="fam-type-tree__search"
+            :placeholder="i18nMappingObj.enter"
+            suffix-icon="erd-iconfont erd-icon-search"
+            clearable
+            autofocus
+            @input="search"
+        ></erd-input>
+    </div>
+    <div class="operate-table">
+        <erd-table
+            border
+            height="360"
+            :column="sourceColumns"
+            :data="classData"
+            :is-embed-table="true"
+            show-overflow
+            ref="erdTable"
+        >
+        </erd-table>
+    </div>
+    <erd-contraction-panel
+        style="margin-bottom: 8px"
+        :unfold.sync="unfold"
+        @onsubmit="showInfoFn"
+        title="AOP"
+    >
+    </erd-contraction-panel>
+    <div v-if="showInfo">
+        <erd-table
+            border
+            :column="defineColumns"
+            :data="aopData"
+            show-overflow
+            :is-embed-table="true"
+            ref="erdTable"
+        >
+        </erd-table>
+    </div>
+</div>

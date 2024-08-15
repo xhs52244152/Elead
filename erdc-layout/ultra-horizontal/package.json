@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-layout/ultra-horizontal",
+  "version": "3.1.0",
+  "description": "顶部布局",
+  "erdcData": {},
+  "dependencies": {
+  }
+}

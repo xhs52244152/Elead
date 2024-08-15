@@ -1,0 +1,106 @@
+<erd-form
+    ref="form"
+    :model="formData"
+    :class="['fam-dynamic-form', lastLineChildClass(innerWidgetList), readonly ? 'fam-dynamic-form--readonly' : '', hasError ? 'fam-dynamic-form--error' : '']"
+    :rules="rules"
+    :size="size"
+    :validate-on-rule-change="validateOnRuleChange"
+    :disabled="formDisabled"
+    hide-required-asterisk
+    @validate="onValidate"
+>
+    <!--<prev><code>{{validateFields}}</code></prev><br />-->
+    <!--<prev><code>{{validateMsg}}</code></prev><br />-->
+    <!--<prev><code>{{currentInvalidField}}</code></prev><br />-->
+
+    <slot
+        :validateFields="validateFields"
+        :validateMsg="validateMsg"
+        :currentInvalidField="currentInvalidField"
+        :readonlyComponent="readonlyComponent"
+        :form-readonly="readonly"
+        :labelPosition="labelPosition"
+        :hideErrorMessage="innerHideErrorMessage"
+        :emitFieldEvent="emitFieldEvent"
+        :vm="vm"
+    >
+        <erd-row
+            type="flex"
+            :gutter="8"
+            justify-content="space-around"
+        >
+            <erd-col
+                v-for="widget in innerWidgetList"
+                v-show="!widget.schema.hidden"
+                :class="{'fam-dynamic-form--hidden': widget.schema.hidden}"
+                :key="widget.id"
+                :span="widget.block ? 24 : widget.schema.col"
+            >
+                <FormWidget
+                    ref="formWidget"
+                    :form="form"
+                    :widget="widget"
+                    :label-width="labelWidth"
+                    :designer="designer"
+                    :validate-fields="validateFields"
+                    :validate-msg="validateMsg"
+                    :current-invalid-field="currentInvalidField"
+                    :readonly-component="readonlyComponent"
+                    :label-position="labelPosition"
+                    :emit-field-event="emitFieldEvent"
+                    :hide-error-message="hideErrorMessage"
+                    :current-target-error-massage="currentTargetErrorMassage"
+                    :disable-validate="disableValidate"
+                    :schema-mapper="schemaMapper"
+                    :eachSchema="eachSchema"
+                    :form-readonly="readonly"
+                    :vm="vm"
+                    :readonly="readonly || widget.readonly"
+                    :lastLineChildClass="lastLineChildClass"
+                    :app-name="appName"
+                    @component:mounted="handleComponentMounted"
+                >
+                    <template #label="scope">
+                        <slot
+                            :name="getSlot(widget.schema, 'label')"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                    <template #tooltip="scope">
+                        <slot
+                            :name="getSlot(widget.schema, 'tooltip')"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                    <template #readonly="scope">
+                        <slot
+                            :name="getSlot(widget.schema, 'readonly')"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                    <template #component="scope">
+                        <slot
+                            :name="getSlot(widget.schema, 'component')"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                    <template #checkbox="scope">
+                        <slot
+                            :name="getSlot(widget.schema, 'checkbox')"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                    <template
+                        v-for="(slot, slotName) in $scopedSlots"
+                        v-slot:[slotName]="scope"
+                    >
+                        <slot
+                            :name="slotName"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                </FormWidget>
+            </erd-col>
+        </erd-row>
+    </slot>
+</erd-form>

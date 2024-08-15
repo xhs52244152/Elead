@@ -1,0 +1,14 @@
+$padding: 12px 16px;
+$paddingBase: 8px;
+$padding12: 12px;
+$margin12: 12px;
+$border: 1px solid var(--colorBorder);
+.add-participant-select{
+    .form-item-title{
+        text-align: right;
+    }
+    .body-container{
+        margin-top: $margin12;
+    }
+
+}

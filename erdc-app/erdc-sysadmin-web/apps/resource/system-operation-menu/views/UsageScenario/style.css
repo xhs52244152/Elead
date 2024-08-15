@@ -1,0 +1,34 @@
+.fam-usage-scenario-content {
+  height: 100%;
+}
+.fam-usage-scenario-content .fam-resizable-container {
+  height: 100%;
+}
+.fam-usage-scenario-content .right-contaienr {
+  height: 100%;
+  position: relative;
+  padding: var(--largePadding) var(--largePadding) 56px var(--largePadding);
+  display: flex;
+  flex-direction: column;
+}
+.fam-usage-scenario-content .right-contaienr .right-contaienr_input {
+  width: 320px;
+  margin-bottom: 16px;
+}
+.fam-usage-scenario-content .right-contaienr .right-contaienr-footer {
+  padding: var(--bigPadding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.joinOrgDialog .el-dialog__body {
+  padding: 0 !important;
+}
+
+/*# sourceMappingURL=style.css.map */

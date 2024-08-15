@@ -1,0 +1,315 @@
+<div
+    id="ComponentWapper-Update"
+    :dialogVisible="dialogVisible"
+    :disableIds="disableIds"
+>
+    <erd-ex-dialog
+        :title="dialogTitle"
+        @close="close"
+        :visible.sync="visibleDialog"
+        size="large"
+    >
+        <!-- 编辑菜单 -->
+        <template v-if="!isShowMenu && !lookMenu">
+            <!--表单-->
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form="formData"
+                :data="formConfig"
+                :readonly="readonly"
+                id="custom-from-update"
+            >
+                <template #updatemenuisshow="scope">
+                    <el-select
+                        v-model="formData.isShow"
+                        :placeholder="i18nMappingObj.pleaseSelet"
+                    >
+                        <el-option
+                            v-for="item in isShowOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        >
+                        </el-option>
+                    </el-select>
+                </template>
+
+                <template #updatemenutarget="scope">
+                    <el-select
+                        v-model="formData.target"
+                        :placeholder="i18nMappingObj.pleaseSelet"
+                    >
+                        <el-option
+                            v-for="item in targetOptions"
+                            :key="item.label"
+                            :label="item.label"
+                            :value="item.value"
+                        >
+                        </el-option>
+                    </el-select>
+                </template>
+                <template #updatemenuisshowReadonly="scope">
+                    <span>{{updatemenuisshowReadonly(formData.isShow)}}</span>
+                </template>
+                <template #onlyRead="scope">
+                    <div>{{getOpen(formData.target)}}</div>
+                </template>
+            </FamDynamicForm>
+        </template>
+        <!-- 查看菜单 -->
+        <template v-else-if="lookMenu && readonly">
+            <div class="menu-name">
+                <span class="menu-name_title">{{menuName}}</span>
+                <erd-tag
+                    v-if="false"
+                    size="mini"
+                    type="info"
+                >
+                    {{menuName}}
+                </erd-tag>
+            </div>
+            <!--表单-->
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form="formData"
+                :data="formConfig"
+                :readonly="readonly"
+                id="custom-from-update"
+            >
+                <template #updatemenuisshow="scope">
+                    <el-select
+                        v-model="formData.isShow"
+                        :placeholder="i18nMappingObj.pleaseSelet"
+                    >
+                        <el-option
+                            v-for="item in isShowOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        >
+                        </el-option>
+                    </el-select>
+                </template>
+                <template #updatemenuisshowReadonly="scope">
+                    <span>{{updatemenuisshowReadonly(formData.isShow)}}</span>
+                </template>
+
+                <template #updatemenutarget="scope">
+                    <el-select
+                        v-model="formData.target"
+                        :placeholder="i18nMappingObj.pleaseSelet"
+                    >
+                        <el-option
+                            v-for="item in targetOptions"
+                            :key="item.label"
+                            :label="item.label"
+                            :value="item.value"
+                        >
+                        </el-option>
+                    </el-select>
+                </template>
+                <template #onlyRead="scope">
+                    <div>{{getOpen(formData.target)}}</div>
+                </template>
+            </FamDynamicForm>
+            <erd-contraction-panel
+                :unfold.sync="unfold2"
+                :title="i18nMappingObj.menuAuth"
+                @onsubmit="(data)=>{onsubmitPanel(2,data)}"
+            ></erd-contraction-panel>
+            <!--菜单权限-->
+            <div
+                class="userAuth"
+                id="userAuth-wapper"
+            >
+                <!--人员-->
+                <div class="topItem flex">
+                    <!-- <fam-participant-select multiple collapseTags clearable v-model="participantVal" ></fam-participant-select> -->
+                    <!-- <erd-button class="add-user-update"  @click="userSearchSubmit">{{i18nMappingObj.addUser}}</erd-button> -->
+                </div>
+
+                <!--人员表格-->
+                <erd-table
+                    border
+                    v-loading="loading"
+                    :height="tableHeight"
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    :data="tableData"
+                    :column="column"
+                    show-overflow
+                    style="margin-top: 12px"
+                    ref="erdTable"
+                >
+                    <template #column:default:participantType="{data}">
+                        <span v-if="data.row.participantType!=undefined">
+                            {{participantTypesMap[data.row.participantType] || data.row.participantType}}
+                        </span>
+                        <span v-else>—</span>
+                    </template>
+                    <!--department-->
+                    <template #column:default:department="{data}">
+                        <span v-if="data.row.department!=undefined">{{data.row.department}}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--phone-->
+                    <template #column:default:phone="{data}">
+                        <span v-if="data.row.phone!=undefined">{{data.row.phone}}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--email-->
+                    <template #column:default:email="{data}">
+                        <span v-if="data.row.email!=undefined">{{data.row.email}}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--操作-->
+                    <template #column:default:operation="{data}">
+                        <el-button
+                            type="text"
+                            :disabled="true"
+                            @click="remove(data)"
+                            >{{i18nMappingObj.remove}}
+                        </el-button>
+                    </template>
+                </erd-table>
+                <!--小于等于一页不展示-->
+                <erd-pagination
+                    style="margin-top: 15px"
+                    :current-page.sync="pagination.pageIndex"
+                    :page-size.sync="pagination.pageSize"
+                    :total="pagination.total"
+                    :hide-on-single-page="false"
+                    @current-change="handlePageChange"
+                    @size-change="handleSizeChange"
+                >
+                </erd-pagination>
+            </div>
+        </template>
+        <template v-else-if="addPowerType === 'single'|| addPowerType === 'multiple'">
+            <div class="menu-name">
+                <span class="menu-name_title">{{menuName}}</span>
+            </div>
+            <div
+                class="userAuth"
+                id="userAuth-wapper"
+            >
+                <!--人员-->
+                <div class="topItem flex">
+                    <fam-participant-select
+                        v-if="visibleDialog"
+                        ref="famParticipantSelect"
+                        multiple
+                        collapseTags
+                        clearable
+                        v-model="participantVal"
+                        :query-scope="queryScope"
+                        :query-params="queryParams"
+                        :default-value="participantSelectValue.value"
+                        width="416px"
+                        isSaveSelected
+                        @input="handleParticipantInput"
+                        @change="handleParticipantChange"
+                    ></fam-participant-select>
+                </div>
+
+                <!--人员表格-->
+                <erd-table
+                    ref="erdTable"
+                    border
+                    v-loading="loading"
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    :column="column"
+                    :data="tableData"
+                    show-overflow
+                    :edit-config="{ showStatus: true, showInsertStatus: true }"
+                    keep-source
+                    style="margin-top: 16px"
+                >
+                    <!--participantType-->
+                    <template #column:default:participantType="{data}">
+                        <span v-if="data.row.participantType!=undefined">
+                            {{participantTypesMap[data.row.participantType] || data.row.participantType}}
+                        </span>
+                        <span v-else>—</span>
+                    </template>
+                    <!--department-->
+                    <template #column:default:department="{data}">
+                        <span v-if="data.row.department!=undefined">{{data.row.department}}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--phone-->
+                    <template #column:default:phone="{data}">
+                        <span v-if="data.row.phone!=undefined">{{data.row.phone}}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--email-->
+                    <template #column:default:email="{data}">
+                        <span v-if="data.row.email!=undefined">{{data.row.email}}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--操作-->
+                    <template #column:default:operation="{data}">
+                        <el-button
+                            type="text"
+                            :disabled="readonly"
+                            @click="remove(data)"
+                            >{{i18nMappingObj.remove}}
+                        </el-button>
+                    </template>
+                </erd-table>
+                <div class="flex justify-end">
+                    <span 
+                        style="margin-top: 15px"
+                        class="flex align-items-center mr-8" 
+                        v-if="newTotal"
+                    >
+                        {{i18n.new}} {{newTotal}} {{i18n.article}}
+                    </span>
+                    <!--小于等于一页不展示-->
+                    <erd-pagination
+                        style="margin-top: 15px"
+                        :current-page.sync="pagination.pageIndex"
+                        :page-size.sync="pagination.pageSize"
+                        :total="pagination.total"
+                        :hide-on-single-page="false"
+                        @current-change="handlePageChange"
+                        @size-change="handleSizeChange"
+                    >
+                    </erd-pagination>
+                </div>
+            </div>
+        </template>
+
+        <template
+            #footer
+            class="dialog-footer"
+            v-if="!isShowMenu && !lookMenu || addPowerType === 'multiple' || addPowerType === 'single'"
+        >
+            <erd-button
+                type="primary"
+                v-if="readonly"
+                @click="edit"
+            >
+                {{i18nMappingObj.submit}}
+            </erd-button>
+            <erd-button
+                type="primary"
+                v-if="!readonly"
+                @click="submit"
+                :loading="loading"
+            >
+                {{i18nMappingObj.submit}}
+            </erd-button>
+            <erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

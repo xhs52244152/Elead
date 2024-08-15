@@ -1,0 +1,50 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.upload"
+    :visible.sync="visible"
+    width="800px"
+    @close="cancel"
+>
+    <FamDynamicForm
+        ref="uploadForm"
+        :form="formData"
+        :data="formConfigs"
+    >
+        <template #appfile>
+            <fam-upload
+                class="upload-demo"
+                action="/platform/mfe/apps/upload/app"
+                accept=".tgz"
+                :auto-upload="true"
+                :limit="1"
+                :file-list="appFileList"
+                :on-success="handleAppSuccess"
+                :on-remove="handleRemoveApp"
+                :before-upload="onBeforeUploadApp"
+            >
+            </fam-upload>
+        </template>
+        <template #source>
+            <fam-upload
+                class="upload-demo"
+                action="/file/file/site/storage/v1/upload"
+                accept=".zip,.tgz"
+                :auto-upload="true"
+                :limit="1"
+                :file-list="sourceFileList"
+                :on-remove="handleRemoveSource"
+                :on-success="handleSourceSuccess"
+                :before-upload="onBeforeUploadSource"
+            >
+            </fam-upload>
+        </template>
+    </FamDynamicForm>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

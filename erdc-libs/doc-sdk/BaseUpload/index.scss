@@ -1,0 +1,61 @@
+.doc-base-upload {
+    width: 100%;
+    .uploader-btn {
+        background: #567FFD;
+        border-color: #567FFD;
+        color: #fff;
+        padding: 0 12px 0 12px;
+        height: 28px;
+        line-height: 26px;
+    }
+    .uploader-btn:hover {
+        background: #7395FF;
+        border-color: #7395FF;
+        color: #fff;;
+    }
+    .file-list {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, calc(33.33% - 5px));
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        li {
+            line-height: 20px;
+            .uploader__file-name {
+                color: #606266;
+                display: block;
+                margin-right: 40px;
+                overflow: hidden;
+                padding-left: 4px;
+                text-overflow: ellipsis;
+                transition: color .3s;
+                white-space: nowrap;
+            }
+            .el-icon-delete {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+                opacity: .75;
+                color: #606266;
+            }
+            .el-icon-document {
+                margin-right: 7px;
+            }
+            .uploader__progress-bar {
+                margin: 5px 0px;
+                .el-progress-bar .el-progress-bar__outer {
+                    height: 2px!important;
+                }
+            }
+        }
+        .echo-file {
+            position: relative;
+        }
+        .uploader-file {
+            border-bottom: none;
+            height: auto;
+            line-height: unset;
+        }
+    }
+}

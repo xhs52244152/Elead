@@ -1,0 +1,12 @@
+{
+  "name": "@erdc-libs/erdc-app",
+  "version": "3.1.0",
+  "description": "公司提供的基于framework的业务包",
+  "scripts": {
+    "build": "node ./build.js"
+  },
+  "dependencies": {
+    "@erdc-libs/erdc-fonts": "workspace:3.1.0",
+    "@erdcloud/erdcloud-icon": "^1.6.0"
+  }
+}

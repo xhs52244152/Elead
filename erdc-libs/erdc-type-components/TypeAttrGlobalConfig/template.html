@@ -1,0 +1,28 @@
+<div id="TypeAttrGlobalConfig">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        close-on-press-escape
+        @close="onCancelForm"
+        custom-class="global-property"
+        width="1200px"
+    >
+        <open-global-attributes
+            ref="globalProperty"
+            @setBtnDisabled="setBtnDisabled"
+        ></open-global-attributes>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submitForm()"
+                :loading="loading"
+                :disabled="disabled"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancelForm">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

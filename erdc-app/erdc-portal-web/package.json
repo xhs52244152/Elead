@@ -1,0 +1,18 @@
+{
+  "name": "@erdc-app/erdc-portal-web",
+  "description": "工作台",
+  "i18n": {
+    "zh_cn": "工作台",
+    "en_us": "workbench"
+  },
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat",
+  "scripts": {
+    "start": "npx erdc-cli start",
+    "clean": "npx erdc-cli clean"
+  },
+  "devDependencies": {
+    "erdc-cli": "workspace:*"
+  }
+}

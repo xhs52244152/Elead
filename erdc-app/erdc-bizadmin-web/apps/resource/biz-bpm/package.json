@@ -1,0 +1,9 @@
+{
+  "name": "@erdc-resource/biz-bpm",
+  "version": "3.1.0",
+  "description": "业务流程管理",
+  "erdcData": {},
+  "dependencies": {
+
+  }
+}

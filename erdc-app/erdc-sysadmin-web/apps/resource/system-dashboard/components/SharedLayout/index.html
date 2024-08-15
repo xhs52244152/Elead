@@ -1,0 +1,21 @@
+<fam-advanced-table
+    ref="table"
+    :table-height="300"
+    :view-table-config="viewTableConfig"
+    :app-name="appName"
+>
+    <template #column:default:operation:content="{ scope }">
+        <erd-button
+            type="text"
+            @click="useSystemLayout(scope.row)"
+        >
+            {{ i18nMappingObj.useBtn }}
+        </erd-button>
+    </template>
+    <template #column:default:appName:content="{ scope }">
+        {{appMap[scope.row.appName] && appMap[scope.row.appName].nameI18nJson &&
+        appMap[scope.row.appName].nameI18nJson[currentLan] ? appMap[scope.row.appName].nameI18nJson[currentLan] :
+        appMap[scope.row.appName] ? appMap[scope.row.appName].displayName : '' }}
+    </template>
+    <template #column:default:createBy:content="{scope}"> {{scope.row?.ownerBy?.displayName || '--' }} </template>
+</fam-advanced-table>

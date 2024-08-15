@@ -1,0 +1,138 @@
+<div id="OpenCreate">
+    <erd-ex-dialog
+    :title="title"
+    popper-class="openCreate"
+    :visible.sync="innerVisible"
+    close-on-press-escape
+    width="1200px">
+        <erd-contraction-panel
+        :unfold.sync="unfoldRole"
+        :title="i18nMappingObj.selectRole">
+            <template v-slot:content>
+                <div class="open-create">
+                    <erd-row style="display:flex;align-items:center;">
+                        <erd-col :span="3" style="text-align: right;margin-right: 10px;">
+                            <label>
+                                <span style="color:red;">*</span>
+                                {{i18nMappingObj.selectRole}}
+                            </label>
+                        </erd-col>
+                        <erd-col :span="20">
+                            <custom-select
+                            v-model="selectRole"
+                            v-bind="selectProps"
+                            @change="changeRole"
+                            :disabled="disMember">
+                            </custom-select>
+                        </erd-col>
+                    </erd-row>
+                </div>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+        :unfold.sync="unfoldMember"
+        :title="i18nMappingObj.member">
+            <template v-slot:content>
+                <div class="open-create">
+                    <erd-row style="display:flex;align-items:center;margin-bottom: 10px;">
+                        <erd-col :span="3" style="text-align: right;margin-right: 10px;">
+                            <label>
+                                <span style="color:red;">*</span>
+                                {{i18nMappingObj.selectMember}}
+                            </label>
+                        </erd-col>
+                        <erd-col :span="14">
+                            <AddParticipantSelect 
+                            ref="groupParticipantSelect" 
+                            :visible="form.visible" 
+                            :labelVisible="false"
+                            :selectedParticipant="selectedParticipant"
+                            @change="changeMember"
+                            @selectChange="changeUserGroup" 
+                            :show-type="showParticipantType">
+                            </AddParticipantSelect>
+
+                        </erd-col>
+                        <erd-col :span="6">
+                            <erd-button
+                                style="margin-left: 8px;"
+                                :disabled="memberDisabled"
+                                @click="addMember">
+                                {{i18nMappingObj.member}}
+                            </erd-button>
+                            <erd-button @click="onRemove">{{i18nMappingObj.remove}}</erd-button>
+                        </erd-col>
+                    </erd-row>
+                    
+                    <erd-table
+                        border
+                        ref="erdTable"
+                        auto-resize
+                        show-overflow
+                        height="300"
+                        :column="columns"
+                        :data="tableData"
+                        :row-config="{isCurrent: true, isHover: true, useKey: true, keyField: 'id', height: 36 }"
+                        :column-config="{resizable: true}"
+                        @checkbox-all="selectChangeEvent"
+                        @checkbox-change="selectChangeEvent">
+                            <!-- 类型 -->
+                            <template #column:default:principalTarget="{data}">
+                                <span>
+                                    {{ data.row?.principalTarget | filterType}}
+                                </span>
+                            </template>
+                            <template #column:default:operation="{data}">
+                                <template v-if="data.row.principalTarget === 'USER'">
+                                    <erd-button type="text" v-if="!data.row.primarily" @click="onSetResp(data)">{{ i18nMappingObj.responsible }}
+                                    </erd-button>
+                                    <erd-button type="text" v-else @click="onCancelResp(data)">{{ i18nMappingObj.cancelResponsible }}
+                                    </erd-button>
+                                </template>
+                                <erd-button type="text" @click="fnRemoveRole(data)">{{ i18nMappingObj.remove }}</erd-button>
+                            </template>
+                            <template #column:default:principalName="{data}">
+                                <span v-if="data.row.primarily" class="team-responsible">主责任人</span>
+                                <span>{{data.row.principalName}}</span>
+                            </template>
+                            <!--department-->
+                            <template #column:default:department="{data}">
+                              <span v-if="data.row.department!=undefined">{{data.row.department}}</span>
+                                <span v-else>—</span>
+                            </template>
+                      
+                            <!--phone-->
+                            <template #column:default:phone="{data}">
+                              <span v-if="data.row.phone!=undefined">{{data.row.phone}}</span>
+                                <span v-else>—</span>
+                            </template>
+                      
+                            <!--email-->
+                            <template #column:default:email="{data}">
+                              <span v-if="data.row.email!=undefined">{{data.row.email}}</span>
+                                <span v-else>—</span>
+                            </template>
+                      
+                        </erd-table>
+                            <!--小于等于一页不展示-->
+                            <!-- <erd-pagination
+                              style="margin-top:15px;"
+                              :current-page.sync="pagination.pageIndex"
+                              :page-size.sync="pagination.pageSize"
+                              :total="pagination.total"
+                              :hide-on-single-page="false"
+                              @current-change="handlePageChange"
+                              @size-change="handleSizeChange"
+                            >
+                            </erd-pagination> -->
+                        </erd-table>
+                </div>
+            </template>
+        </contraction-panel>
+
+        <span slot="footer" class="dialog-footer">
+            <erd-button type="primary" @click="fnOnSubmitForm()" :loading="loading">{{i18nMappingObj.confirm}}</erd-button>
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

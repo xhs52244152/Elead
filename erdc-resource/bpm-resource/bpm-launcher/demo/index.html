@@ -1,0 +1,316 @@
+<div
+    id="customForm"
+    style="padding: 1px 40px"
+>
+    <!-- table 表格 -->
+    <h4>
+        表格03
+        <el-button
+            type="primary"
+            @click="addTableObj"
+            >添加</el-button
+        >
+    </h4>
+    <el-table
+        :data="tableData"
+        border
+        style="width: 100%"
+    >
+        <el-table-column
+            prop="date"
+            label="日期"
+            width="150"
+        ></el-table-column>
+        <el-table-column
+            prop="name"
+            label="姓名"
+            width="120"
+        ></el-table-column>
+        <el-table-column
+            prop="address"
+            label="地址"
+            width="300"
+        ></el-table-column>
+        <el-table-column
+            label="操作"
+            width="100"
+        >
+            <template slot-scope="scope">
+                <el-button
+                    @click="handleEdit(scope.row)"
+                    type="text"
+                    size="small"
+                    >编辑</el-button
+                >
+                <el-button
+                    @click.native.prevent="deleteRow(scope.$index, tableData)"
+                    type="text"
+                    size="small"
+                    >移除</el-button
+                >
+            </template>
+        </el-table-column>
+    </el-table>
+    <!-- 表格数据编辑弹窗 -->
+    <el-dialog
+        title="更新"
+        :visible.sync="dialogVisible"
+        width="450px"
+        :append-to-body="true"
+    >
+        <el-form
+            ref="form2"
+            :model="currentEditObj"
+            label-width="80px"
+        >
+            <el-form-item label="姓名">
+                <el-input
+                    v-model="currentEditObj.name"
+                    :disabled="true"
+                ></el-input>
+            </el-form-item>
+            <el-form-item label="地址">
+                <el-input v-model="currentEditObj.address"></el-input>
+            </el-form-item>
+        </el-form>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button
+                type="primary"
+                @click="sureHandler"
+                >确 定</el-button
+            >
+        </span>
+    </el-dialog>
+    <!-- 表格数据新增弹窗 -->
+    <el-dialog
+        title="更新"
+        :visible.sync="newDialogVisible"
+        width="450px"
+        :append-to-body="true"
+    >
+        <el-form
+            ref="form2"
+            :model="newObj"
+            label-width="80px"
+        >
+            <el-form-item label="姓名">
+                <el-input v-model="newObj.name"></el-input>
+            </el-form-item>
+            <el-form-item label="地址">
+                <el-input v-model="newObj.address"></el-input>
+            </el-form-item>
+        </el-form>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button @click="newDialogVisible = false">取 消</el-button>
+            <el-button
+                type="primary"
+                @click="newHandler"
+                >新 增</el-button
+            >
+        </span>
+    </el-dialog>
+    <!-- 表单 -->
+    <div style="height: 20px"></div>
+    <h4>表单03</h4>
+    <el-tabs v-model="activeName">
+        <el-tab-pane
+            label="erdp系统"
+            name="erdp"
+        >
+            <el-form
+                ref="form"
+                :model="form"
+                label-width="100px"
+            >
+                <el-form-item label="活动名称">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="活动区域">
+                    <el-select
+                        v-model="form.region"
+                        placeholder="请选择活动区域"
+                    >
+                        <el-option
+                            label="区域一"
+                            value="shanghai"
+                        ></el-option>
+                        <el-option
+                            label="区域二"
+                            value="beijing"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="活动时间">
+                    <el-col :span="11">
+                        <el-date-picker
+                            type="date"
+                            placeholder="选择日期"
+                            v-model="form.date1"
+                            style="width: 100%"
+                        ></el-date-picker>
+                    </el-col>
+                    <el-col
+                        class="line"
+                        :span="2"
+                        >-</el-col
+                    >
+                    <el-col :span="11">
+                        <el-time-picker
+                            placeholder="选择时间"
+                            v-model="form.date2"
+                            style="width: 100%"
+                        ></el-time-picker>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="即时配送">
+                    <el-switch v-model="form.delivery"></el-switch>
+                </el-form-item>
+                <el-form-item label="活动性质">
+                    <el-checkbox-group v-model="form.type">
+                        <el-checkbox
+                            label="美食/餐厅线上活动"
+                            name="type"
+                        ></el-checkbox>
+                        <el-checkbox
+                            label="地推活动"
+                            name="type"
+                        ></el-checkbox>
+                        <el-checkbox
+                            label="线下主题活动"
+                            name="type"
+                        ></el-checkbox>
+                        <el-checkbox
+                            label="单纯品牌曝光"
+                            name="type"
+                        ></el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label="特殊资源">
+                    <el-radio-group v-model="form.resource">
+                        <el-radio label="线上品牌商赞助"></el-radio>
+                        <el-radio label="线下场地免费"></el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Node03">
+                    <el-input v-model="form.Node03"></el-input>
+                </el-form-item>
+                <el-form-item label="活动形式">
+                    <el-input
+                        type="textarea"
+                        v-model="form.desc"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <!-- <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button>取消</el-button> -->
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+        <el-tab-pane
+            label="pdm系统"
+            name="pdm"
+        >
+            <el-form
+                ref="pdmform"
+                :model="pdmForm"
+                label-width="80px"
+            >
+                <el-form-item label="活动名称">
+                    <el-input v-model="pdmForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="活动区域">
+                    <el-select
+                        v-model="pdmForm.region"
+                        placeholder="请选择活动区域"
+                    >
+                        <el-option
+                            label="区域一"
+                            value="shanghai"
+                        ></el-option>
+                        <el-option
+                            label="区域二"
+                            value="beijing"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="活动时间">
+                    <el-col :span="11">
+                        <el-date-picker
+                            type="date"
+                            placeholder="选择日期"
+                            v-model="pdmForm.date1"
+                            style="width: 100%"
+                        ></el-date-picker>
+                    </el-col>
+                    <el-col
+                        class="line"
+                        :span="2"
+                        >-</el-col
+                    >
+                    <el-col :span="11">
+                        <el-time-picker
+                            placeholder="选择时间"
+                            v-model="pdmForm.date2"
+                            style="width: 100%"
+                        ></el-time-picker>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="即时配送">
+                    <el-switch v-model="pdmForm.delivery"></el-switch>
+                </el-form-item>
+                <el-form-item label="活动性质">
+                    <el-checkbox-group v-model="pdmForm.type">
+                        <el-checkbox
+                            label="美食/餐厅线上活动"
+                            name="type"
+                        ></el-checkbox>
+                        <el-checkbox
+                            label="地推活动"
+                            name="type"
+                        ></el-checkbox>
+                        <el-checkbox
+                            label="线下主题活动"
+                            name="type"
+                        ></el-checkbox>
+                        <el-checkbox
+                            label="单纯品牌曝光"
+                            name="type"
+                        ></el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label="特殊资源">
+                    <el-radio-group v-model="pdmForm.resource">
+                        <el-radio label="线上品牌商赞助"></el-radio>
+                        <el-radio label="线下场地免费"></el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Node03">
+                    <el-input v-model="pdmForm.Node03"></el-input>
+                </el-form-item>
+                <el-form-item label="活动形式">
+                    <el-input
+                        type="textarea"
+                        v-model="pdmForm.desc"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <!-- <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button>取消</el-button> -->
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+    </el-tabs>
+</div>
+
+<script type="text/javascript">
+    require([ELMP.resource('demo/index.js', 'bpm-launcher')], function (module) {
+        module.init();
+    });
+</script>

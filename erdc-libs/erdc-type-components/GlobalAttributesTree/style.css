@@ -1,0 +1,22 @@
+#GlobalAttributesTree .typelist {
+  margin-bottom: 0;
+}
+
+.outdent-tree-node {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.global-attr-tree .tree-text {
+  white-space: pre;
+}
+.global-attr-tree .tree-title {
+  color: var(--colorTextNormal);
+  line-height: 28px;
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.global-attr-tree .tree-header {
+  padding: var(--normalPadding) var(--bigPadding) var(--normalPadding) var(--bigPadding);
+}/*# sourceMappingURL=style.css.map */

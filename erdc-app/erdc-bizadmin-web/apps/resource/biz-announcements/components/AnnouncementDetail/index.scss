@@ -1,0 +1,66 @@
+.notice-detail {
+    font-size: 14px;
+    font-size: var(--fontSize);
+    line-height: 22px;
+    .el-dialog__body {
+        padding: 0px !important;
+    }
+    .detail {
+        padding: 16px;
+        p {
+            margin-bottom: 0px !important;
+        }
+        &-footer {
+            border-top: 1px solid #EBEBEB;
+            height: 56px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            &-date {
+                color: #89919F;
+                font-size: 12px;
+            }
+        }
+    }
+    .detail-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        .title {
+            font-size: var(--fontSize);
+            color: var(--colorTextNormal);
+            line-height: 22px;
+            font-weight: bold;
+        }
+    }
+    .detail-content{
+        display: grid;
+        grid-row-gap: 12px;    
+        font-size: 14px;
+        font-size: var(--fontSize);
+        line-height: 29px;
+        .attach {
+            display: flex;
+            label {
+                    display: inline-block;
+                    flex: 0 0 auto;
+                    text-align: right;
+                    color: rgba(#000000, 0.45);
+                    margin-right: 8px;
+            }
+            .value {
+                color: rgba( #000000, 0.85);
+                flex: 1 1 auto;
+            }
+        }
+        .file-link {
+            cursor: pointer;
+            color: #567FFD;
+            margin-right: 10px;
+        }
+        .file-link:hover {
+            color: #7395ff;
+        }
+    }
+}

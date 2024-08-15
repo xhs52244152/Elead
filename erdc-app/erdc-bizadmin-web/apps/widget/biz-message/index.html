@@ -1,0 +1,48 @@
+<erd-popover
+    trigger="click"
+    popper-class="message-popover"
+    class="layout-component__plain-button flex align-items-center"
+    v-model="visiable"
+    @show="handleShow"
+>
+    <erd-tabs
+        v-model="activeName"
+        @tab-click="handleTabChange"
+    >
+        <erd-tab-pane
+            v-for="(tab, index) in tabs"
+            :key="index"
+            :label="tab.label"
+            :name="tab.name"
+        >
+            <template slot="label">
+                <span>{{ tab.label }}</span>
+                <span
+                    class="message-trigger_tip"
+                    v-show="currentMsgCount(tab.name) > 0"
+                >
+                    （ {{ showMsgCount(tab.name) }} ）
+                </span>
+            </template>
+            <component
+                :is="tab.component"
+                :ref="`${tab.name}Ref`"
+                @close="handleClose"
+                @countChange="handleCountChange"
+            ></component>
+        </erd-tab-pane>
+    </erd-tabs>
+    <erd-tooltip
+        slot="reference"
+        content="我的消息"
+    >
+        <div :class="['message-trigger', { 'icon-blink': allMsgCount > 0 }]">
+            <erd-icon icon="notification"></erd-icon>
+            <span
+                class="message-trigger_tip"
+                v-show="allMsgCount > 0"
+            >
+            </span>
+        </div>
+    </erd-tooltip>
+</erd-popover>

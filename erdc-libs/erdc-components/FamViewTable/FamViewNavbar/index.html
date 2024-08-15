@@ -1,0 +1,96 @@
+<div
+    id="FamViewNavbar"
+    class="fam-view-navbar-component"
+    :style="{ '--leftMenuWidth': leftMenuWidth + 'px', '--rightWidth': rightWidth + 'px', '--leftSubMenuWidth': leftSubMenuWidth + 'px'}"
+>
+    <div class="left-menubar-container">
+        <erd-menu
+            ref="elMenu"
+            :default-active="activeName"
+            mode="horizontal"
+            @select="handleSelect"
+            hide-timeout="200"
+            show-timeout="200"
+        >
+            <erd-menu-item
+                :title="item[labelKey]"
+                class="truncate"
+                :index="item[valueKey]"
+                v-for="item in viewNavbarList"
+                :key="item[valueKey]"
+                >{{item[labelKey]}}</erd-menu-item
+            >
+            <erd-submenu
+                index="moreView"
+                popper-class="my-el-more-submenu"
+                class="my-el-submenu"
+                v-if="moreViewNavList && moreViewNavList.length > 0"
+            >
+                <template slot="title">
+                    <div class="more-menu-title">
+                        <!-- 更多视图 -->
+                        {{ moreMenuTitle || i18nMappingObj.moreViews }}
+                    </div>
+                </template>
+                <erd-menu-item
+                    :title="item[labelKey]"
+                    :index="item[valueKey]"
+                    v-for="item in moreViewNavList"
+                    :key="item[valueKey]"
+                    >{{item[labelKey]}}</erd-menu-item
+                >
+            </erd-submenu>
+        </erd-menu>
+    </div>
+    <div
+        v-if="showViewManager"
+        class="right-oper-container"
+    >
+        <erd-button
+            type="text"
+            @click="fnShowViewManager"
+        >
+            {{ i18nMappingObj['视图管理']}}
+        </erd-button>
+    </div>
+    <div
+        v-if="$scopedSlots['right:viewNavbar:first']"
+        class="custom-right-viewNavbar-first-slot"
+    >
+        <slot name="right:viewNavbar:first"></slot>
+    </div>
+    <div
+        v-if="$scopedSlots['right:viewNavbar:end']"
+        class="custom-right-viewNavbar-end-slot"
+    >
+        <slot name="right:viewNavbar:end"></slot>
+    </div>
+
+    <erd-ex-dialog
+        ref="viewManagerDialog"
+        :visible.sync="viewManagerForm.visible"
+        width="1200px"
+        :title="i18nMappingObj['配置个人视图']"
+        :before-close="toggleShow"
+    >
+        <!-- table-change -->
+        <view-manager
+            ref="viewManagerTable"
+            v-if="viewManagerForm.visible"
+            :auto-record-view="autoRecordVal"
+            :row="tableRow"
+            :view-type="viewType"
+            :table-max-height="360"
+            :app-name="appName"
+            @table-change="fnTableChange"
+        ></view-manager>
+        <div style="margin-top: 8px">
+            <erd-checkbox
+                class="my-checkbox"
+                @change="fnRecordView"
+                v-model="autoRecordView"
+                >{{ i18nMappingObj['自动记忆上次查看的视图'] }}</erd-checkbox
+            >
+        </div>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,17 @@
+<div id="secutity-ttem-config">
+    <div class="search mb-16">
+        <erd-input
+            v-model="searchValue"
+            suffix-icon="erd-iconfont erd-icon-search"
+            :placeholder="i18n.pleaseEnter"
+            clearable
+        ></erd-input>
+    </div>
+    <fam-erd-table
+        border
+        show-overflow
+        :data="tableData"
+        :column="columns"
+    >
+    </fam-erd-table>
+</div>

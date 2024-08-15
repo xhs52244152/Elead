@@ -1,0 +1,58 @@
+<uploader
+    class="doc-base-upload"
+    ref="fileUploader"
+    :autoStart="true"
+    :options="uploaderOptions"
+    @file-added="onFileAdded"
+    @file-removed="onFileRemove"
+    @file-success="onFileSuccess"
+    @file-error="onFileError"
+>
+    <uploader-btn
+        :attrs="attrs"
+        ref="uploadBtn"
+    >
+        {{ i18nMappingObj.clickUpload }}
+    </uploader-btn>
+    <uploader-list>
+        <template slot-scope="props">
+            <!-- 由于vue-simple-uploader不支持已上传文件的回显，因此已上传的文件直接显示在这里  -->
+            <ul class="file-list">
+                <li
+                    v-for="(file, index) in echoFileList"
+                    :key="`echo-${index}`"
+                >
+                    <div class="echo-file">
+                        <div class="uploader__file-name"><i class="el-icon-document"></i>{{file.name}}</div>
+                        <i class="el-icon-delete" @click="echoRemove(file, index)"></i>
+                    </div>
+                </li>
+
+                <li
+                    v-for="(file, index) in props.fileList"
+                    :key="`file-${index}`"
+                >
+                    <uploader-file
+                        ref="uploader"
+                        :file="file"
+                        :list="true"
+                    >
+                        <template slot-scope="{ progress, isUploading  }">
+                            <div class="uploader__file-name"><i class="el-icon-document"></i>{{file.name}}</div>
+                            <i class="el-icon-delete" @click="remove(file)"></i>
+                            <erd-progress 
+                                class="uploader__progress-bar"
+                                v-if="progressBar.show && isUploading" 
+                                type="line" 
+                                :show-text="progressBar.showText"
+                                :stroke-width="3" 
+                                :percentage="percentage(progress)">
+                            </erd-progress>
+                        </template>
+                    </uploader-file>
+                </li>
+            </ul>
+        </template>
+    </uploader-list>
+    <!-- <erd-button type="primiary">{{ i18nMappingObj.clickUpload }}</erd-button> -->
+</uploader>

@@ -1,0 +1,155 @@
+<div
+    class="portal-dashboard_render h_100p flex flex-column"
+    ref="workSpace"
+>
+    <div class="portal-dashboard_render_head">
+        <erd-pulldown
+            v-if="!fullState"
+            type="text"
+            :visible="switchLayoutVisible"
+            @open="switchLayoutVisible = true"
+            @close="switchLayoutVisible = false"
+        >
+            <erd-tooltip
+                effect="dark"
+                :content="currentUseLayout.name || '--'"
+                placement="top"
+            >
+                <span class="portal-dashboard_render_title title-tip"
+                    >{{currentUseLayout && currentUseLayout.name || '--'}}</span
+                >
+            </erd-tooltip>
+            <template #pulldown>
+                <el-scrollbar class="h-200">
+                    <erd-pulldown-menu>
+                        <erd-pulldown-menu-item
+                            v-for="item in usefulLayout"
+                            :key="item.oid"
+                            @click="changeLayout(item)"
+                            :class="{ 'active_layout': item.oid === currentUseLayout.oid }"
+                        >
+                            {{item.name}}
+                        </erd-pulldown-menu-item>
+                    </erd-pulldown-menu>
+                </el-scrollbar>
+            </template>
+        </erd-pulldown>
+        <div v-if="fullState">
+            <span class="portal-dashboard_render_title">{{currentUseLayout && currentUseLayout.name || '--'}}</span>
+        </div>
+        <div class="portal-dashboard_render_head_sub">
+            <erd-button
+                type="primary"
+                v-if="isEditMode && !fullState"
+                @click="mode = 'read'"
+                >{{ i18n.finishEdit }}</erd-button
+            >
+            <erd-button
+                type="primary"
+                v-if="!isEditMode && !fullState"
+                @click="mode = 'edit'"
+                >{{ i18n.editDashboard }}</erd-button
+            >
+            <erd-pulldown
+                right
+                v-if="!fullState"
+                :visible="operateVisible"
+                @open="operateVisible = true"
+                @close="operateVisible = false"
+            >
+                {{i18n.more}}
+                <template #pulldown>
+                    <erd-pulldown-menu>
+                        <erd-pulldown-menu-item @click="openLayout">
+                            {{ i18n.createNewLayout }}
+                        </erd-pulldown-menu-item>
+                        <erd-pulldown-menu-item @click="showMyLayouts">{{ i18n.myLayouts }}</erd-pulldown-menu-item>
+                    </erd-pulldown-menu>
+                </template>
+            </erd-pulldown>
+            <erd-tooltip
+                v-if="!isEditMode && !fullState"
+                placement="top"
+                :content="i18n.fullScreen"
+            >
+                <erd-button
+                    type="fill-icon"
+                    icon="erd-iconfont erd-icon-zoom-in"
+                    @click="setFull"
+                ></erd-button>
+            </erd-tooltip>
+        </div>
+    </div>
+    <div
+        class="portal-dashboard_render_body grow-1"
+        v-loading="switchLayoutLoading"
+    >
+        <layout-config-component
+            :layout-id="currentUseLayout.oid"
+            :mode="mode"
+            :full-state="fullState"
+            :need-calc-position="needCalcPosition"
+            @cards-loaded="needCalcPosition = false"
+        ></layout-config-component>
+    </div>
+    <erd-ex-dialog
+        :title="i18n.dashboardList"
+        :visible.sync="visible"
+        width="1200px"
+        @closed="loadLayoutByMenu"
+        @opened="handleClick"
+    >
+        <erd-tabs
+            v-model="myLayoutActiveTab"
+            @tab-click="handleClick"
+        >
+            <erd-tab-pane
+                :label="i18n.my"
+                name="my"
+            >
+                <my-layout
+                    ref="my"
+                    :app-name="appName"
+                    :tenant-id="tenantId"
+                ></my-layout>
+            </erd-tab-pane>
+            <erd-tab-pane
+                :label="i18n.shearedWithMe"
+                name="share"
+            >
+                <share-layout
+                    ref="share"
+                    v-if="$refs.share || myLayoutActiveTab === 'share'"
+                    @use-system-layout="calcPositionInTime"
+                    :app-name="appName"
+                ></share-layout>
+            </erd-tab-pane>
+        </erd-tabs>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        :title="i18n.创建布局"
+        :visible.sync="visibleForCreateLayout"
+        size="medium"
+        @close="loadLayoutByMenu"
+    >
+        <layout-form
+            ref="layoutForm"
+            layout-type="PERSONAL"
+            :resource-ref="menuInfo && menuInfo.oid ? menuInfo.oid : ''"
+            :exclude-field="['state']"
+            :validators="validators"
+        ></layout-form>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submitCreateLayout"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="visibleForCreateLayout = false">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

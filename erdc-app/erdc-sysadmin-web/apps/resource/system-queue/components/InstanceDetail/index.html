@@ -1,0 +1,29 @@
+<div class="InstanceDetail">
+    <erd-ex-dialog
+        :title="i18nMappingObj.taskDetails"
+        :visible.sync="innerVisible"
+        size="large"
+    >
+    <div class="flex instanceDetail-title">
+        <div class="title">{{title}}</div>
+            <div>
+                <erd-button
+                    type="primary"
+                    @click="refresh"
+                    >{{i18nMappingObj.refresh}}</erd-button
+                >
+            </div>
+        </div>
+
+        <FamDynamicForm
+            style="padding-top: 4px"
+            ref="dynamicForm"
+            v-loading="loading"
+            :form="formData"
+            :data="data"
+            readonly
+            @form-change="formChange"
+        >
+        </FamDynamicForm>
+    </erd-ex-dialog>
+</div>

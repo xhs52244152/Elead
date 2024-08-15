@@ -1,0 +1,17 @@
+#CodeRuleTips .search {
+    margin-bottom: 16px;
+}
+#CodeRuleTips .code-rule-tips-collapse {
+    margin-top: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+#CodeRuleTips .code-rule-tips-collapse .tips-collapse-title {
+    padding: 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#CodeRuleTips .code-rule-tips-collapse .tips-collapse-content {
+    padding: 16px;
+    border-top: 1px solid #ddd;
+}

@@ -1,0 +1,296 @@
+<div
+    id="bpm-process-details-content"
+    class="bpm-process-details-content"
+    v-if="isShowBpmProcessDetails"
+    v-cloak
+    v-loading="loading"
+>
+    <div
+        class="bpm-process-details-header"
+        ref="detailsHeader"
+    >
+        <div class="title-content">
+            <div class="title font-bold ellipsis">
+                {{processInfos.processName || processInfos.processDefinitionName}}
+            </div>
+            <div class="flex">
+                <erd-button
+                    size="small"
+                    @click="viewFlowChart"
+                    >{{i18n.flowChart}}</erd-button
+                >
+                <fam-action-pulldown
+                    ref="famActionPulldown"
+                    :action-config="getActionConfig"
+                    @click="actionClick"
+                >
+                    <template #customLabel>
+                        <span class="erd-dropdown-link"><i class="erd-iconfont erd-icon-more"></i></span>
+                    </template>
+                </fam-action-pulldown>
+            </div>
+        </div>
+        <div class="bpm-key-variables">
+            <bpm-key-variable
+                v-for="basicInfo in basicInfos"
+                :key="basicInfo.field"
+                :variable="basicInfo"
+            >
+                <template
+                    slot="valueText"
+                    slot-scope="slotProps"
+                >
+                    <div
+                        v-if="basicInfo.type === 'user'"
+                        class="flex"
+                    >
+                        <bpm-avatar
+                            :users="slotProps.valueText"
+                            show-btn
+                        >
+                            <template
+                                slot="showBtn"
+                                slot-scope="slotProps"
+                            >
+                                <erd-button
+                                    v-if="isUrging(slotProps.user)"
+                                    type="text"
+                                    @click="processUrging(slotProps.user)"
+                                    >{{i18n.urging}}</erd-button
+                                >
+                            </template>
+                        </bpm-avatar>
+                        <erd-button
+                            v-if="isParticipantChange"
+                            type="text"
+                            class="ml-8"
+                            @click="changeHandler"
+                            >{{i18n.changeHandler}}</erd-button
+                        >
+                    </div>
+                    <span
+                        v-else
+                        :style="{ color: slotProps.valueColor }"
+                        >{{slotProps.valueText}}</span
+                    >
+                </template>
+            </bpm-key-variable>
+        </div>
+    </div>
+
+    <div
+        class="bpm-process-details-body"
+        :style="{height: detailsBodyHeight}"
+    >
+        <FamAnchorNavigation :panelConfig="activatorContent">
+            <!-- 步骤条 -->
+            <slot name="horse"></slot>
+            <!-- 流程指引 -->
+            <template #processPoint>
+                <FamDynamicForm
+                    :form="processPointData"
+                    :data="processPointConfig"
+                    readonly
+                ></FamDynamicForm>
+            </template>
+            <!-- 基本信息 -->
+            <template #bpmProcessBasicInfo>
+                <component
+                    v-if="bpmProcessPanel.bpmProcessBasicInfo && !basicInfoLoading"
+                    ref="bpmProcessBasicInfo"
+                    :is="bpmProcessPanel.bpmProcessBasicInfo"
+                    :basic-infos="pboData"
+                    :pbo-data="pboData"
+                    :process-infos="processInfos"
+                    :is-secret="isSecret"
+                ></component>
+                <bpm-process-basic-info
+                    v-if="!bpmProcessPanel.bpmProcessBasicInfo && !basicInfoLoading"
+                    readonly
+                    :basic-infos="processBasicInfo"
+                    :process-status="'activator'"
+                    :is-secret="isSecret"
+                    :process-instance-o-id="processInstanceOId"
+                ></bpm-process-basic-info>
+            </template>
+            <!-- 流程变量 流程属性 -->
+            <template #globalVariable>
+                <BpmProcessVariables
+                    ref="globalVariable"
+                    :processVariables="globalVariables"
+                    readonly
+                ></BpmProcessVariables>
+            </template>
+            <!-- 节点变量 节点属性 -->
+            <template #localVariable>
+                <BpmProcessVariables
+                    ref="localVariable"
+                    :processVariables="localVariables"
+                    :readonly="isDetail"
+                ></BpmProcessVariables>
+            </template>
+            <!-- 业务对象 -->
+            <template #bpmProcessPartial>
+                <bpm-process-partial
+                    v-if="partialUrl && !!pboData"
+                    ref="bpmProcessPartial"
+                    :partial-url="partialUrl"
+                    :activity-id="activityId"
+                    :custom-form-json="customformJson"
+                    :process-infos="processInfos"
+                    :task-infos="taskInfos"
+                    :process-step="'activator'"
+                    :pbo-data="pboData"
+                    :readonly="isDetail"
+                ></bpm-process-partial>
+            </template>
+            <!-- 附件 -->
+            <template #attachment>
+                <bpm-process-attachment
+                    ref="bpmProcessAttachment"
+                    v-if="customUploadBtnMounted"
+                    reference=".bpm-upload-btn"
+                    :show-upload="false"
+                    :original-attachments="processAttachments"
+                    :readonly="isDetail"
+                    :oid="pboOid"
+                    :is-secret="isSecret"
+                    :security-label="securityLabel"
+                ></bpm-process-attachment>
+            </template>
+            <template #attachmentHeaderRight>
+                <erd-button
+                    v-if="!isDetail"
+                    size="small"
+                    class="bpm-upload-btn"
+                    ref="customUploadBtn"
+                    @click="attachmentUpLoad"
+                >{{i18n.uploadAttachment}}
+                </erd-button>
+            </template>
+            <!-- 流程处理 -->
+            <template #bpmProcessApproval>
+                <bpm-process-approval
+                    v-if="!isDetail"
+                    ref="bpmProcessApproval"
+                    :process-infos="processInfos"
+                    :task-infos="taskInfos"
+                    :container-ref="innerContainerRef"
+                    :is-secret="isSecret"
+                    :security-label="securityLabel"
+                    @update-task-infos="getTaskDetail"
+                    @next-key="getNextKey"
+                ></bpm-process-approval>
+                <erd-tabs v-model="activeName">
+                    <!-- 处理人配置 -->
+                    <erd-tab-pane
+                        v-if="isShowHandlerConfiguration"
+                        name="processHandler"
+                        :label="i18n.handlerConfiguration"
+                    >
+                        <bpm-process-handler
+                            v-if="!bpmProcessHandlerLoading"
+                            ref="bpmProcessHandler"
+                            :handler-configuration="handlerConfiguration"
+                            :process-role-config="processRoleConfig"
+                            :user-role-map="userRoleMap"
+                            :holder-ref="holderRef"
+                            :container-ref="innerContainerRef"
+                            :next-key="nextKey"
+                            :read-only="isDetail"
+                            :process-infos="processInfos"
+                            :is-secret="isSecret"
+                            :security-label="securityLabel"
+                            @show-handler-configuration="showHandlerConfiguration"
+                        ></bpm-process-handler>
+                    </erd-tab-pane>
+                    <!-- 处理历史记录 -->
+                    <erd-tab-pane
+                        name="processRecord"
+                        :label="i18n.history"
+                    >
+                        <bpm-process-record
+                            :process-record="processRecord"
+                            :user-info="userInfo"
+                        ></bpm-process-record>
+                    </erd-tab-pane>
+                </erd-tabs>
+            </template>
+        </FamAnchorNavigation>
+    </div>
+
+    <div
+        class="bpm-process-details-footer"
+        ref="detailsFooter"
+    >
+        <erd-button
+            v-if="!isDetail"
+            type="primary"
+            @click="submit"
+            >{{i18n.submit}}</erd-button
+        >
+        <erd-button @click="goBack">{{i18n.goBack}}</erd-button>
+        <erd-button
+            v-if="isRollBack"
+            @click="processWithdraw"
+            >{{i18n.withdraw}}</erd-button
+        >
+    </div>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        :show-fullscreen="false"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            ref="bpmFlowchart"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+
+    <!-- 处理流程功能 -->
+    <bpm-handler-dialog
+        :handler-data="handlerData"
+        :is-secret="isSecret"
+        :security-label="securityLabel"
+        @cancel="(val) => handlerData.visible = val"
+        @success-callback="goBack"
+    ></bpm-handler-dialog>
+
+    <!-- 加减签 -->
+    <erd-ex-dialog
+        :title="changeHandlerData.title"
+        :visible.sync="changeHandlerData.visible"
+        destroy-on-close
+    >
+        <bpm-participant-change
+            v-if="changeHandlerData.visible"
+            ref="bpmParticipantChange"
+            :handler-configuration="participantChange"
+            :user-role-map="userRoleMap"
+            :holder-ref="holderRef"
+            :container-ref="innerContainerRef"
+            :process-instance-oid="processInstanceOId"
+            :activity-id="activityId"
+            :read-only="isDetail"
+            :handler-data="changeHandlerData"
+            :user-status="userStatus"
+            :is-secret="isSecret"
+            :security-label="securityLabel"
+        ></bpm-participant-change>
+
+        <template #footer>
+            <erd-button
+                v-loading="loading"
+                type="primary"
+                @click="changeHandlerSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="changeHandlerData.visible = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,222 @@
+.fam-user-info__popover {
+    padding: 0;
+    margin-top: 12px;
+    color: var(--colorTextNormal);
+
+    &.fam-user-info__popover-radius {
+        border-radius: 2px;
+        border-radius: var(--borderRadius);
+        margin-right: 16px;
+    }
+
+    .popper__arrow {
+        display: none;
+    }
+
+    .adminbgImg {
+        position: absolute;
+        background-size: 100%;
+    }
+
+    .avatar-mask {
+        position: absolute;
+        background: #000000;
+        opacity: .25;
+        z-index: 1;
+    }
+
+    .adminInfo {
+        width: 200px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-size: auto 200px;
+    }
+
+    .adminInfo p {
+        margin-bottom: 4px;
+    }
+
+    .admin_avatar {
+        position: absolute;
+        left: 16px;
+        width: 50px;
+        height: 50px;
+        border: 1px solid white;
+        border-radius: 50%;
+        background-size: auto 70px;
+        z-index: 2;
+    }
+
+    .admin_avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .admin_details {
+        position: absolute;
+        right: 16px;
+        margin-left: 12px;
+        width: 106px;
+        z-index: 2;
+    }
+
+    .admin_details .name {
+        font-size: 14px;
+        font-size: var(--fontSize);
+        color: #FFFFFF;
+        line-height: 16px;
+        font-weight: 400;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .admin_details .branch {
+        opacity: 0.8;
+        font-size: 12px;
+        color: #FFFFFF;
+        line-height: 16px;
+        font-weight: 400;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+
+    .detailList li, .selectTenant li {
+        cursor: pointer;
+    }
+
+    .detailList .erd-iconfont {
+        font-size: 16px;
+    }
+    .detailList .el-icon-refresh {
+        font-size: 16px;
+    }
+
+    .selectTenant {
+        background: #fff;
+    }
+
+    .detailList li:hover, .selectTenant li:hover {
+        background: #EBF1FF;
+    }
+
+    .mr-normal.inlineBlock, .inlineBlock {
+        display: inline-block;
+        width: 100%;
+        min-height: var(--layoutSecondaryMenuHeiht);
+        line-height: calc(var(--layoutSecondaryMenuHeiht) - 16px);
+        margin-right: 0;
+        padding: 8px 16px;
+    }
+
+    .drop-down .nameInfo {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .nameInfo span {
+        display: block;
+        font-size: var(--fontSize);
+        line-height: 20px;
+        font-weight: 400;
+    }
+
+    .nameInfo span:last-child {
+        color: rgba(0, 0, 0, 0.45);
+    }
+
+    .text-margin-left {
+        i {
+            position: relative;
+            top: calc(calc(16px - var(--fontSize)) / 2);
+        }
+        span {
+            margin-left: 8px;
+        }
+    }
+
+    .selectTenant {
+        max-height: 192px;
+        margin-bottom: 0;
+        overflow: auto;
+        position: absolute;
+        box-shadow: 0 1px 6px 1px rgba(0, 0, 0, .2);
+        left: -8px;
+        width: 100%;
+    }
+
+    .selectTenant li {
+        display: flex;
+        padding: 6px 12px;
+        height: 32px;
+    }
+
+    .active {
+        background: #EBF1FF;
+        span {
+            color: var(--colorPrimary);
+        }
+    }
+
+    .unactive {
+        background: #FFF;
+    }
+
+    .detailList {
+        /* padding: 8px 12px 8px 20px; */
+        margin: 8px 0;
+    }
+
+    .detailList li,
+    .drop-down {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--colorTextNormal);
+        font-size: 14px;
+font-size: var(--fontSize);
+    }
+
+
+}
+
+.previewDialog.el-dialog .el-dialog__header {
+    display: none;
+}
+
+.previewDialog.el-dialog .dj-dialog-content {
+    padding: 0;
+    overflow: unset;
+}
+
+.ultra-header-right-button-pane {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--bigSpace);
+    .ultra-header-right-button-avatar {
+        margin-right: 16px;
+        img.avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-sizing: content-box;
+            border: 2px solid transparent;
+            transition: border-color .3s ease-in-out;
+            &.active,
+            &:hover {
+                border-color: var(--colorPrimary);
+            }
+        }
+    }
+}

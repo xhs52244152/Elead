@@ -1,0 +1,54 @@
+<div class="fam-icon-select">
+    <div class="icon">
+        <div class="iconDetail">
+            <div
+                class="editIcon"
+                v-if="readonly"
+            >
+                <icon-show
+                    :iconClass.sync="valueClass"
+                    :clear="false"
+                    :readonly="readonly"
+                    :style="{ color: iconColor }"
+                ></icon-show>
+            </div>
+            <div
+                class="editIcon"
+                v-else
+            >
+                <icon-show
+                    :iconClass.sync="valueClass"
+                    :clear="clearable"
+                    :style="{ color: iconColor }"
+                ></icon-show>
+                <erd-button
+                    size="small"
+                    type="text"
+                    v-if="visibleBtn"
+                    @click="openDialog"
+                    :title="btnName"
+                >
+                    {{ btnName }}
+                </erd-button>
+                <span
+                    class="iconTips"
+                    v-if="visibleTips"
+                    :title="tips"
+                >
+                    {{ tips }}
+                </span>
+            </div>
+            <erd-ex-dialog
+                title="选择图标"
+                :visible.sync="dialogVisible"
+                popper-class="fam-icon-select__dialog"
+                size="large"
+            >
+                <icon-menu
+                    ref="iconListMenu"
+                    @icon-change="setIcon"
+                ></icon-menu>
+            </erd-ex-dialog>
+        </div>
+    </div>
+</div>

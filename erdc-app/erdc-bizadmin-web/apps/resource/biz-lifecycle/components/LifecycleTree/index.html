@@ -1,0 +1,143 @@
+<div
+    id="LifecycleTree"
+    class="tree-management"
+>
+    <div class="tree-header">
+        <div
+            ref="header"
+            class="tree-title"
+        >
+            {{i18nMappingObj.lifecycle}}
+        </div>
+        <div class="search flex flex-align">
+            <erd-input
+                clearable
+                class="grow-1"
+                v-model="searchValue"
+                :placeholder="i18nMappingObj.pleaseEnter"
+                suffix-icon="erd-iconfont erd-icon-search"
+            >
+            </erd-input>
+            <div class="flex ml-normal">
+                <erd-tooltip
+                    :content="i18n.import"
+                    placement="top"
+                >
+                    <erd-button
+                        type="fill-icon"
+                        icon="erd-iconfont erd-icon-import"
+                        @click="onImportAll"
+                    ></erd-button>
+                </erd-tooltip>
+                <erd-tooltip
+                    :content="i18n.export"
+                    placement="top"
+                >
+                    <erd-button
+                        type="fill-icon"
+                        icon="erd-iconfont erd-icon-export"
+                        @click="onExportAll"
+                    ></erd-button>
+                </erd-tooltip>
+            </div>
+        </div>
+        <div class="tree-operation">
+            <erd-tooltip
+                class="item"
+                effect="dark"
+                placement="top"
+                :content="i18nMappingObj.stateManagement"
+            >
+                <erd-button
+                    icon="el-icon-edit"
+                    @click="onStateManagement"
+                >
+                    {{i18nMappingObj.stateManagement}}
+                </erd-button>
+            </erd-tooltip>
+            <!-- 导入导出暂时不做 -->
+            <!-- <erd-dropdown
+                            style="margin-left: 12px"
+                            trigger="click"
+                            :hide-on-click="false"
+                            @command="onCommand"
+                        >
+                            <erd-button>
+                                {{i18nMappingObj.moreActions}}<i class="el-icon-arrow-down el-icon--right"></i>
+                            </erd-button>
+                            <erd-dropdown-menu slot="dropdown">
+                                <erd-dropdown-item command="import">{{i18nMappingObj.Import}}</erd-dropdown-item>
+                                <erd-dropdown-item command="export">{{i18nMappingObj.Export}}</erd-dropdown-item>
+                            </erd-dropdown-menu>
+                        </erd-dropdown> -->
+        </div>
+        <FamImport
+            v-if="importVisible"
+            accept=".zip"
+            businessName="LifecycleTemplateImport"
+            :visible.sync="importVisible"
+            :is-show-template="false"
+            :class-name="className"
+            :request-config="importRequestConfig"
+            @submit-success-callback="onImportSuccess"
+        ></FamImport>
+    </div>
+    <div ref="treeSplit"></div>
+    <erd-scrollbar :style="{ height: treeHeight }">
+        <erd-ex-tree
+            ref="tree"
+            class="tree-list"
+            node-key="key"
+            :data="treeList"
+            :props="defaultProps"
+            :filter-node-method="filterSearch"
+            :highlight-current="true"
+            :default-expanded-keys="defaultExpandedKeys"
+            :expand-on-click-node="false"
+            @node-expand="nodeExpand"
+            @node-collapse="nodeCollapse"
+            @node-click="onCheck"
+        >
+            <template v-slot="scope">
+                <div
+                    class="tree-content"
+                    @mouseenter="mouseenter(scope)"
+                    @mouseleave="mouseleave(scope)"
+                >
+                    <div class="tree-text">
+                        <template v-if="isApplication(scope.node.data) && scope.node.data.icon">
+                            <img
+                                v-if="scope.node.data.icon"
+                                alt=""
+                                style="top: -1px; width: 1em; height: 1em"
+                                class="inline-block position-relative"
+                                :src="scope.node.data.icon"
+                            />
+                            <erd-icon
+                                v-else
+                                icon="loading"
+                                style="animation: loading-rotate 2s linear infinite"
+                            ></erd-icon>
+                        </template>
+                        <span>{{scope.node.label}}</span>
+                    </div>
+                    <div
+                        class="tree-operation"
+                        v-show="scope.data.show"
+                        @click.stop
+                    >
+                        <erd-button
+                            type="icon"
+                            icon="erd-iconfont erd-icon-add-document fontSize18"
+                            v-if="scope.node.level == 1"
+                            size="mini"
+                            class="drag"
+                            @click="onCreate(scope)"
+                        >
+                        </erd-button>
+                    </div>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

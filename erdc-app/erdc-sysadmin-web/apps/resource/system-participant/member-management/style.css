@@ -1,0 +1,25 @@
+#fam-member-management .page-content .right-contaienr {
+  height: 100%;
+}
+#fam-member-management .page-content .right-contaienr > .el-tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#fam-member-management .page-content .right-contaienr > .el-tabs > .el-tabs__content {
+  flex-grow: 1;
+}
+#fam-member-management .page-content .right-contaienr > .el-tabs > .el-tabs__content .el-tab-pane {
+  height: 100%;
+}
+#fam-member-management .fam-organization-manager,
+#fam-member-management .fam-resizable-container,
+#fam-member-management .fam-resizable-container__left,
+#fam-member-management .fam-organization-tree {
+  height: 100%;
+}
+#fam-member-management .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,99 @@
+<div
+    id="event-configure"
+    class="event-configure"
+>
+    <erd-contraction-panel
+        :title="i18n.eventConfigure"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <erd-tabs
+                v-model="activeName"
+            >
+                <erd-tab-pane
+                    v-for="eventType in eventTypeList"
+                    :key="eventType.value"
+                    :label="eventType.name"
+                    :name="eventType.value"
+                >
+                    <div v-if="!readonly" style="text-align: right; margin-bottom: 16px;">
+                        <erd-button
+                            size="small"
+                            @click="addRow(eventType.value)"
+                        >{{i18n.add}}</erd-button>
+                    </div>
+
+                    <FamErdTable
+                        :data="tableData"
+                        :column="columns"
+                        :column-config="{ resizable: true }"
+                        :is-embed-table="true"
+                        auto-resize
+                        border
+                    >
+                        <template #column:default:handleType="scope">
+                            <span>{{handleTypeLabelMap[scope.data.row[scope.data.column.property]]}}</span>
+                        </template>
+                        <template #column:default:eventHierarchy="scope">
+                            <span>{{echoEventHierarchy(scope.data.row, scope.data.column)}}</span>
+                        </template>
+                        <template #column:default:description="scope">
+                            <span>{{echoDescription(scope.data.row, scope.data.column)}}</span>
+                        </template>
+                        <template #column:default:operation="scope">
+                            <erd-button
+                                v-if="scope.data.row.handleType !== 'INTERFACE'"
+                                type="text"
+                                @click="editRow(scope.data.row, scope.data.rowIndex)"
+                            >{{i18n.edit}}</erd-button>
+                            <erd-button
+                                type="text"
+                                @click="deleteRow(scope.data.row, scope.data.rowIndex)"
+                            >{{i18n.remove}}</erd-button>
+                        </template>
+                    </FamErdTable>
+                </erd-tab-pane>
+            </erd-tabs>
+
+            <erd-ex-dialog
+                :title="i18n.eventConfigure"
+                :visible.sync="dialogVisible"
+                :modal-append-to-body="false"
+                :destroy-on-close="true"
+                @close="closeDialog"
+            >
+                <FamDynamicForm
+                    ref="famDynamicForm"
+                    :form.sync="formData"
+                    :data="formConfig"
+                    :readonly="readonly"
+                    label-position="right"
+                ></FamDynamicForm>
+
+                <FamErdTable
+                    v-if="formData.handleType === 'INTERFACE'"
+                    ref="multipleTable"
+                    auto-resize
+                    border
+                    class="bpm-mt-4"
+                    :data="interfaceDataList"
+                    :column="interfaceColumns"
+                    :column-config="{ resizable: true }"
+                    :is-embed-table="true"
+                >
+                    <template #column:default:interfaceName="scope">
+                        <span>{{scope.data.row.formatAttrRawList.name}}</span>
+                    </template>
+                    <template #column:default:interfaceType="scope">
+                        <span>{{scope.data.row.formatAttrRawList.interfaceType}}</span>
+                    </template>
+                </FamErdTable>
+
+                <span slot="footer" class="dialog-footer">
+                    <erd-button type="primary" @click="confirmFormLayout">确 定</erd-button>
+                    <erd-button @click="dialogVisible = false">取 消</erd-button>
+                </span>
+            </erd-ex-dialog>
+        </template>
+    </erd-contraction-panel>
+</div>

@@ -1,0 +1,7 @@
+#VariableTran .variable-help {
+    color: var(--colorTextExplain);
+}
+
+#VariableTran .variable-help .help-top {
+    margin-top: 12px;
+}

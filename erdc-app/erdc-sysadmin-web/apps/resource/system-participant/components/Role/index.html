@@ -1,0 +1,53 @@
+<div
+    id="Role"
+    class="grow-1"
+>
+    <ResizableContainer>
+        <template slot="left">
+            <role-tree
+                ref="roleTree"
+                @select="onClick"
+            >
+                <template v-slot:node-operator="scope">
+                    <div @click.stop>
+                        <erd-button
+                            v-if="importPrem && scope.node.level==1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-import"
+                            @click="onImport(scope.data)"
+                        ></erd-button>
+                        <erd-button
+                            v-if="exportPrem && scope.node.level==1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-export"
+                            @click="onExport(scope.data)"
+                        ></erd-button>
+                    </div>
+                </template>
+            </role-tree>
+        </template>
+        <template slot="right">
+            <role-list
+                :role="role"
+                @rowdata="checkDetail"
+                @reloadtree="reloadTree"
+            ></role-list>
+        </template>
+    </ResizableContainer>
+
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="RoleImport"
+        :request-config="importRequestConfig"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="RoleExport"
+        :request-config="exportRequestConfig"
+    ></fam-export>
+</div>

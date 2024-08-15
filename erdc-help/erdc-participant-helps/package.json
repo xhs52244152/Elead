@@ -1,0 +1,13 @@
+{
+  "name": "@erdc-help/erdc-participant-helps",
+  "description": "参与者管理指引",
+  "version": "3.1.0",
+  "erdcData": {
+    "help": {
+      "matchRoutes": [
+        "^/system-participant",
+        "^/platform-license"
+      ]
+    }
+  }
+}

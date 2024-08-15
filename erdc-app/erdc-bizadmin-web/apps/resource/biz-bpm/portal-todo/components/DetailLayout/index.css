@@ -1,0 +1,34 @@
+.detail-layout-content {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #EBEBEB;
+}
+
+.wide-detail-ctt-left-box {
+  width: 344px !important;
+}
+.wide-detail-ctt-left-box .el-scrollbar__wrap {
+  overflow-x: hidden;
+}
+.wide-detail-ctt-left-box .wide-detail-ctt-left-p {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid #EBEBEB;
+  border-radius: 0px 0px 0px 2px;
+}
+
+.wide-detail-ctt-middle-box {
+  width: 4px !important;
+  background: #ebebeb;
+  flex-shrink: 0;
+}
+
+.wide-detail-ctt-right-box {
+  width: calc(100% - 348px);
+}
+
+.wide-detail-ctt-right-box .workflow-workshop .workflow-workshop__content {
+  width: 100%;
+}/*# sourceMappingURL=index.css.map */

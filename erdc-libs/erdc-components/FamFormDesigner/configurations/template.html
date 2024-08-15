@@ -1,0 +1,52 @@
+<script type="text/template" id="fam-widget-configuration-common-tmpl">
+<fam-dynamic-form-item
+    :label="label"
+    :field="wcd.name"
+    v-bind="wcdProps"
+    :formData="formData"
+    :label-width="labelWidth"
+>
+    <component
+        :is="wcdComponent"
+        :value="innerValue"
+        class="w-100p"
+        v-bind="wcdProps"
+        :placeholder="props.placeholder || i18nMappingObj.pleaseInput"
+        :disabled="readonly"
+        :readonly="readonly"
+        @input="onInput"
+        @blur="onBlur"
+        @change="onChange"
+    ></component>
+</fam-dynamic-form-item>
+</script>
+
+<script type="text/template" id="fam-widget-configuration-table-tmpl">
+
+<fam-dynamic-form-item
+    :label="label"
+    :field="wcd.name"
+    v-bind="wcdProps"
+    label-width="0"
+>
+    <table-data
+        :columns="wcdProps.columns"
+        :data.sync="innerValue"
+        :row-schema="wcdProps.rowSchema"
+        :readonly="readonly"
+        @change="handlerWcdEvent('change', $event)"
+    ></table-data>
+</fam-dynamic-form-item>
+</script>
+
+<script type="text/template" id="fam-widget-separator-tmpl">
+<fam-dynamic-form-item
+    :label="label"
+    :field="wcd.name"
+    v-bind="wcdProps"
+    label-width="0"
+    style="margin-top: -16px; margin-bottom: -12px;"
+>
+    <div class="w-100p h-1 bg-disabled"></div>
+</fam-dynamic-form-item>
+</script>

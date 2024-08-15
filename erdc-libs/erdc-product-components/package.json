@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-libs/erdc-product-components",
+  "version": "3.1.0",
+  "description": "平台空间组件",
+  "dependencies": {
+  }
+}

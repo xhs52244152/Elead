@@ -1,0 +1,21 @@
+<erd-ex-dialog
+    v-if="changePassworkVisible"
+    :visible.sync="changePassworkVisible"
+    :title="i18nMappingObj.changePassword"
+>
+    <FamDynamicForm
+        ref="changePassword"
+        :form="passwordForm"
+        :data="passwordConfig"
+    >
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="passwordSubmit"
+        >
+            {{i18nMappingObj.ok}}
+        </erd-button>
+        <erd-button @click="changePassworkVisible = false">{{i18nMappingObj.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

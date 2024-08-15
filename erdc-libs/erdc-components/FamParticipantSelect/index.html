@@ -1,0 +1,171 @@
+<div
+    id="FamParticipantSelect"
+    :style="{width: innerWidth}"
+    :class="['fam-participant-select', componentDisabled ? 'custom-dropdown-disabled' : '']"
+    class="text-0"
+>
+    <erd-dropdown
+        v-if="participantTypeList?.length > 1"
+        ref="fam-dropdown"
+        trigger="click"
+        placement="bottom-start"
+        :disabled="componentDisabled"
+        @command="handleCommand"
+        @visible-change="fnVisibleChange"
+    >
+        <span :class="['el-dropdown-link type-select', typeVisible ? 'is-focus' : '']">
+            <i :class="['fontSize16 select-icon', selectedTypeIcon]"></i>
+            <i :class="['select-caret el-icon-arrow-up fontSize16', typeVisible ? 'is-reverse' : '']"></i>
+        </span>
+        <template #dropdown>
+            <erd-dropdown-menu
+                class="participant-dropdown"
+                :class="popperClass"
+                slot="dropdown"
+            >
+                <erd-dropdown-item
+                    :class="['participant-type-dropdown-item', item.value == type ? 'seleted' : '']"
+                    v-for="(item,index) in participantTypeList"
+                    :key="index"
+                    :command="item.value"
+                    :icon="item.icon"
+                >
+                    {{ item.name }}
+                </erd-dropdown-item>
+            </erd-dropdown-menu>
+        </template>
+    </erd-dropdown>
+    <div
+        class="component-show-body grow-1 overflow-hidden w-0"
+        :class="{'select-component': participantTypeList?.length > 1}"
+    >
+        <erd-popover
+            ref="popover"
+            v-model="visiblePopover"
+            placement="bottom-end"
+            trigger="click"
+            :popper-class="innerPopperClass"
+            :width="popoverWidth"
+            @show="handlePopoverShow"
+            @hide="handlePopoverHide"
+        >
+            <div
+                ref="selectBox"
+                class="w-100p bordered wapperInput inline-flex align-items-center justify-end pl-8 pr-0 position-relative text-normal"
+                slot="reference"
+            >
+                <div
+                    ref="selectBoxContent"
+                    class="inline-flex align-items-center grow-1 mr-normal overflow-hidden"
+                >
+                    <span
+                        v-if="!selectData.length"
+                        class="textPlaceholder"
+                    >
+                        {{i18nMappingObj.pleaseSelect}}
+                    </span>
+                    <div
+                        ref="selectTagRef"
+                        class="flex align-items-center"
+                    >
+                        <erd-tag
+                            v-for="(item, i) in selectDataTags"
+                            :key="item.value"
+                            type="info"
+                            effect="light"
+                            size="mini"
+                            closable
+                            disable-transitions
+                            @close="closeTag(item)"
+                        >
+                            <span class="tag-text">
+                                <erd-show-tooltip
+                                    :content="type === 'USER' ? item[defaultProps.label] + ' ' + item?.code || ''
+                            : item[defaultProps.label]"
+                                >
+                                    <template v-slot:show-tooltip-title>
+                                        <span class="title_text"> {{tagName(type, item)}} </span>
+                                    </template>
+                                </erd-show-tooltip>
+                            </span>
+                        </erd-tag>
+                    </div>
+                    <erd-tag
+                        ref="selectCounts"
+                        v-show="selectDataCounts && selectDataCounts.length"
+                        class="ml-4"
+                        type="info"
+                        effect="light"
+                        size="mini"
+                        disable-transitions
+                    >
+                        <erd-tooltip placement="top">
+                            <div slot="content">
+                                <div v-for="item in selectDataCountsTips">{{item}}</div>
+                            </div>
+                            <span>
+                                <erd-icon icon="erd-iconfont erd-icon-add-user-round"></erd-icon>
+                                {{selectDataCounts.length}}
+                            </span>
+                        </erd-tooltip>
+                    </erd-tag>
+                </div>
+                <div
+                    ref="toolPanel"
+                    class="flex mr-normal justify-end"
+                    style="gap: var(--normalSpace)"
+                >
+                    <erd-icon
+                        v-if="selectData && selectData.length && !componentDisabled"
+                        icon="error-solid"
+                        aria-invalid="true"
+                        @click.stop="clearInput()"
+                    ></erd-icon>
+                    <erd-icon
+                        :icon="selectedTypeIcon"
+                        class="color-primary"
+                    ></erd-icon>
+                </div>
+            </div>
+            <div :class="{ 'h-360': !autoHeight }">
+                <SelectContainer
+                    v-if="visiblePopover"
+                    v-model="selected"
+                    ref="SelectContainerRef"
+                    :type="type"
+                    :queryMode="innerQueryMode"
+                    :default-mode="defaultMode"
+                    :select-data.sync="selectData"
+                    :default-value="defaultValue"
+                    :props="defaultProps"
+                    :query-scope="queryScope"
+                    :query-params="queryParams"
+                    :container-ref="innerContainerRef"
+                    :multiple="multiple"
+                    :app-name="innerAppName"
+                    :node-key="nodeKey"
+                    :disable-ids="disableIds"
+                    :custom-schema="customSchema"
+                    :three-member-env="innerthreeMemberEnv"
+                    :filter-security-label="filterSecurityLabel"
+                    :security-label="securityLabel"
+                    v-bind="{...componentProps, ...$attrs}"
+                    @change="handleChange"
+                ></SelectContainer>
+            </div>
+        </erd-popover>
+        <!-- <component
+            :ref="currentShowComponent"
+            :key="type"
+            :disabled="componentDisabled"
+            :isgetdisable="isgetdisable"
+            :is="currentShowComponent"
+            v-model="selected"
+            v-bind="componentProps"
+            :defaultValue="tempSelectedUsers"
+            v-on="componentListeners"
+            @remove-tag="handleRemoveTag"
+            @change="handleChange"
+        ></component> -->
+    </div>
+</div>

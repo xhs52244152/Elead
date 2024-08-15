@@ -1,0 +1,143 @@
+<erd-ex-dialog
+    width="1200px"
+    custom-class="notice-edit"
+    :title="formData.oid ? i18nMappingObj.updateNotice : i18nMappingObj.createNotice"
+    :destroy-on-close="true"
+    :visible.sync="visible"
+    @close="cancel"
+>
+    <FamDynamicForm
+        ref="form"
+        :form.sync="formData"
+        :data="formConfigs"
+    >
+        <template #upload>
+            <fam-upload
+                ref="uploadRef"
+                :need-content-id="true"
+                :file-list="fileList"
+                :on-preview="downloadFile"
+                :multiple="true"
+                class-name="erd.cloud.notice.entity.SysNotice"
+            >
+            </fam-upload>
+        </template>
+
+        <template #notify>
+            <erd-checkbox-group v-model="formData.notifyCodes">
+                <erd-checkbox
+                    v-for="item in notifySendTypes"
+                    :key="item.value"
+                    :label="item.value"
+                >
+                    {{item.description}}
+                </erd-checkbox>
+            </erd-checkbox-group>
+        </template>
+
+        <template #relation>
+            <!--关联信息  当选择用户/组才显示-->
+            <div
+                class="participant-panel"
+                style="width: 100%; padding-left: 12.5%"
+                v-show="formData.selectType === '1'"
+            >
+                <!--人员-->
+                <div class="topItem flex mb-16">
+                    <fam-participant-select
+                        width="300px"
+                        ref="famParticipantSelect"
+                        multiple
+                        collapseTags
+                        clearable
+                        v-model="participantVal"
+                        @change="changeMember"
+                        @selectChange="changeUserGroup"
+                        :query-params="queryParams"
+                        :query-scope="'fullTenant'"
+                        :show-type="['USER', 'GROUP', 'ORG']"
+                    ></fam-participant-select>
+                    <erd-button
+                        class="participant-add ml-8"
+                        @click="addMember"
+                    >
+                        {{ i18nMappingObj.addMember }}
+                    </erd-button>
+                </div>
+
+                <!--管理组表格-->
+                <fam-erd-table
+                    border
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    :data="relationTableData"
+                    :column="relationTableColumn"
+                    show-overflow
+                    ref="erdTable"
+                >
+                    <template #column:default:participantType="{data}">
+                        <span>{{ i18nMappingObj[data.row.participantType] ?? '' }}</span>
+                    </template>
+
+                    <!--department-->
+                    <template #column:default:department="{data}">
+                        <span v-if="data.row.department">{{ data.row.department }}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--phone-->
+                    <template #column:default:mobile="{data}">
+                        <span v-if="data.row.mobile">{{ data.row.mobile }}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--email-->
+                    <template #column:default:email="{data}">
+                        <span v-if="data.row.email">{{ data.row.email }}</span>
+                        <span v-else>—</span>
+                    </template>
+
+                    <!--操作-->
+                    <template #column:default:operation="{data}">
+                        <el-button
+                            type="text"
+                            @click="removeRelation(data.row)"
+                        >
+                            {{ i18nMappingObj.remove }}
+                        </el-button>
+                    </template>
+                </fam-erd-table>
+                <!--小于等于一页不展示-->
+                <erd-pagination
+                    style="margin-top: 15px"
+                    :current-page.sync="relationTablePagination.pageIndex"
+                    :page-size.sync="relationTablePagination.pageSize"
+                    :total="relationTablePagination.total"
+                    :hide-on-single-page="false"
+                    @current-change="handlePageChange"
+                    @size-change="handleSizeChange"
+                >
+                </erd-pagination>
+            </div>
+        </template>
+    </FamDynamicForm>
+
+    <template
+        #footer
+        class="dialog-footer"
+    >
+        <erd-button
+            type="primary"
+            @click="submit"
+            :loading="loading"
+        >
+            {{ i18nMappingObj.confirm }}
+        </erd-button>
+        <erd-button
+            @click="cancel"
+            :loading="loading"
+            >{{ i18nMappingObj.cancel }}</erd-button
+        >
+    </template>
+</erd-ex-dialog>

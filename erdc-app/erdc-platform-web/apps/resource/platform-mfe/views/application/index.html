@@ -1,0 +1,132 @@
+<div class="w-100p h-100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <fam-advanced-table
+        class="grow-1 ptrl-xl"
+        ref="appManageTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+    >
+        <template #column:default:pkgVersion:content="{ scope }">
+            <span v-if="scope.row.innerApp">{{ scope.row.pkgVersion }}</span>
+            <span v-else>--</span>
+        </template>
+        <template #column:default:innerApp:content="{ scope }">
+            <span>{{ getAppType(scope.row) }}</span>
+        </template>
+        <template #column:default:dependency:content="{ scope }">
+            <span v-if="getDependency(scope.row).length > 0">
+                <span v-for="item in getDependency(scope.row)">{{item.key}}:{{item.value}}</span>
+            </span>
+            <span v-else>--</span>
+        </template>
+        <template #column:default:group:content="{ scope }">
+            <span v-if="scope.row.appId || scope.row.groupId">{{ getGroupName(scope.row) }}</span>
+            <span v-else>--</span>
+        </template>
+        <template #column:default:online:content="{ scope }">
+            <erd-tag
+                :type="scope.row.online ? '' : 'info'"
+                effect="dark"
+                :size="tagSize"
+            >
+                {{ scope.row.online? i18nMappingObj.online : i18nMappingObj.offline }}
+            </erd-tag>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-link
+                :underline="false"
+                type="primary"
+                @click="editApp(scope.row)"
+                >{{ i18nMappingObj.edit }}</erd-link
+            >
+            <erd-divider direction="vertical"></erd-divider>
+            <erd-dropdown
+                @command="handleMoreAction($event, scope.row)"
+                trigger="click"
+            >
+                <span class="el-dropdown-link">
+                    <erd-link
+                        type="primary"
+                        :underline="false"
+                        >{{ i18nMappingObj.more }}
+                        <i class="el-icon-arrow-down el-icon--right"></i>
+                    </erd-link>
+                </span>
+                <erd-dropdown-menu slot="dropdown">
+                    <div v-if="scope.row.innerApp">
+                        <erd-dropdown-item command="download">{{ i18nMappingObj.download }}</erd-dropdown-item>
+                        <erd-dropdown-item command="config">{{ i18nMappingObj.config }}</erd-dropdown-item>
+                        <erd-dropdown-item command="switchVersion"
+                            >{{ i18nMappingObj.versionManage }}
+                        </erd-dropdown-item>
+                        <erd-dropdown-item command="connect">{{ i18nMappingObj.resourceList }}</erd-dropdown-item>
+                    </div>
+                    <erd-dropdown-item
+                        command="status"
+                        v-if="isShowOffline(scope.row)"
+                    >
+                        {{ scope.row.online? i18nMappingObj.offline : i18nMappingObj.online }}
+                    </erd-dropdown-item>
+                    <erd-dropdown-item
+                        v-if="!scope.row.innerApp"
+                        command="delete"
+                        >{{ i18nMappingObj.delete }}</erd-dropdown-item
+                    >
+                </erd-dropdown-menu>
+            </erd-dropdown>
+        </template>
+    </fam-advanced-table>
+    
+    <!-- 创建/编辑框 -->
+    <addForm
+        ref="addModal"
+        @done="refreshTable"
+    ></addForm>
+
+    <!-- 版本管理弹框 -->
+    <versionManage
+        ref="versionModal"
+        :id="rowId"
+        :title="versionTitle"
+        @done="saveVersion"
+    ></versionManage>
+
+    <!-- 关联微功能弹框 -->
+    <erd-ex-dialog
+        :title="i18nMappingObj.resourceList"
+        :visible.sync="connectVisible"
+        width="1200px"
+    >
+        <connectResource
+            class="h-300"
+            :parent-code="parentCode"
+            :is-show-left="isShowLeft"
+            v-if="connectVisible"
+        ></connectResource>
+        <template #footer>
+            <erd-button @click="cancelConnect">{{ i18nMappingObj.close }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 分组管理 -->
+    <groupManage
+        ref="groupModal"
+        @done="updateGroup"
+    ></groupManage>
+
+    <!-- 应用配置/配置 -->
+    <configManage
+        ref="configModal"
+        :type="configType"
+        :pkgCode="pkgCode"
+    ></configManage>
+
+    <!-- 导入/导出 -->
+    <importModal
+        ref="importModal"
+        :is-import="isImport"
+    ></importModal>
+</div>

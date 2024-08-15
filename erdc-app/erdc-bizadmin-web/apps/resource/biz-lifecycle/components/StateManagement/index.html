@@ -1,0 +1,142 @@
+<div
+    id="StateManagement"
+    class="h-100p flex flex-column"
+>
+    <div
+        ref="header"
+        class="stateManagement-header ptb-16"
+    >
+        {{i18nMappingObj.stateManagement}}
+    </div>
+    <div class="content grow-1 flex flex-column">
+        <div
+            class="operation flex"
+            ref="operation"
+        >
+            <div class="left">
+                <erd-input
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    v-model="searchVal"
+                    :placeholder="i18nMappingObj.pleaseEnter"
+                    clearable
+                    @input="search"
+                    @keyup.enter.native="seachEnter"
+                    style="width: 240px"
+                >
+                </erd-input>
+            </div>
+            <div class="right">
+                <erd-button
+                    icon="el-icon-plus"
+                    type="primary"
+                    @click="onCreate"
+                >
+                    {{i18nMappingObj.create}}
+                </erd-button>
+                <erd-button @click="importInterface">{{i18n.import}}</erd-button>
+                <erd-button @click="exportInterface">{{i18n.export}}</erd-button>
+                <erd-button
+                    type="fill-icon"
+                    icon="erd-iconfont erd-icon-reset"
+                    @click="refresh"
+                ></erd-button>
+            </div>
+        </div>
+        <div class="satte-table fam-erd-table-container">
+            <erd-table
+                ref="erdTable"
+                border
+                v-loading="loading"
+                :data="tableData"
+                :column="columns"
+                height="100%"
+                show-overflow
+            >
+                <template #column:default:displayName="{data}">
+                    <span>{{translateI18n(data.row.nameI18nJson?.value)}}</span>
+                </template>
+                <template #column:default:description="{data}">
+                    <span>{{translateI18n(data.row.descriptionI18nJson?.value)}}</span>
+                </template>
+                <template #column:default:enabled="{data}">
+                    <span>{{data.row.enabled ? i18nMappingObj.enabled : i18nMappingObj.disabled}}</span>
+                </template>
+                <template #column:default:oper="{data}">
+                    <erd-tooltip
+                        :disabled="data.row.tenantId === currentTenantId"
+                        :content="i18n.noCurrentTenant"
+                        placement="top"
+                        :open-delay="800"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="data.row.tenantId !== currentTenantId"
+                            @click="onEdit(data)"
+                        >
+                            {{i18nMappingObj.edit}}
+                        </erd-button>
+                    </erd-tooltip>
+                    <erd-tooltip
+                        v-if="!data.row.enabled"
+                        :disabled="data.row.tenantId === currentTenantId"
+                        :content="i18n.noCurrentTenant"
+                        placement="top"
+                        :open-delay="800"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="data.row.tenantId !== currentTenantId"
+                            @click="onEnable(data)"
+                        >
+                            {{i18nMappingObj.enable}}
+                        </erd-button>
+                    </erd-tooltip>
+                    <erd-tooltip
+                        v-else
+                        :disabled="data.row.tenantId === currentTenantId"
+                        :content="i18n.noCurrentTenant"
+                        placement="top"
+                        :open-delay="800"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="data.row.tenantId !== currentTenantId"
+                            @click="onEnable(data)"
+                        >
+                            {{i18nMappingObj.disable}}
+                        </erd-button>
+                    </erd-tooltip>
+                </template>
+            </erd-table>
+        </div>
+        <erd-pagination
+            style="padding: 16px 0"
+            :total="total"
+            :page-size="pageSize"
+            :current-page="currentPage"
+            :hide-on-single-page="false"
+            @size-change="sizeChange"
+            @current-change="currentChange"
+        >
+        </erd-pagination>
+    </div>
+    <state-management-add
+        v-if="visible"
+        :visible.sync="visible"
+        :oid="oid"
+        :title="title"
+        @onsubmit="onSubmit"
+    >
+    </state-management-add>
+
+    <FamImport
+        v-if="importVisible"
+        accept=".zip"
+        businessName="LifecycleStateImport"
+        :visible.sync="importVisible"
+        :is-show-template="false"
+        :class-name="className"
+        :request-config="importRequestConfig"
+        @submit-success-callback="onImportSuccess"
+    ></FamImport>
+</div>

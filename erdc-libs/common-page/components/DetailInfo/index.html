@@ -1,0 +1,79 @@
+<div class="fam-common-page__form__baseinfo">
+    <component
+        v-if="slots.formBefore"
+        :is="slots.formBefore"
+        ref="beforeForm"
+        :current-data="formData"
+        :renderLayoutForm="renderLayoutForm"
+        :setFormData="setFormData"
+        :current-type="formShowType"
+        v-bind="formBeforeProps"
+        :vm="vm"
+    ></component>
+    <basic-info
+        v-else-if="['create', 'edit'].includes(formShowType) && !(formShowType === 'edit' && $attrs.isCommonPageSpace)"
+        v-show="formShowType === 'edit' || showBasicInfo"
+        ref="beforeForm"
+        :formType="layoutType"
+        :current-data="formData"
+        :className="className"
+        :renderLayoutForm="renderLayoutForm"
+        :setFormData="setFormData"
+        :current-type="formShowType"
+        @set-layout-extra-params="setLayoutExtraParams"
+        v-bind="formBeforeProps"
+        :vm="vm"
+    >
+    </basic-info>
+    <fam-advanced-form
+        ref="layoutForm"
+        :editable-attr="editableAttrs"
+        v-bind="formProps"
+        :object-oid="containerOid"
+        :oid="containerOid"
+        :type-oid="typeOid"
+        :query-layout-params="queryLayoutParams"
+        :type-reference-info="typeReferenceInfo"
+        :model.sync="formData"
+        :form-id="layoutType"
+        :class-name="innerClassName"
+        :model-mapper="modelMapper"
+        :beforeEcho="beforeEcho"
+        :class="{'pt-24': !!slots.formBefore}"
+        v-on="$listeners"
+    >
+        <template
+            v-for="(slot, slotName) in slots.formSlots"
+            v-slot:[slotName]="slotProps"
+        >
+            <component
+                :ref="slotName"
+                v-model="formData[slotName]"
+                :formData="formData"
+                :is="slot"
+                :vm="vm"
+                v-bind="{ ...slotProps, ...formSlotsProps[slotName]}"
+            ></component>
+        </template>
+        <template
+            v-if="$attrs.isCommonPageSpace"
+            #type-reference="scope"
+        >
+            <erd-tooltip
+                v-if="scope.readonly"
+                placement="top"
+                :tabindex="-1"
+            >
+                <span class="fam-dynamic-form__readonly-field"> {{ formData.typeName }} </span>
+                <template #content>
+                    <span> {{ formData.typeName }} </span>
+                </template>
+            </erd-tooltip>
+            <custom-select
+                v-else
+                v-model="formData.typeReference"
+                :row="$attrs.typeReferenceRow"
+            ></custom-select>
+        </template>
+    </fam-advanced-form>
+</div>

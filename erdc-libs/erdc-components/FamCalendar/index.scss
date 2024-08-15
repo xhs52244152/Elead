@@ -1,0 +1,99 @@
+#calendarEl {
+    .fc-toolbar.fc-header-toolbar {
+        // margin-bottom: 0;
+    }
+    .fc-h-event {
+        height: 3px;
+        border: none;
+        overflow: hidden;
+    }
+    .fc-daygrid-day.fc-day-today {
+        background: none;
+        .fc-daygrid-day-top {
+            span {
+                color: #5ab1ef !important;
+            }
+        }
+        // .fc-daygrid-day-frame {
+        //     border: 1px solid #5ab1ef !important;
+        //     border-radius: 4px;
+        // }
+    }
+    .fc-daygrid-day-top {
+        justify-content: center;
+    }
+    // .fc-daygrid-day-frame {
+    //     line-height: 18px;
+    // }
+    .fc-daygrid-day-frame:hover {
+        background: rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+    td,
+    th {
+        border: none;
+    }
+    .fc-cell-shaded,
+    .fc-day-disabled {
+        background-color: #fff;
+    }
+    .fc-multimonth-title {
+        font-weight: 700;
+        padding: 5px 0;
+        text-align: center;
+        font-size: 16px;
+        background: #eee;
+        color: #666;
+        margin-top: 4px;
+    }
+    .fc-button-primary {
+        background: var(--buttonPrimaryBgColor);
+        border-color: var(--buttonPrimaryBorderColor);
+        &:focus {
+            box-shadow: none;
+        }
+    }
+    // td.fc-day-sat,
+    // td.fc-day-sun,
+    td.fc-day {
+        span {
+            color: #fe0000 !important;
+        }
+        &.workday {
+            span {
+                color: #666 !important;
+            }
+        }
+    }
+    .fc-event-main {
+        // height: 3px;
+        .fc-event-title {
+            display: none;
+        }
+    }
+    .fc-daygrid-event-harness-abs {
+        visibility: visible !important;
+    }
+    // .fc-daygrid-day-bottom {
+    //     display: none;
+    // }
+
+    .fc-multimonth-compact {
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+            background: rgba(144, 147, 153, 0.3);
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(144, 147, 153, 0.5);
+        }
+        // &::-webkit-scrollbar-track {
+        //     -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+        //     border-radius: 0;
+        //     background: rgba(144, 147, 153, 0.3);
+        // }
+    }
+}

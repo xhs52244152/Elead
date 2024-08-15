@@ -1,0 +1,138 @@
+{
+  "metadata": [
+    {
+      "key": "ELCONF.watermark.content",
+      "name": {
+        "zh_cn": "页面水印内容配置",
+        "en_us": "Page watermarking rendering method"
+      },
+      "description": {
+        "zh_cn": "水印内容通过函数的返回值自定义，默认：用户名",
+        "en_us": "The watermark content is customized by the return value of the function. The default value is user name"
+      },
+      "type": "textarea",
+      "defaultValue": "function(options) { var store = require(\"erdcloud.store\"); var user = store.state.app.user; options.content = user.displayName;}",
+      "classification": "功能类配置(通过开关开启或关闭相应功能)"
+    },
+    {
+      "key": "ELCONF.watermark.option",
+      "name": {
+        "zh_cn": "页面水印样式参数配置",
+        "en_us": "Page watermark user-defined parameters"
+      },
+      "description": {
+        "zh_cn": "参数格式为json格式,或一个函数返回一个json格式",
+        "en_us": "The parameter format is json, or a function returns a json format"
+      },
+      "type": "textarea",
+      "defaultValue": "{'gap': [50,50],'font': {'color': 'rgba(0,0,0,.09)'}}",
+      "classification": "功能类配置(通过开关开启或关闭相应功能)"
+    },
+    {
+      "key": "ELCONF.logout",
+      "name": {
+        "zh_cn": "登出处理",
+        "en_us": "Logout processing"
+      },
+      "description": {
+        "zh_cn": "登出前的拦截，可以做一些自己的处理",
+        "en_us": "Intercept before logout, you can do some of your own processing"
+      },
+      "type": "textarea",
+      "defaultValue": "",
+      "classification": "开发类配置"
+    },
+    {
+      "key": "ELCONF.widgetSort",
+      "name": {
+        "zh_cn": "小部件顺序",
+        "en_us": "Widget sequence"
+      },
+      "description": {
+        "zh_cn": "设置小部件的顺序，支持数组和方法",
+        "en_us": "Sets the order of widgets, supports arrays and methods"
+      },
+      "type": "textarea",
+      "defaultValue": "",
+      "classification": "开发类配置"
+    },
+    {
+      "key": "ELCONF.globalDefaultLayout",
+      "name": {
+        "zh_cn": "默认布局",
+        "en_us": "Default layout"
+      },
+      "description": {
+        "zh_cn": "用户第一次进入系统默认的布局",
+        "en_us": "Default layout when user enters the system for the first time"
+      },
+      "type": "text",
+      "defaultValue": "ultra"
+    },
+    {
+      "key": "ELCONF.globalDefaultTheme",
+      "name": {
+        "zh_cn": "默认主题",
+        "en_us": "Default theme"
+      },
+      "description": {
+        "zh_cn": "用户第一次进入系统默认的主题",
+        "en_us": "Default theme when user enters the system for the first time"
+      },
+      "type": "text",
+      "defaultValue": "general-ultra"
+    },
+    {
+      "key": "ELCONF.layout.erdc-portal-web",
+      "name": {
+        "zh_cn": "布局配置",
+        "en_us": "Layout configuration"
+      },
+      "description": {
+        "zh_cn": "布局和应用的适配关系",
+        "en_us": "The fit between layout and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": [], \"default\": \"ultra-horizontal\"}"
+    },
+    {
+      "key": "ELCONF.theme.erdc-portal-web",
+      "name": {
+        "zh_cn": "主题配置",
+        "en_us": "Theme configuration"
+      },
+      "description": {
+        "zh_cn": "主题和应用的适配关系",
+        "en_us": "The fit between theme and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    },
+    {
+      "key": "ELCONF.logo",
+      "name": {
+        "zh_cn": "logo",
+        "en_us": "logo"
+      },
+      "description": {
+        "zh_cn": "系统的logo。宽高比是 13:6",
+        "en_us": "System logo. The aspect ratio is 13:6"
+      },
+      "type": "text",
+      "defaultValue": ""
+    },
+    {
+      "key": "ELCONF.copyRight",
+      "name": {
+        "zh_cn": "版权信息",
+        "en_us": "copyRight"
+      },
+      "description": {
+        "zh_cn": "系统的版权信息",
+        "en_us": "Copyright information of the system"
+      },
+      "type": "text",
+      "defaultValue": ""
+    }
+  ]
+}

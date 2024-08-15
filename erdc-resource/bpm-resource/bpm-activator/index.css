@@ -1,0 +1,9 @@
+.bpm-activator-content {
+  display: flex;
+}
+.bpm-activator-content .bpm-activator-content__right {
+  margin: var(--bigSpace) var(--largeSpace);
+  transition: all .25s linear;
+}
+
+/*# sourceMappingURL=index.css.map */

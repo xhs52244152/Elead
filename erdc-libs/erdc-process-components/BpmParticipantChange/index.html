@@ -1,0 +1,35 @@
+<div class="bpm-participant-change bg-light" v-cloak>
+    <BpmParticipantConfiguration
+        ref="bpmParticipantConfiguration"
+        :handler-configuration="participantConfiguration"
+        :column="column"
+    >
+        <template #participantRef="{ data: { row, column } }">
+            <template v-if="_.isFunction(column.params.disabled) ? column.params.disabled({ row, column }) : column.params.disabled">
+                <span>{{ column.formatter({ row, column }) }}</span>
+            </template>
+            <template v-else>
+                <div class="flex">
+                    <bpm-avatar
+                        v-if="row.participantRefListRead.length"
+                        icon-more="number"
+                        :users="row.participantRefListRead"
+                    ></bpm-avatar>
+                    <fam-participant-select
+                        v-model="row[column.field]"
+                        v-bind="getPropsProperty({ row, column })"
+                        :default-value="row.participantRefList"
+                        @change="(...arg) => optionsChange(...arg, { row, column })"
+                    ></fam-participant-select>
+                </div>
+            </template>
+        </template>
+    </BpmParticipantConfiguration>
+    <FamDynamicForm
+        ref="famDynamicForm"
+        :form="formData"
+        :data="formConfig"
+        label-position="right"
+        class="mt-8"
+    ></FamDynamicForm>
+</div>

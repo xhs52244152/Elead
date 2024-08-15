@@ -1,0 +1,73 @@
+#global-search-list {
+    .toolbar-search-component {
+        > div {
+            width: 130px;
+        }
+    }
+}
+.config-container {
+    .container {
+        height: 500px;
+        .left,
+        .center {
+            width: 35%;
+        }
+        .right {
+            width: 30%;
+        }
+    }
+}
+.center-container {
+    .el-tree-node {
+        &[aria-disabled='true'] {
+            > .el-tree-node__content {
+                display: none;
+            }
+        }
+    }
+}
+
+.right-container {
+    .main-content {
+        .el-radio-group {
+            height: 28px;
+            li {
+                &:hover {
+                    background-color: #f0f4fb;
+                }
+                &.is-active {
+                    background-color: #ebf1ff;
+                }
+            }
+        }
+        .link-span {
+            text-decoration: underline;
+            color: var(--colorPrimary);
+            cursor: pointer;
+        }
+    }
+}
+
+.tree-container {
+    .erd-tree-node__label {
+        text-align: left;
+    }
+    .el-tree-node__content {
+        .el-checkbox {
+            &.is-disabled {
+                display: none;
+            }
+        }
+        &:has(.tree-node-container.color-primary) {
+            color: var(--colorTextNormal);
+            background-color: var(--colorHover);
+        }
+    }
+    .tree-node-container {
+        &:hover {
+            .erd-icon-double-drag {
+                visibility: visible;
+            }
+        }
+    }
+}

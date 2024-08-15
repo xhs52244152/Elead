@@ -1,0 +1,96 @@
+<div
+    id="participant-configure"
+    class="participant-configure"
+>
+    <erd-contraction-panel
+        :title="i18nMappingObj.participantConfigure"
+        :unfold.sync="expanded"
+    >
+        <template #header-right>
+            <div class="flex">
+                <erd-button
+                    v-if="!readonly && expanded"
+                    size="small"
+                    class="mr-8"
+                    @click="addRow"
+                >{{i18nMappingObj.add}}</erd-button>
+                <AdvancedApproverConfigure
+                    :template.sync="approverTemplate"
+                    :activeElement="activeElement"
+                    :bpmnModeler="bpmnModeler"
+                    :isEdit="isEdit"
+                    :readonly="readonly"
+                ></AdvancedApproverConfigure>
+            </div>
+        </template>
+
+        <template #content>
+            <EditableTable
+                ref="table"
+                keyField="id"
+                :data.sync="tableData"
+                :column="column"
+                :rules="rules"
+                :edit-config="{mode: 'cell'}"
+                @row-change="rowChange"
+            >
+                <template #participant-select="scope">
+                    <span v-if="!scope.data.column.params.canEdit({ row: scope.data.row, column: scope.data.column })">-</span>
+                    <template v-else>
+                        <fam-participant-select
+                            v-if="scope.data.column.property === 'participantRef' && scope.data.row.memberType !== 'OPERATOR'"
+                            v-model="scope.data.row[scope.data.column.property]"
+                            isFetchValue
+                            isDestroySave
+                            popper-class="vxe-table--ignore-clear"
+                            :app-name="appName"
+                            :default-value="scope.data.row[scope.data.column.property + 'List']"
+                            :multiple="scope.data.column.params.multiple({ row: scope.data.row, column: scope.data.column })"
+                            :show-type="scope.data.column.params.showType({ row: scope.data.row, column: scope.data.column })"
+                            :query-scope="scope.data.column.params.queryScope({ row: scope.data.row, column: scope.data.column })"
+                            :query-params="scope.data.column.params.queryParams({ row: scope.data.row, column: scope.data.column })"
+                            @change="(...arg) => cellChange({ row: scope.data.row, column: scope.data.column }, ...arg)"
+                        ></fam-participant-select>
+                        <erd-select
+                            v-else
+                            v-model="scope.data.row[scope.data.column.property]"
+                            popper-class="vxe-table--ignore-clear"
+                            filterable
+                            :style="{'width': 'auto'}"
+                            :remote="scope.data.row.memberType === 'USER'"
+                            :remote-method="(value) => getUsersList(value, { row: scope.data.row, column: scope.data.column })"
+                            @change="(...arg) => cellChange({ row: scope.data.row, column: scope.data.column }, ...arg)"
+                            @visible-change="visibleChange(...arguments, { row: scope.data.row, column: scope.data.column })"
+                        >
+                            <erd-option
+                                v-for="option in scope.data.row[scope.data.column.property + 'List']"
+                                :key="option.oid || option.value"
+                                :label="option.displayName || option.name"
+                                :value="option.oid || option.value"
+                                :disabled="option.disabled"
+                            ></erd-option>
+                        </erd-select>
+                        <erd-select
+                            v-if="scope.data.column.property === 'processType' && scope.data.row.processType === 'PERCENTAGE'"
+                            v-model="scope.data.row.percentage"
+                            popper-class="vxe-table--ignore-clear"
+                            :style="{'width': '80px'}"
+                        >
+                            <erd-option
+                                v-for="option in percentageList"
+                                :key="option.value"
+                                :label="option.name"
+                                :value="option.value"
+                                :disabled="option.disabled"
+                            ></erd-option>
+                        </erd-select>
+                    </template>
+                </template>
+
+                <template #participant-select-static-text="scope">
+                    {{participantSelectStaticText({ row: scope.data.row, column: scope.data.column }) || '-'}}
+                </template>
+            </EditableTable>
+        </template>
+    </erd-contraction-panel>
+</div>

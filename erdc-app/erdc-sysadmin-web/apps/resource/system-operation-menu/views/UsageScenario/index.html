@@ -1,0 +1,49 @@
+<div class="fam-usage-scenario-content position-relative">
+    <ResizableContainer :left="{ width: '260px' }">
+        <template v-slot:left>
+            <usage-scenario-tree
+                ref="checkerTree"
+                @nodeClick="onNodeClick"
+            >
+            </usage-scenario-tree>
+        </template>
+        <template v-slot:right>
+            <div class="right-contaienr">
+                <scenario-details
+                    ref="scenarioDetails"
+                    :button-info="buttonInfo"
+                ></scenario-details>
+                <div class="right-contaienr-footer">
+                    <erd-tooltip
+                        effect="dark"
+                        placement="top"
+                        :content="i18n.noCurrentTenant"
+                        :disabled="isEdit"
+                    >
+                        <erd-button
+                            type="primary"
+                            :loading="functionButton.loading"
+                            :disabled="!isEdit"
+                            @click="fnOnSubmit()"
+                        >
+                            {{ i18nMappingObj.save }}
+                        </erd-button>
+                    </erd-tooltip>
+                    <erd-tooltip
+                        effect="dark"
+                        placement="top"
+                        :content="i18n.noCurrentTenant"
+                        :disabled="isEdit"
+                    >
+                        <erd-button
+                            :disabled="!isEdit"
+                            @click="remake()"
+                        >
+                            {{ i18nMappingObj.reset }}
+                        </erd-button></erd-tooltip
+                    >
+                </div>
+            </div>
+        </template>
+    </ResizableContainer>
+</div>

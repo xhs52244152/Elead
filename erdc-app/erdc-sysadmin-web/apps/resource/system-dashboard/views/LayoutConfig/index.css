@@ -1,0 +1,29 @@
+.system-dashboard_config {
+  background: #F1F1F1;
+}
+.system-dashboard_config .system-dashboard_config_head {
+  align-items: center;
+  padding: 12px 12px;
+  display: flex;
+  background-color: #fff;
+  border-radius: 8px;
+  justify-content: space-between;
+}
+.system-dashboard_config .system-dashboard_config_head h4 {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.system-dashboard_config .system-dashboard_config_head .system-dashboard_config_head_sub {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.system-dashboard_config .el-divider--horizontal {
+  margin: 12px 0;
+}
+.system-dashboard_config .system-dashboard_config_body {
+  margin-top: var(--bigSpace);
+  height: calc(100% - 60px - var(--bigSpace));
+}
+
+/*# sourceMappingURL=index.css.map */

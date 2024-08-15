@@ -1,0 +1,48 @@
+.custom-date-time{
+    .el-date-editor.el-input {
+        width: 100%;
+    }
+    .el-range-editor{
+        .el-input__icon{
+            width: var(--inputIconWidth);
+            line-height: 32px;
+            line-height: var(--inputHeight);
+            color: #567ffd;
+            color: var(--inputIconColor);
+            height: auto;
+            font-size: 16px;
+            margin-left: -3px;
+        }
+        .el-range-separator{
+            display: inline-block;
+            height: auto;
+            padding: 0 0px;
+            margin: 0;
+            text-align: center;
+            line-height: 32px;
+            font-size: 14px;
+            font-size: var(--fontSize);
+            width: 18px;
+            color: #303133;
+        }
+        .el-range__close-icon{
+            display: inline-block;
+            width: var(--inputIconWidth);
+            line-height: var(--inputHeight);
+            color: var(--inputIconColor);
+            font-size: 16px;
+            height: auto;
+            margin-left: auto;
+        }
+        ::-webkit-input-placeholder{
+            color: var(--colorTextPlaceholder);
+        }
+        .el-range-editor.el-input__inner{
+            padding: 3px 8px 3px 10px;
+        }
+        input{
+            text-align: left;
+            padding-left: 8px;
+        }
+    }
+}

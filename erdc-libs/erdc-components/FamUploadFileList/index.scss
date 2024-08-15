@@ -1,0 +1,16 @@
+.upload-file-list_table {
+    .fam-upload__file-list__table{
+        margin-top: var(--normalPadding);
+    }
+    .my-link-btn{
+        color: var(--buttonTextColor);
+        cursor: pointer;
+
+        &.disabled {
+            color: unset;
+            cursor: unset;
+        }
+    }
+
+}
+

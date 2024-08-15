@@ -1,0 +1,80 @@
+<!-- 上传 -->
+<div
+    :class="['upload-panel', {'collapsed': collapse}]"
+    v-show="panelShow"
+>
+    <div class="upload-panel-header">
+        <span class="title">{{ i18nMappingObj.fileTransfer }}</span>
+        <div class="operate">
+            <el-button
+                @click="fileListShow"
+                type="text"
+                :title="collapse ? i18nMappingObj.expand : i18nMappingObj.fold "
+            >
+                <i
+                    class="erd-iconfont"
+                    :class="collapse ? 'erd-icon-arrow-up' : 'erd-icon-minify' "
+                ></i>
+            </el-button>
+            <el-button
+                @click="close"
+                type="text"
+                :title="i18nMappingObj.close"
+            >
+                <i class="el-icon el-icon-close"></i>
+            </el-button>
+        </div>
+    </div>
+    <div
+        class="upload-panel-content"
+        v-show="!collapse"
+    >
+        <uploader
+            v-for="(item, key) in uploadManager"
+            :key="key"
+            ref="uploader"
+            :options="item.uploaderOptions"
+            :autoStart="true"
+            :fileStatusText="fileStatusText"
+            @file-added="onFileAdded"
+            @file-removed="onFileRemove"
+            @file-success="onFileSuccess"
+            @file-progress="onFileProgress"
+            @file-error="onFileError"
+        >
+            <uploader-unsupport></uploader-unsupport>
+
+            <uploader-btn
+                :attrs="attrs"
+                :ref="`uploadBtn-${key}`"
+                >
+                {{ i18nMappingObj.selectDoc }}
+            </uploader-btn>
+
+            <uploader-list>
+                <template slot-scope="props">
+                    <ul class="file-list">
+                        <li
+                            v-for="file in props.fileList"
+                            :key="file.id"
+                        >
+                            <uploader-file
+                                :class="'file_' + file.id"
+                                ref="files"
+                                :file="file"
+                                :list="true"
+                            ></uploader-file>
+                        </li>
+                    </ul>
+                </template>
+            </uploader-list>
+        </uploader>
+
+        <div
+            class="no-file"
+            v-if="!fileList.length"
+        >
+            <i class="iconfont icon-empty-file"></i> {{ i18nMappingObj.noFiles }}
+        </div>
+    </div>
+</div>

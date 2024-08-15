@@ -1,0 +1,139 @@
+<div>
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="visible"
+        width="800px"
+    >
+        <fam-advanced-table
+            ref="versionManageTable"
+            :view-table-config="viewTableConfig"
+            :view-table-height="viewTableHeight"
+        >
+            <template #column:default:pkgVersion:content="{ scope }">
+                <span
+                    >{{ scope.row.pkgVersion }}
+                    <erd-tag
+                        class="ml-8"
+                        effect="dark"
+                        type="success"
+                        v-if="scope.row.isCurrent"
+                    >
+                        {{ i18nMappingObj.currentVersion }}
+                    </erd-tag>
+                </span>
+            </template>
+            <template #column:default:hasSource:content="{ scope }">
+                <span>{{ getSource(scope.row) }}</span>
+            </template>
+            <template #column:default:versionDesc:content="{ scope }">
+                <span v-if="scope.row.versionDesc">{{ scope.row.versionDesc }}</span>
+                <span v-else>--</span>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <erd-link
+                    :underline="false"
+                    type="primary"
+                    @click="openVersion(scope.row)"
+                    >{{ i18nMappingObj.versionDesc }}</erd-link
+                >
+                <erd-divider direction="vertical"></erd-divider>
+                <span v-if="!scope.row.isCurrent">
+                    <erd-link
+                        :underline="false"
+                        type="primary"
+                        @click="updateVersion(scope.row)"
+                        >{{ i18nMappingObj.apply }}</erd-link
+                    >
+                    <erd-divider direction="vertical"></erd-divider>
+                </span>
+                <erd-dropdown
+                    @command="handleMoreAction($event, scope.row)"
+                    trigger="click"
+                >
+                    <span class="el-dropdown-link">
+                        <erd-link
+                            type="primary"
+                            :underline="false"
+                            >{{ i18nMappingObj.sourceCode }}
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </erd-link>
+                    </span>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item command="uploadSource">{{ i18nMappingObj.upload }}</erd-dropdown-item>
+                        <div v-if="scope.row.sourceCodeFileId">
+                            <erd-dropdown-item command="downSource">{{ i18nMappingObj.download }}</erd-dropdown-item>
+                            <erd-dropdown-item command="deleteSource">{{ i18nMappingObj.delete }}</erd-dropdown-item>
+                        </div>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </template>
+        </fam-advanced-table>
+        <template #footer>
+            <erd-button @click="cancel">{{ i18nMappingObj.close }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :title="i18nMappingObj.uploadSource"
+        :visible.sync="sourceVisible"
+        width="600px"
+        @close="cancelSource"
+    >
+        <fam-upload
+            class="upload-demo"
+            action="/file/file/site/storage/v1/upload"
+            accept=".zip,.tgz"
+            :auto-upload="true"
+            :on-remove="handleRemove"
+            :limit="1"
+            :file-list="fileList"
+            :before-upload="onBeforeUpload"
+            :on-success="handleSuccess"
+            :tips="i18nMappingObj.tgzDesc"
+        >
+        </fam-upload>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="submitSource"
+                >{{ i18nMappingObj.confirm }}</erd-button
+            >
+            <erd-button @click="cancelSource">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :title="i18nMappingObj.versionDesc"
+        :visible.sync="versionVisible"
+        width="600px"
+    >
+        <div style="height: 230px">
+            <FamDynamicForm
+                v-if="formData.desc !== '' || isEdit"
+                ref="versionForm"
+                :form="formData"
+                :data="formConfigs"
+            >
+            </FamDynamicForm>
+            <fam-empty
+                v-else
+                :description="noData"
+            ></fam-empty>
+        </div>
+        <template #footer>
+            <erd-button
+                v-if="!isEdit"
+                type="primary"
+                @click="editDesc"
+                >{{ i18nMappingObj.edit }}</erd-button
+            >
+            <erd-button
+                v-else
+                type="primary"
+                @click="saveDesc"
+                >{{ i18nMappingObj.save }}</erd-button
+            >
+            <erd-button @click="cancelVesion">{{ i18nMappingObj.close }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,54 @@
+<div class="h_100p">
+    <fam-view-table
+        :view-table-config="viewTableConfig"
+        @handler-data="handlerData"
+        ref="processTable"
+    >
+        <!-- 到期日期 -->
+        <template v-slot:[slotName.dueDate]="{ scope }">
+            <BpmDueData :due-data="getDueDate(scope)"></BpmDueData>
+        </template>
+        <!-- 流程状态 -->
+        <template v-slot:[slotName.processStatus]="{ scope }">
+            <BpmProcessStatus :status="getStatus(scope)"></BpmProcessStatus>
+        </template>
+        <!-- 操作 -->
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'famActionPulldowm' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="onCommand"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        :show-fullscreen="false"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+
+    <!-- 查看任务 -->
+    <erd-ex-dialog
+        width="1200px"
+        custom-class="biz-process-look-history"
+        :title="viewTaskForm.title"
+        :visible.sync="viewTaskForm.visible"
+        @close="viewTaskForm.processInstanceId = ''"
+    >
+        <bpm-view-task
+            v-if="viewTaskForm.visible"
+            :process-instance-id="viewTaskForm.processInstanceId"
+            @close-dialog="viewTaskFormVisible"
+        ></bpm-view-task>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,165 @@
+#DictList {
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  height: 100%;
+}
+#DictList .DictList-title {
+  line-height: 28px;
+  padding: 0 16px;
+  color: var(--colorTextNormal);
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#DictList .content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0 16px 16px 16px;
+}
+#DictList .content .operation {
+  display: flex;
+  padding: 16px 0;
+  justify-content: flex-end;
+}
+#DictList .DictList-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  text-align: center;
+  background-color: #fff;
+  border-top: 1px solid #ebebeb;
+}
+#DictList .vxe-input--inner {
+  appearance: none;
+  background-color: #fff;
+  border-radius: 0px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 28px;
+  line-height: 28px;
+  outline: 0;
+  padding: 0 15px;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  width: 100%;
+}
+#DictList .vxe-input {
+  height: auto;
+}
+#DictList .vxe-input .vxe-input--suffix {
+  height: 28px;
+}
+#DictList table {
+  border-collapse: collapse;
+}
+#DictList table tbody tr td {
+  position: relative;
+}
+#DictList table tbody tr td.editCell .vxe-cell--tree-node {
+  padding-left: 0 !important;
+}
+#DictList table tbody tr td.editCell .vxe-cell--tree-node .vxe-tree-cell {
+  padding-left: 0;
+}
+#DictList table tbody tr td.editCell .vxe-cell--tree-node .vxe-tree--btn-wrapper {
+  display: none;
+}
+#DictList table tbody tr td .vxe-input {
+  line-height: 0;
+}
+#DictList table tbody tr td .vxe-cell {
+  position: relative;
+}
+#DictList table tbody tr td .tooltip {
+  position: absolute;
+  top: 0px;
+  right: 4px;
+}
+#DictList table tbody tr td .more-button span {
+  display: flex;
+  align-items: center;
+}
+#DictList table tbody tr td .el-button--text {
+  max-width: 60px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+#DictList table tbody tr .editIcon::after {
+  content: "";
+  border-top: 4px solid #00a854;
+  border-bottom: 4px solid transparent;
+  border-right: 4px solid #00a854;
+  border-left: 4px solid transparent;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#DictList table tbody tr .erd-table-valid-error.editIcon::after {
+  border-top: 4px solid #f04134;
+  border-right: 4px solid #f04134;
+}
+#DictList table tbody tr .erd-table-valid-error .el-input__inner {
+  border-color: #f04134 !important;
+  border: 1px solid #f04134;
+}
+#DictList table tbody tr .erd-table-valid-error .vxe-input--inner {
+  border-color: #f04134 !important;
+  border: 1px solid #f04134;
+}
+#DictList table tbody tr .erd-table-valid-error .intermation {
+  border-color: #f04134 !important;
+}
+#DictList .newEdit {
+  color: #999999;
+}
+#DictList .vxe-table--render-default .vxe-cell {
+  padding: 4px;
+}
+#DictList .vxe-table--render-default .vxe-body--column.col--valid-error .vxe-cell--valid .vxe-cell--valid-msg {
+  display: none;
+}
+#DictList .vxe-table--render-default .is--checked.vxe-cell--checkbox .vxe-checkbox--icon:before,
+#DictList .vxe-table--render-default .is--indeterminate.vxe-cell--checkbox .vxe-checkbox--icon:before {
+  background: none !important;
+  border: none;
+}
+#DictList .vxe-table--render-default .is--checked.vxe-cell--checkbox .vxe-checkbox--icon:before,
+#DictList .vxe-table .vxe-checkbox--icon:before {
+  border: none !important;
+}
+
+.showTooltip {
+  display: block;
+}
+.showTooltip.is-dark {
+  background-color: #ff7875 !important;
+}
+.showTooltip .popper__arrow {
+  border-bottom-color: transparent !important;
+  border-top-color: #ff7875 !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+}
+.showTooltip .popper__arrow::after {
+  border-bottom-color: transparent !important;
+  border-top-color: #ff7875 !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+}
+
+.hideTooltip {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

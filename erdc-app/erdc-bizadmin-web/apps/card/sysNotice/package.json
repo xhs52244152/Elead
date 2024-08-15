@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/sysNotice",
+  "version": "3.1.0",
+  "description": "系统公告卡片",
+  "appId": "plat",
+  "dependencies": {}
+}

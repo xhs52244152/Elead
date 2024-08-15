@@ -1,0 +1,89 @@
+<div id="UnitMeasureNewEdit">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        width="1200px"
+        v-if="innerVisible"
+    >
+        <div class="UnitMeasureNewEdit">
+            <erd-contraction-panel
+                :unfold.sync="basicUnfold"
+                :title="i18nMappingObj.basicInfor"
+            >
+                <template v-slot:content>
+                    <FamDynamicForm
+                        ref="dynamicForm"
+                        :form="formData"
+                        :data="data"
+                        @form-change="formChange"
+                    >
+                    </FamDynamicForm>
+                </template>
+            </erd-contraction-panel>
+            <erd-contraction-panel
+                class="showUnit"
+                :unfold.sync="measureUnfold"
+                :title="i18nMappingObj.showUnits"
+            >
+                <template v-slot:content>
+                    <div class="content">
+                        <!-- <div class="measureOper">
+                            <erd-button type="primary" @click="onCreate">创建</erd-button>
+                            <erd-button>{{i18nMappingObj.export}}</erd-button>
+                        </div> -->
+                        <erd-table
+                            border
+                            :column="columns"
+                            :data="listDataForm.listData"
+                            ref="erdTable"
+                        >
+                            <!-- <template #column:default:oper="{data}">
+                                <erd-button type="text" @click="onSave(data)" v-if="data.row.editFlag != 0">{{ i18nMappingObj.save }}</erd-button>
+                                <erd-button type="text" @click="oncancel(data)" v-if="data.row.editFlag != 0">{{ i18nMappingObj.cancel }}</erd-button>
+                                <erd-button type="text" @click="onEdit(data)" v-if="data.row.editFlag == 0">{{ i18nMappingObj.edit }}</erd-button>
+                                <erd-button type="text" @click="onDelete(data)" v-if="data.row.editFlag == 0">{{ i18nMappingObj.remove }}</erd-button>
+                            </template> -->
+                            <template #column:default:measureSys="{data}">
+                                <span>{{data.row.measureSys}}</span>
+                                <!-- <erd-input v-else v-model="data.row.measureSys"></erd-input> -->
+                            </template>
+                            <template #column:default:defaultUnit="{data}">
+                                <span>{{data.row.defaultUnit}}</span>
+                            </template>
+                            <template #column:header:coverUnit="{data}">
+                                <span
+                                    ><i
+                                        class="erd-iconfont erd-icon-edit"
+                                        style="margin-right: 4px"
+                                    ></i
+                                    >{{i18nMappingObj.cover}}</span
+                                >
+                            </template>
+                            <template #column:default:coverUnit="{data}">
+                                <span v-if="data.row.editFlag == 0">{{data.row.coverUnit}}</span>
+                                <erd-input
+                                    v-else
+                                    :placeholder="i18nMappingObj.enter"
+                                    v-model="data.row.coverUnit"
+                                ></erd-input>
+                            </template>
+                        </erd-table>
+                    </div>
+                </template>
+            </erd-contraction-panel>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveSubmit"
+                :disabled="disabled"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

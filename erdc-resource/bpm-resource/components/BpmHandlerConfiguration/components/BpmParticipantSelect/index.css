@@ -1,0 +1,113 @@
+.change_handler_conf_box .el-step__icon {
+  width: 12px;
+  height: 12px;
+}
+.change_handler_conf_box .el-step.is-vertical .el-step__line {
+  top: 5px;
+  bottom: -8px;
+}
+.change_handler_conf_box .el-step.is-vertical .el-step__line {
+  left: 4px;
+  width: 4px;
+}
+.change_handler_conf_box .el-step.is-vertical .el-step__head {
+  width: 12px;
+}
+.change_handler_conf_box .el-step__line {
+  background: #EBEBEB;
+}
+.change_handler_conf_box .el-step.is-vertical .el-step__main {
+  padding-left: 12px;
+}
+.change_handler_conf_box .el-step.is-vertical .el-step__title {
+  padding-bottom: 24px;
+}
+.change_handler_conf_box .el-step.is-vertical.el-step-one .el-step__title {
+  padding-bottom: 0px;
+}
+.change_handler_conf_box .conf_box_icon {
+  width: 100%;
+  height: 100%;
+  background: #999999;
+}
+.change_handler_conf_box .conf_box_title {
+  display: flex;
+  flex-direction: column;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_title {
+  display: flex;
+  align-items: center;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_title .t1 {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0;
+  line-height: 20px;
+  font-weight: 400;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_title .t2 {
+  margin-left: 8px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  line-height: 22px;
+  font-weight: 700;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_title .t3 {
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--primary-color);
+  line-height: 22px;
+  font-weight: 400;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_title .add-btn {
+  margin-left: 8px;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_title .add-btn > span {
+  color: var(--primary-color);
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_table {
+  margin-top: 8px;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_table .wf-common-table-container .wf-common-table-main .bpm-base-table_table-content {
+  padding: 0px;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_table .avatar.avatar-false span.avatar-name {
+  display: none;
+}
+.change_handler_conf_box .conf_box_title .conf_box_title_table .select-member-selected.editable {
+  display: none;
+}
+.change_handler_conf_box .empty-text {
+  color: rgba(0, 0, 0, 0.45);
+}
+.change_handler_conf_box .username-txt {
+  font-size: inherit;
+  color: #333333;
+  font-weight: 400;
+}
+
+.bpm-participant-select-content .erd-participant-select {
+  width: 100%;
+}
+.bpm-participant-select-content .erd-participant-select.select-role-more .el-select__input {
+  margin-left: 8px;
+}
+.bpm-participant-select-content .erd-participant-select.select-role-none .el-select__input {
+  margin-left: 32px;
+}
+
+.bpm-participant-select-content .erd-participant-select.el-select .el-select__tags .tag-count-node {
+  position: absolute;
+  right: 16px;
+  display: none;
+}
+
+.bpm-participant-select-content .erd-participant-select.el-select .el-select__tags .el-tag:nth-child(2) {
+  margin-left: 26px;
+}
+
+/*# sourceMappingURL=index.css.map */

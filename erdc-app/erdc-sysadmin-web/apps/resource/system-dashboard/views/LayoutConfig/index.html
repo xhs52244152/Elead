@@ -1,0 +1,26 @@
+<div class="system-dashboard_config h-100p">
+    <div class="system-dashboard_config_head">
+        <h4>{{title}}</h4>
+        <div class="system-dashboard_config_head_sub">
+            <erd-button
+                type="primary"
+                v-if="isEditMode"
+                @click="mode = 'read'"
+                >{{i18n.finishEdit}}</erd-button
+            >
+            <erd-button
+                type="primary"
+                v-else
+                @click="mode = 'edit'"
+                >{{i18n.editDashboard}}</erd-button
+            >
+            <erd-button @click="goBack()">{{i18n.back}}</erd-button>
+        </div>
+    </div>
+    <div class="system-dashboard_config_body">
+        <layout-config-component
+            :layout-id="layoutId"
+            :mode="mode"
+        ></layout-config-component>
+    </div>
+</div>

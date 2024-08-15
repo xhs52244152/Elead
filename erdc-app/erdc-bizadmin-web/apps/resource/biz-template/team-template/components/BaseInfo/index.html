@@ -1,0 +1,21 @@
+<div id="BaseInfo">
+    <FamDynamicForm
+    ref="BaseInfoForm"
+    :form="lifeData"
+    :data="data"
+    :readonly="readonly">
+        <template #menuApp="scope">
+            <el-select v-model="scope.data[scope.formConfig.field]" :placeholder="i18n.pleaseSelect" style="width: 100%;">
+                <el-option
+                v-for="item in appList"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name">
+                </el-option>
+            </el-select>
+        </template>
+        <template #readonlyComponent="scope">
+            <span>{{scope.data.appDisplayName}}</span>
+        </template>
+    </FamDynamicForm>
+</div>

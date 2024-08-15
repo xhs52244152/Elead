@@ -1,0 +1,210 @@
+<div class="system-notify_tmpl_list p-normal">
+    <div class="head">
+        <FamPageTitle
+            :title="row.title"
+            @back="$emit('switch-component', 'NotifyList')"
+            show-back-button
+        >
+        </FamPageTitle>
+    </div>
+    <div class="operation flex">
+        <div class="system-notify_tmpl_search">
+            <div class="system-notify_tmpl_search_item">
+                <span class="table_select_title">{{ i18nMappingObj.appName }}</span>
+                <div class="table_select_content">
+                    <erd-select v-model="applicationVal"  clearable :placeholder="i18nMappingObj.appName" @change="handleApplicationChange">
+                        <erd-option
+                            v-for="item in applications"
+                            :key="item.code"
+                            :label="item.name"
+                            :value="item.code">
+                        </erd-option>
+                    </erd-select>
+                </div>
+            </div>
+            <div class="system-notify_tmpl_search_item">
+                <span class="table_select_title">{{ i18nMappingObj.language }}</span>
+                <div class="table_select_content">
+                    <erd-select v-model="languageVal" filterable clearable :placeholder="i18nMappingObj.language" @change="handleLanguageChange">
+                        <erd-option
+                            v-for="item in language"
+                            :key="item.language"
+                            :label="item.displayName"
+                            :value="item.language">
+                        </erd-option>
+                    </erd-select>
+                </div>
+            </div>
+        </div>
+        <div>
+            <erd-button
+                type="primary"
+                icon="el-icon-plus"
+                @click="onCreate"
+            >{{i18nMappingObj.create}}</erd-button>
+<!--            <erd-pulldown :disabled="!currentSelected">-->
+<!--                {{i18nMappingObj.moreAction}}-->
+<!--                <template #pulldown>-->
+<!--                    <erd-pulldown-menu>-->
+<!--                        <erd-pulldown-menu-item @click="onUpgrade">-->
+<!--                            {{i18nMappingObj.upgrade}}-->
+<!--                        </erd-pulldown-menu-item>-->
+<!--                        <erd-pulldown-menu-item  @click="onCopy">-->
+<!--                            {{i18nMappingObj.copy}}-->
+<!--                        </erd-pulldown-menu-item>-->
+<!--                    </erd-pulldown-menu>-->
+<!--                </template>-->
+<!--            </erd-pulldown>-->
+        </div>
+    </div>
+    <div class="main">
+        <fam-erd-table
+            ref="erdTable"
+            :column-config="{resizable: true}"
+            border
+            v-loading="loading"
+            :data="listData"
+            :column="columns"
+            :height="tableHeight"
+            show-overflow
+        >
+            <template #column:default:sentTypeName="{data}">
+                {{ sendTypeName(data.row.sendTypeCode) }}
+            </template>
+            <template #column:default:status="{data}">
+                {{data.row.status == 1 ? i18nMappingObj.enable : i18nMappingObj.disable}}
+            </template>
+            <template #column:default:operation="{data}">
+                <div style="font-size: 0;" v-if="tenantId === data.row.tenantId">
+                    <erd-button
+                        type="text"
+                        @click="onUpdate(data.row.oid, data.row)">
+                        {{i18nMappingObj.edit}}
+                    </erd-button>
+                    <erd-button
+                        type="text"
+                        @click="onUpgrade(data.row)"
+                    >
+                        {{i18nMappingObj.upgrade}}
+                    </erd-button>
+                    <erd-dropdown style="margin-left: var(--buttonApposeSpace);vertical-align: bottom;" @command="handleCommand($event, data.row)">
+                        <erd-button
+                            type="text"
+                        >{{i18nMappingObj.more}}<i class="el-icon-arrow-down el-icon--right"></i></erd-button>
+                        <erd-dropdown-menu slot="dropdown">
+                            <erd-dropdown-item command="copy">{{i18nMappingObj.copy}}</erd-dropdown-item>
+                            <erd-dropdown-item  command="status">
+                                {{data.row.status == 1 ? i18nMappingObj.disable : i18nMappingObj.enable}}
+                            </erd-dropdown-item>
+                        </erd-dropdown-menu>
+                    </erd-dropdown>
+                </div>
+                <div style="font-size: 0;" v-else>
+                    <erd-button
+                        type="text"
+                        @click="onCopy(data.row)">
+                        {{i18nMappingObj.copy}}
+                    </erd-button>
+                </div>
+            </template>
+        </fam-erd-table>
+        <erd-pagination
+            style="padding-top: 16px"
+            :total="total"
+            :page-size.sync="pageSize"
+            :current-page.sync="currentPage"
+            :hide-on-single-page="false"
+            @size-change="loadData"
+            @current-change="loadData"
+        >
+        </erd-pagination>
+    </div>
+    <erd-ex-dialog
+        width="1200px"
+        :title="dialogTitle"
+        @close="close"
+        :visible.sync="visibleDialog"
+        size="large"
+    >
+        <el-row class="content_in" :gutter="20">
+            <el-col :span="16" class="l">
+                <FamDynamicForm
+                    ref="dynamicForm"
+                    :form="formData"
+                    :data="formConfig"
+                >
+                    <template #sendTypeCode>
+                        <erd-select class="w_100p" v-model="formData.sendTypeCode" :disabled="!!oid">
+                            <erd-option
+                                v-for="item in sendType"
+                                :key="item.value"
+                                :label="item.description"
+                                :value="item.value">
+                            </erd-option>
+                        </erd-select>
+                    </template>
+                    <template #lang>
+                        <erd-select class="w_100p" v-model="formData.lang" :disabled="!!oid">
+                            <erd-option
+                                v-for="item in language"
+                                :key="item.language"
+                                :label="item.displayName"
+                                :value="item.language">
+                            </erd-option>
+                        </erd-select>
+                    </template>
+                    <template #content="scope">
+                        <div class="system-notify_tmpl_form_param" ref="system-notify_tmpl_form_param"></div>
+                    </template>
+                </FamDynamicForm>
+            </el-col>
+            <el-col :span="8">
+                <div class="system-notify_tmpl__params">
+                    <erd-input
+                        ref="system-notify_params"
+                        disabled
+                        :value="params"
+                        type="textarea"
+                    />
+                </div>
+            </el-col>
+        </el-row>
+
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="save"
+            >{{i18nMappingObj.save}}</erd-button
+            ><erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        width="600px"
+        :title="dialogTitleForUpgrade"
+        @close="closeForUpgrade"
+        :visible.sync="visibleDialogForUpgrade"
+        size="large"
+    >
+        <FamDynamicForm
+            label-width="20%"
+            ref="dynamicFormForUpgrade"
+            :form="formDataForUpgrade"
+            :data="formConfigForUpgrade"
+        >
+        </FamDynamicForm>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                :loading="saveLoading"
+                type="primary"
+                @click="saveForUpgrade"
+            >{{i18nMappingObj.save}}</erd-button
+            ><erd-button @click="closeForUpgrade">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

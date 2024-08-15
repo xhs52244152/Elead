@@ -1,0 +1,419 @@
+/*通用样式start*/
+// 字体
+@for $i from 0 through 10 {
+    $value: 10 + $i * 2;
+    .font-#{$value} {
+        font-size: #{$value}px !important;
+    }
+}
+
+// 负的外边距
+@each $value in 1, 2, 4, 8, 12, 16, 20, 24 {
+    .m-sub#{$value}, .m_sub#{$value} {
+        margin: -#{$value}px !important;
+    }
+    .mt-sub#{$value}, .mt_sub#{$value} {
+        margin-top: -#{$value}px !important;
+    }
+    .mb-sub#{$value}, .mb_sub#{$value} {
+        margin-bottom: -#{$value}px !important;
+    }
+    .ml-sub#{$value}, .ml_sub#{$value} {
+        margin-left: -#{$value}px !important;
+    }
+    .mr-sub#{$value}, .mr_sub#{$value} {
+        margin-right: -#{$value}px !important;
+    }
+}
+
+// 外边距
+@each $i in 0, 1, 2, 4, 8, 12, 16, 20, 24 {
+    .m-#{$i}, .m_#{$i} {
+        margin: #{$i}px !important;
+    }
+    .mt-#{$i}, .mt_#{$i} {
+        margin-top: #{$i}px !important;
+    }
+    .mb-#{$i}, .mb_#{$i} {
+        margin-bottom: #{$i}px !important;
+    }
+    .ml-#{$i}, .ml_#{$i} {
+        margin-left: #{$i}px !important;
+    }
+    .mr-#{$i}, .mr_#{$i} {
+        margin-right: #{$i}px !important;
+    }
+}
+
+// 内边距
+@each $i in 0, 1, 2, 4, 8, 12, 16, 20, 24 {
+    .p-#{$i}, .p_#{$i} {
+        padding: #{$i}px !important;
+    }
+    .pt-#{$i}, .pt_#{$i} {
+        padding-top: #{$i}px !important;
+    }
+    .pb-#{$i}, .pb_#{$i} {
+        padding-bottom: #{$i}px !important;
+    }
+    .pl-#{$i}, .pl_#{$i} {
+        padding-left: #{$i}px !important;
+    }
+    .pr-#{$i}, .pr_#{$i} {
+        padding-right: #{$i}px !important;
+    }
+}
+
+// 左右上下边距
+@each $i in 0, 1, 2, 4, 8, 12, 16, 20, 24 {
+    .plr-#{$i}, .plr_#{$i} {
+        padding-left: #{$i}px !important;
+        padding-right: #{$i}px !important;
+    }
+    .ptb-#{$i}, .ptb_#{$i} {
+        padding-top: #{$i}px !important;
+        padding-bottom: #{$i}px !important;
+    }
+}
+
+// 宽度
+@each $i in 0, 1, 2, 4, 8, 12, 16, 20, 24, 100, 120, 240, 300 {
+    .w_#{$i}, .w-#{$i} {
+        width: #{$i}px !important;
+        min-width: #{$i}px;
+        max-width: #{$i}px;
+    }
+}
+
+// 0 - 100
+@for $i from 0 through 20 {
+    $value: $i * 5;
+    .w_#{$value}, .w-#{$value} {
+        width: #{$value}px !important;
+        min-width: #{$value}px;
+        max-width: #{$value}px;
+    }
+    .w_#{$i}em, .w-#{$i}em {
+        width: #{$i}em;
+    }
+}
+
+// 100 - 300
+@for $i from 10 through 30 {
+    $value: $i * 10;
+    .w_#{$value}, .w-#{$value} {
+        width: #{$value}px !important;
+        min-width: #{$value}px;
+        max-width: #{$value}px;
+    }
+}
+
+// 350 - 800
+@for $i from 1 through 10 {
+    $value: 300 + $i * 50;
+    .w_#{$value}, .w-#{$value} {
+        width: #{$value}px !important;
+        min-width: #{$value}px;
+        max-width: #{$value}px;
+    }
+}
+
+// 高度
+@for $i from 0 through 20 {
+    $value: $i * 5;
+    .h-#{$value}, .h_#{$value} {
+        height: #{$value}px !important;
+    }
+}
+
+// 宽高百分比
+@for $i from 1 through 20 {
+    $value: $i * 5;
+    .w_#{$value}p, .w-#{$value}p {
+        width: #{($value) + '%'} !important;
+    }
+    .h-#{$value}p, .h_#{$value}p {
+        height: #{($value) + '%'} !important;
+    }
+}
+
+// 最小宽高，最大宽高
+@for $i from 1 through 15 {
+    $value: $i * 50;
+    .min-w#{$value} {
+        min-width: #{$value}px !important;
+    }
+    .max-w#{$value} {
+        max-width: #{$value}px !important;
+    }
+    .min-h#{$value} {
+        min-height: #{$value}px !important;
+    }
+    .max-h#{$value} {
+        max-height: #{$value}px !important;
+    }
+}
+
+.h_100p_minus24, .h-100p-minus24 {
+    height: calc(100% - 24px);
+}
+
+.max-w280 {
+    max-width: 280px !important;
+}
+
+.max-w725 {
+    max-width: 725px !important;
+}
+
+.min-h20 {
+    min-height: 20px !important;
+}
+
+.max-h290 {
+    max-height: 290px !important;
+}
+
+.m-0-auto {
+    margin: 0 auto !important;
+}
+
+.mlr-0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.mlr-28 {
+    margin: 0 28px !important;
+}
+
+.mlr-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.vl-m,
+.vl_m {
+    vertical-align: middle !important;
+}
+
+.vl-t,
+.vl_t {
+    vertical-align: top !important;
+}
+
+.vl-b,
+.vl_b {
+    vertical-align: bottom !important;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.f-dir-column {
+    flex-direction: column;
+}
+
+.f-grow-1 {
+    flex-grow: 1;
+}
+
+.p-relative {
+    position: relative;
+}
+
+.p-absolute {
+    position: absolute;
+}
+
+.inline-show {
+    display: inline-block !important;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ellipsis-inline, .essipsis-inline {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    width: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-light {
+    background-color: #FFFFFF !important;
+}
+
+/* 延时动画 */
+.transition {
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+@-webkit-keyframes loading {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes loading {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@-webkit-keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@-moz-keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@-ms-keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@-o-keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes linear-rotate {
+    from {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+    to {
+        transform: rotate3d(0, 0, 1, 360deg);
+    }
+}
+
+@-webkit-keyframes linear-rotate {
+    from {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+    to {
+        transform: rotate3d(0, 0, 1, 360deg);
+    }
+}
+
+@-moz-keyframes linear-rotate {
+    from {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+    to {
+        transform: rotate3d(0, 0, 1, 360deg);
+    }
+}
+
+@-ms-keyframes linear-rotate {
+    from {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+    to {
+        transform: rotate3d(0, 0, 1, 360deg);
+    }
+}
+
+@-o-keyframes linear-rotate {
+    from {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+    to {
+        transform: rotate3d(0, 0, 1, 360deg);
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0; /*初始状态 透明度为0*/
+    }
+    50% {
+        opacity: 0.5; /*中间状态 透明度为0.5*/
+    }
+    100% {
+        opacity: 1; /*结尾状态 透明度为1*/
+    }
+}
+

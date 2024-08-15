@@ -1,0 +1,269 @@
+<div
+    ref="famAdvancedGroup"
+    id="FamAdvancedGroup"
+    :class="['fam-advanced-group', { 'fam-advanced-group-panel': isPanel, 'fam-advanced-group-panel-hidden': !isExpand }]"
+    :style="{'max-height': maxHeight, 'height': height}"
+>
+    <slot
+        v-if="isPanel"
+        name="advanced-search-title"
+    >
+    </slot>
+    <erd-form
+        v-show="isExpand"
+        ref="form"
+    >
+        <erd-scrollbar :class="{ 'conditions-scroll-contianer': isPanel }">
+            <div class="conditions-container">
+                <!-- <erd-row v-if="isGroup" class="condition-group-type-select">
+                    <erd-ex-select class="type-select" v-model="selectedType" :options="fieldTypeList" :defaultProps="typePropConfig"></erd-ex-select>
+                    <span>注：仅支持单个对象类型的属性设置为搜索条件组合</span>
+                </erd-row> -->
+                <div
+                    v-if="showTypeTips"
+                    v-show="conditionsList.length > 0"
+                    class="fam-advanced-group-type-tips"
+                >
+                    <erd-tooltip placement="top">
+                        <div slot="content">
+                            条件组仅支持单个类型的条件筛选，当其首个条件选择选项后<br />即确定类型，新增的条件可选项只展示该类型属性
+                        </div>
+                        <erd-icon icon="help"></erd-icon>
+                    </erd-tooltip>
+                </div>
+                <erd-row
+                    class="condition-row-item"
+                    v-for="(item,index) in conditionsList"
+                    :key="item.id + item.field + '-' + index"
+                    :gutter="8"
+                    type="flex"
+                    align="middle"
+                >
+                    <erd-button
+                        type="icon"
+                        class="fam-advanced-remove-btn"
+                        :class="{'remove-btn-hidden': isHiddenRemoveBtn}"
+                        icon="erd-iconfont erd-icon-forbidden"
+                        @click="fnDeleteCondition(item, index)"
+                    >
+                    </erd-button>
+                    <erd-ex-select
+                        v-show="!isHiddenRelationSelect"
+                        v-model="item.relation"
+                        :options="relationOptions"
+                        placeholder=""
+                        class="fam-advanced-ralation fam-advanced-relation-select"
+                        :class="{'advanced-ralation-hidden': index === 0 }"
+                    ></erd-ex-select>
+                    <div
+                        v-if="item.type !== 'group'"
+                        class="fam-advanced-not-group-container"
+                    >
+                        <erd-form-item class="fam-advanced-field">
+                            <erd-select
+                                v-model="item.field"
+                                clearable
+                                filterable
+                                filter
+                                @change="fnSelectColumn(item, index)"
+                                @clear="fnClearColumn(item, index)"
+                            >
+                                <erd-option
+                                    v-for="option in fieldOptions"
+                                    :key="option.attrName"
+                                    :label="option.label"
+                                    :value="option.attrName"
+                                    @mousedown.native="beforeSelect($event, option, item)"
+                                ></erd-option>
+                            </erd-select>
+                        </erd-form-item>
+                        <erd-form-item class="fam-advanced-oper">
+                            <erd-select
+                                v-model="item.operator"
+                                @change="fnOperChange(item, index)"
+                                filterable
+                                clearable
+                            >
+                                <erd-option
+                                    v-for="item in item.operationList"
+                                    :key="item.value"
+                                    :label="item.displayName"
+                                    :value="item.value"
+                                ></erd-option>
+                            </erd-select>
+                        </erd-form-item>
+                        <!-- 选中字段则显示对应组件 -->
+                        <!-- 显示组件根据字段对应的类型来映射生成 -->
+                        <erd-form-item
+                            v-if="item.field && fnOperatorHandle(item)"
+                            class="fam-advanced-component"
+                        >
+                            <template
+                                v-if="['BETWEEN', 'NOT_BETWEEN'].indexOf(item.operator) !== -1 && !isCustomDate(item.showComponent)"
+                            >
+                                <component
+                                    v-model="item._value1"
+                                    :ref="item.showComponent + '-' + index + 0"
+                                    :data-type="item.dataType"
+                                    :is="item.showComponent"
+                                    :oper="item.operator"
+                                    :key="item.field  + '-' + index + 1"
+                                    :row="getComponentRow(item)"
+                                    :multiple="false"
+                                    @callback="fnComponentCallback"
+                                    v-bind="item.props"
+                                    :value1-index="1"
+                                ></component>
+                                <div class="inline-flex mlr-sm justify-center">~</div>
+                                <component
+                                    v-model="item._value2"
+                                    :ref="item.showComponent + '-' + index + 1"
+                                    :data-type="item.dataType"
+                                    :is="item.showComponent"
+                                    :oper="item.operator"
+                                    :key="item.field  + '-' + index + 2"
+                                    :row="getComponentRow(item)"
+                                    :multiple="false"
+                                    @callback="fnComponentCallback"
+                                    v-bind="item.props"
+                                    :value1-index="2"
+                                ></component>
+                            </template>
+                            <!-- 自定义动态组件，根据传入的组件名称显示对应组件，逻辑在组件里面自己判断，
+                                    每个字段所有字段都以对象传进去了，这样如果后续有拓展组件，自己写组件判断逻辑就行，组件名称规则 custom-组件名称 -->
+                            <component
+                                v-else
+                                :ref="item.showComponent + '-' + index"
+                                :data-type="item.dataType"
+                                :is="item.showComponent"
+                                :oper="item.operator"
+                                :key="item.field  + '-' + index"
+                                :row="getComponentRow(item)"
+                                :multiple="false"
+                                @callback="fnComponentCallback"
+                                is-fetch-value
+                                v-bind="item.props"
+                                v-model="item.value"
+                                class="w-100p"
+                            ></component>
+                        </erd-form-item>
+                    </div>
+                    <div
+                        v-else
+                        class="fam-advanced-group-container"
+                    >
+                        <slot
+                            name="condition-row-prefix"
+                            :model="item"
+                            :index="index"
+                        >
+                        </slot>
+                        <fam-advanced-group
+                            v-model="item.childrenList"
+                            :init-type="innerSelectedType"
+                            :field-type-list="fieldTypeList"
+                            :footer-btn-show="false"
+                            :condition-columns-list="conditionColumnsListCopy"
+                            :show-type-tips="!isGroup && !isPanel"
+                            :counter="counter + 1"
+                            :all-condition-list="innerAllConditionList"
+                            :classify-condition-list="item.classifyConditionList"
+                            :is-classify-search="isClassifySearch"
+                            :can-add-condition-group="canAddConditionGroup"
+                            is-group
+                            @type-change="onChildTypeChange"
+                        >
+                        </fam-advanced-group>
+                    </div>
+                </erd-row>
+            </div>
+            <div class="fam-advanced-conditions-add">
+                <erd-button
+                    v-if="canAddCondition"
+                    type="text"
+                    class="my-icon-btn"
+                    icon="el-icon-plus"
+                    @click="fnAddConditionItem"
+                >
+                    {{ i18nMappingObj['add_conditions']}}
+                </erd-button>
+                <erd-button
+                    v-if="canAddConditionGroup"
+                    type="text"
+                    class="my-icon-btn"
+                    icon="el-icon-plus"
+                    @click="fnAddConditionGroup"
+                >
+                    {{ i18nMappingObj['add_conditions_group'] }}
+                </erd-button>
+            </div>
+        </erd-scrollbar>
+        <erd-form-item
+            class="footer-form-item"
+            v-if="footerBtnShow"
+        >
+            <div class="footer-btn-container">
+                <el-button
+                    v-for="(item, index) in buttonsList"
+                    :type="item.btnType"
+                    :key="item.type + '-' + index"
+                    :disabled="item.disabled"
+                    @click="buttonClick(item.type)"
+                >
+                    {{ item.name }}
+                </el-button>
+            </div>
+        </erd-form-item>
+    </erd-form>
+    <!-- 展开/收起按钮 -->
+    <div
+        v-if="isPanel"
+        v-show="isExpand"
+        class="fam-advanced-group-expand-btn"
+        @click="changeExpand(false)"
+    >
+        <em class="el-input__icon el-icon-arrow-up"></em>
+        <span>{{ i18nMappingObj['folded'] }}</span>
+    </div>
+    <!-- 历史筛选 -->
+    <!-- TODO 6.30版本不是上，暂时禁用 -->
+    <erd-form
+        inline
+        class="fam-advanced-group-history"
+    >
+        <component-width-label
+            v-if="showAdvancedHistory"
+            v-model="historyFilter.value"
+            disabled
+            :label="historyFilter.label"
+            :removeable="false"
+            :is-render="historyFilter.showComponent"
+            :placeholder="historyFilter.placeholder"
+        >
+            <erd-option
+                v-for="item in historyFilter.options"
+                :key="item.label + '-' + item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+                <a
+                    v-if="item.type === 'link'"
+                    @click="item.handleClick"
+                    >{{ item.label }}</a
+                >
+                <span v-else>{{ item.label }}</span>
+            </erd-option>
+        </component-width-label>
+        <erd-form-item>
+            <div
+                v-if="isPanel"
+                v-show="!isExpand"
+                class="fam-advanced-group-expand-btn fam-advanced-group-expand-btn-notexpand"
+                @click="changeExpand(true)"
+            >
+                <em class="el-input__icon el-icon-arrow-down"></em>
+                <span>{{ i18nMappingObj['expand'] }}</span>
+            </div>
+        </erd-form-item>
+    </erd-form>
+</div>

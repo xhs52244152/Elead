@@ -1,0 +1,107 @@
+.configContanier {
+    position: relative;
+
+    .config-label {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: 32px;
+        justify-content: flex-end;
+        padding-right: 8px;
+    }
+
+    .config-input {
+        position: relative;
+        padding-left: 8px;
+
+        .isActive {
+            .el-input__inner {
+                border-color: var(--colorPrimary);
+            }
+        }
+
+        .config-tip {
+            position: absolute;
+            top: -26px;
+            left: 0;
+            text-align: center;
+            width: 100%;
+            line-height: 22px;
+        }
+
+        .nabla {
+            position: absolute;
+            top: 41px;
+            left: 54px;
+            z-index: 1;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 20px;
+                height: 20px;
+                transform: rotate(135deg);
+                background-color: transparent;
+                box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.2);
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 6px;
+                left: -10px;
+                width: 40px;
+                height: 40px;
+                transform: rotate(135deg);
+                border-left: 20px solid #fff;
+                border-right: 20px solid transparent;
+                border-bottom: 20px solid #fff;
+                border-top: 20px solid transparent;
+            }
+        }
+    }
+
+    .el-input__inner {
+        cursor: pointer;
+    }
+
+    .config-content {
+        position: relative;
+        box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.2);
+        margin: 20px 4px 4px 4px;
+        width: calc(100% - 8px);
+        border-radius: 4px;
+
+        .el-radio {
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .group-radio {
+            height: 32px;
+            display: flex;
+            align-items: center;
+
+            & + .group-radio {
+                margin-top: 12px;
+            }
+        }
+
+        .group-checkbox {
+            padding-left: 16px;
+            .el-checkbox .el-checkbox__label {
+                line-height: 22px;
+                width: 20px;
+            }
+        }
+
+        .el-checkbox {
+            margin-right: 16px;
+            margin-bottom: 12px;
+        }
+    }
+}

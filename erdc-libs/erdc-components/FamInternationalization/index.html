@@ -1,0 +1,40 @@
+<div
+    id="FamInternationalization"
+    :class="{'appendToBody': !appendToBody}"
+    xmlns:v-slot="http://www.w3.org/1999/XSL/Transform"
+>
+    <erd-ex-dialog
+        :title="i18nMappingObj['Internationalization']"
+        :visible.sync="innerVisible"
+        :custom-class="popperClass"
+        :close-on-click-modal="closeOnClickModal"
+        :append-to-body="appendToBody"
+        size="large"
+    >
+        <div id="FamInternationalizationContent">
+            <div class="Internationalization-headerTitle">{{i18nMappingObj['multiLanguage']}}</div>
+            <FamDynamicForm
+                ref="innerData"
+                :form.sync="innerData"
+                :data="formLayout"
+                v-on="$listeners"
+                @field:blur="handleFieldInput"
+            >
+                <template v-slot:attr-name-component="scope">
+                    <span>{{attrShowName}}</span>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveSubmit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="toogleShow">{{i18nMappingObj.cencel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,56 @@
+<div id="fam-template-manage">
+    <div ref="header" class="manage-search">
+        <erd-input
+		:placeholder="i18nMappingObj.enter"
+		class="fam-manage-tree__search"
+		@input="search"
+		v-model="searchValue"
+		suffix-icon='erd-iconfont erd-icon-search'
+		clearable>
+        </erd-input>
+
+        <div style="display: inline-block;">
+            <erd-button type="primary" @click="onCreateRole">{{i18nMappingObj.add}}</erd-button>
+            <erd-button @click="onRemove">{{i18nMappingObj.remove}}</erd-button>
+            <erd-button
+			style="min-width: 32px;"
+			@click="onRefresh" 
+			icon="erd-iconfont erd-icon-reset">
+            </erd-button>
+            <erd-button
+			style="min-width: 32px;"
+			icon="erd-iconfont erd-icon-list-config"
+			@click="onConfig">
+			</erd-button>
+        </div>
+    </div>
+    <div class="manage-table">
+        <erd-table
+		v-bind="tableConfig"
+		@checkbox-change="changeCheck"
+		:data="tableData"
+		ref="ProRoleTable">
+			
+			<template #column:default:enabled="{data}">
+				<erd-checkbox v-model="data.row.enabled" @change="changeCheckbox(data.row)"></erd-checkbox>
+			</template>
+		</erd-table>
+		<!--小于等于一页不展示-->
+		<erd-pagination
+		style="margin-top:16px;"
+		:current-page.sync="pagination.pageIndex"
+		:page-size.sync="pagination.pageSize"
+		:total="pagination.total"
+		:hide-on-single-page="false"
+		@current-change="handlePageChange"
+		@size-change="handleSizeChange">
+		</erd-pagination>
+    </div>
+    <open-create
+	:team-oid="teamOid"
+	v-if="dialogVisible"
+	:visible.sync="dialogVisible"
+	@onsubmit="onSubmit"
+	:title="dialogTitle">
+    </open-create>
+</div>

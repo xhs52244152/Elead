@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/platform-api",
+  "description": "API 管理",
+  "erdcData": {},
+  "appId": "plat",
+  "version": "3.1.0"
+}

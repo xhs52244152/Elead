@@ -1,0 +1,77 @@
+<div class="agent_process_configuration">
+    <div class="agent_process_configuration-body">
+        <resizable-container>
+            <template slot="left">
+                <div class="left">
+                    <span class="select-process">{{ i18nMappingObj['流程类型'] }}</span>
+                    <!-- <span class="t2">{{ '（' + selectedQuantity + '/' + optionalQuantity + '）' }}</span> -->
+                    <div class="search">
+                        <erd-input
+                            v-model="searchValue"
+                            style="width: 100%"
+                            :placeholder="i18nMappingObj['请输入搜索内容']"
+                            suffix-icon="erd-iconfont erd-icon-search"
+                        ></erd-input>
+                    </div>
+                    <erd-scrollbar :style="{height: treeHeight}">
+                        <erd-ex-tree
+                            ref="tree"
+                            class="agent-tree"
+                            node-key="oid"
+                            :highlight-current="true"
+                            :data="treeData"
+                            :filter-node-method="filterSearch"
+                            :props="defaultProps"
+                            @node-click="nodeClick"
+                        >
+                            <template v-slot="scope">
+                                <div class="tree-content">
+                                    <div class="tree-text">
+                                        <i
+                                            v-if="scope.data.icon"
+                                            :class="scope.data.icon"
+                                            aria-hidden="true"
+                                        ></i>
+                                        <template v-if="isApplication(scope.node.data) && scope.node.data.icon">
+                                            <img
+                                                v-if="scope.node.data.icon"
+                                                style="top: -1px; width: 1em; height: 1em"
+                                                class="inline-block position-relative"
+                                                :src="scope.node.data.icon"
+                                                alt=""
+                                            />
+                                            <erd-icon
+                                                v-else
+                                                icon="loading"
+                                                style="animation: loading-rotate 2s linear infinite"
+                                            ></erd-icon>
+                                        </template>
+                                        {{scope.node.label}}
+                                    </div>
+                                </div>
+                            </template>
+                        </erd-ex-tree>
+                    </erd-scrollbar>
+                </div>
+            </template>
+            <template slot="right">
+                <div class="right">
+                    <erd-ex-transfer
+                        ref="transferProxy"
+                        v-model="selectData"
+                        :allColumnsList="allColumnsList"
+                        :defaultSelected="defaultSelected"
+                        :valueKey="valueKey"
+                        :isShowLock="false"
+                        :leftTitle="i18nMappingObj['请选择流程']"
+                        :rightTitle="i18nMappingObj['已选流程']"
+                        isUnfixedSource
+                        showLabel="name"
+                    >
+                        <template slot="right-title-sub">{{i18nMappingObj['请拖动调整排序']}}</template>
+                    </erd-ex-transfer>
+                </div>
+            </template>
+        </resizable-container>
+    </div>
+</div>

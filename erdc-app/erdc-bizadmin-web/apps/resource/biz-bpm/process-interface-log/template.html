@@ -1,0 +1,54 @@
+<div
+    id="bpm-log-content"
+    class="bpm-log-content h_100p"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        @handler-data="handlerData"
+    >
+        <!-- <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="onCommand"
+            ></fam-action-pulldown>
+        </template> -->
+    </fam-view-table>
+
+    <!-- 日志详情 -->
+    <erd-ex-dialog
+        size="large"
+        :title="logForm.title"
+        :visible.sync="logForm.visible"
+        @close="logForm.oid = ''; logForm.interfaceRef = ''; logForm.readonly = false;"
+    >
+        <log-form
+            v-if="logForm.visible"
+            :readonly="logForm.readonly"
+            :oid="logForm.oid"
+            :interface-ref="logForm.interfaceRef"
+            ref="logForm"
+        ></log-form>
+    </erd-ex-dialog>
+    <!-- 历史记录 -->
+    <erd-ex-dialog
+        size="large"
+        :title="recordForm.title"
+        :visible.sync="recordForm.visible"
+    >
+        <template v-for="(item, index) in recordForm.list">
+            <div class="bpm-log-content-record-form">
+                <record-form
+                    v-if="recordForm.visible"
+                    :readonly="recordForm.readonly"
+                    :form="item"
+                    :ref="'recordForm_' + index"
+                ></record-form>
+            </div>
+        </template>
+    </erd-ex-dialog>
+</div>

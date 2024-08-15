@@ -1,0 +1,54 @@
+<div
+    class="fam-sidemenu"
+    :class="{ 'fam-sidemenu--collapsed': collapsed}"
+>
+    <div class="fam-sidemenu__header">
+        <div v-if="!collapsed">{{titleName(currentRoot)}}</div>
+        <div
+            class="fam-sidemenu__header-toggle"
+            @click="toggleCollapsed"
+        >
+            <i
+                class="erd-iconfont"
+                :class="{ 'erd-icon-fold-left': !collapsed, 'erd-icon-fold-right': collapsed }"
+            ></i>
+        </div>
+    </div>
+    <transition name="el-fade-in">
+        <slot v-show="!collapsed"></slot>
+    </transition>
+    <transition name="el-fade-in">
+        <div class="fam-sidemenu__search">
+            <erd-input
+                v-show="!collapsed && isShowSearch"
+                v-model="keyword"
+                style="width: 100%"
+                :placeholder="i18n.enterNameKeywords"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+            ></erd-input>
+        </div>
+    </transition>
+    <transition
+        name="el-fade-in"
+        class="grow-1"
+    >
+        <erd-scrollbar
+            v-show="!collapsed"
+            class="fam-sidemenu__menu flex flex-column grow-1 h-0"
+            style="flex-shrink: 0"
+            wrap-class="flex flex-column grow-1 "
+        >
+            <FamSecondaryMenu
+                v-if="!collapsed"
+                v-show="!collapsed"
+                :config="config"
+                :resources="filteredResources"
+                :default-active="defaultActive"
+                :show-children="showChildren"
+                :hide-resource-children="hideResourceChildren"
+                @select="onSelect"
+            ></FamSecondaryMenu>
+        </erd-scrollbar>
+    </transition>
+</div>

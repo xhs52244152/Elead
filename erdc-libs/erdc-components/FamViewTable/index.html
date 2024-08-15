@@ -1,0 +1,149 @@
+<div
+    id="FamViewTable"
+    class="fam-view-table-component"
+    :class="{'adaptive-height': isAdaptiveHeight, 'pb-xl': !isAdaptiveHeight}"
+>
+    <FamInfoTitle
+        v-if="showTitle"
+        :title="viewTableTitle"
+        :staticTitle="staticViewTableTitle"
+        :class="{'pb-xl': !isShowNavbar}"
+    ></FamInfoTitle>
+    <fam-view-navbar
+        ref="FamViewNavbar"
+        v-show="isShowNavbar"
+        v-bind="menuConfig"
+        :table-key="tableKey"
+        :app-name="appName"
+        :is-global-search-list="isGlobalSearchList"
+        :view-table-config="viewTableConfig"
+        @callback="fnViewNavCallBack"
+        @change="fnViewChange"
+        @refresh-table="refreshTable"
+    >
+        <template
+            v-if="showMoreSearch"
+            slot="right:viewNavbar:first"
+        >
+            <erd-button
+                type="text"
+                :class="['fam-advanced-filter-btn', { 'fam-advanced-filter-active': advancedFilterActive }]"
+                @click="switchAdvancedFilter"
+            >
+                {{ i18nMappingObj['高级筛选'] }}
+            </erd-button>
+        </template>
+        <template
+            v-if="showClassifySearch"
+            slot="right:viewNavbar:first"
+        >
+            <erd-button
+                type="text"
+                :class="['fam-classify-search-btn', { 'fam-classify-search-btn-active': classifySearchActive }]"
+                @click="switchClassifySearch"
+            >
+                {{ i18nMappingObj['分类搜索'] }}
+            </erd-button>
+        </template>
+        <template
+            #right:viewNavbar:end
+            v-if="$scopedSlots['right:viewNavbar:end']"
+        >
+            <slot name="right:viewNavbar:end"></slot>
+        </template>
+    </fam-view-navbar>
+
+    <div class="advanced-table-container pt-xl">
+        <fam-advanced-table
+            ref="FamAdvancedTable"
+            :view-oid="viewOid"
+            :hyperlinkObj.sync="hyperlinkObj"
+            :default-view-oid="defaultViewOid"
+            :table-views-info="viewTableMenuRow"
+            :view-info="viewInfo"
+            :table-key="tableKey"
+            :view-table-config="advancedTableConfig"
+            :isStreamline="isStreamline"
+            :view-table-height="viewTableHeight"
+            :table-max-height="tableMaxHeight"
+            :is-adaptive-height="isAdaptiveHeight"
+            :maxLine="maxLine"
+            :is-relational-view="isRelationalView"
+            :is-designer-form="isDesignerForm"
+            :is-layout-widget="isLayoutWidget"
+            :form-oid="formOid"
+            :enable-scroll-load="isDynamicLoad"
+            :views-basic-filters="viewsBasicFilters"
+            :app-name="appName || viewInfo.appName"
+            v-on="$listeners"
+        >
+            <template
+                v-if="viewTableConfig?.saveAs"
+                #left:toolbar:end
+            >
+                <erd-button
+                    @click="fnShowFormDialog"
+                    type="text"
+                    >{{ i18nMappingObj['另存为视图'] }}</erd-button
+                >
+            </template>
+            <!-- 自定义插槽（可参考高级表格文档插槽用法），这里直接取父级传进来的全部插槽渲染到表格 -->
+            <template
+                v-for="slotName in allSlots"
+                v-slot:[slotName]="{ scope }"
+            >
+                <slot
+                    :name="`${slotName}`"
+                    :scope="scope"
+                ></slot>
+            </template>
+            <!-- 插槽穿透 -->
+            <template
+                v-for="(slot, name) in $scopedSlots"
+                v-slot:[name]="scope"
+            >
+                <slot
+                    :name="name"
+                    v-bind="scope"
+                ></slot>
+            </template>
+        </fam-advanced-table>
+    </div>
+    <!-- 另存为视图 -->
+    <erd-ex-dialog
+        ref="createViewTableDialog"
+        :visible.sync="viewForm.visible"
+        width="1200px"
+        :title="i18nMappingObj['另存为视图']"
+        :before-close="fnCloseForm"
+    >
+        <!-- 表单组件 -->
+        <view-form
+            ref="viewForm"
+            v-if="viewForm.visible"
+            :oid="viewForm.oid"
+            :row="viewInfoRow"
+            :table-row="viewTableMenuRow"
+            :table-key="tableKey"
+            :save-as="true"
+            :visible="viewForm.visible"
+            :view-type="viewType"
+            @form-change="fnFormChange"
+        ></view-form>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="viewForm.loading"
+                @click="fnFormSubmit('viewForm')"
+                :disabled="!isChanged || viewForm.loading"
+                >{{ i18nMappingObj.confirm }}</erd-button
+            >
+            <erd-button
+                @click="fnCloseForm"
+                :disabled="viewForm.loading"
+                >{{ i18nMappingObj.cancel }}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,28 @@
+.fam-autograph-upload {
+    .el-image {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+    }
+    .el-upload__input {
+        display: none !important;
+    }
+    .el-upload__tip {
+        font-size: 13px;
+    }
+    .notImageBack {
+        width: 32px;
+        height: 32px;
+        background: #d8d8d8;
+    }
+    img {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    }
+    .fam-autograph-upload__delete-button {
+        display: flex;
+        background-color: rgba(0, 0, 0, .5);
+        i {
+            font-size: calc(var(--fontSize) + 4px);
+        }
+    }
+}

@@ -1,0 +1,29 @@
+<div>
+    <span @click="doAction"><slot></slot></span>
+    <erd-ex-dialog :visible.sync="visible"
+                   :fullscreen="true"
+                   :is-center="false"
+                   v-bind="$attrs"
+                   :before-close="beforeClose" width="1200px"
+                   @closed="handleClosed"
+                   v-on="$listeners"
+                   :append-to-body="true"
+                   ref="dialog"
+                   :title="title"
+                   custom-class="fam-file-preview"
+    >
+        <template v-if="$scopedSlots.title">
+            <template slot="title">
+                <slot name="title"  v-bind="params"></slot>
+            </template>
+        </template>
+        <div :style="{height: calcHeight}">
+            <div :id="containerId" style="height: 100%;"></div>
+        </div>
+        <template v-if="$scopedSlots.footer">
+            <template slot="footer">
+                <slot name="footer" v-bind="params"></slot>
+            </template>
+        </template>
+    </erd-ex-dialog>
+</div>

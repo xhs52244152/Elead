@@ -1,0 +1,16 @@
+.dimission-handover .dimission-member-body {
+  margin-bottom: 12px;
+}
+.dimission-handover .cursor-pointer {
+  cursor: pointer;
+}
+.dimission-handover .left-main-container {
+  border-bottom: 1px solid var(--colorBorder);
+  padding: 12px 16px;
+}
+.dimission-handover .fontWeight {
+  opacity: 0.7;
+  font-size: 16px;
+  color: #000000;
+  font-weight: bold;
+}/*# sourceMappingURL=style.css.map */

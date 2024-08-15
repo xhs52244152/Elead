@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/platform-tenant",
+  "version": "3.1.0",
+  "description": "租户",
+  "erdcData": {},
+  "appId": "plat"
+}

@@ -1,0 +1,24 @@
+<div
+    id="permissionStatusSelect"
+    class="flex align-items-center"
+>
+    <erd-select
+        v-model="selectedValue"
+        clearable
+        filterable
+        :disabled="disabled"
+        :placeholder="i18nMappingObj.pleaseSelect"
+        @change="handlerChangeStatus"
+    >
+        <erd-option
+            v-for="option in optionsList"
+            :key="option.id"
+            :label="option.name"
+            :value="option.id"
+        ></erd-option>
+
+        <template #prefix>
+            <slot name="prefix"></slot>
+        </template>
+    </erd-select>
+</div>

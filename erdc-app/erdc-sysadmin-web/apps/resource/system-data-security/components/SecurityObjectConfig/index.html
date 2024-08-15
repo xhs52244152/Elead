@@ -1,0 +1,97 @@
+<div
+    ref="securityObjectConfig"
+    id="security-object-config"
+    class="flex flex-column overflow-hidden h-100p"
+>
+    <div
+        ref="header"
+        class="flex align-items-center justify-between w_100p pb-16"
+    >
+        <div class="search">
+            <erd-input
+                v-model="searchValue"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18n.pleaseEnter"
+                clearable
+            ></erd-input>
+        </div>
+        <div class="btn">
+            <erd-button
+                type="primary"
+                @click="onCreate()"
+                >{{i18n.create}}</erd-button
+            >
+        </div>
+    </div>
+    <div class="grow-1" style="min-height: 0;">
+        <fam-erd-table
+            ref="erdTable"
+            height="100%"
+            :data="tableData"
+            :column="columns"
+            :edit-config="{trigger: 'manual', mode: 'row'}"
+            class="h-100p"
+            @edit-closed="handleEditClosed"
+        >
+            <template #column:default:appName="{data}">
+                <FamCustomSelectStaticText
+                    v-model="data.row[data.column.property]"
+                    :row="appNameRow"
+                ></FamCustomSelectStaticText>
+            </template>
+            <template #column:edit:appName="{data}">
+                <custom-select
+                    v-model="data.row[data.column.property]"
+                    :row="appNameRow"
+                    @change="(value, select) => onChange(value, select, data.row)"
+                ></custom-select>
+            </template>
+            <template #column:default:typeDefinitionDto="{data}">
+                <span>{{objectDisplayName(data)}}</span>
+            </template>
+            <template #column:edit:typeDefinitionDto="{data}">
+                <erd-tree-select
+                    style="width: 100%"
+                    v-model="data.row[data.column.property]"
+                    check-relation="irrelevance"
+                    :data="data.row.securityObjectData"
+                    :node-key="nodeKey"
+                    :props="treeProps"
+                    default-expand-all
+                    multiple
+                    collapse-tags
+                ></erd-tree-select>
+            </template>
+            <template #column:default:operation="{data}">
+                <template v-if="isActiveStatus(data)">
+                    <erd-button
+                        type="text"
+                        @click="onSave(data)"
+                    >
+                        {{i18n.save}}
+                    </erd-button>
+                    <erd-button
+                        type="text"
+                        @click="onCancle(data)"
+                    >
+                        {{i18n.cancel}}
+                    </erd-button>
+                </template>
+                <template v-else>
+                    <erd-button
+                        type="text"
+                        @click="onEdit(data)"
+                    >
+                        {{i18n.edit}}
+                    </erd-button>
+                    <erd-button
+                        type="text"
+                        @click="onDelete(data)"
+                    >
+                        {{i18n.delete}}
+                    </erd-button>
+                </template>
+            </template>
+        </fam-erd-table>
+    </div>
+</div>

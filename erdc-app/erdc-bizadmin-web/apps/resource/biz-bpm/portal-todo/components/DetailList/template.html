@@ -1,0 +1,43 @@
+<div
+    id="detail-list-content"
+    class="detail-list-content"
+    v-cloak
+>
+    <div
+        v-for="(item, index) in tableData"
+        :key="item.id"
+        :style="{ 'background': index === current ? '#F3F6FF' : '#ffffff' }"
+        :class="['detail-list-content-item', { 'item-active': index === current }]"
+        @click="clickItem(index)"
+    >
+        <div class="box-list-item">
+            <div class="box-list-top">
+                <erd-checkbox
+                    v-model="item.processSelect"
+                    @click.native.stop
+                    @change="change"
+                ></erd-checkbox>
+                <span class="box-list-top-title">{{ item.processInstanceName }}</span>
+            </div>
+            <div class="box-list-bot">
+                <div class="box-list-bot-left">
+                    <div
+                        v-if="!!item.processStatusClass"
+                        :class="['box-list-bot-bgbox', item.processStatusClass]"
+                    >
+                        <span>{{ item.processStatusName }}</span>
+                    </div>
+                    <span class="box-list-bot-bgtitle">{{ item.processPromoterName }}</span>
+                </div>
+                <div class="box-list-bot-right">
+                    <div
+                        v-if="!!item.processDueDateClass"
+                        :class="['box-list-bot-bgbox', 'box-list-bot-bgbox-duedata', item.processDueDateClass]"
+                    >
+                        <span>{{ item.processDueDateName }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+#QueueTree {
+    background-color: #fff;
+    width: 100%;
+
+    .QueueTree {
+        .list_item {
+            padding-left: 40px;
+            height: 40px;
+            line-height: 40px;
+            color: var(--colorTextNormal);
+            font-size: 14px;
+            font-size: var(--fontSize);
+            cursor: pointer;
+        }
+
+        .list_item:hover {
+            background-color: #EBF1FF;
+            color: #6C6FFF;
+        }
+
+        .QueueTree-header {
+            margin-bottom: 12px;
+            color: red;
+
+            .QueueTree-search {
+                justify-content: space-between;
+            }
+
+            .QueueTree-title {
+                padding-bottom: 12px;
+                font-size: var(--fontSizeLarge);
+                color: var(--colorTextNormal);
+                font-weight: 700;
+            }
+
+            .operation {
+                margin: 12px 0;
+            }
+        }
+
+        .el-button {
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .el-tree-node__content {
+            display: flex;
+            width: 100%;
+            align-items: center;
+
+            .tree-content {
+                display: inline-block;
+                width: calc(100% - 25px);
+                position: relative;
+
+                .tree-operation {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+            }
+        }
+    }
+
+}

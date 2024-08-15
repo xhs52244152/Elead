@@ -1,0 +1,37 @@
+<div class="associated-process-def-content">
+    <fam-erd-table
+        height="500"
+        border
+        :row-config="{isCurrent: true, isHover: true}"
+        :column-config="{resizable: true}"
+        align="left"
+        :data="tableData"
+        :column="column"
+        show-overflow
+        ref="erdTable"
+    >
+        <!-- 工具栏插槽 -->
+        <template #column:default:operation="{ data: { row } }">
+            <erd-button
+                type="text"
+                @click="viewFlowChart(row)"
+                >{{ i18nMappingObj['流程图'] }}</erd-button
+            >
+        </template>
+    </fam-erd-table>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        :show-fullscreen="false"
+        @close="bpmFlowchart.processDefinitionId = '', bpmFlowchart.processInstanceId = ''"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+</div>

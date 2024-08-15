@@ -1,0 +1,60 @@
+<div
+    class="received-notice-list_card"
+    style="height: 100%"
+>
+    <div class="x_title">
+        <span
+            >{{ this.title || i18n.systemNotice }}<span
+                v-if="total > 0"
+                class="ml-8 text-12 title-desc"
+                >{{$t('noticeCount', { total: total })}}</span
+            ></span
+        >
+    </div>
+    <div style="height: calc(100% - 54px)">
+        <template v-if="tableData && tableData.length">
+            <el-scrollbar style="height: calc(100% - 37px)">
+                <div
+                    v-for="item in tableData"
+                    class="list-group-item"
+                >
+                    <div class="data-list">
+                        <div class="data-list-left flex align-items-center">
+                            <span
+                                :class="{'is-read': item.noticeState === 'readed' }"
+                                class="spot mr-8"
+                            ></span>
+                            <erd-tooltip :content="item.displayName">
+                                <div
+                                    class="left-text cursor-pointer"
+                                    @click="showDetail(item)"
+                                >
+                                    {{ item.displayName }}
+                                </div>
+                            </erd-tooltip>
+                        </div>
+                        <div class="data-list-right">{{ item.createTime | dateFormat }}</div>
+                    </div>
+                </div>
+            </el-scrollbar>
+        </template>
+        <template v-else>
+            <fam-empty></fam-empty>
+        </template>
+        <erd-pagination
+            v-if="total > 0"
+            streamline
+            class="pr-16"
+            :total="total"
+            :current-page="pageIndex"
+            :page-size="pageSize"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        ></erd-pagination>
+    </div>
+
+    <notice-detail
+        ref="noticeRef"
+        @readed="handleReadByDetail"
+    ></notice-detail>
+</div>

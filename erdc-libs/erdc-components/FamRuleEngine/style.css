@@ -1,0 +1,6 @@
+#rule-engine {
+    max-height: 500px;
+}
+#rule-engine .el-scrollbar__wrap {
+    max-height: 500px;
+}

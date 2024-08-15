@@ -1,0 +1,19 @@
+<div class="ultra-third">
+    <ScrollPanel
+        ref="scrollPanel"
+        class="ultra-third-menu"
+    >
+        <ul>
+            <li
+                v-for="resource in thirdResources"
+                ref="menuItem"
+                :key="resource.oid"
+                :data-code="resource.identifierNo"
+                :class="{ 'is-active': currentResource.oid === resource.oid }"
+                @click="routeTo(resource.href, resource)"
+            >
+                <span>{{resource.displayName}}</span>
+            </li>
+        </ul>
+    </ScrollPanel>
+</div>

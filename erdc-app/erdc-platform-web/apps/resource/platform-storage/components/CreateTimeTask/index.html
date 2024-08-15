@@ -1,0 +1,85 @@
+<div>
+    <erd-ex-dialog
+        custom-class="doc-site-timing-task"
+        :visible.sync="visible"
+        :destroy-on-close="true"
+        :title="title"
+        @close="onClose"
+    >
+        <FamDynamicForm
+            ref="form"
+            label-width="120px"
+            :form.sync="form"
+            :data="formConfig"
+        >
+            <template #sourceSite>
+                <erd-select
+                    v-model="form.sourceSiteCode"
+                    class="w-100p"
+                >
+                    <erd-option
+                        v-for="(option, index) in siteList"
+                        :key="index"
+                        :label="option.name"
+                        :value="option.code"
+                    ></erd-option>
+                </erd-select>
+            </template>
+
+            <template #destSite>
+                <erd-select
+                    v-model="form.destSiteCode"
+                    class="w-100p"
+                >
+                    <erd-option
+                        v-for="(option, index) in siteList"
+                        :key="index"
+                        :label="option.name"
+                        :value="option.code"
+                    ></erd-option>
+                </erd-select>
+            </template>
+
+            <template #cronExpression="scope">
+                <div class="timeExpression">
+                    <erd-input
+                        v-model="form.timeExpression"
+                        :placeholder="i18nMappingObj.pleaseEnter"
+                    ></erd-input>
+                    <i
+                        class="erd-iconfont erd-icon-main-server intermation"
+                        @click.stop="configExpression(scope)"
+                    ></i>
+                </div>
+            </template>
+
+            <template #app>
+                <erd-checkbox-group v-model="form.appIds">
+                    <erd-checkbox
+                        v-for="(item, index) in appList"
+                        :key="index"
+                        :label="item.identifierNo"
+                    >
+                        {{ item.displayName }}</erd-checkbox
+                    >
+                </erd-checkbox-group>
+            </template>
+        </FamDynamicForm>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="confirm"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="cancel"> {{ i18nMappingObj.cancel }} </erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <cron-config
+        :visible.sync="configVisible"
+        @onsubmit="configSubmit"
+    >
+    </cron-config>
+</div>

@@ -1,0 +1,40 @@
+<div class="fam-info">
+    <div class="fam-info__header">
+        <FamInfoTitle
+            :title="title"
+            :icon="icon"
+            staticTitle
+        ></FamInfoTitle>
+        <slot
+            name="menu"
+            v-bind="{ baseInfo: baseInfo }"
+        ></slot>
+    </div>
+
+    <div class="fam-info__brief"></div>
+
+    <erd-tabs
+        v-model="activeTab"
+        class="bg-white"
+    >
+        <erd-tab-pane
+            v-for="(item, index) in filteredTabs"
+            :key="item.name"
+            :label="item.title"
+            :name="item.name"
+        >
+            <slot
+                v-if="activeTab === item.name"
+                :name="item.name"
+                v-bind="{ baseInfo: baseInfo, tab: item, productOid: oid }"
+            >
+                <component
+                    v-if="item.component"
+                    :is="item.component"
+                    v-bind="item.props"
+                    v-on="item.listeners"
+                ></component>
+            </slot>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

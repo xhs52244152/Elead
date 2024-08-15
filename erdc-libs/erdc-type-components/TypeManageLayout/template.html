@@ -1,0 +1,144 @@
+<div
+    id="fam-type-layout"
+    class="h_100p flex flex-column"
+>
+    <div class="type-search">
+        <erd-input
+            v-model="searchValue"
+            class="fam-type-tree__search"
+            :placeholder="i18nMappingObj.enter"
+            suffix-icon="erd-iconfont erd-icon-search"
+            clearable
+            @input="search"
+        ></erd-input>
+        <div>
+            <fam-action-button
+                ref="famActionButton"
+                :action-config="actionConfig"
+                @click="actionClick"
+            >
+            </fam-action-button>
+        </div>
+    </div>
+    <div class="layout-table position-relative grow-1">
+        <erd-table
+            ref="erdTable"
+            :column="columns"
+            :data="viewData"
+            height="100%"
+            show-overflow
+            class="position-absolute w-100p h-100p"
+            border
+        >
+            <template #column:default:oper="{data}">
+                <!-- 去除启用停用 -->
+                <!-- <erd-button type="text" @click="onEdit(data)">{{ i18nMappingObj.disabled }}</erd-button>
+                <erd-button type="text" @click="onEdit(data)">{{ i18nMappingObj.enabled }}</erd-button> -->
+                <erd-dropdown
+                    trigger="click"
+                    @command="value => ( onCommand(value, data.row) )"
+                >
+                    <erd-button type="text">
+                        {{i18nMappingObj.more}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </erd-button>
+                    <erd-dropdown-menu slot="dropdown">
+                        <template v-if="data.row.contextRef === oid">
+                            <erd-dropdown-item
+                                v-for="item in operBtns(data.row)"
+                                :key="item.name"
+                                :command="item.name"
+                                >{{item.label}}</erd-dropdown-item
+                            >
+                        </template>
+                        <erd-dropdown-item
+                            v-else
+                            :disabled="data.row.isShare"
+                            command="copy"
+                        >
+                            {{ i18nMappingObj.copyType }}
+                        </erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </template>
+            <template #column:default:icon="{data}">
+                <fam-icon
+                    :value="getIconObj(data.row).value"
+                    :tooltipContent="getIconObj(data.row).tooltip"
+                    class="font-18"
+                ></fam-icon>
+            </template>
+            <template #column:default:displayName="{data}">
+                <!-- <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="data.row.displayName"
+                    placement="top-start"
+                > -->
+                <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="data.row.displayName"
+                    placement="top"
+                >
+                    <erd-link
+                        class="custom-link-cell"
+                        :underline="false"
+                        @click="onDetail(data)"
+                        >{{data.row.displayName}}</erd-link
+                    >
+                </erd-tooltip>
+                <!-- </erd-tooltip> -->
+            </template>
+            <template #column:default:type="{data}">
+                <span>{{typeMap[data.row.type]}}</span>
+            </template>
+        </erd-table>
+    </div>
+
+    <TypeLayoutForm
+        :visible.sync="layoutForm.visible"
+        :layout-id="layoutForm.layoutId"
+        :readonly.sync="layoutForm.readonly"
+        :type-oid="oid"
+        :type-name="typeName"
+        :use-form="useForm"
+        @create-success="onLayoutChange"
+        @update-success="onLayoutChange"
+    ></TypeLayoutForm>
+
+    <erd-ex-dialog
+        v-if="ruleConfigVisible"
+        :visible.sync="ruleConfigVisible"
+        size="meduim"
+        title="配置规则"
+    >
+        <fam-rule-engine
+            ref="famRuleEngine"
+            :oid="oid"
+            :className="className"
+            :isUpdate="isUpdate"
+            :ruleConditionDtoList="ruleConditionDtoList"
+        >
+        </fam-rule-engine>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="formLoading"
+                @click="ruleConfigSubmit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="clearAllConditions">{{i18nMappingObj.clearConditions}}</erd-button>
+            <erd-button @click="ruleConfigVisible = false">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        businessName="LayoutImport"
+        accept=".json"
+        :visible.sync="importVisible"
+        :is-show-template="false"
+        :before-upload="beforeUpload"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+</div>

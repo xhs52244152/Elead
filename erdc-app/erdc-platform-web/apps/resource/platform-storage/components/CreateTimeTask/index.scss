@@ -1,0 +1,20 @@
+.doc-site-timing-task {
+    .timeExpression {
+        position: relative;
+        width: 100%;
+
+        .intermation {
+            cursor: pointer;
+            position: absolute;
+            top: 7px;
+            right: 5px;
+            color: #567FFD;
+            font-size: 20px;
+
+            &:hover {
+                color: #7395FF;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,89 @@
+#DataTypeDetail {
+    padding: 16px;
+
+    .type-header {
+        justify-content: space-between;
+        align-items: center;
+
+        .type-left {
+            color: var(--colorTextNormal);
+            font-size: var(--fontSizeLarge);
+            line-height: 28px;
+            font-weight: 700;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            min-width: 200px;
+        }
+        .type-right {
+            min-width: 248px;
+        }
+    }
+
+    .content {
+        padding-top: var(--largePadding);
+    }
+
+    .cell-center {
+        text-align: center !important;
+    }
+
+    .is-validerror {
+        .el-input__inner {
+            border-color: #f04134 !important;
+        }
+
+        &::after {
+            content: '';
+            border-top: 4px solid #f04134;
+            border-bottom: 4px solid transparent;
+            border-right: 4px solid #f04134;
+            border-left: 4px solid transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    .vxe-header--row .is-required {
+        color: #f04134;
+    }
+
+    tbody {
+        tr {
+            td {
+                position: relative;
+
+                // 编辑状态提示信息
+                .tooltip {
+                    position: absolute;
+                    top: 8px;
+                    right: 16px;
+                }
+            }
+        }
+    }
+
+}
+
+.showTooltip {
+    display: block;
+
+    &.is-dark {
+        background-color: #ff7875 !important;
+    }
+
+    .popper__arrow {
+        border-bottom-color: transparent !important;
+        border-top-color: #ff7875 !important;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+
+        &::after {
+            border-bottom-color: transparent !important;
+            border-top-color: #ff7875 !important;
+            border-left-color: transparent !important;
+            border-right-color: transparent !important;
+        }
+    }
+}

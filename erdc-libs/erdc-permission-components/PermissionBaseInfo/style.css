@@ -1,0 +1,12 @@
+#permissionBaseInfo #FamParticipantSelect, #permissionBaseInfo #typeTreeSelect, #permissionBaseInfo #permissionStatusSelect {
+    width: 100% !important;
+}
+#permissionBaseInfo #FamParticipantSelect #customSelect div {
+    width: 100%;
+}
+#permissionBaseInfo #typeTreeSelect .erd-tree-select {
+    width: 100%;
+}
+#permissionBaseInfo #permissionStatusSelect .el-select {
+    width: 100%;
+}

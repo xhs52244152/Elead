@@ -1,0 +1,166 @@
+<div class="h-100p flex flex-column overflow-hidden">
+    <fam-page-title
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></fam-page-title>
+    <div class="grow-1 ptrl-xl">
+        <div class="flex justify-between w-100p h-auto flex-no-wrap">
+            <div class="flex grow-1 mb-xl">
+                <label class="flex align-items-center mr-xl">
+                    <span class="mr-normal text-normal">{{ i18n.service }}</span>
+                    <erd-ex-select
+                        v-model="currentSelectedService"
+                        class="w-auto"
+                        :options="serviceOptions"
+                        :filterMethod="serviceFilterMethod"
+                        filterable
+                        @change="handleServiceChange"
+                    ></erd-ex-select>
+                </label>
+                <label class="flex align-items-center w-auto">
+                    <span class="mr-normal text-normal">{{ i18n.region }}</span>
+                    <erd-input
+                        v-model.trim="keyword"
+                        :placeholder="i18n.searchRegionPlaceholder"
+                        class="w-auto"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                        clearable
+                        @change="search"
+                        @keydown.enter.native="search"
+                    ></erd-input>
+                </label>
+            </div>
+            <div>
+                <erd-button
+                    type="primary"
+                    :disabled="disableClearAll"
+                    :loading="loadingBtn.clear"
+                    @click="handleClearSelectedCaches"
+                >
+                    {{ i18n.clearCache }}
+                </erd-button>
+                <erd-button
+                    :loading="loadingBtn.clearAll"
+                    @click="handleClearAllCaches"
+                    >{{ i18n.clearAllCaches }}</erd-button
+                >
+                <erd-button
+                    :loading="loadingBtn.refresh"
+                    @click="handleRefreshAllCaches"
+                    >{{ i18n.refreshAllCaches }}</erd-button
+                >
+                <erd-button
+                    type="fill-icon"
+                    icon="el-icon-refresh"
+                    @click="refreshTable"
+                ></erd-button>
+            </div>
+        </div>
+        <div class="flex flex-column grow-1 table-list">
+            <div class="fam-erd-table-container">
+                <fam-erd-table
+                    :data="tableData"
+                    :column="columns"
+                    v-loading="loading"
+                    height="100%"
+                    @checkbox-change="handleCheckboxChange"
+                    @checkbox-all="handleCheckboxChange"
+                >
+                    <template #common-cell="scope">
+                        <erd-show-tooltip
+                            placement="top"
+                            :content="scope.data.row[scope.data.column.property]"
+                            enterable
+                            :flex="false"
+                            :paddingWidth="16"
+                        >
+                            <span class="title_text"> {{scope.data.row[scope.data.column.property] || '--'}} </span>
+                        </erd-show-tooltip>
+                    </template>
+
+                    <template #boolean-cell="scope">
+                        <span>{{i18n[scope.data.row[scope.data.column.property]] || '--'}} </span>
+                    </template>
+
+                    <template #column:default:name="scope">
+                        <erd-show-tooltip
+                            placement="top"
+                            :content="scope.data.row.name"
+                            class="w-100p text-link"
+                            enterable
+                            :paddingWidth="16"
+                            :flex="false"
+                        >
+                            <span
+                                class="title_text cursor-pointer"
+                                @click="handleCheckCacheKeys(scope.data.row)"
+                            >
+                                {{scope.data.row.name || '--'}}
+                            </span>
+                        </erd-show-tooltip>
+                    </template>
+
+                    <template #column:default:operation="scope">
+                        <erd-dropdown
+                            class="w-100p"
+                            trigger="click"
+                            hide-on-click
+                            placement="bottom-end"
+                        >
+                            <erd-button
+                                class="erd-dropdown-link"
+                                type="text"
+                                @visible-change="(visible) => handleDropdownVisibleChange(visible, scope.data.row)"
+                            >
+                                <span>{{i18n.operation}}</span>
+                                <erd-icon
+                                    v-if="scope.data.row._visible"
+                                    icon="arrow-up"
+                                ></erd-icon>
+                                <erd-icon
+                                    v-else
+                                    icon="arrow-down"
+                                ></erd-icon>
+                            </erd-button>
+                            <template #dropdown>
+                                <erd-dropdown-menu>
+                                    <erd-dropdown-item @click.native="handleCheckCacheKeys(scope.data.row)">
+                                        {{ i18n.checkCacheKeys }}
+                                    </erd-dropdown-item>
+                                    <erd-dropdown-item
+                                        :disabled="scope.data.row.readonly"
+                                        @click.native="handleClearCaches([scope.data.row])"
+                                    >
+                                        {{ i18n.clearCache }}
+                                    </erd-dropdown-item>
+                                </erd-dropdown-menu>
+                            </template>
+                        </erd-dropdown>
+                    </template>
+                </fam-erd-table>
+            </div>
+            <erd-pagination
+                class="mt-xl"
+                :current-page.sync="pagination.pageIndex"
+                :page-size.sync="pagination.pageSize"
+                :total="pagination.total"
+                :hide-on-single-page="false"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+            >
+            </erd-pagination>
+        </div>
+    </div>
+
+    <erd-ex-dialog
+        v-if="dialog.currentRegion"
+        :visible.sync="dialog.visible"
+        :title="i18n.cacheKey"
+        size="large"
+    >
+        <CacheKeyList
+            :current-region="dialog.currentRegion.name"
+            :current-service-short-name="currentServiceShortName"
+        ></CacheKeyList>
+    </erd-ex-dialog>
+</div>

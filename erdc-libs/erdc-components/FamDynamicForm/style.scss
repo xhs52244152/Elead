@@ -1,0 +1,301 @@
+.fam-dynamic-form {
+    &.fam-dynamic-form--readonly {
+        .el-form-item {
+            // align-items: center;
+            line-height: var(--famFormItemReadonlyHeight);
+            margin-bottom: 0;
+        }
+        .el-form-item__label {
+            color: var(--colorTextNormal);
+            padding-right: 0;
+        }
+        .fam-dynamic-form__label {
+            padding-right: 8px;
+        }
+        .fam-dynamic-form__label--required-identifier {
+            visibility: hidden;
+        }
+    }
+    &:not(.fam-dynamic-form--readonly) {
+        .fam-dynamic-form__label--required-identifier {
+            visibility: visible;
+        }
+    }
+    > .el-row--flex {
+        flex-wrap: wrap;
+        align-items: center;
+        .el-col {
+            margin-bottom: var(--bigSpace);
+        }
+        .fam-dynamic-form--hidden {
+            margin-bottom: 0;
+        }
+    }
+    .fam-dynamic-form__item {
+        display: flex;
+        width: 100%;
+        .el-form-item__label {
+            margin-bottom: 0;
+            color: var(--colorTextNormal);
+            // padding-top: 4px;
+            .help-btn {
+                line-height: 100%;
+                margin-right: var(--miniSpace);
+            }
+        }
+        .el-form-item__content {
+            flex: 1;
+            margin-left: unset !important;
+            width: 75%;
+            overflow: hidden;
+            slot {
+                display: inline-block;
+                height: var(--formItemHeight);
+                border: 1px dashed var(--colorBorder);
+            }
+            .el-input-number {
+                height: var(--formItemHeight);
+                line-height: var(--formItemHeight);
+                .el-input-number__decrease,
+                .el-input-number__increase {
+                    height: calc(100% - 2px);
+                }
+            }
+            .el-textarea {
+                font-size: var(--fontSize) !important;
+            }
+        }
+        &.is-error {
+            .intermation {
+                color: var(--colorError);
+                border-color: var(--colorError);
+            }
+
+            // fam-member-select 选人组件的校验不通过样式
+            #ComponentWapper-famMemberSelect {
+                .wapperInput {
+                    .el-tooltip.searchInputWapper {
+                        border-color: var(--colorError);
+                    }
+                }
+            }
+
+            // 富文本编辑器校验失败高亮
+            #quill-editor .quill-editor .ql-toolbar {
+                border-top-color: var(--colorError);
+                border-left-color: var(--colorError);
+                border-right-color: var(--colorError);
+            }
+
+            #quill-editor .quill-editor .ql-container {
+                border-color: var(--colorError);
+            }
+        }
+        .custom-select-text-display-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            display: -webkit-inline-box;
+            -webkit-line-clamp: 2;
+            white-space: pre-line !important;
+            width: auto;
+            word-break: break-all;
+        }
+    }
+
+    &:not(.fam-dynamic-form--readonly) {
+        .fam-dynamic-form__item-readonly {
+            .el-form-item__content {
+                line-height: var(--famFormItemReadonlyHeight);
+                align-items: center;
+            }
+        }
+    }
+    .fam-dynamic-form__quill-editor {
+        .el-form-item__content {
+            overflow: visible;
+        }
+    }
+    .fam-dynamic-form__label {
+        display: inline-flex;
+        width: 100%;
+        margin-bottom: 0;
+        padding: 0;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .fam-dynamic-form__label--right {
+        justify-content: flex-end;
+    }
+    .fam-dynamic-form__label--required {
+        .fam-dynamic-form__label--required-identifier {
+            color: var(--colorError);
+            line-height: var(--famFormItemReadonlyHeight);
+        }
+        &.fam-dynamic-form__label--right {
+            .fam-dynamic-form__label--required-identifier {
+                margin-right: 4px;
+            }
+        }
+        &.fam-dynamic-form__label--readonly {
+            .fam-dynamic-form__label--required-identifier {
+                visibility: hidden;
+            }
+        }
+    }
+    .fam-dynamic-form--error {
+    }
+    .fam-dynamic-form__label--label {
+        display: inline-flex;
+        max-width: calc(100% - 1em);
+        // line-height: 16px;
+        justify-content: space-between;
+        align-items: center;
+        .fam-dynamic-form__label--labelText {
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--colorTextNormal);
+        }
+    }
+    .fam-dynamic-form__label--separator {
+        width: 1em;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .fam-dynamic-form__readonly-field {
+        display: inline-block;
+        overflow: hidden;
+        width: auto;
+        text-overflow: ellipsis;
+        line-height: 18px;
+        color: var(--colorTextNormal);
+    }
+    .el-form-item--medium .el-form-item__content {
+        min-height: var(--formItemHeight);
+        align-items: center;
+        line-height: 18px;
+        &:has(#quill-editor) {
+            line-height: 0;
+        }
+        .title_text {
+            line-height: var(--famFormItemReadonlyHeight);
+        }
+    }
+    @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+        .el-form-item--medium .el-form-item__content {
+            min-height: calc(var(--formItemHeight) + 1px);
+            line-height: 18px;
+        }
+    }
+    &.fam-dynamic-form--readonly {
+        .el-form-item--medium .el-form-item__content {
+            min-height: var(--famFormItemReadonlyHeight);
+            color: var(--colorTextNormal);
+        }
+        .fam-dynamic-form__label--labelText {
+            color: var(--colorTextPlaceholder);
+        }
+        .el-form-item--medium .el-form-item__label {
+            line-height: inherit;
+            // padding-top: 1px;
+        }
+    }
+    .el-form-item {
+        margin-bottom: 0;
+    }
+    .el-form-item__error {
+        display: none;
+    }
+
+    .fam-member-select {
+        .el-form-item__content {
+            line-height: normal;
+        }
+    }
+
+    #showTooltip .el-tooltip .title_text_textarea {
+        -webkit-box-orient: horizontal !important;
+    }
+    .title-whitespace-pre-line {
+        white-space: pre-line !important;
+    }
+    & .el-row > .el-col {
+        &:has(.fam-form-widget > div > .ContractionPanel) {
+            margin-bottom: 0;
+        }
+        .fam-form-widget {
+            > div:has( > .ContractionPanel) {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+        }
+        &:first-of-type {
+            > .fam-form-widget {
+                > div:has( > .ContractionPanel) {
+                    padding-top: 0;
+                }
+            }
+        }
+        &:last-of-type {
+            > .fam-form-widget {
+                > div:has( > .ContractionPanel) {
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+    .el-input-number .el-input,
+    .custom-date-time .el-date-editor.el-input {
+        display: flex;
+    }
+}
+.last-line-two-col-no-bottom {
+    .el-col:last-child {
+        margin-bottom: 0;
+    }
+    .el-col:nth-last-child(2) {
+        margin-bottom: 0;
+    }
+}
+.last-line-no-bottom {
+    & > .el-row > .el-col:last-child {
+        margin-bottom: 0;
+    }
+}
+.fam-dynamic-form__error-tips {
+    &.is-dark {
+        background-color: #ff7875;
+        background-color: var(errorBorderColor);
+        .popper__arrow,
+        .popper__arrow::after {
+            border-top-color: #ff7875;
+            border-top-color: var(errorBorderColor);
+        }
+    }
+    &[x-placement^='bottom'] {
+        .popper__arrow,
+        .popper__arrow::after {
+            border-bottom-color: #ff7875;
+            border-bottom-color: var(errorBorderColor);
+        }
+    }
+    .popper__arrow {
+        right: 8px !important;
+    }
+}
+
+#FamQuillEditorStaticText .fam-quill-editor-static-text {
+    width: 100%;
+    min-height: var(--famFormItemReadonlyHeight);
+    overflow: hidden;
+    p {
+        margin: 0;
+    }
+}
+#FamQuillEditorStaticText .fam-quill-editor-scrollbar {
+    padding: 12px 16px;
+    height: 200px;
+}

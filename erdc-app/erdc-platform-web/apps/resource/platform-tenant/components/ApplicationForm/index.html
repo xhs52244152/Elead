@@ -1,0 +1,40 @@
+<div id="applicationForm">
+    <div class="applcation-form">
+        <div class="application-form-line">
+            <div class="application-form-line-left">{{i18nMappingObj.name}}</div>
+            <div class="application-form-line-right">
+                <span>{{tenantName}}</span>
+                <!-- <erd-input
+                    v-else
+                    v-model="tenantName"
+                ></erd-input> -->
+            </div>
+        </div>
+        <div class="application-form-line">
+            <div class="application-form-line-left">{{i18nMappingObj.addApplication}}</div>
+            <div class="application-form-line-right">
+                <erd-ex-select
+                    v-model="applications"
+                    clearable
+                    multiple
+                    :placeholder="i18nMappingObj.pleaseSelect"
+                    :default-props="defaultProps"
+                    :options="applicationOpts"
+                ></erd-ex-select>
+            </div>
+            <div class="application-form-line-right-opt">
+                <erd-button @click="handlerAddApplications">{{i18nMappingObj.addApplication}}</erd-button>
+                <div class="division-line"></div>
+                <erd-button @click="handlerBatchRemove">{{i18nMappingObj.remove}}</erd-button>
+            </div>
+        </div>
+    </div>
+    <div class="application-table">
+        <application-table
+            ref="applicationTable"
+            :applications="applicationTableData"
+            :isShowOperation="isShowOperation"
+            @removeApplication="removeApplication"
+        ></application-table>
+    </div>
+</div>

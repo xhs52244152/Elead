@@ -1,0 +1,92 @@
+<div
+    id="FamSpaceSelect"
+    class="fam-space-select"
+>
+    <erd-popover
+        ref="spacePopover"
+        placement="bottom"
+        trigger="click"
+        popper-class="fam-space-select__popper"
+        :visible-arrow="false"
+        @show="onPopoverVisibleChange(true)"
+        @hide="onPopoverVisibleChange(false)"
+    >
+        <template #reference>
+            <span class="fam-space-select__title">
+                <span
+                    :title="currentSpaceLabel"
+                    :style="textStyle"
+                >
+                    {{currentSpaceLabel}}
+                </span>
+                <erd-icon
+                    :class="{
+                        'fam-space-select__caret': true,
+                        'is-reverse': popoverVisible
+                    }"
+                    :icon="!popoverVisible ? 'arrow-down' : 'arrow-up'"
+                ></erd-icon>
+            </span>
+        </template>
+        <div class="fam-space-select__content">
+            <slot name="search">
+                <div class="fam-space-select__search">
+                    <erd-input
+                        ref="search"
+                        v-model="keyword"
+                        :placeholder="i18nMappingObj.pleaseEnter"
+                        suffix-icon="el-input__icon erd-iconfont erd-icon-search"
+                        autofocus
+                        clearable
+                        @input="onSearch"
+                        @keyup.native.enter="onSearch(keyword)"
+                    >
+                    </erd-input>
+                </div>
+            </slot>
+
+            <slot name="before"></slot>
+            <erd-scrollbar
+                ref="spaceScrollbar"
+                class="space-scroll-bar"
+                :style="{ 'max-height': '320px' }"
+                wrap-style="overflow-x: hidden;"
+            >
+                <erd-pulldown-menu>
+                    <template v-for="item in filteredList">
+                        <template v-if="item && item.children">
+                            <li
+                                class="el-select-group__title text-gray-45"
+                                :class="{ 'favorite-title': item[props.labelKey] === i18nMappingObj.myCollection }"
+                                :key="item[props.labelKey]"
+                            >
+                                {{ item[props.labelKey] }}
+                            </li>
+                            <erd-show-tooltip
+                                v-for="child in item.children"
+                                :key="item[props.labelKey] + getObjectAttrValue(child, props.valueKey)"
+                                placement="top-start"
+                                :content="getObjectAttrValue(child, props.labelKey)"
+                                :tabindex="-1"
+                                :openDelay="800"
+                            >
+                                <erd-pulldown-menu-item
+                                    @click="onChange(child)"
+                                >
+                                    <span class="title_text">{{getObjectAttrValue(child, props.labelKey)}}</span>
+                                </erd-pulldown-menu-item>
+                            </erd-show-tooltip>
+                            <div
+                                v-if="!item.children.length"
+                                class="text-center text-gray-45 p-12"
+                            >
+                                {{i18nMappingObj.nodata}}
+                            </div>
+                        </template>
+                    </template>
+                </erd-pulldown-menu>
+            </erd-scrollbar>
+            <slot name="after"></slot>
+        </div>
+    </erd-popover>
+</div>

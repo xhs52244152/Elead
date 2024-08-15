@@ -1,0 +1,192 @@
+#ComponentWapper-famMemberSelect {
+    line-height: inherit !important;
+    width: 100%;
+    .inputBox {
+        position: relative;
+        & > span:nth-child(1) {
+            display: inline-block;
+            width: 100%;
+        }
+        .wapperInput {
+            position: relative;
+        }
+        // 多选标签
+        .selectBox {
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            right: 22px;
+            z-index: 100;
+            &.showWordLimit {
+                right: auto;
+            }
+            .itemBox {
+                &.once {
+                    justify-content: flex-start;
+                    align-items: center;
+                    margin-top: 3px;
+                    .item {
+                        float: none;
+                        margin-top: 0;
+                    }
+                }
+            }
+            .item {
+                min-width: 88px;
+                height: 20px;
+                line-height: 20px;
+                background: #f5f5f5;
+                border: 1px solid rgba(217, 217, 217, 1);
+                border-radius: 2px;
+                margin-right: 4px;
+                font-size: 12px;
+                justify-content: space-between;
+                padding: 0 3px;
+                cursor: default;
+                float: left;
+                margin-top: 4px;
+
+                label {
+                    margin: 0;
+                    display: inline;
+                    font-weight: normal;
+                }
+                .l {
+                    max-width: 200px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    word-break: break-all;
+                    display: inline-block;
+                    justify-content: space-between;
+                }
+
+                .el-icon-close {
+                    cursor: pointer;
+                    padding: 3px 0;
+                }
+            }
+            .moreBox {
+                min-width: 32px;
+                height: 20px;
+                background-color: var(--colorPrimary);
+                border-radius: 2px;
+                color: #fff;
+                text-align: center;
+                line-height: 20px;
+                font-size: 12px;
+                padding: 0 2px;
+            }
+
+            &.HAS-VAL:hover + .searchInputWapper {
+                .el-icon-circle-close {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .wapperInput .el-tooltip {
+        textarea {
+            border: 0;
+            resize: none;
+            padding: 0;
+            line-height: var(--formItemHeight);
+        }
+        .el-input {
+            flex: 1;
+            width: 100%;
+            height: var(--famWidthLabelHeight) !important;
+            line-height: var(--famWidthLabelHeight) !important;
+            input {
+                border: none !important;
+                height: var(--famWidthLabelHeight) !important;
+                line-height: var(--famWidthLabelHeight) !important;
+            }
+        }
+        &.searchInputWapper {
+            border-radius: var(--inputBorderRadius);
+            border: var(--inputBorder);
+            justify-content: flex-start;
+            align-items: center;
+            background: #fff;
+            &.error {
+                border-color: #f04134;
+            }
+            .el-input__suffix {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                margin-right: 8px;
+                right: 20px;
+            }
+            .icon {
+                font-size: var(--inputIconSize);
+                color: var(--inputIconColor);
+                margin-right: 8px;
+                &.focus {
+                    color: var(--inputBorderColor__focus);
+                }
+                &.el-icon-circle-close {
+                    z-index: 1000;
+                    display: none;
+                }
+                &.icon-close {
+                    color: var(--colorBan);
+                }
+            }
+            &.is-focus {
+                border-color: var(--selectBorderColor__focus);
+            }
+            .el-input {
+                align-self: start;
+            }
+        }
+        &.searchInputWapper.HAS-VAL:hover {
+            .el-icon-circle-close {
+                display: block;
+            }
+        }
+    }
+}
+// 弹窗内容
+.famMemberSelect-popClass-custom {
+    overflow: hidden !important;
+    padding: 0 !important;
+    .vxe-table--body tr {
+        cursor: pointer;
+    }
+    .emptyBox {
+        text-align: center;
+        color: var(--colorTextPlaceholder);
+    }
+    .nodata {
+        color: var(--colorTextPlaceholder);
+    }
+    &.box_manual {
+        top: 40px;
+        width: 100%;
+    }
+    .vxe-header--column .vxe-resizable {
+        right: -10px !important;
+    }
+}
+
+// 错误提醒
+.error-popper-class {
+    max-width: 367px;
+    height: 28px;
+    font-size: 12px !important;
+    text-align: center;
+    background: #f04134 !important;
+    &.el-tooltip__popper[x-placement^='top'] {
+        .popper__arrow {
+            border-top-color: #f04134 !important;
+            right: 20px !important;
+            left: auto !important;
+        }
+        .popper__arrow::after {
+            border-top-color: #f04134 !important;
+        }
+    }
+}

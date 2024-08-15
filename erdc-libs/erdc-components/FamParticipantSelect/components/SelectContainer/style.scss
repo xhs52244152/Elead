@@ -1,0 +1,25 @@
+#SelectContainer {
+    .wapperInput {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .textPlaceholder {
+        font-size: 14px;
+        color: var(--colorTextPlaceholder);
+    }
+    .el-tabs__content .el-tab-pane {
+        padding: 0;
+    }
+    .h-320 {
+        height: 320px !important;
+    }
+    .category {
+        padding: 0 var(--bigPadding);
+        border-right: 1px  solid var(--colorBorder);
+        text-wrap: nowrap;
+    }
+    .container_bottom {
+        border-bottom: 1px solid #ebeef5;
+    }
+}

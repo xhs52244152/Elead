@@ -1,0 +1,91 @@
+<div id="tenantForm">
+    <erd-contraction-panel
+        v-if="readonly"
+        :unfold.sync="unfold"
+        :title="i18nMappingObj.baseInfo"
+    >
+        <template v-slot:content>
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form="formData"
+                :data="formConfig"
+                :readonly="readonly"
+                label-position="right"
+            >
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group
+                        :disabled="isEditForm && isDisabled"
+                        v-model="scope.data[scope.formConfig.field]"
+                    >
+                        <erd-radio :label="true">{{i18nMappingObj.enabled}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.disabled}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:readonlyComponent="scope">
+                    <span
+                        >{{scope.data[scope.formConfig.field] ? i18nMappingObj.enabled : i18nMappingObj.disabled
+                        }}</span
+                    >
+                </template>
+                <template v-slot:shareRadioComponent="scope">
+                    <erd-radio-group
+                        :disabled="isEditForm"
+                        v-model="scope.data[scope.formConfig.field]"
+                    >
+                        <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:shareReadonlyComponent="scope">
+                    <span>{{scope.data[scope.formConfig.field]? i18nMappingObj.yes : i18nMappingObj.no}}</span>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <FamDynamicForm
+        v-else
+        ref="dynamicForm"
+        :form="formData"
+        :data="formConfig"
+        :readonly="readonly"
+        label-position="right"
+    >
+        <template v-slot:radioComponent="scope">
+            <erd-radio-group
+                :disabled="isEditForm && isDisabled"
+                v-model="scope.data[scope.formConfig.field]"
+            >
+                <erd-radio :label="true">{{i18nMappingObj.enabled}}</erd-radio>
+                <erd-radio :label="false">{{i18nMappingObj.disabled}}</erd-radio>
+            </erd-radio-group>
+        </template>
+        <template v-slot:readonlyComponent="scope">
+            <span>{{scope.data[scope.formConfig.field] ? i18nMappingObj.enabled : i18nMappingObj.disabled }}</span>
+        </template>
+        <template v-slot:shareRadioComponent="scope">
+            <erd-radio-group
+                :disabled="isEditForm"
+                v-model="scope.data[scope.formConfig.field]"
+            >
+                <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+            </erd-radio-group>
+        </template>
+        <template v-slot:shareReadonlyComponent="scope">
+            <span>{{scope.data[scope.formConfig.field]? i18nMappingObj.yes : i18nMappingObj.no}}</span>
+        </template>
+    </FamDynamicForm>
+    <erd-contraction-panel
+        style="margin-top: 16px"
+        v-if="readonly"
+        :unfold.sync="unfold2"
+        :title="i18nMappingObj.maintancedApp"
+    >
+        <template v-slot:content>
+            <application-table
+                :isEditStatus="false"
+                :applications="applications"
+            ></application-table>
+        </template>
+    </erd-contraction-panel>
+</div>

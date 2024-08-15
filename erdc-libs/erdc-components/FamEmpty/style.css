@@ -1,0 +1,16 @@
+.fam-empty {
+  margin: auto;
+  font-size: 14px;
+font-size: var(--fontSize);
+  line-height: 22px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+.fam-empty .fam-empty-description {
+  color: var(--colorTextExplain);
+  text-align: center;
+}/*# sourceMappingURL=style.css.map */

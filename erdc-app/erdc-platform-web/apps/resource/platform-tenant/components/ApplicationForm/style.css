@@ -1,0 +1,29 @@
+#applicationForm {
+    height: 100%;
+}
+.application-form-line {
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+}
+.application-form-line-left {
+    width: 140px;
+    text-align: right;
+    padding-right: 8px;
+}
+.application-form-line-right {
+    flex: 1;
+}
+.el-select {
+    width: 100%;
+}
+.division-line {
+    width: 1px;
+    height: 32px;
+    margin: 0px 8px;
+    background-color: rgba(217, 217, 217, 1);
+}
+.application-form-line-right-opt {
+    display: flex;
+    padding-left: 17px;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@erdc-libs/erdc-fonts",
+  "version": "3.1.0",
+  "description": "拆分字体包",
+  "main": "./lib/font.css",
+  "scripts": {
+    "build": "node index.js"
+  },
+  "devDependencies": {
+    "font-slice": "^1.0.2"
+  }
+}

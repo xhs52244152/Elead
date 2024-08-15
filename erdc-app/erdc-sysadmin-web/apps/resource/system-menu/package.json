@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-menu",
+  "description": "菜单配置",
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat"
+}

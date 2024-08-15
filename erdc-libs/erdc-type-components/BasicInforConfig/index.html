@@ -1,0 +1,60 @@
+<div id="BasicInforConfig">
+    <erd-ex-dialog
+        width="1200px"
+        :title="title"
+        :visible.sync="innerVisible"
+    >
+        <div class="basic-info-config">
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form.sync="formData"
+                :data="data"
+                @form-change="formChange"
+            >
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                        <erd-radio :label="true">{{i18nMappingObj.Yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.No}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:belong="scope">
+                    <erd-autocomplete
+                        v-model="scope.data[scope.formConfig.field]"
+                        :placeholder="i18n['belongPlaceholder']"
+                        :fetch-suggestions="querySearch"
+                        class="w-100p"
+                        @select="handleSelectBelong"
+                    ></erd-autocomplete>
+                </template>
+            </FamDynamicForm>
+            <erd-contraction-panel
+                v-if="properties && properties.length"
+                title="组件配置"
+                :unfold.sync="unfold"
+            >
+                <template #content>
+                    <FamComponentConfigurationForm
+                        v-if="componentRefName"
+                        :data.sync="formData"
+                        :form.sync="componentJson"
+                        :properties="properties"
+                    ></FamComponentConfigurationForm>
+                </template>
+            </erd-contraction-panel>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                :disabled="disabled"
+                :loading="loading"
+                @click="saveSubmit"
+            >
+                {{i18nMappingObj.confirm}}
+            </erd-button>
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

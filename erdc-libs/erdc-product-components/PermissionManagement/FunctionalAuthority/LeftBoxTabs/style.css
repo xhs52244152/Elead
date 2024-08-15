@@ -1,0 +1,11 @@
+#left-box-tabs .el-tab-pane {
+  padding: 0;
+}
+#left-box-tabs .tab-panel {
+  padding: 16px;
+}
+#left-box-tabs .tab-panel-search {
+  padding-bottom: 4px;
+}
+
+/*# sourceMappingURL=style.css.map */

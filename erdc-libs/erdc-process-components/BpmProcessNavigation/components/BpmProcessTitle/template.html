@@ -1,0 +1,61 @@
+<div
+    id="bpm-process-title-content"
+    class="bpm-process-title-content"
+    v-cloak
+>
+    <template v-for="(activity, index) in newActivities">
+        <div
+            v-if="_.isArray(activity.children) && activity.children.length > 0"
+            class="thumbnail-title-sub"
+            :style="{ 'flex-direction': vertical ? 'column' : 'row', 'align-items': vertical ? 'flex-start' : 'center' }"
+        >
+            <div
+                v-for="(subActivity, sindex) in activity.children"
+                :key="sindex"
+                v-show="!collapsed"
+                :class="['thumbnail-title-sub-sub']"
+                :style="{ 'flex': vertical ? 'auto' : '1', 'flex-direction': vertical ? 'row' : 'column' }"
+            >
+                <BpmProcessIcon
+                    :isChildNode="true"
+                    :vertical="vertical"
+                    :type="subActivity.thumbnailType"
+                    :activity="subActivity"
+                    :placement="vertical ? 'bottom-end' : 'top-start'"
+                ></BpmProcessIcon>
+                <slot
+                    name="title"
+                    :activity="subActivity"
+                    :activity-name="translateActivity(subActivity)"
+                    :users="subActivity.candidateUsers"
+                >
+                    {{translateActivity(subActivity)}}
+                </slot>
+            </div>
+        </div>
+        <div
+            :class="['thumbnail-title-one']"
+            :style="{ 'justify-content': vertical ? 'space-between' : 'center','align-items':  vertical ? 'flex-start' : 'center' }"
+            v-else
+        >
+            <slot
+                name="title"
+                :activity="activity"
+                :activity-name="translateActivity(activity)"
+                :users="activity.candidateUsers"
+            >
+                {{translateActivity(activity)}}
+            </slot>
+            <span
+                v-if="index === 0 && activities && activities.length > 1"
+                style="cursor: pointer; margin-right: 6px"
+                @click="collapsed = !collapsed"
+            >
+                <i
+                    :class="collapsed ? 'el-icon-arrow-right' : 'el-icon-arrow-down'"
+                    style="color: var(--primary-color)"
+                ></i>
+            </span>
+        </div>
+    </template>
+</div>

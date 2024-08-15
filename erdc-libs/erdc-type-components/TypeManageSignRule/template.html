@@ -1,0 +1,83 @@
+<div id="fam-type-sign" class="h_100p flex flex-column">
+    <div class="type-search">
+        <erd-input
+            v-model="searchValue"
+            clearable
+            class="fam-type-tree__search"
+            suffix-icon="erd-iconfont erd-icon-search"
+            :placeholder="i18nMappingObj.enter"
+            @input="search"
+        ></erd-input>
+        <erd-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="onCreate"
+        >{{i18nMappingObj.create}}</erd-button>
+    </div>
+
+    <div class="position-relative grow-1">
+        <FamErdTable
+            ref="erdTable"
+            :column="column"
+            :data="tableData"
+            height="100%"
+            show-overflow
+            class="position-absolute w-100p h-100p"
+            border
+        >
+            <template #column:default:operation="{ data }">
+                <FamActionPullDown
+                    :is-operation="true"
+                    :action-config="getActionConfig(data.row)"
+                    :action-data="data.row"
+                    @click="onCommand"
+                ></FamActionPullDown>
+            </template>
+        </FamErdTable>
+    </div>
+
+    <erd-ex-dialog
+        :visible.sync="signatureRuleVisible"
+        :title="isUpdate ? i18n.edit : i18n.create"
+        destroy-on-close
+    >
+        <erd-contraction-panel
+            :title="i18nMappingObj.selectTemplate"
+            :unfold.sync="unfold.selectTemplate"
+        >
+            <template #content>
+                <FamDynamicForm
+                    ref="dynamicForm"
+                    :form="formData"
+                    :data="formConfig"
+                ></FamDynamicForm>
+            </template>
+        </erd-contraction-panel>
+
+        <erd-contraction-panel
+            :title="i18nMappingObj.configureRule"
+            :unfold.sync="unfold.configureRule"
+        >
+            <template #content>
+                <FamRuleEngine
+                    v-if="signatureRuleVisible && !editLoading"
+                    ref="famRuleEngine"
+                    :oid="oid"
+                    :class-name="className"
+                    :is-update="isUpdate"
+                    :rule-condition-dto-list="ruleConditionDtoList"
+                ></FamRuleEngine>
+            </template>
+        </erd-contraction-panel>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="loading"
+                @click="submit"
+            >{{i18nMappingObj.confirm}}</erd-button>
+            <erd-button @click="clearAllConditions">{{i18nMappingObj.clearConditions}}</erd-button>
+            <erd-button @click="signatureRuleVisible = false">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

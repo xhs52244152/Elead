@@ -1,0 +1,13 @@
+<erd-tabs
+    class="message-overview"
+    v-model="activeName"
+>
+    <erd-tab-pane
+        v-for="(tab, index) in tabs"
+        :key="index"
+        :label="tab.label"
+        :name="tab.name"
+    >
+        <component :is="tab.component"></component>
+    </erd-tab-pane>
+</erd-tabs>

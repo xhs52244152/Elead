@@ -1,0 +1,145 @@
+#fam_common_page_info {
+    height: 100%;
+    overflow-y: auto;
+}
+.fam-common-page__form__section {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    .no-tab-container {
+        margin-bottom: var(--largeSpace);
+    }
+    .fam-common-page__top-tab {
+        > .el-tabs__header {
+            background-color: var(--colorFullBg);
+        }
+    }
+    .el-tabs__content {
+        flex-grow: 1;
+        padding: var(--largeSpace);
+        .fam-advanced-form {
+            .el-row {
+                > .el-col:has(.ContractionPanel) {
+                    margin-bottom: 0;
+                }
+            }
+            .el-form-item__content {
+                min-height: auto;
+                > div:has(> .ContractionPanel) {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                }
+                .ContractionPanel {
+                    .panelLeft {
+                        align-self: flex-start;
+                    }
+                }
+            }
+        }
+    }
+    .fam-common-page__form__baseinfo {
+        padding-top: var(--famCommonPageInfoPadding);
+    }
+
+    &__content {
+        flex: 1;
+        overflow-y: auto;
+        &__scroll {
+            .form__scroll__content {
+                height: 100%;
+                .el-tabs {
+                    height: calc(100% - 106px);
+                    .el-tabs__content {
+                        height: calc(100% - 40px);
+                        .el-tab-pane {
+                            height: 100%;
+                            padding-bottom: 0;
+                            .el-scrollbar {
+                                height: 100%;
+                                .el-scrollbar__view {
+                                    height: 100%;
+                                    .tab-content-body {
+                                        padding: 0;
+                                        #FamViewTable {
+                                            .advanced-table-container {
+                                                padding: 0;
+                                                .viewtable-body-container {
+                                                    .el-pagination {
+                                                        margin-bottom: 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .no-margin {
+                // margin: 0;
+            }
+
+            .common-page-title {
+                margin: 0 var(--largeSpace) var(--largeSpace) var(--largeSpace);
+            }
+        }
+    }
+    .fam-single-tab-container {
+        background: #fff;
+
+        .el-tabs {
+            height: 100%;
+        }
+
+        .el-tabs__header {
+            display: none;
+        }
+
+        .form__scroll__content {
+            .el-tabs__content {
+                height: 100%;
+
+                .el-tab-pane {
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    &__bottom_operation {
+        align-items: center;
+        justify-content: center;
+        padding: var(--largeSpace);
+        border-top: 1px solid #ebebeb;
+    }
+    .common-page-title {
+        padding-left: var(--famNormalSpace);
+        padding-right: var(--famNormalSpace);
+    }
+}
+
+.success__dialog__content {
+    i {
+        height: 32px;
+        width: 32px;
+        font-size: 32px;
+        color: #00a854;
+    }
+    &__text {
+        &__title {
+            line-height: 32px;
+            font-size: var(--fontSizeLarge);
+            font-weight: bolder;
+        }
+        &__sub__title {
+            line-height: 28px;
+            padding-bottom: 12px;
+        }
+    }
+}
+.object-common-space__content > .el-scrollbar__view:has(> #fam_common_page_info) {
+    padding: 0 !important;
+}

@@ -1,0 +1,181 @@
+#codeRuleConfig {
+  width: 100%;
+}
+#codeRuleConfig .code-rule-config__container {
+  border: 1px solid #E9E9E9;
+  width: 100%;
+  min-height: 350px;
+  display: flex;
+  color: var(--colorTextNormal);
+}
+#codeRuleConfig .code-rule-config__container .left {
+  flex: 1;
+  border: 1px solid #E9E9E9;
+  border-right: none;
+}
+#codeRuleConfig .code-rule-config__container .right {
+  flex: 4;
+  border: 1px solid #E9E9E9;
+}
+#codeRuleConfig .code-rule-config__container .right .top {
+  height: 200px;
+}
+#codeRuleConfig .code-rule-config__container .title {
+  font-weight: bold;
+}
+#codeRuleConfig .code-rule-config__header {
+  height: 40px;
+  width: 100%;
+  background-color: #ebebeb;
+  line-height: 40px;
+  padding-left: 8px;
+}
+#codeRuleConfig .content {
+  text-align: center;
+  max-width: 700px;
+  min-width: 200px;
+  margin: 12px auto;
+}
+#codeRuleConfig .code-rule-config-rule {
+  padding: 16px 0;
+}
+#codeRuleConfig .code-rule-config-rule .code-rule-config-rule-item {
+  width: 80%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  margin: 0 auto;
+  cursor: move;
+  border: 1px solid;
+}
+#codeRuleConfig .code-rule-config-rule .code-rule-config-rule-item + .code-rule-config-rule-item {
+  margin-top: 8px;
+}
+#codeRuleConfig .config-header {
+  justify-content: space-between;
+}
+#codeRuleConfig .config-header .config-right {
+  padding-right: 8px;
+}
+#codeRuleConfig .code-rule-config-config {
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 40px);
+}
+#codeRuleConfig .code-rule-config-config > div span {
+  display: flex;
+}
+#codeRuleConfig .code-rule-config-config .draggable-content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  position: relative;
+  cursor: move;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item .right-semicircle {
+  position: absolute;
+  right: -12px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  z-index: 100;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item .right-semicircle-half {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 14px;
+  height: 28px;
+  z-index: 101;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item .close {
+  position: absolute;
+  top: -10px;
+  right: -7px;
+  width: 16px;
+  height: 16px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  z-index: 199;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item .close:hover {
+  background-color: #ebf1ff;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item .isFeatureScript {
+  position: absolute;
+  right: 8px;
+  bottom: 12px;
+  width: 4px;
+  height: 4px;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item:active {
+  border: 1px sloid #000;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item:hover .close {
+  display: block;
+}
+#codeRuleConfig .code-rule-config-config .code-rule-config-config-item .code-rule-config-placeholder {
+  position: absolute;
+  bottom: -28px;
+  left: 0;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--colorTextPlaceholder);
+}
+#codeRuleConfig .code-rule-config__codeRuleTest {
+  margin: 12px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#codeRuleConfig .code-rule-config__codeRuleTest .codeRuleTest {
+  padding: 8px 4px;
+}
+#codeRuleConfig .el-scrollbar {
+  height: calc(100% - 40px);
+}
+#codeRuleConfig .el-scrollbar .el-scrollbar__wrap .el-scrollbar__view {
+  white-space: nowrap;
+  overflow-x: auto;
+  height: 100%;
+}
+#codeRuleConfig .el-scrollbar .el-scrollbar__wrap .el-scrollbar__view::-webkit-scrollbar {
+  height: 8px;
+}
+#codeRuleConfig .el-scrollbar .el-scrollbar__wrap .el-scrollbar__view::-webkit-scrollbar-thumb {
+  position: absolute;
+  bottom: 0;
+  border-radius: 10px;
+  background: rgba(144, 147, 153, 0.3);
+}
+#codeRuleConfig .el-scrollbar .el-scrollbar__wrap .el-scrollbar__view::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(144, 147, 153, 0.5);
+}
+#codeRuleConfig .active {
+  border: 1px solid #567ffd !important;
+}
+#codeRuleConfig .active .right-semicircle {
+  border: 1px solid #567ffd !important;
+}
+#codeRuleConfig .active-semicircle {
+  border: 1px solid #567ffd !important;
+}
+
+/*# sourceMappingURL=style.css.map */

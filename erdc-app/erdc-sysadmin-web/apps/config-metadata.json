@@ -1,0 +1,120 @@
+{
+  "metadata": [
+    {
+      "key": "ELCONF.initPath",
+      "name": {
+        "zh_cn": "初始化数据",
+        "en_us": "Initialize data"
+      },
+      "description": {
+        "zh_cn": "在用户登录成功之后的所有应用的数据初始化，会按照顺序执行",
+        "en_us": "The data initialization of all applications after a successful user login is performed in sequence"
+      },
+      "type": "text",
+      "defaultValue": "[]",
+      "classification": "开发类配置"
+    },
+    {
+      "key": "ELCONF.feat.websocket",
+      "name": {
+        "zh_cn": "Websocket通信开关",
+        "en_us": "Websocket communication switch"
+      },
+      "description": {
+        "zh_cn": "前后端双向数据传输开关，默认开启，关闭后影响的模块包括【导入导出】导入进度条，离线任务页面中上的下载提示，系统公告弹窗，站内信未读消息提示",
+        "en_us": "This function is enabled by default. After this function is disabled, the modules affected include the import/export progress bar, download prompt displayed on the offline task page, system bulletin pop-up, and unread message notification"
+      },
+      "defaultValue": "true",
+      "type": "radio",
+      "deprecated": false,
+      "options": [
+        {
+          "value": "true",
+          "text": {
+            "zh_cn": "开启",
+            "en_us": "On"
+          }
+        },
+        {
+          "value": "false",
+          "text": {
+            "zh_cn": "关闭",
+            "en_us": "Off"
+          }
+        }
+      ],
+      "classification": "开发类配置"
+    },
+    {
+      "key": "ELCONF.screenLocker.active",
+      "name": {
+        "zh_cn": "锁屏开关",
+        "en_us": "Lock screen switch"
+      },
+      "description": {
+        "zh_cn": "开启后，开启锁屏功能，与锁屏超时时间一同使用",
+        "en_us": "After this function is enabled, the screen lock function is enabled together with the screen lock timeout period"
+      },
+      "defaultValue": "true",
+      "type": "radio",
+      "options": [
+        {
+          "value": "true",
+          "text": {
+            "zh_cn": "开启",
+            "en_us": "On"
+          }
+        },
+        {
+          "value": "false",
+          "text": {
+            "zh_cn": "关闭",
+            "en_us": "Off"
+          }
+        }
+      ],
+      "classification": "功能类配置(通过开关开启或关闭相应功能)"
+    },
+    {
+      "key": "ELCONF.screenLocker.overtime",
+      "name": {
+        "zh_cn": "锁屏超时时间",
+        "en_us": "Timeout period of screen lock"
+      },
+      "description": {
+        "zh_cn": "用户与平台无交互时，系统自动锁屏，需重新输入密码登录（单位：秒）",
+        "en_us": "When the user has no interaction with the platform, the system automatically locks the screen and needs to re-enter the password to log in (unit: second)."
+      },
+      "type": "text",
+      "defaultValue": "30 * 60",
+      "show": "ELCONF.screenLocker.active === 'true'",
+      "classification": "功能类配置(通过开关开启或关闭相应功能)"
+    },
+    {
+      "key": "ELCONF.layout.erdc-sysadmin-web",
+      "name": {
+        "zh_cn": "布局配置",
+        "en_us": "Layout configuration"
+      },
+      "description": {
+        "zh_cn": "布局和应用的适配关系",
+        "en_us": "The fit between layout and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    },
+    {
+      "key": "ELCONF.theme.erdc-sysadmin-web",
+      "name": {
+        "zh_cn": "主题配置",
+        "en_us": "Theme configuration"
+      },
+      "description": {
+        "zh_cn": "主题和应用的适配关系",
+        "en_us": "The fit between theme and application"
+      },
+      "type": "textarea",
+      "defaultValue": "{\"include\":[], \"exclude\": []}"
+    }
+  ]
+}

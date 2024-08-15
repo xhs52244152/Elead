@@ -1,0 +1,63 @@
+<div class="signature-watermark-task">
+    <FamDynamicForm
+        ref="layoutForm"
+        :form="formData"
+        :data="formConfigs"
+    >
+        <template #file-slot="scope">
+            <erd-upload
+                action="/file/file/site/storage/v1/upload"
+                :limit="1"
+                :on-success="onFileUploadSuccess"
+                accept=".pdf"
+                :on-remove="resetFileData"
+                :on-exceed="handleExceed"
+                :headers="CONST.defaultHeaders"
+                :before-upload="onBeforeUpload"
+                :multiple="false"
+            >
+                <erd-button size="small">{{i18nMappingObj.signatureUpload}}</erd-button>
+                <div
+                    slot="tip"
+                    class="el-upload__tip"
+                >
+                    {{i18nMappingObj.pdfFileTips}}
+                </div>
+            </erd-upload>
+        </template>
+        <template #watermark-slot="scope">
+            <div class="flex grow-1">
+                <erd-select
+                    class="grow-1"
+                    v-model="formData.watermark"
+                    filterable
+                    clearable
+                    remote
+                    :remote-method="queryWatermark"
+                    v-el-select-selectLazy="selectLazy"
+                >
+                    <erd-option
+                        v-for="item in watermarkOptions"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code"
+                    >
+                    </erd-option>
+                    <erd-option
+                        v-if="!isDefaultValueInOptions"
+                        :class="{none: !isDefaultValueInOptions}"
+                        :label="watermarkForm.name"
+                        :value="watermarkForm.code"
+                        :key="watermarkForm.code"
+                    ></erd-option>
+                </erd-select>
+                <erd-button
+                    :disabled="!formData.watermark"
+                    class="ml-8"
+                    @click="previewWatermark(formData.watermark)"
+                    >{{i18nMappingObj.view}}</erd-button
+                >
+            </div>
+        </template>
+    </FamDynamicForm>
+</div>

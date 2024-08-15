@@ -1,0 +1,39 @@
+<!--消息摘要。未读消息的简单列表 -->
+<div class="message-abstract">
+    <div>
+        <div class="message-popover__content">
+            <el-scrollbar
+                style="height: 100%"
+                v-if="msgList.length"
+            >
+                <ul class="has-content">
+                    <li
+                        class="list-item"
+                        @click="handleMsgDetail(row)"
+                        v-for="(row, index) in msgList"
+                    >
+                        <div class="mb-8 font-bold text-ellipsis">{{row.userName}}</div>
+                        <div class="mb-8 text-ellipsis">
+                            {{row.subject_name}} {{row.subjectTitle}} {{row.notify_name}}
+                        </div>
+                        <div class="mb-8 text-12 list-item-date">{{ row.createTime }}</div>
+                    </li>
+                </ul>
+            </el-scrollbar>
+            <div
+                class="no-content"
+                v-else
+            >
+                <fam-empty></fam-empty>
+            </div>
+        </div>
+        <div class="message-popover__footer flex justify-between align-items-center cursor-pointer">
+            <div @click="handleAllMsgReadConfirm">全部已读</div>
+            <div @click="goToMessageList">查看更多</div>
+        </div>
+    </div>
+    <message-content
+        ref="msgContent"
+        @readed="handleMsgRead"
+    ></message-content>
+</div>

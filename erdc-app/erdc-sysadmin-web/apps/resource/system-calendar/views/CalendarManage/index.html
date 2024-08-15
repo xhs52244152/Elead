@@ -1,0 +1,159 @@
+<div
+    id="fam_calendar"
+    class="h-100p flex flex-column"
+>
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-xl font-bold"
+        static-title
+    >
+        {{ innerCalendarTitle }}
+    </FamPageTitle>
+    <div class="p-xl">
+        <div class="top-button">
+            <slot name="select-calendar">
+                <erd-tree-select
+                    v-model="currentCalendarOid"
+                    popper-class="fam-calendar-select"
+                    filterable
+                    default-expand-all
+                    node-key="oid"
+                    :data="cldList"
+                    :props="testData"
+                >
+                </erd-tree-select>
+            </slot>
+            <div>
+                <erd-tooltip
+                    effect="dark"
+                    placement="top-start"
+                    :content="cannotCreateTips"
+                    :disabled="!isDisabledCreateBtn"
+                >
+                    <erd-button
+                        type="primary"
+                        :disabled="isDisabledCreateBtn"
+                        @click="DialogCreateCalendar"
+                        >{{i18n.create}}</erd-button
+                    >
+                </erd-tooltip>
+                <erd-tooltip
+                    effect="dark"
+                    placement="top-start"
+                    :content="disabledTips"
+                    :disabled="!isContextCalendar"
+                >
+                    <erd-button
+                        :disabled="isContextCalendar"
+                        @click="deleteCalendar"
+                        >{{i18n.delete}}</erd-button
+                    >
+                </erd-tooltip>
+                <erd-button
+                    type="fill-icon"
+                    icon="erd-iconfont erd-icon-wrench"
+                    @click="openCalendarConfig"
+                ></erd-button>
+            </div>
+        </div>
+    </div>
+    <el-row
+        class="grow-1 p-xl"
+        type="flex"
+    >
+        <el-col
+            :span="18"
+            class="left-pos"
+        >
+            <!-- 日历组件 -->
+            <div class="h-100p">
+                <fam-calendar
+                    :height="calendarHeight"
+                    :key="eventData.length"
+                    :data="eventData"
+                    class="h-100p"
+                    v-bind="$attrs"
+                    :current-data="currentData"
+                    :options="handleOptions"
+                    @dateclick="selectDate"
+                    @changeyear="changeYear"
+                ></fam-calendar>
+            </div>
+        </el-col>
+        <el-col
+            :span="6"
+            class="right-pos"
+        >
+            <div class="right-content bg-purple-dark">
+                <!-- 列表 -->
+                <show-day-list
+                    ref="DayListRef"
+                    :oid="currentCalendarOid"
+                    :holiday-list="holidayList"
+                    :isContextCalendar="isContextCalendar"
+                    v-bind="$attrs"
+                    v-on="$listeners"
+                    :cannot-update-tips="cannotUpdateTips"
+                    @created="setHoliday"
+                    @setDay="setDayList"
+                ></show-day-list>
+                <!-- 图例 -->
+                <div>
+                    <div class="rightHeader">{{i18n.legend}}</div>
+                    <div class="rightBody calendar-legend-container">
+                        <div
+                            v-for="legend in legends"
+                            class="calendar-legend"
+                            :style="{'background': legend.bgColor,'color': legend.color}"
+                            :title="legend.name"
+                        >
+                            {{legend.name}}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div
+                        class="rightTips"
+                        style="margin: 0"
+                    >
+                        <div class="rightHeader">Tips:</div>
+                        <ol>
+                            <li>{{i18n.tips}}</li>
+                            <!-- <li>2. 鼠标放在某项安排记录上，试试选择右键。</li> -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
+    <!-- 新建日历 -->
+    <dialog-create-calendar
+        v-if="dialogCreateVisible"
+        :visible.sync="dialogCreateVisible"
+        :title="title"
+        :cldList="cldList"
+        v-bind="$attrs"
+        @updatelist="updateCldList"
+        @openconfig="openCalendarConfig"
+    ></dialog-create-calendar>
+    <!-- 系统日历配置 -->
+    <dialog-system-calendar-config
+        v-if="dialogConfigVisible"
+        :visible.sync="dialogConfigVisible"
+        :title="configTitle"
+        :oid="currentCalendarOid"
+        :new-oid="newOid"
+        :isContextCalendar="isContextCalendar"
+        @updaterule="updateRules"
+    ></dialog-system-calendar-config>
+    <!-- 设置工作/节假日 -->
+    <dialog-setting-days
+        v-if="dialogDayVisible"
+        :visible.sync="dialogDayVisible"
+        :date-config="dateConfig"
+        :title="setDayTitle"
+        :type="setDayType"
+        :oid="currentCalendarOid"
+        @updatelist="updateDayList"
+    ></dialog-setting-days>
+</div>

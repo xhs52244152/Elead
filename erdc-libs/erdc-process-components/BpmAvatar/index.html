@@ -1,0 +1,37 @@
+<div class="bpm-user-extend">
+    <template v-if="userList && userList.length">
+        <FamUser v-if="!showMore" :users="userList"></FamUser>
+        <erd-popover
+            v-else
+            placement="top"
+            trigger="hover"
+            class="bpm-user-popover-extend"
+            popper-class="bpm-user-popper-extend"
+        >
+            <span slot="reference">
+                <span>{{userListName}}</span><span>
+                    <i :class="iconMoreStyle"></i><span v-if="iconMore === 'number'">{{iconMoreNumber}}</span>
+                </span>
+            </span>
+            <div v-for="item in allUsers">
+                <div v-if="item.endTime" class="flex-format">
+                    <span class="icon-circle-border">
+                        <i class="el-icon-check primary-color"></i>
+                    </span>
+                    <div>
+                        <FamUser :users="[item]"></FamUser>
+                        <span class="font-12">{{item.endTime}}</span>
+                    </div>
+                </div>
+                <div v-else class="flex-format">
+                    <span class="icon-circle-border">
+                        <i class="el-icon-s-custom primary-color"></i>
+                    </span>
+                    <FamUser :users="[item]"></FamUser>
+                    <slot name="showBtn" :user="item"></slot>
+                </div>
+            </div>
+        </erd-popover>
+    </template>
+    <span v-else>--</span>
+</div>

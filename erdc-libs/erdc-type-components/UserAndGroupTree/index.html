@@ -1,0 +1,86 @@
+<div
+    id="userAndGroupTree"
+    class="tree-management"
+>
+    <div class="tree-header">
+        <div class="search">
+            <erd-input
+                v-model="searchValue"
+                suffix-icon="erd-iconfont erd-icon-search"
+                style="width: 100%"
+                clearable
+                :placeholder="i18nMappingObj.pleaseEnter"
+            >
+            </erd-input>
+        </div>
+    </div>
+    <erd-scrollbar>
+        <erd-ex-tree
+            ref="userAndGroupTree"
+            :data="userAndGroupTreeData"
+            :props="treeProps"
+            :highlight-current="true"
+            :default-expand-all="true"
+            node-key="key"
+            :filter-node-method="filterSearch"
+            @node-click="handleNodeClick"
+        >
+            <template v-slot="scope">
+                <div
+                    class="custom-tree-node"
+                    @mouseenter="mouseenter(scope)"
+                    @mouseleave="mouseleave(scope)"
+                >
+                    <div class="tree-text">{{scope.node.label}}</div>
+                    <div
+                        class="tree-operation"
+                        v-show="scope.data.show"
+                        @click.stop
+                    >
+                        <erd-button
+                            type="icon"
+                            icon="erd-iconfont erd-icon-add-document fontSize18"
+                            v-if="scope.node.level == 1 && isShowAdd"
+                            @click="onCreate(scope)"
+                        ></erd-button>
+                        <erd-button
+                            type="icon"
+                            icon="erd-iconfont erd-icon-delete fontSize18"
+                            @click="onDelete(scope)"
+                            v-if="scope.node.level == 2 && scope.data.delete"
+                        ></erd-button>
+                    </div>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+    <erd-ex-dialog
+        :title="addDialogTitle"
+        :visible.sync="dialogVisiable"
+        close-on-press-escape
+        width="600px"
+    >
+        <div>
+            <fam-dynamic-form
+                v-if="dialogVisiable"
+                ref="addRoleToTreeForm"
+                :form.sync="formData"
+                :data="formConfig"
+                :rules="formRules"
+            >
+            </fam-dynamic-form>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="handlerAddRoleToTree"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="handlerCancelAddRoleToTree">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

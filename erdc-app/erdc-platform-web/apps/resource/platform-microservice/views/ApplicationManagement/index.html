@@ -1,0 +1,60 @@
+<div
+    id="applicationTable"
+    class="w-100p h-100p flex flex-column"
+>
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        class="grow-1 ptrl-xl"
+        :view-table-config="viewTableConfig"
+        @hook:mounted="reSetTableHeight"
+    >
+        <template #column:default:displayName:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="handlerViewDetail(scope.row)"
+                >{{ scope.row.displayName }}</erd-button
+            >
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="handlerEdit(scope.row)"
+                >{{i18nMappingObj.edit}}</erd-button
+            >
+        </template>
+    </fam-advanced-table>
+    <erd-ex-dialog
+        v-if="dialogVisiable"
+        :title="dialogTitle"
+        :visible.sync="dialogVisiable"
+        custom-class="application-dialog"
+        width="1200px"
+    >
+        <div class="dialog-main-content">
+            <application-form
+                ref="applicationForm"
+                :defaultValue="formData"
+                :readonly="readonly"
+                @formValidSuccess="handlerUpdate"
+            ></application-form>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+            v-if="!readonly"
+        >
+            <erd-button
+                type="primary"
+                :loading="loading"
+                @click="onHandlerConfirm"
+            >
+                {{i18nMappingObj.confirm}}
+            </erd-button>
+            <erd-button @click="onHandlerCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,69 @@
+<div id="process-property-config" class="process-property-config">
+    <erd-contraction-panel
+        :title="panelTitle"
+        :unfold.sync="expanded"
+    >
+        <template #header-right>
+            <erd-button
+                v-if="!readonly && expanded"
+                size="small"
+                @click="createProperty"
+            >{{ i18nMappingObj.create }}</erd-button>
+        </template>
+
+        <template #content>
+            <FamErdTable
+                :data="tableData"
+                :column="columns"
+                :column-config="{ resizable: true }"
+                :is-embed-table="true"
+                auto-resize
+                border
+            >
+                <template #boolean="scope">
+                    <span>{{scope.data.row[scope.data.column.property] ? '是' : '否'}}</span>
+                </template>
+
+                <template #column:default:variableLabel="scope">
+                    <span>{{ translateI18n(scope.data.row[scope.data.column.property]) }}</span>
+                </template>
+
+                <template #column:default:componentContent.key="scope">
+                    <span> {{getWidget(scope.data.row).name || '-'}} </span>
+                </template>
+                <template #column:default:refVariableId="scope">
+                    <span> {{translateProperty(scope.data.row[scope.data.column.property]) || '-'}} </span>
+                </template>
+
+                <template #column:default:defaultValue="scope">
+                    <component
+                        v-if="scope.data.row.componentContent && scope.data.row.componentContent.schema.defaultValue"
+                        :is="getReadonlyComponent(scope.data.row.componentContent)"
+                        :value="scope.data.row.componentContent.schema.defaultValue"
+                        v-bind="scope.data.row.componentContent.schema.props"
+                        :formData="{ defaultValue: scope.data.row.componentContent.schema.defaultValue }"
+                        readonly
+                        disabled
+                    >{{scope.data.row.componentContent.schema.defaultValue}}</component>
+                    <span v-else>-</span>
+                </template>
+
+                <template #column:default:operation="scope">
+                    <erd-button type="text" @click="editRow(scope.data.row, scope.data.rowIndex)">{{ i18nMappingObj[readonly ? 'view' : 'edit'] }}</erd-button>
+                    <erd-button v-if="!readonly" type="text" @click="deleteRow(scope.data.row, scope.data.rowIndex)">{{ i18nMappingObj.delete }}</erd-button>
+                </template>
+            </FamErdTable>
+        </template>
+    </erd-contraction-panel>
+
+    <ProcessPropertyForm
+        :visible.sync="visible"
+        :isEdit="editRowIdx !== -1"
+        :row="targetRow"
+        :globalProperties="globalProperties"
+        :uniqChecker="uniqChecker"
+        v-bind="$props"
+        @save="onPropertySave"
+        @cancel="onPropertyCancel"
+    ></ProcessPropertyForm>
+</div>

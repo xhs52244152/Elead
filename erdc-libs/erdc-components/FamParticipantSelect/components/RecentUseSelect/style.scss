@@ -1,0 +1,22 @@
+#recentUseSelect {
+    .el-input__suffix {
+        display: flex;
+        .el-input__suffix-inner {
+            align-items: center;
+            font-size: 16px;
+        }
+    }
+
+    .recent-checkbox {
+        line-height: 32px;
+        &:hover {
+            background-color: var(--colorHover);
+        }
+    }
+    .el-checkbox > .el-checkbox__label {
+        width: 100%;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+}

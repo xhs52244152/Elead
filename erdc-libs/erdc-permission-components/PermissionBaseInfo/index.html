@@ -1,0 +1,41 @@
+<div id="permissionBaseInfo">
+    <expansion-folding-block :title="i18nMappingObj.baseInfo">
+        <template #baseinfo:form:expansion:panel>
+            <fam-dynamic-form
+                ref="permissionBaseInfoForm"
+                :form.sync="formData"
+                :data="formConfig"
+                :readonly="formDisabled"
+            >
+                <template #famParticipantSelect="scope">
+                    <fam-participant-select
+                        v-if="!formDisabled"
+                        multiple
+                        collapseTags
+                        v-model="formData.participant"
+                        :query-params="innerQueryParams"
+                        :componentDisabled="formDisabled"
+                        :showType="participantShowType"
+                        :userDefaultValue="formData.principal"
+                        :query-scope="queryScope"
+                        :app-name="appName"
+                        :three-member-env="false"
+                        v-bind="$attrs"
+                    ></fam-participant-select>
+                    <span v-else>{{formData.participant?.name}}</span>
+                </template>
+                <template #typeTreeSelect="scope">
+                    <type-tree-select
+                        v-if="!formDisabled"
+                        v-bind="$attrs"
+                        :default-value="formData.typeSelected"
+                        :app-name="appName"
+                        :is-basics="isBasics"
+                        @handler-change-type-select="handlerChangeTypeInDialog"
+                    ></type-tree-select>
+                    <span v-else>{{formData.typeSelected && formData.typeSelected.displayName || ''}}</span>
+                </template>
+            </fam-dynamic-form>
+        </template>
+    </expansion-folding-block>
+</div>

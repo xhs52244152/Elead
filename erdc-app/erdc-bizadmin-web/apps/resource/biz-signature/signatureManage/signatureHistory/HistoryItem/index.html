@@ -1,0 +1,12 @@
+<div class='signature-manage-history_item' :class="{empty: !history || !history.url}" v-loading='loading'>
+    <template v-if="history && history.url">
+        <div class='signature-manage-history_item_body'>
+            <img :src='history.url' @load="loadImg">
+        </div>
+        <div class='signature-manage-history_item_info' :class="{active: history.effective}">
+            <div>{{stateInfo}}</div>
+            <div>{{createInfo}}</div>
+            <div>{{updateInfo}}</div>
+        </div>
+    </template>
+</div>

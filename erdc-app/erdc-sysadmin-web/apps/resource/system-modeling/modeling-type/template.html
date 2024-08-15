@@ -1,0 +1,83 @@
+<div
+    v-loading="loading"
+    id="FamTypeTree"
+    class="h-100p"
+>
+    <resizable-container
+        v-show="!isSetting"
+        :left="left"
+    >
+        <template v-slot:left>
+            <div class="fam-type-tree tree-management flex flex-column">
+                <div
+                    class="fam-type-tree__header"
+                    ref="header"
+                >
+                    <div class="fam-type-tree__tabs">
+                        <erd-tabs
+                            v-model="activeTab.name"
+                            @tab-click="activeChange"
+                        >
+                            <erd-tab-pane
+                                v-for="item in tabsTypeList"
+                                :label="item.label"
+                                :name="item.name"
+                                :key="item.name"
+                            >
+                                <div
+                                    class="tabIcon"
+                                    :title="item.label"
+                                    :class="{'isActive':activeTab.name == item.name}"
+                                    slot="label"
+                                >
+                                    <erd-tooltip
+                                        effect="dark"
+                                        :content="item.label"
+                                        placement="top"
+                                    >
+                                        <i :class="item.icon"></i>
+                                    </erd-tooltip>
+                                </div>
+                            </erd-tab-pane>
+                        </erd-tabs>
+                    </div>
+                </div>
+                <template v-for="(item, index) in tabList">
+                    <component
+                        :is="activeTab.left"
+                        :key="index"
+                        v-if="activeTab.left === item.left"
+                        :ref="item.left"
+                        @type-tree-loading="typeTreeLoading"
+                        @node-type-click="(data)=>(onCheck(data, item.right))"
+                        @global-attr-tree-data="(data)=>(globalAttrTreeData(data, item.right))"
+                    ></component>
+                </template>
+            </div>
+        </template>
+        <template v-slot:right>
+            <template v-for="(item, index) in tabList">
+                <component
+                    :is="activeTab.right"
+                    v-if="activeTab.right === item.right"
+                    :key="index"
+                    :ref="item.right"
+                    @set-app-name-by-detail="setAppNameByDetail"
+                    @type-tree-loading="typeTreeLoading"
+                    @onsubmit="(data)=>(onSubmit(data, item.left))"
+                    @refresh-tree="(data, methodName)=>(refreshTree(data, methodName, item.left))"
+                ></component>
+            </template>
+        </template>
+    </resizable-container>
+    <attr-permission-setting
+        v-if="isSetting"
+        :type-oid="typeOid"
+        :container-oid="containerOid"
+        :type-name="typeName"
+        :app-name="appName"
+        :show-return-back="true"
+        :query-params="queryParams"
+        @changeShowSetting="handlerChangeShow"
+    ></attr-permission-setting>
+</div>

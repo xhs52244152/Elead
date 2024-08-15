@@ -1,0 +1,17 @@
+#fam_preference {
+    background-color: #fff;
+    height: 100%;
+    .preference-body {
+        .preference-header {
+            justify-content: space-between;
+        }
+    
+        .preference-table {
+            padding-top: 16px;
+        }
+    
+        .bold {
+            font-weight: 700;
+        }
+    }
+}

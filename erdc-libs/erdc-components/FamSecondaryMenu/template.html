@@ -1,0 +1,64 @@
+<div id="fam-secondary-menu">
+    <div class="fam-secondary">
+        <div class="fam-secondary-title ellipsis">{{ rootResourceTitle || ' ' }}</div>
+        <div class="fam-secondary-sub-title">
+            <slot></slot>
+        </div>
+        <erd-menu
+            ref="menu"
+            class="fam-secondary-menu transition"
+            mode="horizontal"
+            :default-active="currentActive"
+            @select="handleSelect"
+        >
+            <template>
+                <erd-menu-item
+                    v-for="resource in viewResources"
+                    :key="resource.oid"
+                    :index="resource.identifierNo"
+                    class="fam-secondary-menu-item"
+                    :class="{ 'is-active': resource.identifierNo === currentActive }"
+                >
+                    <span>
+                        <erd-icon
+                            v-if="resource.icon"
+                            :icon="resource.icon"
+                        ></erd-icon>
+                        {{resource.displayName}}
+                    </span>
+                </erd-menu-item>
+                <erd-submenu
+                    v-show="collapsedResourcesShows"
+                    ref="submenu"
+                    index="more"
+                >
+                    <template #title>
+                        <span>
+                            <erd-icon
+                                v-if="collapsedMenuIcon"
+                                :icon="collapsedMenuIcon"
+                            ></erd-icon>
+                            <span>{{ collapsedMenuTitle }}</span>
+                        </span>
+                    </template>
+                    <erd-menu-item
+                        v-for="(resource, index) in collapsedResources"
+                        :index="resource.identifierNo"
+                        :key="resource.oid"
+                    >
+                        <span style="display: flex; align-items: center;">
+                            <erd-icon
+                                v-if="resource.icon"
+                                :icon="resource.icon"
+                            ></erd-icon>
+                            <i v-else style="width: 14px;"></i>
+                            <span style="margin-left: 3px;">
+                                {{resource.displayName}}
+                            </span>
+                        </span>
+                    </erd-menu-item>
+                </erd-submenu>
+            </template>
+        </erd-menu>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<erd-ex-dialog
+    title="请选择要对比的版本"
+    :visible.sync="visible"
+>
+    <FamDynamicForm
+        :form="formData"
+        :data="formConfigs"
+        :labelWidth="labelWidth"
+    >
+        <template #baseId>
+            <erd-select
+                v-model="formData.version"
+                :placeholder="i18nMappingObj.请选择版本"
+            >
+                <erd-option
+                    v-for="option in list"
+                    :key="option.value"
+                    :label="option.label"
+                    :value="option.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #newId>
+            <erd-select
+                v-model="formData.versionId"
+                :placeholder="i18nMappingObj.请选择版本"
+            >
+                <erd-option
+                    v-for="option in list"
+                    :key="option.value"
+                    :label="option.label"
+                    :value="option.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >提交</erd-button
+        >
+        <erd-button @click="cancel">取消</erd-button>
+    </template>
+</erd-ex-dialog>

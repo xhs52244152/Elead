@@ -1,0 +1,11 @@
+#fam-api-log-list .viewtable-body-container > .el-pagination {
+    margin-bottom: 0;
+}
+
+#fam-api-log-list .toolbar-search-component .fuzzy-search .el-input__inner {
+    width: 405px;
+}
+
+#fam-api-log-list .toolbar-search-component .el-select .el-input__inner {
+    width: 170px;
+}

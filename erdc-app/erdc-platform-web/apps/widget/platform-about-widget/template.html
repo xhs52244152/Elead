@@ -1,0 +1,41 @@
+<erd-popover
+    ref="popover"
+    trigger="click"
+    popper-class="p-0"
+    :visible-arrow="false"
+    class="layout-component__plain-button flex align-items-center"
+    @show="handlePopoverShow"
+    @hide="handlePopoverHide"
+>
+    <div
+        v-if="!aboutVisible"
+        class="text-normal"
+    >
+        <erd-pulldown-menu-item
+            v-for="menu in menuList"
+            :key="menu.key"
+            v-show="!menu.hide"
+            @click="handleMenuClick(menu)"
+        >
+            {{menu.title}}
+
+            <erd-icon
+                v-if="menu.icon"
+                :icon="menu.icon"
+            ></erd-icon>
+        </erd-pulldown-menu-item>
+    </div>
+
+    <ErdcAbout v-if="aboutVisible"></ErdcAbout>
+
+    <template #reference>
+        <erd-tooltip
+            class="layout-component__plain-button"
+            :content="i18n.assistance"
+        >
+            <div class="cursor-pointer flex align-items-center text-center">
+                <erd-icon icon="help"></erd-icon>
+            </div>
+        </erd-tooltip>
+    </template>
+</erd-popover>

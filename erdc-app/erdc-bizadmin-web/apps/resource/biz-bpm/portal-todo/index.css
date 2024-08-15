@@ -1,0 +1,22 @@
+.bpm-todo-content .left-button-content {
+  display: flex;
+  align-items: center;
+}
+.bpm-todo-content .left-button-content .left-button-content-item {
+  display: flex;
+  align-items: center;
+}
+.bpm-todo-content .left-button-content .left-button-content-item > span {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  margin-right: 4px;
+}
+.bpm-todo-content .detail-layout-class .advanced-table-container {
+  padding: 0;
+}
+.bpm-todo-content .detail-layout-class .advanced-table-container .fam-view-table-header-component {
+  padding: 0 16px;
+}
+
+/*# sourceMappingURL=index.css.map */

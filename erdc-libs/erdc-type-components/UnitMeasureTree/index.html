@@ -1,0 +1,94 @@
+<div
+    id="UnitMeasureTree"
+    :lan="lan"
+    class="flex-1"
+>
+    <div class="UnitMeasureTree flex flex-column h-100p">
+        <div
+            class="tree-header"
+            ref="header"
+        >
+            <div class="tree-title">{{i18nMappingObj.measureUnit}}</div>
+            <div class="UnitMeasureTree-search">
+                <erd-input
+                    v-model="searchValue"
+                    :placeholder="i18nMappingObj.searchKeyword"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                    style="width: 100%"
+                >
+                </erd-input>
+            </div>
+            <!-- <div class="flex operation">
+                <div class="measure-title">
+                    <span>{{i18nMappingObj.measureUnit}}</span>
+                </div>
+                <div class="measure-oper">
+                    <erd-button icon="el-icon-edit" @click="onCreate">{{i18nMappingObj.create}}</erd-button>
+                    <erd-dropdown trigger="click" :hide-on-click="false" @command="onCommand" style="margin-left: 8px;">
+                        <erd-button>
+                          {{i18nMappingObj.moreActions}}<i class="el-icon-arrow-down el-icon--right"></i>
+                        </erd-button>
+                        <erd-dropdown-menu slot="dropdown">
+                          <erd-dropdown-item command="import">{{i18nMappingObj.completeImport}}</erd-dropdown-item>
+                          <erd-dropdown-item command="export">{{i18nMappingObj.completeExport}}</erd-dropdown-item>
+                        </erd-dropdown-menu>
+                    </erd-dropdown>
+                </div>
+            </div> -->
+        </div>
+        <erd-scrollbar
+            class="flex-1"
+            style="min-height: 0"
+            wrap-style="overflow: hidden auto;"
+        >
+            <ul class="typelist">
+                <erd-ex-tree
+                    :data="treeData"
+                    :props="defaultProps"
+                    class="unit-measure-tree tree-list"
+                    @node-click="onCheck"
+                    :filter-node-method="filterSearch"
+                    :highlight-current="true"
+                    node-key="key"
+                    default-expand-all
+                    :default-expanded-keys="defaultExpandedKeys"
+                    :expand-on-click-node="false"
+                    ref="tree"
+                >
+                    <template v-slot="scope">
+                        <div
+                            class="tree-content"
+                            @mouseenter="mouseenter(scope)"
+                            @mouseleave="mouseleave(scope)"
+                        >
+                            <div class="tree-text">{{scope.node.label}}</div>
+                            <div
+                                class="tree-operation"
+                                v-show="scope.data.show"
+                                @click.stop
+                            >
+                                <erd-button
+                                    type="icon"
+                                    icon="erd-iconfont erd-icon-add-document fontSize18"
+                                    v-if="scope.node.level == 1"
+                                    size="mini"
+                                    class="drag"
+                                    @click="onCreate"
+                                >
+                                </erd-button>
+                            </div>
+                        </div>
+                    </template>
+                </erd-ex-tree>
+            </ul>
+        </erd-scrollbar>
+    </div>
+    <unit-measure-new-edit
+        v-if="visible"
+        :visible.sync="visible"
+        :title="i18nMappingObj.createMeasureUnit"
+        @onsubmit="refreshList"
+    >
+    </unit-measure-new-edit>
+</div>

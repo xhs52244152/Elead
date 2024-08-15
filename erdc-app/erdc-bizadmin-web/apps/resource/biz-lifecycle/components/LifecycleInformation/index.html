@@ -1,0 +1,67 @@
+<div
+    id="LifecycleInformation"
+    v-if="refreshComponent"
+>
+    <FamDynamicForm
+        ref="LifecycleInformationForm"
+        :form="lifeData"
+        :data="data"
+        :readonly="readonly"
+        :validate-on-rule-change="false"
+    >
+        <template #menuApp="scope">
+            <el-select
+                v-model="scope.data[scope.formConfig.field]"
+                :placeholder="i18nMappingObj.pleaseSelet"
+                style="width: 100%"
+            >
+                <el-option
+                    v-for="item in appList"
+                    :key="item.identifierNo"
+                    :label="item.displayName"
+                    :value="item.identifierNo"
+                >
+                </el-option>
+            </el-select>
+        </template>
+        <template #appNameReadonlyComponent="scope">
+            <span>{{scope.data.appDisplayName}}</span>
+        </template>
+        <template #descriptionReadonly="scope">
+            <span style="white-space: pre-line">{{scope.data[scope.formConfig.field] || '--'}}</span>
+        </template>
+
+        <template #typeTooltipComponent="scope">
+            <span class="lifecycle-tooltip">{{i18nMappingObj.typeTooltip}}</span>
+        </template>
+        <template #typeTooltipReadonly="scope">
+            <span class="lifecycle-tooltip">{{i18nMappingObj.typeTooltip}}</span>
+        </template>
+        <template #supportedClassPlaceholderComponent="scope">
+            <span class="lifecycle-tooltip">{{i18nMappingObj.objectTypeTooltip}}</span>
+        </template>
+        <template #supportedClassPlaceholderReadonly="scope">
+            <span class="lifecycle-tooltip">{{i18nMappingObj.objectTypeTooltip}}</span>
+        </template>
+        <template #supportedClassComponent="scope">
+            <erd-tree-select
+                class="tree-select"
+                v-model="scope.data[scope.formConfig.field]"
+                clearable
+                filterable
+                default-expand-all
+                node-key="typeName"
+                :props="{
+                    label: 'displayName',
+                    children: 'children',
+                    value: 'typeName'
+                }"
+                :data="referenceList"
+            >
+            </erd-tree-select>
+        </template>
+        <template #placeholderComponent="scope">
+            <span></span>
+        </template>
+    </FamDynamicForm>
+</div>

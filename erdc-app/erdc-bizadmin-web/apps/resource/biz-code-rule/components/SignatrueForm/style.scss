@@ -1,0 +1,61 @@
+#signatrueForm {
+    border: 1px solid #bebebe;
+    padding: 8px 16px;
+
+    .content {
+        margin-bottom: 12px;
+        .title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .feature-code {
+            display: flex;
+            padding: 16px 0;
+            .feature-code-item {
+                display: flex;
+                padding: 12px 16px;
+                position: relative;
+                flex-shrink: 0;
+                .right-semicircle {
+                    position: absolute;
+                    right: -12px;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    z-index: 100;
+                }
+                .right-semicircle-half {
+                    position: absolute;
+                    right: 0px;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                    width: 14px;
+                    height: 28px;
+                    z-index: 101;
+                }
+            }
+        }
+    }
+
+    .preview {
+        text-align: center;
+        .preview-code {
+            margin: 12px 0;
+            font-size: 16px;
+        }
+    }
+    .el-scrollbar {
+        height: calc(100% - 40px);
+        .el-scrollbar__wrap {
+            .el-scrollbar__view {
+                white-space: nowrap;
+                overflow-x: auto;
+                height: 100%;
+            }
+        }
+    }
+}

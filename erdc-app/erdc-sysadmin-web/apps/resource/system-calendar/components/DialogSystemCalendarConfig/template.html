@@ -1,0 +1,271 @@
+<div id="DialogSystemCalendarConfig">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+    >
+        <div class="TypeAttrConfig">
+            <erd-contraction-panel
+                :unfold.sync="unfold"
+                @onsubmit="showInfoFn"
+                :title="i18nMappingObj.basicInformation"
+            >
+            </erd-contraction-panel>
+            <div v-if="showInfo">
+                <FamDynamicForm
+                    ref="baseInfo"
+                    v-cloak
+                    :form="formData"
+                    :data="baseFormConfig"
+                    @form-change="formChange"
+                >
+                    <template v-slot:radioComponent="scope">
+                        <erd-radio-group
+                            style="width: 100%"
+                            v-model="scope.data[scope.formConfig.field]"
+                            :disabled="isContextCalendar || scope.data[scope.formConfig.field + '_checked']"
+                        >
+                            <erd-radio :label="'1'">{{i18nMappingObj.yes}}</erd-radio>
+                            <erd-radio :label="'0'">{{i18nMappingObj.no}}</erd-radio>
+                        </erd-radio-group>
+                    </template>
+
+                    <template v-slot:statusComponent="scope">
+                        <erd-radio-group
+                            style="width: 100%"
+                            v-model="scope.data[scope.formConfig.field]"
+                            :disabled="isContextCalendar || scope.data[scope.formConfig.field + '_checked']"
+                        >
+                            <erd-radio :label="1">{{i18nMappingObj.enable}}</erd-radio>
+                            <erd-radio :label="0">{{i18nMappingObj.disable}}</erd-radio>
+                        </erd-radio-group>
+                    </template>
+                </FamDynamicForm>
+            </div>
+        </div>
+        <erd-contraction-panel
+            :unfold.sync="componentConfigUnfold"
+            :title="i18nMappingObj.workSetting"
+        >
+            <template #content>
+                <!-- 常规工作周期设置 -->
+                <erd-row :gutter="8">
+                    <erd-col
+                        :span="24"
+                        style="padding-left: 4px; padding-right: 4px"
+                    >
+                        <label class="el-form-item__label i18n-form__label--right">
+                            <span style="font-weight: 700; color: #000">{{i18nMappingObj.generalWork}}</span>
+                        </label>
+                    </erd-col>
+                </erd-row>
+                <erd-row :gutter="8">
+                    <erd-col
+                        :span="3"
+                        style="padding-left: 4px; padding-right: 4px"
+                    >
+                        <label
+                            class="el-form-item__label i18n-form__label--right"
+                            style="width: 100%"
+                        >
+                            <erd-tooltip
+                                placement="top-start"
+                                :content="i18nMappingObj.regularWork"
+                            >
+                                <span>{{i18nMappingObj.regularWork}}</span>
+                            </erd-tooltip>
+                        </label>
+                    </erd-col>
+                    <erd-col :span="21">
+                        <div class="el-form-item__content">
+                            <erd-checkbox-group v-model="formData.regularWorkWeekList" :disabled="isContextCalendar">
+                                <erd-checkbox
+                                    v-for="(item, index) in weekDays"
+                                    :checked="item.checked"
+                                    :key="index"
+                                    :label="item.value"
+                                    >{{item.label}}</erd-checkbox
+                                >
+                            </erd-checkbox-group>
+                        </div>
+                    </erd-col>
+                </erd-row>
+                <!-- 例外工作时间 -->
+                <erd-row :gutter="8">
+                    <erd-col
+                        :span="24"
+                        style="padding-left: 4px; padding-right: 4px"
+                    >
+                        <label class="el-form-item__label i18n-form__label--right">
+                            <span style="font-weight: 700; color: #000">{{i18nMappingObj.exceptional}}</span>
+                        </label>
+                    </erd-col>
+                </erd-row>
+                <erd-row
+                    :gutter="8"
+                    style="margin-bottom: 12px"
+                >
+                    <erd-col
+                        :span="3"
+                        style="padding-left: 4px; padding-right: 4px"
+                    >
+                        <label
+                            class="el-form-item__label i18n-form__label--right"
+                            style="width: 100%"
+                        >
+                            <erd-tooltip
+                                placement="top-start"
+                                :content="i18nMappingObj.exceptionalPeriod"
+                            >
+                                <span>{{i18nMappingObj.exceptionalPeriod}}</span>
+                            </erd-tooltip>
+                        </label>
+                    </erd-col>
+                    <erd-col :span="21">
+                        <div class="el-form-item__content">
+                            <!-- <erd-date-picker
+                                v-model="formData.exceptionalPeriod"
+                                type="daterange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"
+                                @change="onSelectTime"
+                            >
+                            </erd-date-picker> -->
+                            <erd-date-picker
+                                v-model="formData.startTime"
+                                type="date"
+                                placeholder="选择开始日期"
+                                :disabled="isContextCalendar"
+                                :picker-options="pickerOptionsEnd"
+                            >
+                            </erd-date-picker>
+                            <span style="margin: 0 8px">{{i18n.to}}</span>
+                            <erd-date-picker
+                                v-model="formData.finishTime"
+                                type="date"
+                                placeholder="选择结束日期"
+                                :disabled="isContextCalendar"
+                                :picker-options="pickerOptionsStart"
+                            >
+                            </erd-date-picker>
+                        </div>
+                    </erd-col>
+                </erd-row>
+                <erd-row
+                    :gutter="8"
+                    style="margin-bottom: 12px"
+                >
+                    <erd-col
+                        :span="3"
+                        style="padding-left: 4px; padding-right: 4px"
+                    >
+                        <label
+                            class="el-form-item__label i18n-form__label--right"
+                            style="width: 100%"
+                        >
+                            <erd-tooltip
+                                placement="top-start"
+                                :content="i18nMappingObj.frequency"
+                            >
+                                <span>{{i18nMappingObj.frequency}}</span>
+                            </erd-tooltip>
+                        </label>
+                    </erd-col>
+                    <erd-col :span="21">
+                        <div class="el-form-item__content">
+                            <span>{{i18n.every}}</span>
+                            <erd-input
+                                style="width: 180px; margin: 0 8px"
+                                v-model="formData.lastMonth"
+                                clearable
+                                :disabled="isContextCalendar"
+                                :placeholder="i18nMappingObj.pleaseEnter"
+                            ></erd-input>
+                            <erd-ex-select
+                                v-model="formData.repeatMode"
+                                clearable
+                                :disabled="isContextCalendar"
+                                :options="recurrenceList"
+                                @change="handlerepeatModeChange"
+                            ></erd-ex-select>
+                            <erd-ex-select
+                                v-if="formData.repeatMode === '1'"
+                                style="margin: 0 8px"
+                                v-model="formData.fewWeeks"
+                                clearable
+                                :disabled="isContextCalendar"
+                                :options="whichNumberList"
+                            ></erd-ex-select>
+                            <erd-ex-select
+                                v-model="formData.weeks"
+                                clearable
+                                :options="weekDays"
+                                :disabled="isContextCalendar"
+                            ></erd-ex-select>
+                        </div>
+                    </erd-col>
+                </erd-row>
+                <erd-row :gutter="8">
+                    <erd-col
+                        :span="3"
+                        style="padding-left: 4px; padding-right: 4px"
+                    >
+                        <label
+                            class="el-form-item__label i18n-form__label--right"
+                            style="width: 100%"
+                        >
+                            <erd-tooltip
+                                placement="top-start"
+                                :content="i18nMappingObj.repetition"
+                            >
+                                <span>{{i18nMappingObj.repetition}}</span>
+                            </erd-tooltip>
+                        </label>
+                    </erd-col>
+                    <erd-col :span="21">
+                        <div class="el-form-item__content">
+                            <erd-ex-select
+                                v-model="formData.isRepetition"
+                                clearable
+                                :disabled="isContextCalendar"
+                                :options="repetitionList"
+                                @change="handleRepetitionChange"
+                            ></erd-ex-select>
+                            <span v-if="formData.isRepetition === '1'">
+                                <erd-input
+                                    style="width: 180px; margin: 0 8px"
+                                    v-model="formData.repetitions"
+                                    clearable
+                                    :disabled="isContextCalendar"
+                                    :placeholder="i18nMappingObj.pleaseEnter"
+                                ></erd-input>
+                                <span>次</span>
+                            </span>
+                        </div>
+                    </erd-col>
+                </erd-row>
+            </template>
+        </erd-contraction-panel>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-tooltip
+                effect="dark"
+                placement="top-start"
+                :content="i18nMappingObj['cannotModified']"
+                :disabled="!isContextCalendar"
+            >
+                <erd-button
+                    type="primary"
+                    @click="submitEditForm()"
+                    :loading="loading"
+                    :disabled="isContextCalendar || disabled"
+                    >{{i18nMappingObj.confirm}}</erd-button
+                >
+            </erd-tooltip>
+
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

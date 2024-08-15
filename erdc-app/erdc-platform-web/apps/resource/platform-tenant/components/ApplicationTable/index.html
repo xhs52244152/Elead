@@ -1,0 +1,22 @@
+<div id="applicationTable">
+    <fam-erd-table
+        ref="applicationTable"
+        border
+        :column="tableColumns"
+        :header-align="'left'"
+        :data="tableData"
+        :column-config="{ resizable: true }"
+        :checkbox-config="{checkMethod: checkMethod}"
+    >
+        <template #column:default:operation="{ data }">
+            <div class="custom-table-columns-cell">
+                <erd-button
+                    v-if="isShowOperation || !data.row.isDefault"
+                    type="text"
+                    @click="handlerRemove(data)"
+                    >{{i18nMappingObj.remove}}</erd-button
+                >
+            </div>
+        </template>
+    </fam-erd-table>
+</div>

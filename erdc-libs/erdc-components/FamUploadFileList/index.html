@@ -1,0 +1,109 @@
+<div
+    class="upload-file-list_table w-100p"
+    v-cloak
+    v-loading="loading"
+    :element-loading-text="i18n.uploading"
+>
+    <slot name="uploadBtn">
+        <div class="flex justify-between align-items-center">
+            <div>
+                <slot name="left"></slot>
+            </div>
+            <div v-show="showUpload">
+                <slot name="right">
+                    <fam-upload
+                        ref="myUpload"
+                        class="inline-block"
+                        :show-file-list="false"
+                        :before-upload="beforeUpload"
+                        :on-success="onUploadSuccess"
+                        :class-name="className"
+                        :on-error="onUploadError"
+                        :multiple="multiple"
+                        :readonly="readonly"
+                        :security-label="securityLabel"
+                        :is-need-security="isNeedSecurity"
+                        :reference="reference"
+                    >
+                    </fam-upload>
+                </slot>
+            </div>
+        </div>
+    </slot>
+    <ErdTable
+        ref="erdTable"
+        :column="innerColumns"
+        :data="innerTableData"
+        :maxLine="10"
+        :edit-config="tableProps.editConfig || {trigger: 'click', mode: 'cell'}"
+        :class="{ 'fam-upload__file-list__table': showUpload }"
+        border
+        show-overflow
+        auto-resize
+    >
+        <template
+            v-for="col in innerColumnsDefault"
+            :slot="'column:default:' + col.prop"
+            slot-scope="{data}"
+        >
+            <slot
+                v-if="$scopedSlots['column:default:' + col.prop]"
+                :name="'column:default:' + col.prop"
+                v-bind="{data: data}"
+            ></slot>
+            <span
+                v-else-if="col.link"
+                :class="{'my-link-btn': col.link, 'disabled': col.disabled ? col.disabled(data.row) : false }"
+                @click="clickHandler(data.row, col)"
+                >{{data.row[col.prop]}}</span
+            >
+            <FamUser
+                v-else-if="col.user"
+                :users="data.row[col.prop]"
+            ></FamUser>
+            <span v-else>{{col.customRender ? col.customRender(data.row, col) : data.row[col.prop] }}</span>
+        </template>
+        <template
+            slot="column:default:operation"
+            slot-scope="{data}"
+        >
+            <slot
+                v-if="$scopedSlots['column:default:operation']"
+                name="column:default:operation"
+                v-bind="{data: data}"
+            ></slot>
+            <fam-action-pulldown
+                v-else
+                :is-operation="false"
+                :buttons="innerOperationButtons(data.row)"
+                :action-data="data.row"
+                @pulldown-click="onCommand"
+            ></fam-action-pulldown>
+        </template>
+
+        <template
+            v-for="(slot, name) in $scopedSlots"
+            v-slot:[name]="scope"
+        >
+            <slot
+                :name="name"
+                v-bind="scope"
+            ></slot>
+        </template>
+    </ErdTable>
+    <FamFilePreview
+        ref="filePreview"
+        :static-class-name="className"
+        @close="previewClose"
+        @done="handleUpdate"
+    >
+        <template #footer="scope">
+            <erd-button
+                v-if="isNeedEdit && scope.isViewMode && scope.type === 'onlyoffice' && currentRow.authorizeCode"
+                type="text"
+                @click="switchToEdit"
+                >{{i18n['编辑']}}
+            </erd-button>
+        </template>
+    </FamFilePreview>
+</div>

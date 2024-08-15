@@ -1,0 +1,27 @@
+<erd-popover
+    trigger="hover"
+    :placement="placement"
+    width="80"
+>
+    <div class="thumbnail-help-content">
+        <div
+            class="thumbnail-help-item"
+            :style="{ 'margin-top': index === 0 ? '0px' : '16px' }"
+            v-for="(item, index) in thumbnailHelpList"
+            :key="index"
+        >
+            <div
+                class="thumbnail-help-item-icon"
+                :class="[ item.borderBorderColor ]"
+            >
+                <i :class="[ item.iconClass ]"></i>
+            </div>
+            <span>{{ item.title }}</span>
+        </div>
+    </div>
+    <i
+        class="el-icon-question"
+        :style="{ 'font-size': iconSize, 'color': 'rgba(0, 0, 0, .45)' }"
+        slot="reference"
+    ></i>
+</erd-popover>

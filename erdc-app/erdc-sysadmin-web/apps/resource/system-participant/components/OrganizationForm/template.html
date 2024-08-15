@@ -1,0 +1,25 @@
+<div>
+    <FamAdvancedForm
+        v-if="showForm"
+        ref="form"
+        :object-oid="oid"
+        :model.sync="form"
+        :form-id="formId"
+        class-name="organization"
+        :reoslve-form-item="resolveWidget"
+        :readonly="readonly"
+    >
+        <template #parent-ref="scope">
+            <erd-tooltip
+                v-if="scope.data.parentRef"
+                placement="top"
+                :tabindex="-1"
+            >
+                <span class="fam-dynamic-form__readonly-field"> {{ scope.data.parentRef.name || '--' }} </span>
+                <template #content>
+                    <span> {{ scope.data.parentRef.name || '--' }} </span>
+                </template>
+            </erd-tooltip>
+        </template>
+    </FamAdvancedForm>
+</div>

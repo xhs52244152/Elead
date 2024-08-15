@@ -1,0 +1,41 @@
+<div
+    id="associated-user-list"
+    class="h-100p bg-white pb-16"
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        app-name="ALL"
+        @action-click="actionClick"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                is-operation
+                @click="actionClick"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+    <erd-ex-dialog
+        :visible.sync="dialogVisible"
+        :title="i18nMappingObj.associatedUser"
+        custom-class="associated-user-dialog"
+    >
+        <associated-user-select
+            v-if="dialogVisible"
+            ref="associatedUserSelectRef"
+            :type-def-vo-list="typeDefVoList"
+        ></associated-user-select>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="isLoading"
+                @click="submit"
+                >{{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button @click="dialogVisible = false">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

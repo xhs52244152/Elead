@@ -1,0 +1,36 @@
+<div class="doc-header">
+    <div>
+        <span class="back-btn" @click="goBack">
+            <i class="el-icon-back"></i>
+            返回
+        </span>
+        <div class="title">
+            <span class="main-title">{{ doc.serviceName }}</span>
+            <erd-tag type="info">{{ doc.version }} </erd-tag>
+        </div>
+    </div>
+
+
+    <div class="input-inline">
+        <erd-select v-if="versionArr.length" v-model="curVersion" @change="handleVersionChange" value-key="id">
+            <erd-option
+                v-for="option in versionArr"
+                :key="option.id"
+                :label="option.version"
+                :value="option"
+            >
+            </erd-option>
+        </erd-select>
+        <span><erd-button type="primary" @click="handleCompare">对比报告</erd-button></span>
+        <erd-pulldown v-if="selectedVersion" right>
+            下载文件
+            <template #pulldown>
+                <erd-pulldown-menu>
+                    <erd-pulldown-menu-item @click="download('markdown')"> 下载Markdown </erd-pulldown-menu-item>
+                    <erd-pulldown-menu-item @click="download('word')"> 下载Word </erd-pulldown-menu-item>
+                    <erd-pulldown-menu-item @click="download('json')"> 下载Json </erd-pulldown-menu-item>
+                </erd-pulldown-menu>
+            </template>
+        </erd-pulldown>
+    </div>
+</div>

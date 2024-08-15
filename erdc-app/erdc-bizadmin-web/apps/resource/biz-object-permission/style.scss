@@ -1,0 +1,24 @@
+#fam-object-permission-management {
+    height: 100%;
+    .obj-permission-main-index {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 0px 16px 0px 16px;
+    }
+    .virtual-list-item {
+        padding-left: 38px;
+    }
+    .site-and-org-tree {
+        margin-top: 4px;
+    }
+    .tree-text {
+        flex: 1;
+        overflow: hidden;
+        word-break: break-all;
+        text-overflow: ellipsis;
+    }
+    .el-tree-node__children .el-tree-node__children {
+        display: none !important;
+    }
+}

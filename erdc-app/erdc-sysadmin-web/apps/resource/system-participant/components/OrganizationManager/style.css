@@ -1,0 +1,37 @@
+.fam-organization-manager .fam-resizable-container__left {
+  position: relative;
+}
+.fam-organization-manager .fam-resizable-container__left .fam-organization-tree .tree-node-content {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  vertical-align: middle;
+}
+.fam-organization-manager .fam-resizable-container__left .fam-organization-tree .tree-node-content .fam-organization-manager__node-operation .el-button + .el-button {
+  margin-left: 8px;
+}
+.fam-organization-manager .fontSize18 {
+  font-size: 18px !important;
+}
+.fam-organization-manager .right-contaienr {
+  position: relative;
+}
+.fam-organization-manager .right-operateBtns {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+
+.orgForm .el-radio__input.is-disabled + span.el-radio__label {
+  color: var(--radioInnerColor__checked);
+}
+
+.radio-form-item {
+  margin-bottom: 0;
+}
+
+.orgForm .el-form-item__content .el-input {
+  width: 100%;
+}/*# sourceMappingURL=style.css.map */

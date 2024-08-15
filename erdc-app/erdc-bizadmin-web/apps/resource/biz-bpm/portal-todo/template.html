@@ -1,0 +1,129 @@
+<div
+    id="bpm-todo-content"
+    class="bpm-todo-content h-100p flex flex-column bg-normal"
+    v-cloak
+>
+    <fam-view-table
+        class="bg-white flex flex-column grow-1"
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        @action-click="actionClick"
+        @handler-data="handlerData"
+        :class="[{ 'detail-layout-class': detailedLayout.visible }]"
+    >
+        <!-- 优先级 -->
+        <template v-slot:[slotName.priority]="{ scope }">
+            <BpmPriority v-bind="getPriority(scope)"></BpmPriority>
+        </template>
+        <!-- 到期日期 -->
+        <template v-slot:[slotName.dueDate]="{ scope }">
+            <BpmDueData :due-data="getDueDate(scope)"></BpmDueData>
+        </template>
+        <!-- 流程状态 -->
+        <template v-slot:[slotName.processStatus]="{ scope }">
+            <BpmProcessStatus :status="getStatus(scope)"></BpmProcessStatus>
+        </template>
+        <!-- 工具栏插槽 -->
+        <template #left:toolbar:first="{}">
+            <div class="left-button-content">
+                <div
+                    class="left-button-content-item"
+                    :style="{ 'margin-left': index === 0 ? '0px' : '8px' }"
+                    v-for="(item, index) in leftButtonList"
+                    :key="index"
+                >
+                    <span class="whitespace-nowrap">{{ item.label }}</span>
+                    <erd-ex-select
+                        style="width: 100px"
+                        :value="item.value"
+                        :options="item.options"
+                        :clearable="item.clearable"
+                        :disabled="item.disabled"
+                        @change="$event => { item.handleClick($event) }"
+                    >
+                    </erd-ex-select>
+                </div>
+            </div>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="actionClick"
+            ></fam-action-pulldown>
+        </template>
+        <template #table="{ scope: { tableData, pagination: pageConfig, innerTableHeight: height, tableLoading } }">
+            <DetailLayout
+                v-if="detailedLayout.visible"
+                ref="detailLayout"
+                :table-data="tableData"
+                :page-config="pageConfig"
+                :height="height"
+                :loading="tableLoading"
+                @current-change="currentChange"
+                @update-selected="updateSelected"
+            ></DetailLayout>
+        </template>
+    </fam-view-table>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        :show-fullscreen="false"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            ref="bpmFlowchart"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+
+    <!-- 委派 -->
+    <erd-ex-dialog
+        :title="delegateForm.title"
+        :visible.sync="delegateForm.visible"
+        @close="delegateForm.taskOId = []"
+    >
+        <bpm-delegate-form
+            v-if="delegateForm.visible"
+            ref="delegateForm"
+        ></bpm-delegate-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="!loading && delegateCheck()"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'delegateForm' })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 批量处理 -->
+    <erd-ex-dialog
+        width="1400px"
+        :title="batchApproval.title"
+        :visible.sync="batchApproval.visible"
+        @close="batchApproval.taskIds = []"
+    >
+        <batch-approval
+            v-if="batchApproval.visible"
+            ref="batchApproval"
+            :task-ids="batchApproval.taskIds"
+        ></batch-approval>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="!loading && batchApprovalClick()"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'batchApproval' })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

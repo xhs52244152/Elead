@@ -1,0 +1,36 @@
+.notice-detail {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  line-height: 22px;
+}
+.notice-detail .detail-content {
+  display: grid;
+  grid-row-gap: 12px;
+}
+.notice-detail .detail-content > div {
+  display: flex;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  line-height: 32px;
+}
+.notice-detail .detail-content > div label {
+  display: inline-block;
+  flex: 0 0 100px;
+  text-align: right;
+  color: var(--colorTextPlaceholder);
+  margin-right: 8px;
+}
+.notice-detail .detail-content > div .value {
+  color: var(--colorTextNormal);
+  flex: 1 1 auto;
+}
+.notice-detail .detail-content .file-link {
+  cursor: pointer;
+  color: var(--colorPrimary);
+  margin-right: 10px;
+}
+.notice-detail .detail-content .file-link:hover {
+  color: var(--colorPrimaryLighter);
+}
+
+/*# sourceMappingURL=index.css.map */

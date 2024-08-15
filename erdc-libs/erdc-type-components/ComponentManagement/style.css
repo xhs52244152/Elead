@@ -1,0 +1,17 @@
+.OrgManagement {
+  width: 100%;
+}
+.OrgManagement .management-header {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.OrgManagement .content {
+  margin-top: 10px;
+}
+.OrgManagement .link-text {
+  cursor: pointer;
+  color: #567ffd;
+}
+
+/*# sourceMappingURL=style.css.map */

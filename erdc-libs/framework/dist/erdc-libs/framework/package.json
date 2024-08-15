@@ -1,0 +1,33 @@
+{
+  "name": "@erdc-libs/framework",
+  "version": "3.1.0-rc4.2",
+  "description": "FAM 应用前端框架",
+  "dependencies": {
+    "@erdc-libs/erdc-kit": "workspace:3.1.0-rc4.2",
+    "@erdcloud/erdcloud-icon": "^1.5.0",
+    "@erdcloud/erdcloud-ui": "~1.5.1",
+    "@stomp/stompjs": "^7.0.0",
+    "axios": "^1.6.8",
+    "core-js-bundle": "^3.37.1",
+    "dayjs": "^1.11.11",
+    "echarts": "^5.5.0",
+    "jquery": "^3.7.1",
+    "sockjs-client": "^1.6.1",
+    "sortablejs": "^1.15.2",
+    "uglify-js": "^3.17.4",
+    "underscore": "^1.13.6",
+    "vue": "~2.7.16",
+    "vue-router": "^3.6.5",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "erdc-cli": "workspace:3.1.0-rc4.2",
+    "require-css": "0.1.10",
+    "requirejs": "2.3.6",
+    "requirejs-text": "2.0.16"
+  },
+  "scripts": {
+    "build": "npx erdc-cli build",
+    "build-rjs": "node ./node_modules/requirejs/bin/r.js -o ./build.js"
+  }
+}

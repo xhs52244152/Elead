@@ -1,0 +1,83 @@
+<div class="convert-form">
+    <erd-contraction-panel
+        :unfold.sync="taskInfoUnfold"
+        :title="i18nMappingObj.taskDetail"
+    >
+        <template #content>
+            <FamDynamicForm
+                :form="formData"
+                :data="formConfigs"
+                class="file-form mt-16"
+                ref="taskDetailForm"
+            >
+                <template #pdfFile>
+                    <fam-upload
+                        class="upload-demo"
+                        action="/file/file/site/storage/v1/upload"
+                        :headers="CONST.defaultHeaders"
+                        ref="upload"
+                        :limit="1"
+                        :on-remove="handleRemovePdf"
+                        :on-exceed="handleExceed"
+                        :on-success="onFileUploadSuccess"
+                    >
+                        <erd-button size="small">{{ i18nMappingObj.clickUpload }}</erd-button>
+                    </fam-upload>
+                </template>
+                <template #docDestType>
+                    <erd-select
+                        v-model="formData.docDestType"
+                        filterable
+                        class="grow-1"
+                    >
+                        <erd-option
+                            v-for="option in destOptions"
+                            :key="option.name"
+                            :label="option.name"
+                            :value="option.name"
+                        ></erd-option>
+                    </erd-select>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+    <erd-contraction-panel
+        :unfold.sync="fileInfoUnfold"
+        :title="i18nMappingObj.convertFileList"
+    >
+        <template #content>
+            <FamDynamicForm
+                :form="fileFormData"
+                :data="fileFormConfigs"
+                class="file-form mt-16"
+            >
+                <template #fileType>
+                    <erd-select
+                        class="grow-1"
+                        v-model="fileFormData.fileType"
+                        @change="changeFile"
+                        filterable
+                    >
+                        <erd-option
+                            v-for="option in convertOptions"
+                            :key="option.id"
+                            :label="option.id"
+                            :value="option.id"
+                        ></erd-option>
+                    </erd-select>
+                </template>
+                <template #fileTable>
+                    <fam-advanced-table
+                        ref="convertTable"
+                        :view-table-config="viewTableConfig"
+                        class="convert-form-table w-100p"
+                        :table-max-height="tableMaxHeight"
+                    ></fam-advanced-table>
+                </template>
+            </FamDynamicForm>
+        </template>
+    </erd-contraction-panel>
+
+    <!-- 参数配置弹框 -->
+    <FormatParams ref="paramsDiolog" @save-params="saveParams"></FormatParams>
+</div>

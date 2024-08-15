@@ -1,0 +1,106 @@
+.el-form-item.is-error {
+    .fam-participant-select {
+        .wapperInput {
+            border-color: var(--colorError) !important;
+        }
+    }
+}
+.fam-participant-select {
+    display: flex;
+    .type-select {
+        width: 50px;
+        padding: 0 8px;
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+        color: #999999;
+        height: 100%;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        &.is-focus {
+            border-color: var(--selectBorderColor__focus);
+        }
+    }
+    .fontSize16 {
+        font-size: 16px;
+    }
+    .select-caret {
+        color: var(--inputIconColor);
+        font-size: 14px;
+        font-size: var(--fontSize);
+        transition: transform 0.3s;
+        transform: rotateZ(180deg);
+        cursor: pointer;
+    }
+    .is-reverse {
+        transform: rotateZ(0);
+    }
+    .select-component {
+        margin-left: -1px;
+    }
+    .component-show-body {
+        .erd-tree-select {
+            display: block;
+        }
+
+        .wapperInput {
+            height: var(--formItemHeight);
+            &:hover {
+                cursor: pointer;
+                .select-clear {
+                    display: inline-block !important;
+                    color: var(--colorBan);
+                }
+            }
+            .select-clear {
+                display: none !important;
+            }
+        }
+        .textPlaceholder {
+            font-size: var(--fontSize);
+            color: var(--colorTextPlaceholder);
+            white-space: normal !important;
+        }
+    }
+    .erd-iconfont {
+        width: auto;
+        height: auto;
+    }
+}
+.select-icon {
+    color: var(--inputIconColor);
+    font-size: 16px !important;
+    margin-right: 3px;
+}
+.mr0 {
+    margin-right: 0 !important;
+}
+.el-dropdown-menu__item.participant-type-dropdown-item {
+    line-height: var(--selectDropdownItemHeight);
+    padding: 0 12px;
+}
+.el-dropdown-menu__item.participant-type-dropdown-item.seleted {
+    background-color: #ebf1ff;
+}
+.el-dropdown-menu__item.participant-type-dropdown-item .select-icon {
+    margin-right: 0px !important;
+}
+.el-dropdown-menu.participant-dropdown {
+    padding: 0;
+}
+.famParticipantSelect-popClass-custom {
+    min-width: 325px;
+    padding: 0;
+    .popper__arrow {
+        display: none;
+        &::after {
+            content: none;
+        }
+    }
+    .el-input>.el-input__suffix>.el-input__validateIcon {
+        display: none !important;
+    }
+    .h-360 {
+        height: 360px;
+    }
+}

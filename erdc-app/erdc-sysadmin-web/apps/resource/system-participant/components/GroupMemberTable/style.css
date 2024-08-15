@@ -1,0 +1,34 @@
+.fam-group-member-table .fontWeightNormal {
+  font-weight: normal;
+}
+.fam-group-member-table .toolbar-search-component {
+  width: 450px;
+  display: flex;
+  align-items: center;
+}
+.fam-group-member-table .table_search_title {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--infoColor);
+  margin-right: 8px;
+}
+.fam-group-member-table .search_component {
+  width: calc(100% - 50px);
+}
+
+.joinOrgDialog .el-dialog__body {
+  padding: 0 !important;
+}
+
+.fnRemoveParticipant .el-message-box__content .el-message-box__message {
+  font-weight: 700;
+  padding-right: 0;
+}
+.fnRemoveParticipant .el-message-box__btns {
+  padding: 0 20px 20px;
+}
+.fnRemoveParticipant .el-message-box__btns .el-button + .el-button {
+  margin-left: 8px;
+}
+
+/*# sourceMappingURL=style.css.map */

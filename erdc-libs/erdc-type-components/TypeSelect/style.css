@@ -1,0 +1,10 @@
+.erdc-type-select .erdc-type-select__app-select input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.erdc-type-select .erdc-type-select__type-select input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

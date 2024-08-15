@@ -1,0 +1,104 @@
+.fam_action_pulldown-erd-tooltip {
+    z-index: 99999 !important;
+}
+
+.fam_action_pulldown.el-dropdown-menu--medium .el-dropdown-menu__item {
+    white-space: nowrap;
+    max-width: 152px;
+    /* max-width: var(--buttonPullDownListMaxWidth); */
+}
+
+.fam_action_pulldown_popover {
+    padding: 0;
+    transform: translate(-4px, -13px);
+    &.pulldown-popover {
+        transform: translate(-5px, -2px);
+    }
+    & > ul {
+        margin: 0;
+        li {
+            width: 100%;
+            color: var(--colorTextNormal);
+            text-align: left;
+            padding: 0 12px;
+            line-height: 32px;
+            height: 32px;
+            &:hover {
+                cursor: pointer;
+                background-color: var(--dropdownMenuItemActiveBg);
+            }
+            .text {
+                .text_content {
+                    width: 100%;
+                    display: inline-block;
+                }
+            }
+            &.popover-disabled {
+                background-color: var(--buttonBgColor__disabled);
+                color: var(--colorTextPlaceholder);
+                &:hover {
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+    .popover-active {
+        background-color: var(--dropdownMenuItemActiveBg);
+    }
+    .popover-right {
+        position: relative;
+        .text_content {
+            padding-right: 12px;
+        }
+        .erd-icon-arrow-right {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            margin-right: 0;
+        }
+    }
+}
+.fam_action_pulldown {
+    .popover-active {
+        background-color: var(--dropdownMenuItemActiveBg);
+    }
+    .popover-right {
+        position: relative;
+        .text.el-popover__reference {
+            line-height: 1;
+        }
+        .text_content {
+            padding-right: 22px;
+            width: 100%;
+            display: inline-block;
+        }
+        .erd-icon-arrow-right {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            margin-right: 0;
+        }
+        & > .popover-disabled {
+            cursor: not-allowed;
+        }
+    }
+    .no-right-item {
+        background-color: var(--buttonBgColor__disabled);
+        color: var(--colorTextPlaceholder);
+        &:hover {
+            cursor: not-allowed;
+            color: var(--colorTextPlaceholder)
+        }
+    }
+}
+#fam_action_pulldown .action_pulldowm_item {
+    & + .action_pulldowm_item {
+        margin-left: 8px;
+    }
+    .erd-dropdown-link[disabled]:hover {
+        color: #bbb;
+    }
+}
+.popover-disabled {
+    cursor: not-allowed;
+}

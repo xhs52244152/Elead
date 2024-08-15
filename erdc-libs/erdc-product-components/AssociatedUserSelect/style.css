@@ -1,0 +1,11 @@
+.associated-users {
+  display: flex;
+}
+.associated-users .cursor-pointer {
+  cursor: pointer;
+}
+.associated-users .left-main-container {
+  width: 800px;
+}
+
+/*# sourceMappingURL=style.css.map */

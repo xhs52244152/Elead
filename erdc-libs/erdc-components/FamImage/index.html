@@ -1,0 +1,75 @@
+<div class="fam-autograph-upload">
+    <div v-show="showNoDataMark">--</div>
+    <template v-show="!showNoDataMark">
+        <erd-upload
+            action="/file/file/site/storage/v1/upload"
+            :class="classList"
+            :list-type="listType"
+            :accept="innerAccept"
+            :headers="requestHeader"
+            :file-list="fileList"
+            :before-upload="beforeUpload"
+            :limit="limit"
+            :on-success="handleSuccess"
+            :on-change="handleChange"
+            :disabled="disabled"
+            v-bind="$attrs"
+            v-on="$listeners"
+        >
+            <div
+                v-if="showPictureAdd"
+                slot="default"
+                class="flex justify-center align-items-center"
+                :style="{ width: thumbnailWidth, height: thumbnailHeight }"
+            >
+                <erd-icon
+                    icon="el-icon-plus"
+                    style="line-height: 100%"
+                ></erd-icon>
+            </div>
+            <div
+                v-if="isPictureType"
+                slot="file"
+                slot-scope="{ file }"
+                class="overflow-hidden"
+                :style="{ width: thumbnailWidth, height: thumbnailHeight }"
+            >
+                <erd-image
+                    v-for="(item, index) in fileList"
+                    :ref="`erdImage_${file.uid}_${index}`"
+                    :key="`${file.uid}_${index}`"
+                    :src="file.src"
+                    :preview-src-list="getPrivewIdList(index)"
+                    class="pointer w-100p h-100p"
+                >
+                </erd-image>
+                <span
+                    class="el-upload-list__item-actions"
+                    :style="imageActionStyle"
+                >
+                    <span
+                        v-if="canPreview"
+                        class="el-upload-list__item-preview"
+                        @click="handlePreview(file)"
+                    >
+                        <erd-icon icon="el-icon-zoom-in"></erd-icon>
+                    </span>
+                    <span
+                        v-if="!disabled && !readonly"
+                        class="el-upload-list__item-delete"
+                        @click="handleRemove(file)"
+                    >
+                        <erd-icon icon="el-icon-delete"></erd-icon>
+                    </span>
+                </span>
+            </div>
+            <slot name="content"></slot>
+        </erd-upload>
+        <div
+            v-if="!readonly && showPictureAdd"
+            class="mb8 font-12 text-gray-45"
+        >
+            {{ tips }}
+        </div>
+    </template>
+</div>

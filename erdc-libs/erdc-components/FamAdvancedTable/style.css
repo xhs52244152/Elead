@@ -1,0 +1,92 @@
+.fam-advanced-table-component .my-link-btn {
+  color: var(--buttonTextColor);
+  cursor: pointer;
+}
+.fam-advanced-table-component .my-drag-icon {
+  cursor: move;
+  vertical-align: middle;
+}
+.fam-advanced-table-component .toolbar-search-component-label {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  margin-right: 4px;
+}
+.fam-advanced-table-component .el-pagination {
+  margin-top: var(--largeSpace);
+}
+.fam-advanced-table-component .viewtable-body-container .load-more-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e8eaec;
+  border-top: none;
+  height: var(--famTableRowHeight);
+  line-height: var(--famTableRowHeight);
+}
+.fam-advanced-table-component .viewtable-body-container .load-more-container > span {
+  line-height: normal !important;
+}
+.fam-advanced-table-component.adaptive-height {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.fam-advanced-table-component.adaptive-height .viewtable-body-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.fam-advanced-table-component.adaptive-height .viewtable-body-container .fam-erd-table-container {
+  position: relative;
+  flex-grow: 1;
+}
+.fam-advanced-table-component.adaptive-height .viewtable-body-container .fam-erd-table-container > #ComponentWapper-erdTable {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.fam-advanced-table-component.adaptive-height .viewtable-body-container > .el-pagination {
+  height: 28px;
+  margin-bottom: var(--largeSpace);
+}
+.fam-advanced-table-component .fam-icon-container .fam-icon-width-style i {
+  font-size: var(--fontSizeBig);
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row {
+  height: var(--famTableRowHeight);
+  font-size: var(--fontSize);
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row.fam-advanced-table__footer-row--loading .vxe-cell--item::before {
+  display: inline-flex;
+  content: "\e716";
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  margin-right: 4px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  animation: loading-rotate 2s linear infinite;
+  font-family: erd-iconfont, serif !important;
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row .vxe-cell {
+  position: relative;
+  height: 22px;
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row .vxe-cell--item {
+  line-height: 22px;
+  color: var(--colorBan);
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row.fam-advanced-table__footer-row--link .vxe-cell--item {
+  color: var(--colorPrimary);
+  cursor: pointer;
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row.fam-advanced-table__footer-row--link .vxe-cell--item:hover {
+  color: var(--colorPrimaryLighter);
+}
+.fam-advanced-table-component .fam-advanced-table__footer-row.fam-advanced-table__footer-row--link .vxe-cell--item:active {
+  color: var(--colorPrimaryDark);
+}
+.fam-advanced-table-component .fam-basicfilter-container .fam-form-item-width-value .fam-participant-select .component-show-body {
+  height: var(--famBasicfilterParticipantHeight);
+}/*# sourceMappingURL=style.css.map */

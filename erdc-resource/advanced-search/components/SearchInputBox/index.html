@@ -1,0 +1,35 @@
+<div class="search-input-box">
+    <erd-input
+        :value="searchKey"
+        :placeholder="i18n.inputSearchTip"
+        size="large"
+        clearable
+        @input="onInputChange"
+        @focus="onInputFocus"
+        @clear="onInputClear"
+        @keyup.enter.native="onInputSearch"
+    >
+        <erd-tree-select
+            slot="prepend"
+            :value="mainModelType"
+            node-key="value"
+            :data="modelTypeList"
+            :props="{
+                children: 'children',
+                label: 'label',
+                value: 'value'
+            }"
+            defaultExpandAll
+            :placeholder="`${i18n.pleaseSelect}${i18n.mainModelType}`"
+            @change="changeMainModelType"
+        >
+        </erd-tree-select>
+        <erd-button
+            slot="append"
+            @click.native="onInputSearch"
+        >
+            <erd-icon icon="search"></erd-icon>
+            {{i18n.search}}
+        </erd-button>
+    </erd-input>
+</div>

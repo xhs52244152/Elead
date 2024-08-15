@@ -1,0 +1,88 @@
+<div id="GlobalAttributesConfig">
+    <erd-ex-dialog
+        size="large"
+        :title="title"
+        :visible.sync="innerVisible"
+    >
+        <div v-if="showInfo">
+            <FamDynamicForm
+                ref="editForm"
+                :form="formData"
+                :data="showFormConfig"
+                v-cloak
+                :readonly="openType == 'detail'"
+                @form-change="formChange"
+            >
+                <template v-slot:attrCategoryComponent="scope">
+                    <erd-radio-group
+                        v-model="scope.data[scope.formConfig.field]"
+                        v-for="item in categoryOptions"
+                    >
+                        <erd-radio
+                            v-if="!item.isHidden"
+                            :label="item.name"
+                            >{{item.value}}</erd-radio
+                        >
+                    </erd-radio-group>
+                </template>
+                <template v-slot:tableFieldsComponent="scope">
+                    <p
+                        disabled
+                        style="
+                            display: flex;
+                            display: -webkit-flex;
+                            display: -moz-flex;
+                            display: -ms-flexbox;
+                            flex-wrap: wrap;
+                            margin: 0;
+                        "
+                    >
+                        <erd-tag
+                            v-for="(item, index) in useField"
+                            :key="index"
+                            style="margin-left: 8px"
+                            v-cloak
+                            >{{item}}</erd-tag
+                        >
+                    </p>
+                </template>
+                <template
+                    v-if="formData['componentName'] =='erd-radio'"
+                    v-slot:dataKeyComponent="scope"
+                >
+                    <erd-radio-group
+                        style="width: 100%"
+                        v-model="scope.data[scope.formConfig.field]"
+                    >
+                        <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group
+                        style="width: 100%"
+                        v-model="scope.data[scope.formConfig.field]"
+                        :disabled="scope.data[scope.formConfig.field + '_checked']"
+                    >
+                        <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                        <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+            v-if="openType != 'detail'"
+        >
+            <erd-button
+                type="primary"
+                @click="submitEditForm()"
+                :loading="loading"
+                :disabled="disabled"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,124 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    :append-to-body="true"
+    @open="initData"
+    @close="closeForm"
+>
+    <fam-advanced-form
+        v-if="visible"
+        ref="layoutForm"
+        @field:getWidgetList="handleGetWidgetList"
+        :schema-mapper="schemaMapper"
+        :model.sync="formData"
+        :form-id="viewType"
+        :object-oid="oid"
+        :validators="customValidators"
+        :class-name="className"
+    >
+        <template #name-slot="scope">
+            <span
+                v-if="isSystemType"
+                class="w-100p"
+            >
+                <span v-if="isEdit"> {{formData.name}}</span>
+                <erd-input
+                    v-else
+                    v-model="formData.name"
+                />
+            </span>
+            <span v-if="isPersonalType">{{formData.name}}</span>
+        </template>
+        <template #sign-type-slot="scope">
+            <span v-if="isPersonalType">{{i18nMappingObj.signaturePersonal}}</span>
+            <span v-else="isSystemType">{{i18nMappingObj.signatureSystem}}</span>
+        </template>
+        <template #code-slot="scope">
+            <template v-if="isEdit">
+                <span>{{formData.code}}</span>
+            </template>
+            <template v-else>
+                <FamParticipantSelect
+                    ref="famParticipantSelect"
+                    v-if="isPersonalType"
+                    v-model="formData.code"
+                    :showType="['USER']"
+                    :collapse-tags="true"
+                    @change="handleCodeChange"
+                ></FamParticipantSelect>
+                <erd-input
+                    v-if="isSystemType"
+                    v-model="formData.code"
+                />
+            </template>
+        </template>
+        <template #file-slot="scope">
+            <fam-upload
+                accept=".jpg,.png"
+                :auto-upload="false"
+                :show-file-list="false"
+                :on-change="onFileChange"
+                :multiple="false"
+                :tips="i18nMappingObj.signaturePictureOnly"
+            >
+            </fam-upload>
+        </template>
+        <template #preview-slot="scope">
+            <div  class="signature-manage-preview-container mlr-auto  position-relative">
+                <div v-if="imgSrcTmpl" class="signature-manage-input_tools position-absolute">
+                    <erd-button @click="visibleForCrop = true">裁剪</erd-button>
+                </div>
+                <div class="signature-preview overflow-hidden" :style="previewContainerStyle" >
+                    <img
+                        :src="imgSrc"
+                        :style="previewStyle"
+                    />
+                </div>
+            </div>
+
+        </template>
+    </fam-advanced-form>
+    <erd-ex-dialog
+        title="裁剪"
+        :visible.sync="visibleForCrop"
+        :append-to-body="true"
+        width="1200px"
+        :destroy-on-close="true"
+        @open="handleStartCrop"
+        @close="cancelCrop"
+    >
+        <div style="height: 500px">
+            <FamImgCropTool
+                :tool-bar="false"
+                ref="imgCropTool"
+                :imgSrc="imgSrc"
+                @done="handleDone"
+            ></FamImgCropTool>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="cropDone"
+            >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button
+                @click="cancelCrop"
+            >{{i18nMappingObj.cancel}}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+
+    <template #footer>
+        <erd-button
+            :loading="loading"
+            type="primary"
+            @click="onSubmit"
+            >{{i18nMappingObj.confirm}}</erd-button
+        >
+        <erd-button
+            :loading="loading"
+            @click="closeForm"
+            >{{i18nMappingObj.cancel}}</erd-button
+        >
+    </template>
+</erd-ex-dialog>

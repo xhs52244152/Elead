@@ -1,0 +1,252 @@
+<div
+    id="DataTypeDetail"
+    class="p-xl"
+>
+    <div v-if="dataType == 'dataTypeDefinition'">
+        <div class="flex type-header">
+            <div class="type-left">
+                <erd-tooltip
+                    placement="top-start"
+                    :content="title"
+                >
+                    <span>{{title}}</span>
+                </erd-tooltip>
+            </div>
+            <div class="type-right">
+                <!-- <erd-button type="primary">编辑</erd-button> -->
+                <!-- <erd-dropdown trigger="click" :hide-on-click="false" @command="onCommand">
+                    <erd-button>
+                      更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                    </erd-button>
+                    <erd-dropdown-menu slot="dropdown">
+                      <erd-dropdown-item command="delete">删除</erd-dropdown-item>
+                      <erd-dropdown-item command="export">导出数据</erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown> -->
+            </div>
+        </div>
+        <div class="content">
+            <erd-contraction-panel
+                :unfold.sync="bascisUnfold"
+                :title="i18nMappingObj.basicInformation"
+            >
+                <template v-slot:content>
+                    <FamDynamicForm
+                        ref="dynamicForm"
+                        :form="formData"
+                        :data="data"
+                        :readonly="true"
+                    >
+                    </FamDynamicForm>
+                </template>
+            </erd-contraction-panel>
+
+            <erd-contraction-panel
+                :unfold.sync="relationUnfold"
+                :title="i18nMappingObj.associatedComponents"
+            >
+                <template v-slot:header-right>
+                    <erd-button
+                        plain
+                        @click="addComponent"
+                    >
+                        {{i18nMappingObj.add}}
+                    </erd-button>
+                </template>
+                <template v-slot:content>
+                    <!-- <BaseTable
+                        ref="table"
+                        :columns="columns"
+                        :data="listData"
+                        height="600px"
+                        v-loading="loading"
+                    >
+                        <template v-slot:typeLink="scope">
+                            <div>
+                                {{scope.row.editFlag}}
+                                <span v-if="!scope.row.editFlag">{{scope.row[scope.column.property]}}</span>
+                                <span v-if="scope.row.editFlag">112551</span>
+                            </div>
+                        </template>
+
+                        <template v-slot:oper="scope">
+                            {{scope.row.editFlag}}
+                            <erd-button type="text" @click="onEdit(scope.row, scope.column)">{{ $t('编辑') }}</erd-button>
+                            <erd-button type="text" @click="onDelete(scope.row)">{{ $t('移除') }}</erd-button>
+                            <erd-button type="text" @click="onSave(scope.row)">{{ $t('保存') }}</erd-button>
+                            <erd-button type="text" @click="onCancel(scope.row)">{{ $t('取消') }}</erd-button>
+                        </template>
+                    </BaseTable> -->
+                    <div>
+                        <erd-table
+                            border
+                            ref="erdTable"
+                            show-overflow
+                            :max-height="maxHeight"
+                            :column="columns"
+                            :data="listData"
+                            :is-embed-table="true"
+                            :cell-class-name="cellClassName"
+                        >
+                            <template #column:default:oper="{data}">
+                                <!-- <erd-button type="text" @click="onEdit(data)" v-if="data.row.editFlag == 0">{{ i18nMappingObj.edit }}</erd-button> -->
+                                <erd-button
+                                    type="text"
+                                    @click="onDelete(data)"
+                                    v-if="data.row.editFlag == 0 && !data.row.isDefault"
+                                    >{{ i18nMappingObj.remove }}
+                                </erd-button>
+                                <erd-button
+                                    type="text"
+                                    @click="onSave(data)"
+                                    v-if="data.row.editFlag == 1"
+                                    >{{ i18nMappingObj.save }}
+                                </erd-button>
+                                <erd-button
+                                    type="text"
+                                    @click="onCancel(data)"
+                                    v-if="data.row.editFlag == 1"
+                                    >{{ i18nMappingObj.cancel }}
+                                </erd-button>
+                            </template>
+                            <template #column:default:displayName="{data}">
+                                <span v-if="data.row.editFlag == 0">{{data.row.displayName}}</span>
+                                <template v-if="data.row.editFlag == 1">
+                                    <div :class="{'is-validerror': (data.row.validerror == true)}">
+                                        <custom-select
+                                            v-model="data.row.oid"
+                                            :row="customSelectRow"
+                                            filterable
+                                            @callback="(value)=>(customCallback(value,data))"
+                                            ref="customSelect"
+                                        >
+                                        </custom-select>
+                                        <erd-tooltip
+                                            class="item"
+                                            :manual="true"
+                                            effect="dark"
+                                            placement="top-end"
+                                            v-model="data.row.validerror"
+                                            popper-class="showTooltip"
+                                            ref="validateTooltips"
+                                        >
+                                            <div slot="content">请选择组件</div>
+                                            <span class="tooltip"></span>
+                                        </erd-tooltip>
+                                    </div>
+                                </template>
+                            </template>
+                            <template #column:header:displayName="{data}">
+                                <span>{{i18nMappingObj?.['name']}}</span>
+                            </template>
+                            <template #column:default:isDefault="{data}">
+                                <erd-radio
+                                    v-model="data.row.isDefault"
+                                    :label="true"
+                                    :disabled="+data.row.editFlag === 1"
+                                    @change="(value)=>changeRadio(data, value)"
+                                >
+                                    <span></span>
+                                </erd-radio>
+                                <!-- <template v-if="data.row.editFlag == 1">
+                                    <custom-select
+                                        v-model="data.row.isDefault"
+                                        :row="selectOption"
+                                        @callback="(value)=>(customCallback(value,data))">
+                                    </custom-select>
+                                </template> -->
+                            </template>
+                        </erd-table>
+                    </div>
+                </template>
+            </erd-contraction-panel>
+        </div>
+    </div>
+    <div v-else-if="dataType == 'component'">
+        <div class="flex type-header">
+            <div class="type-left">
+                <erd-tooltip
+                    placement="top-start"
+                    :content="title"
+                >
+                    <span>{{title}}</span>
+                </erd-tooltip>
+            </div>
+            <div class="type-right">
+                <erd-button
+                    type="primary"
+                    @click="onEdit"
+                    >编辑
+                </erd-button>
+                <erd-button
+                    v-if="!componentFormData.enabled"
+                    @click="onEnabled()"
+                    >启用
+                </erd-button>
+                <erd-button
+                    v-if="componentFormData.enabled"
+                    @click="onEnabled()"
+                    >停用
+                </erd-button>
+                <erd-button
+                    :disabled="componentFormData.isDefault"
+                    @click="onDeleteComponent"
+                    >删除
+                </erd-button>
+            </div>
+        </div>
+        <div class="content">
+            <FamDynamicForm
+                ref="componentDynamicForm"
+                :form="componentFormData"
+                :data="componentData"
+                :readonly="true"
+            >
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                        <erd-radio :label="true">启用</erd-radio>
+                        <erd-radio :label="false">停用</erd-radio>
+                    </erd-radio-group>
+                </template>
+                <template v-slot:radioComponentReadonly="scope">
+                    <span>{{scope.data[scope.formConfig.field]==true? '启用' : '停用'}}</span>
+                </template>
+            </FamDynamicForm>
+        </div>
+    </div>
+    <erd-ex-dialog
+        :title="i18nMappingObj.addComponent"
+        :visible.sync="innerVisible"
+        width="1200px"
+    >
+        <erd-ex-transfer
+            v-if="innerVisible"
+            :allColumnsList="allColumnsList"
+            :valueKey="showLabelKey"
+            ref="column-select"
+        >
+        </erd-ex-transfer>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveSubmit"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+
+    <new-edit-component
+        v-if="NewEditComponentVisible"
+        :visible.sync="NewEditComponentVisible"
+        :title="componentTitle"
+        :oid="oid"
+        :type="componentType"
+        @onsubmit="refreshList"
+    >
+    </new-edit-component>
+</div>

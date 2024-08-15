@@ -1,0 +1,57 @@
+.fam-info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--colorFullBg);
+}
+.fam-info .fam-info__header {
+  display: flex;
+  padding: var(--largePadding);
+  align-items: center;
+}
+.fam-info .fam-info__header .fam-base-info-title {
+  flex: auto;
+  width: 65%;
+}
+.fam-info .el-tabs {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+.fam-info .el-tabs .el-tabs__content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.fam-info .el-tabs #pane-team {
+  display: flex;
+  flex-grow: 1;
+}
+
+.fam-base-info-title {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--largePadding);
+}
+.fam-base-info-title .fam-base-info-title__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: var(--fontSizeLarge);
+  letter-spacing: 0;
+  color: var(--colorTextNormal);
+}
+.fam-base-info-title .fam-base-info-title__icon {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  line-height: 28px;
+}
+.fam-base-info-title .fam-base-info-title__status {
+  height: 20px;
+  background-color: rgba(240, 65, 52, 0.1);
+}
+
+/*# sourceMappingURL=style.css.map */

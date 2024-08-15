@@ -1,0 +1,66 @@
+.notice-detail {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  line-height: 22px;
+}
+.notice-detail .el-dialog__body {
+  padding: 0px !important;
+}
+.notice-detail .detail {
+  padding: 16px;
+}
+.notice-detail .detail p {
+  margin-bottom: 0px !important;
+}
+.notice-detail .detail-footer {
+  border-top: 1px solid #EBEBEB;
+  height: 56px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.notice-detail .detail-footer-date {
+  color: #89919F;
+  font-size: 12px;
+}
+.notice-detail .detail-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.notice-detail .detail-header .title {
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  line-height: 22px;
+  font-weight: bold;
+}
+.notice-detail .detail-content {
+  display: grid;
+  grid-row-gap: 12px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  line-height: 29px;
+}
+.notice-detail .detail-content .attach {
+  display: flex;
+}
+.notice-detail .detail-content .attach label {
+  display: inline-block;
+  flex: 0 0 auto;
+  text-align: right;
+  color: rgba(0, 0, 0, 0.45);
+  margin-right: 8px;
+}
+.notice-detail .detail-content .attach .value {
+  color: rgba(0, 0, 0, 0.85);
+  flex: 1 1 auto;
+}
+.notice-detail .detail-content .file-link {
+  cursor: pointer;
+  color: #567FFD;
+  margin-right: 10px;
+}
+.notice-detail .detail-content .file-link:hover {
+  color: #7395ff;
+}/*# sourceMappingURL=index.css.map */

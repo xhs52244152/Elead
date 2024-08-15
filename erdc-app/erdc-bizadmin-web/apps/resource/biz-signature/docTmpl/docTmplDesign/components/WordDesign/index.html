@@ -1,0 +1,75 @@
+<div class="signature-word-design w-100p">
+    <div class="mb-8 w-100p flex justify-end">
+        <erd-button
+            v-if="!disabled"
+            @click="handleSignatureAdd"
+        >
+            {{ i18nMappingObj.add }}
+        </erd-button>
+    </div>
+    <div>
+        <erd-table
+            border
+            ref="erdTable"
+            :data="innerPoints"
+            :max-line="5"
+            :column="columns"
+            :edit-config="{trigger: 'click', mode: 'cell' }"
+            :edit-rules="validRules"
+        >
+            <template #column:default:code="{data}">
+                <span v-if="data.row.code">{{ data.row.code }}</span>
+                <span
+                    v-else
+                    class="newEdit"
+                >
+                    {{ i18nMappingObj['请输入'] }}
+                </span>
+            </template>
+            <template #column:edit:code="{data}">
+                <erd-input v-model.trim="data.row.code" />
+            </template>
+            <template #column:default:contentType="{data}"> {{ getContentName(data.row.contentType) }}</template>
+            <template #column:edit:contentType="{data}">
+                <erd-select
+                    style="width: 100%"
+                    v-model="data.row.contentType"
+                    @change="(id) => handleContentTypeChange(id, data.row)"
+                >
+                    <erd-option
+                        v-for="cto in contentTypeOptions"
+                        :key="cto.id"
+                        :label="cto.name"
+                        :value="cto.id"
+                    >
+                    </erd-option>
+                </erd-select>
+            </template>
+            <template #column:default:defaultValue="{data}">{{ data.row.defaultValue || '--' }}</template>
+            <template #column:edit:defaultValue="{data}">
+                <erd-select
+                    v-if="data.row.contentType === contentTypes.signature_system"
+                    v-model="data.row.defaultValue"
+                    style="width: 100%"
+                >
+                    <erd-option
+                        v-for="st in systemSignatureOptions"
+                        :key="st.code"
+                        :label="st.name"
+                        :value="st.code"
+                    >
+                    </erd-option>
+                </erd-select>
+                <span v-else>--</span>
+            </template>
+            <template #column:default:oper="{data}">
+                <erd-button
+                    type="text"
+                    @click="handleDocSignatureDelete(data.rowIndex)"
+                >
+                    {{i18nMappingObj.deleteBtn}}
+                </erd-button>
+            </template>
+        </erd-table>
+    </div>
+</div>

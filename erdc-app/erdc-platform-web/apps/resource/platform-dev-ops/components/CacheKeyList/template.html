@@ -1,0 +1,115 @@
+<div>
+    <div class="flex justify-space-between">
+        <div class="mb-xl">
+            <erd-input
+                v-model.trim="keyword"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18n.cacheKeyKeywordPlaceholder"
+                @change="search"
+                @keydown.enter.native="search"
+            ></erd-input>
+        </div>
+        <div>
+            <erd-button
+                :disabled="disabledDeleteCacheKey"
+                :loading="deleteLoading"
+                @click="handleDeleteSelectedCacheKeys"
+            >
+                {{ i18n.delete }}
+            </erd-button>
+            <erd-button
+                type="fill-icon"
+                icon="el-icon-refresh"
+                @click="refreshTable"
+            ></erd-button>
+        </div>
+    </div>
+
+    <fam-erd-table
+        :data="tableData"
+        :column="columns"
+        v-loading="loading"
+        :max-line="10"
+        @checkbox-change="handleCheckboxChange"
+        @checkbox-all="handleCheckboxChange"
+    >
+        <template #column:default:key="scope">
+            <erd-show-tooltip
+                placement="top"
+                :content="scope.data.row.key"
+                class="w-100p text-link"
+                enterable
+                :flex="false"
+            >
+                <span
+                    class="title_text cursor-pointer"
+                    @click="handleCheckCacheInfo(scope.data.row)"
+                >
+                    {{scope.data.row.key || '--'}}
+                </span>
+            </erd-show-tooltip>
+        </template>
+
+        <template #column:default:level="scope">
+            <span>{{translateCacheLevel(scope.data.row.level) || '--'}}</span>
+        </template>
+
+        <template #column:default:operation="scope">
+            <erd-dropdown
+                class="w-100p"
+                trigger="click"
+                hide-on-click
+                placement="bottom-end"
+            >
+                <erd-button
+                    class="erd-dropdown-link"
+                    type="text"
+                    @visible-change="(visible) => handleDropdownVisibleChange(visible, scope.data.row)"
+                >
+                    <span>{{i18n.operation}}</span>
+                    <erd-icon
+                        v-if="scope.data.row._visible"
+                        icon="arrow-up"
+                    ></erd-icon>
+                    <erd-icon
+                        v-else
+                        icon="arrow-down"
+                    ></erd-icon>
+                </erd-button>
+                <template #dropdown>
+                    <erd-dropdown-menu>
+                        <erd-dropdown-item @click.native="handleCheckCacheInfo(scope.data.row)">
+                            {{ i18n.checkCacheInfo }}
+                        </erd-dropdown-item>
+                        <erd-dropdown-item @click.native="handleDeleteCacheKey(scope.data.row)">
+                            {{ i18n.delete }}
+                        </erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </template>
+            </erd-dropdown>
+        </template>
+    </fam-erd-table>
+
+    <erd-pagination
+        class="mt-xl"
+        :current-page.sync="pagination.pageIndex"
+        :page-size.sync="pagination.pageSize"
+        :total="pagination.total"
+        :hide-on-single-page="false"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+    ></erd-pagination>
+
+    <erd-ex-dialog
+        v-if="dialog.visible"
+        :visible.sync="dialog.visible"
+        :title="i18n.checkCacheInfo"
+        size="large"
+    >
+        <CacheKeyDetail
+            :currentServiceShortName="currentServiceShortName"
+            :currentRegion="currentRegion"
+            :currentCacheKey="dialog.currentCacheKey"
+        ></CacheKeyDetail>
+    </erd-ex-dialog>
+</div>

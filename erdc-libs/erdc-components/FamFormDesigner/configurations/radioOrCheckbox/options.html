@@ -1,0 +1,131 @@
+<fam-dynamic-form-item
+    field="props.config"
+    :label-width="labelWidth"
+>
+    <!-- 单选框 -->
+    <!-- <erd-radio-group
+			class="formItemRadio"
+			v-if="schema.props.type == 'radio'"
+			v-model="schema.props.checked"
+			@change="defaultValueChange">
+        <ul>
+            <li v-for="(item,index) in tableData">
+                <erd-radio :label="item.value">
+                    <FamI18nbasics
+											style="width: 140px"
+											v-bind="i18nprops"
+											v-model="item.name">
+                    </FamI18nbasics>
+                    <erd-input
+											style="width: 80px;margin:0 4px;"
+											v-model="item.value">
+                    </erd-input>
+                    <erd-button
+					type="icon"
+					icon="erd-iconfont erd-icon-delete"
+					@click="fnRemoveOption(index)">
+                    </erd-button>
+                </erd-radio>
+            </li>
+        </ul>
+        <erd-button style="width: 100%" icon="el-icon-plus" @click="fnAddOption">新增选项</erd-button>
+    </erd-radio-group> -->
+    <!-- 复选框 -->
+    <!-- <erd-checkbox-group
+			class="formItemRadio"
+			v-else-if="schema.props.type == 'checkbox'"
+			v-model="schema.props.checkedList"
+			@change="defaultValueChange">
+				<erd-checkbox
+				v-for="(item,index) in tableData"
+				:key="item.id"
+				:label="item.value">
+						<FamI18nbasics
+							style="width: 140px"
+							v-bind="i18nprops"
+							v-model="item.name">
+						</FamI18nbasics>
+						<erd-input
+							style="width: 80px;margin:0 4px;"
+							v-model="item.value">
+						</erd-input>
+						<erd-button
+							type="icon"
+							icon="erd-iconfont erd-icon-delete"
+							@click="fnRemoveOption(index)">
+						</erd-button>
+					</erd-checkbox>
+        <erd-button style="width: 100%" icon="el-icon-plus" @click="fnAddOption">新增选项</erd-button>
+		</erd-checkbox-group> -->
+    <table class="table options-table">
+        <thead>
+            <tr>
+                <th width="20"></th>
+                <th>{{ i18nMappingObj.name }}</th>
+                <th :width="!!selected ? 80 : 0">{{ i18nMappingObj.value }}</th>
+                <th width="20"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(item,index) in tableData">
+                <td style="vertical-align: middle">
+                    <erd-radio
+                        v-if="schema.props.type == 'radio'"
+                        v-model="schema.defaultValue"
+                        :label="item.value"
+                        @change="fnRadioItem(item,index)"
+                    >
+                        {{''}}
+                    </erd-radio>
+                    <!-- <erd-checkbox
+                        v-else-if="schema.props.type == 'checkbox'"
+                        v-model="item.check"
+                        @change="fnCheckItem(item,index)"
+                    >
+                    </erd-checkbox> -->
+                </td>
+                <td>
+                    <FamI18nbasics
+                        v-bind="i18nprops"
+                        v-model="item.name"
+                    ></FamI18nbasics>
+                </td>
+                <td>
+                    <erd-input
+                        v-if="!isBoolean"
+                        v-model="item.value"
+                        @change="onChange(item)"
+                    ></erd-input>
+                    <erd-select
+                        v-else
+                        v-model="item.value"
+                        class="w_100p"
+                        @change="onChange(item)"
+                    >
+                        <erd-option :value="true">true</erd-option>
+                        <erd-option :value="false">false</erd-option>
+                    </erd-select>
+                </td>
+                <td>
+                    <erd-button
+                        type="icon"
+                        icon="erd-iconfont erd-icon-delete"
+                        @click="fnRemoveOption(index)"
+                    >
+                    </erd-button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <erd-button
+                        v-if="!isBoolean"
+                        style="width: 100%"
+                        icon="el-icon-plus"
+                        @click="fnAddOption"
+                        >新增选项</erd-button
+                    >
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fam-dynamic-form-item>

@@ -1,0 +1,11 @@
+.process-editable-table .vxe-cell--valid-msg {
+  white-space: nowrap;
+  display: inline-block !important;
+}
+.process-editable-table .vxe-cell:has(.custom-select):has(.el-tag) {
+  height: auto !important;
+  max-height: unset !important;
+}
+.process-editable-table .vxe-cell:has(.custom-select):has(.el-tag) .el-input--suffix.is-focus {
+  height: 66px !important;
+}/*# sourceMappingURL=style.css.map */

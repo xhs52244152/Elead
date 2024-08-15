@@ -1,0 +1,47 @@
+.fam-virtual-list-container {
+    position: relative;
+    overflow-y: scroll;
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-track {
+        background: #fff;
+    }
+    margin: 0 2px;
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: #f8f8f8;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    .virtual-list-box {
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .virtual-list-item {
+        font-size: var(--treeNodeFontSize);
+        color: #333333;
+        display: flex;
+        align-items: center;
+        .text-overflow {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    .virtual-list-item:hover {
+        color: var(--colorPrimary);
+        cursor: pointer;
+        background-color: var(--treeNodeHoverBgColor);
+    }
+    .item_checked {
+        font-weight: normal;
+        color: var(--treeNodeCurrentLabel);
+        background-color: #f0f7ff;
+    }
+}

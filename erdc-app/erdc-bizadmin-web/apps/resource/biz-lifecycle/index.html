@@ -1,0 +1,30 @@
+<div
+    id="fam_lifecycle"
+    class="h-100p position-relative"
+>
+    <resizable-container>
+        <template slot="left">
+            <div class="lifecycle-container h-100p">
+                <lifecycle-tree
+                    ref="lifecycleTree"
+                    class="h-100p"
+                    @onsubmit="onSubmit"
+                    @clickstate="onClickState"
+                ></lifecycle-tree>
+            </div>
+        </template>
+        <template slot="right">
+            <state-management v-if="state"></state-management>
+            <lifecycle-form
+                ref="lifecycleForm"
+                v-else
+                :title="title"
+                :type="type"
+                :data="data"
+                @onsubmit="onSubmit"
+                @onrefresh="onRefresh"
+            >
+            </lifecycle-form>
+        </template>
+    </resizable-container>
+</div>

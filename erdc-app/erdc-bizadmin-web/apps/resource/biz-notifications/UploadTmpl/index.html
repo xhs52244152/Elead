@@ -1,0 +1,31 @@
+<erd-ex-dialog
+    width="600px"
+    :title="title"
+    :visible="visible"
+    size="large"
+    v-on="dialogListeners"
+>
+    <div class="erdcloud_upload_tmpl_tips">
+        <slot name="tips">
+            <span class="import-tips">请按格式填写模板，若没有模板请先下载</span>
+        </slot>
+    </div>
+    <div class="erdcloud_upload_tmpl_body">
+        <slot>
+            <erd-upload v-bind="localUploadProps" ref="upload">
+                <erd-button size="small" type="primary">{{i18nMappingObj.upload}}</erd-button>
+            </erd-upload>
+            <span>{{i18nMappingObj.download}}<a class="ml-10" @click="downloadFile">{{i18nMappingObj.tmpl}}</a></span>
+        </slot>
+    </div>
+    <template
+        #footer
+        class="erdcloud_upload_tmpl_footer"
+    >
+        <erd-button
+            type="primary"
+            @click="save"
+        >{{i18nMappingObj.save}}</erd-button
+        ><erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

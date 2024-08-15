@@ -1,0 +1,122 @@
+<div id="fam-member-form">
+    <FamAdvancedForm
+        ref="form"
+        :model.sync="form"
+        :form-id="formId"
+        class-name="user"
+        :validators="validators"
+        :editable-attr="editableAttr"
+        :query-layout-params="innerQueryLayoutParams"
+        :widgetList.sync="widgetList"
+        :readonly="readonly"
+    >
+        <template v-slot:avatar="scope">
+            <div class="text-center h-64 w-100p">
+                <fam-image
+                    v-model="form.avatar"
+                    class-list="avatar-uploader m-auto w-64 h-64 flex align-items-center justify-center bordered rounded-50p text-2xl overflow-hidden"
+                    :accept-list="acceptList"
+                    listType="text"
+                    :limit="2"
+                    :on-success="handleAvatarSuccess"
+                    :show-file-list="false"
+                >
+                    <template #content>
+                        <div class="avatar position-relative">
+                            <div
+                                class="shade flex align-items-center justify-center z-50 position-absolute m-auto top-0 right-0 bottom-0 left-0"
+                            >
+                                <i class="el-icon-camera"></i>
+                            </div>
+                            <img
+                                class="w-64 h-64 position-relative z-0"
+                                :src="imageUrl || form.avatar"
+                            />
+                        </div>
+                    </template>
+                </fam-image>
+            </div>
+        </template>
+        <template v-slot:signature="scope">
+            <span v-if="signature === ''" class="mr-18">--</span>
+            <img
+                v-else
+                class="sign-img"
+                :src="signature"
+                @click="previewImg(signature)"
+            />
+            <a
+                class="font-10"
+                @click="changeSignature"
+                >{{ i18nMappingObj.replaceSignature }}</a
+            >
+        </template>
+        <template v-slot:name="scope">
+            <erd-input
+                v-if="!scope.readonly"
+                v-model="scope.data.name"
+                v-bind="scope.formConfig.props"
+                :maxlength="scope.formConfig.props?.maxlength || 25"
+                @focus="scope.onFocus"
+            ></erd-input>
+            <erd-tooltip
+                v-else
+                placement="top"
+                :tabindex="-1"
+            >
+                <span class="fam-dynamic-form__readonly-field"> {{ scope.data.name }} </span>
+                <template #content>
+                    <span> {{ scope.data.name }} </span>
+                </template>
+            </erd-tooltip>
+        </template>
+        <template v-slot:password="scope">
+            <erd-button
+                type="text"
+                @click="changePassword"
+            >{{i18nMappingObj.changePassword}}</erd-button
+            >
+        </template>
+        <template v-slot:department="scope">
+            <FamOrganizationSelect
+                v-if="!scope.readonly"
+                v-model="scope.data.orgIds"
+                style="width: 100%"
+                type="password"
+                :placeholder="i18nMappingObj['请选择']"
+                v-bind="scope.formConfig.props"
+            ></FamOrganizationSelect>
+            <erd-tooltip
+                v-else
+                placement="top"
+                :tabindex="-1"
+            >
+                <span class="fam-dynamic-form__readonly-field">
+                    {{ type==='userInfo' ? form.department : translateOrgName(scope)}}
+                </span>
+                <template #content>
+                    <span> {{ type==='userInfo' ? form.department : translateOrgName(scope) }} </span>
+                </template>
+            </erd-tooltip>
+        </template>
+        <template #sign="scope">
+            <FamAutographUpload
+                v-model="scope.data.signature"
+                :readonly="scope.readonly"
+                :disabled="scope.disabled"
+            ></FamAutographUpload>
+        </template>
+    </FamAdvancedForm>
+
+    <!-- 修改密码 -->
+    <ChangePassword
+        ref="passwordForm"
+        :type="type"
+    ></ChangePassword>
+
+    <!-- 修改签章 -->
+    <ChangeSignature
+        ref="signatureForm"
+        @done="loadSignature"
+    ></ChangeSignature>
+</div>

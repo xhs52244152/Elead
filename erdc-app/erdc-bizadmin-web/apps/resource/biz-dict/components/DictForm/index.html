@@ -1,0 +1,53 @@
+<div id="DictForm">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        width="1200px"
+    >
+        <div class="basic-infor-config">
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form="formData"
+                :data="data"
+                @form-change="formChange"
+            >
+                <template v-slot:appNameComponent="scope">
+                    <el-select
+                        style="width: 100%;"
+                        v-model="scope.data[scope.formConfig.field]"
+                        :disabled="true"
+                        :placeholder="i18nMappingObj.pleaseSelet"
+                    >
+                        <el-option
+                            v-for="item in appList"
+                            :key="item.number"
+                            :label="item.displayName"
+                            :value="item.number"
+                        >
+                        </el-option>
+                    </el-select>
+                </template>
+                <template v-slot:radioComponent="scope">
+                    <erd-radio-group v-model="scope.data[scope.formConfig.field]">
+                        <erd-radio :label="0">{{i18nMappingObj.draft}}</erd-radio>
+                        <erd-radio :label="1">{{i18nMappingObj.enable}}</erd-radio>
+                        <erd-radio :label="2">{{i18nMappingObj.disable}}</erd-radio>
+                    </erd-radio-group>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveSubmit"
+                :disabled="disabled"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,159 @@
+<div>
+    <fam-advanced-table
+        ref="connectResTable"
+        :view-table-config="viewTableConfig"
+        is-adaptive-height
+        @table-data="fnTableData"
+    >
+        <template
+            #left:toolbar:first
+            v-if="isShowLeft"
+        >
+            <erd-select
+                v-model="resType"
+                style="width: 96px"
+                @change="changeResType"
+                filterable
+            >
+                <erd-option
+                    v-for="re in resOption"
+                    :key="re.value"
+                    :label="re.label"
+                    :value="re.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #column:default:code:content="{ scope }">
+            {{ scope.row.code }}
+            <span v-if="scope.row.customInfo.length > 0">
+                <erd-tag
+                    effect="dark"
+                    :type="tagType(scope.row.isCustom)"
+                    @click="openCustomList(scope.row)"
+                    :class="{'cursor-pointer': isShowLeft}"
+                    :size="tagSize"
+                >
+                    {{ scope.row.isCustom ? "客" : "原" }}
+                </erd-tag>
+            </span>
+        </template>
+        <template #column:default:parentCode:content="{ scope }">
+            <span v-if="scope.row.parentCode !== '-1'">{{ scope.row.parentCode }}</span>
+            <span v-else>--</span>
+        </template>
+        <template #column:default:online:content="{ scope }">
+            <erd-tag
+                :type="scope.row.online ? '' : 'info'"
+                effect="dark"
+                :size="tagSize"
+            >
+                {{ scope.row.online? i18nMappingObj.online : i18nMappingObj.offline }}
+            </erd-tag>
+        </template>
+        <template #column:default:createUser:content="{ scope }">
+            <span v-if="scope.row.createBy">{{ getUser(scope.row.createBy) }}</span>
+            <span v-else>--</span>
+        </template>
+        <template #column:default:updateUser:content="{ scope }">
+            <span v-if="scope.row.updateBy">{{ getUser(scope.row.updateBy) }}</span>
+            <span v-else>--</span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <span v-if="scope.row.parentCode === '-1'">
+                <erd-link
+                    :underline="false"
+                    type="primary"
+                    @click="download(scope.row)"
+                    >{{ i18nMappingObj.download }}</erd-link
+                >
+                <erd-divider direction="vertical"></erd-divider>
+                <erd-dropdown
+                    @command="handleMoreAction($event, scope.row)"
+                    trigger="click"
+                >
+                    <span class="el-dropdown-link">
+                        <erd-link
+                            type="primary"
+                            :underline="false"
+                            >{{ i18nMappingObj.more }}
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </erd-link>
+                    </span>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item
+                            command="status"
+                            v-if="isShowOffline(scope.row)"
+                        >
+                            {{ scope.row.online ? i18nMappingObj.offline : i18nMappingObj.online }}
+                        </erd-dropdown-item>
+                        <erd-dropdown-item command="versionManage"
+                            >{{ i18nMappingObj.versionManage }}</erd-dropdown-item
+                        >
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </span>
+        </template>
+    </fam-advanced-table>
+
+    <!-- 版本管理弹框 -->
+    <versionManage
+        ref="versionModal"
+        :id="rowId"
+        :title="versionTitle"
+        @done="updateVersion"
+    ></versionManage>
+
+    <!-- 上传弹框 -->
+    <uploadForm
+        ref="uploadModal"
+        @done="refreshTable"
+    ></uploadForm>
+
+    <erd-ex-dialog
+        title="客制化列表"
+        :visible.sync="versionVisible"
+        width="1000px"
+    >
+        <fam-advanced-table
+            v-if="versionVisible"
+            ref="customTable"
+            :view-table-config="customTableConfig"
+            :view-table-height="customTableHeight"
+        >
+            <template #column:default:code:content="{ scope }">
+                {{ scope.row.code }}
+                <erd-tag
+                    :type="tagType(scope.row.isCustom)"
+                    effect="dark"
+                    :size="tagSize"
+                >
+                    {{ scope.row.isCustom ? "客" : "原" }}
+                </erd-tag>
+            </template>
+            <template #column:default:online:content="{ scope }">
+                <erd-tag
+                    :type="scope.row.online ? '' : 'info'"
+                    effect="dark"
+                    :size="tagSize"
+                >
+                    {{ scope.row.online? i18nMappingObj.online : i18nMappingObj.offline }}
+                </erd-tag>
+            </template>
+            <template #column:default:parentCode:content="{ scope }">
+                <span v-if="scope.row.parentCode !== '-1'">{{ scope.row.parentCode }}</span>
+                <span v-else>--</span>
+            </template>
+            <template #column:default:operation:content="{ scope }">
+                <erd-link
+                    :underline="false"
+                    type="primary"
+                    @click="changeCustomStatus(scope.row)"
+                    >{{ scope.row.online ? i18nMappingObj.offline : i18nMappingObj.online }}
+                </erd-link>
+            </template>
+        </fam-advanced-table>
+        <template #footer>
+            <erd-button @click="cancelVesion">关闭</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

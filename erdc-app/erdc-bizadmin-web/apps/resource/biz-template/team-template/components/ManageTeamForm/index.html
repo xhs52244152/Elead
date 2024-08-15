@@ -1,0 +1,113 @@
+<div id="ManageTeamForm">
+    <div class="ManageTeamForm-container">
+        <div
+            class="ManageTeamForm-header flex"
+            ref="header"
+        >
+            <div class="title">
+                <erd-icon
+                    class="header-title"
+                    icon="edit2"
+                ></erd-icon>
+                <erd-tooltip
+                    placement="top"
+                    popper-class="fam-tooltip-max-width"
+                >
+                    <span slot="content">{{title}}</span>
+                    <span class="title-content">{{title}}</span>
+                </erd-tooltip>
+            </div>
+            <div class="operation">
+                <erd-button
+                    @click="onEdit"
+                    :disabled="!isEdit"
+                >
+                    {{i18n.edit}}
+                </erd-button>
+                <erd-dropdown
+                    trigger="click"
+                    style="margin-left: 8px"
+                >
+                    <erd-button>
+                        <span>{{i18n.operations}}</span><i class="el-icon-arrow-down el-icon--right"></i>
+                    </erd-button>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item
+                            v-if="!formData.enabled"
+                            :disabled="!isEdit"
+                            @click.native="onEnabled"
+                        >
+                            {{i18n.enable}}
+                        </erd-dropdown-item>
+                        <erd-dropdown-item
+                            v-else
+                            :disabled="!isEdit"
+                            @click.native="onEnabled"
+                        >
+                            {{i18n.disable}}
+                        </erd-dropdown-item>
+                        <erd-dropdown-item
+                            v-if="formData.isUsed === 0"
+                            :disabled="!isDelete"
+                            @click.native="onDelete"
+                        >
+                            {{i18n.delete}}
+                        </erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </div>
+        </div>
+        <div class="main">
+            <erd-tabs v-model="activeTab">
+                <erd-tab-pane
+                    v-for="item in tabList"
+                    :label="item.label"
+                    :name="item.name"
+                    :key="item.name"
+                >
+                    <div
+                        class="tabIcon"
+                        slot="label"
+                    >
+                        <span>{{item.label}}</span>
+                    </div>
+                </erd-tab-pane>
+            </erd-tabs>
+            <erd-scrollbar>
+                <!-- <template v-for="item in tabList"> -->
+                <component
+                    style="padding: 16px"
+                    :ref="activeTabObj.componentName"
+                    :is="activeTabObj.name"
+                    :key="activeTabObj.name"
+                    :is-edit="isEdit"
+                    :container-team-ref="data.oid"
+                    :form-data="formData"
+                    :product-oid="oid"
+                    :query-params="queryParams"
+                    :show-participant-type="showParticipantType"
+                    :height="activeTab === 'Team' ? tableHeight : ''"
+                    :app-name="appName"
+                    @onsubmit="onSubmit"
+                >
+                </component>
+                <!-- </template> -->
+            </erd-scrollbar>
+        </div>
+    </div>
+    <!-- <div class="footer" v-if="formType != 'check' && formType != 'checkHistory'">
+        <erd-button type="primary" @click="onSave">保存</erd-button>
+        <erd-button @click="onCancel">取消</erd-button>
+    </div> -->
+
+    <base-info-config
+        v-if="innerVisible"
+        :visible.sync="innerVisible"
+        :title="i18nMappingObj.updateTemplate"
+        :type="'edit'"
+        :oid="key"
+        :is-edit="isEdit"
+        @onsubmit="onSubmit"
+    >
+    </base-info-config>
+</div>

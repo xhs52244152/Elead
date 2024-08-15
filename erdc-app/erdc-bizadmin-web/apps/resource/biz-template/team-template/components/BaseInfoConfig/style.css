@@ -1,0 +1,22 @@
+#BaseInfoConfig {
+  padding: 12px 16px;
+}
+#BaseInfoConfig .BaseInfoConfig-header {
+  padding: 10px 0;
+  width: 100%;
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+}
+#BaseInfoConfig .content {
+  width: 100%;
+}
+#BaseInfoConfig .content .operation {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+#BaseInfoConfig .content .satte-table {
+  padding: 8px 0;
+}
+
+/*# sourceMappingURL=style.css.map */

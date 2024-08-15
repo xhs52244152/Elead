@@ -1,0 +1,33 @@
+<div
+    v-loading="loading"
+    class="fam-checker-tree tree-management"
+    :languageBySystem="languageBySystem"
+>
+    <div
+        class="tree-header"
+        ref="header"
+    >
+        <erd-input
+            :placeholder="i18nMappingObj.inputPlaceholder"
+            class="fam-checker-tree__search"
+            suffix-icon="el-input__icon erd-iconfont erd-icon-search"
+            v-model="searchStr"
+            clearable
+            @clear="init"
+        ></erd-input>
+    </div>
+    <erd-scrollbar :style="{ height: treeHeight }">
+        <!-- 树 :expand-on-click-node="false" -->
+        <erd-ex-tree
+            ref="componentTreeSearch"
+            node-key="oid"
+            :data="treeData"
+            :props="{ label: 'displayName', children: 'serviceInfoList'}"
+            :highlight-current="true"
+            :default-expanded-keys="defaultExpandedKeys"
+            :filter-node-method="filterNode"
+            @node-click="onNodeClick"
+        >
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

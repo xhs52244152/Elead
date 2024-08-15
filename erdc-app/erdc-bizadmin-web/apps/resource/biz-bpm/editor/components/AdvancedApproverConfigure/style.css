@@ -1,0 +1,15 @@
+.approver-configure .approver-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.approver-configure .approver-panel .panel-title-icon {
+  font-size: var(--fontSize);
+  color: var(--colorPrimary);
+}
+
+.approver-configure-dialog .approver-empty {
+  color: var(--colorTextPlaceholder);
+}
+
+/*# sourceMappingURL=style.css.map */

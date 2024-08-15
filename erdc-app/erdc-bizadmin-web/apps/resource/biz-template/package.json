@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/biz-template",
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat",
+  "description": "模板配置",
+  "dependencies": {}
+}

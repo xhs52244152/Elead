@@ -1,0 +1,31 @@
+.doc-site-manage .content-opea {
+  text-align: right;
+  padding: 10px 10px 0 10px;
+}
+.doc-site-manage .health-common {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.doc-site-manage .health-excellent {
+  background-color: rgb(36, 170, 29);
+}
+.doc-site-manage .health-normal {
+  background-color: rgb(190, 246, 99);
+}
+.doc-site-manage .health-slow {
+  background-color: rgb(240, 167, 50);
+}
+.doc-site-manage .health-veryslow {
+  background-color: rgb(230, 22, 16);
+}
+.doc-site-manage .erd-dropdown-link {
+  cursor: pointer;
+}
+
+.err-msg-confirm .el-message-box__btns--center {
+  justify-content: right !important;
+}
+
+/*# sourceMappingURL=index.css.map */

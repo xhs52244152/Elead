@@ -1,0 +1,40 @@
+.fam-viewtable-container {
+  height: 100%;
+}
+.fam-viewtable-container .fam-view-manager-container {
+  padding: 16px;
+}
+.fam-viewtable-container .link {
+  color: #567ffd;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.fam-viewtable-container .link:last-child {
+  margin: 0;
+}
+.fam-viewtable-container .edit-default {
+  color: #9b9b9b;
+  cursor: pointer;
+}
+.fam-viewtable-container .title {
+  color: var(--colorTextNormal);
+  padding-bottom: 8px;
+}
+.fam-viewtable-container .title .callback {
+  color: var(--colorTextNormal);
+}
+.fam-viewtable-container .title .callback:hover {
+  color: #567ffd;
+}
+.fam-viewtable-container .footer-container {
+  margin: 0 -16px -16px -16px !important;
+}
+
+.view-table-dialog .el-dialog__body {
+  padding-bottom: 4px;
+}
+.view-table-dialog .last-line-bottom {
+  margin-bottom: 12px;
+}
+
+/*# sourceMappingURL=index.css.map */

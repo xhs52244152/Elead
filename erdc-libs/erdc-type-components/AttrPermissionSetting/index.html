@@ -1,0 +1,34 @@
+<div
+    id="fam_attrPermissionSetting"
+    class="flex flex-column grow-1"
+    @mousedown="handleMouseDown"
+>
+    <div>
+        <feedback-title
+            :typeName="typeName"
+            @returnBack="handlerReturnBack"
+            :showReturnBack="showReturnBack"
+        ></feedback-title>
+    </div>
+    <resizable-container>
+        <template slot="left">
+            <user-and-group-tree
+                :max-height="pageHeight"
+                :type-oid="typeOid"
+                :container-oid="containerOid"
+                :is-show-add="isShowAdd"
+                :query-params="queryParams"
+                @onclick="onTreeList"
+            >
+            </user-and-group-tree>
+        </template>
+        <template slot="right">
+            <create-or-edit-right-tabs
+                ref="rightPermissionTabs"
+                :max-height="pageHeight"
+                :is-change="containerChanged"
+                @container-change="handleContainerChange"
+            ></create-or-edit-right-tabs>
+        </template>
+    </resizable-container>
+</div>

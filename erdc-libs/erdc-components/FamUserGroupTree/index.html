@@ -1,0 +1,64 @@
+<div
+    v-loading="loading"
+    class="fam-user-group-tree tree-management"
+>
+    <div
+        class="fam-user-group-tree__header tree-header"
+        ref="header"
+    >
+        <div class="search">
+            <erd-input
+                :placeholder="i18n.enterKeyword"
+                class="fam-user-group-tree__search"
+                suffix-icon="erd-iconfont erd-icon-search"
+                v-model="searchStr"
+                clearable
+                @clear="init"
+            ></erd-input>
+        </div>
+    </div>
+    <erd-scrollbar :style="{ height: treeHeight }">
+        <!-- 树 :expand-on-click-node="false" -->
+        <erd-ex-tree
+            ref="componentTreeSearch"
+            node-key="key"
+            :data="treeData"
+            class="tree-list"
+            :props="{ label: 'name', children: 'childList'}"
+            :highlight-current="true"
+            :default-expanded-keys="defaultExpandedKeys"
+            :filter-node-method="filterNode"
+            @node-click="onNodeClick"
+        >
+            <template v-slot="scope">
+                <div :class="{ 'tree-node-content': true}">
+                    <!-- ({{scope.data.linkCount || 0}}) -->
+                    <div class="tree-content">
+                        <template v-if="isApplication(scope.node.data)">
+                            <img
+                                v-if="scope.node.data.icon"
+                                style="top: -1px; width: 1em; height: 1em"
+                                class="inline-block position-relative"
+                                :src="scope.node.data.icon"
+                                alt=""
+                            />
+                        </template>
+                        <span class="tree-node-title"
+                            >{{ `${scope.node.label} ${isShowCount && noCountLevel.indexOf(scope.node.level) === -1 ? `
+                            (${scope.data.linkCount || 0}) ` : ''}` }}</span
+                        >
+                    </div>
+                    <div
+                        class="tree-node-operator"
+                        v-if="$scopedSlots['node-operator']"
+                    >
+                        <slot
+                            name="node-operator"
+                            v-bind="scope"
+                        ></slot>
+                    </div>
+                </div>
+            </template>
+        </erd-ex-tree>
+    </erd-scrollbar>
+</div>

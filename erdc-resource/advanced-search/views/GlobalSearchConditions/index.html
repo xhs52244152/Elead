@@ -1,0 +1,32 @@
+<div class="global-search-conditions">
+    <search-input-box v-on="$listeners"></search-input-box>
+    <div
+        v-show="globalSearchIconVisible || showMoreConditions"
+        class="more-conditions"
+    >
+        <history-filters ref="historyFilters"></history-filters>
+        <advanced-filters ref="advacedFilters"></advanced-filters>
+        <div class="flex justify-center align-items-center mt-12">
+            <erd-button
+                :disabled="btnDisabled"
+                type="primary"
+                @click="onGlobalSearch"
+            >
+                {{i18n.search}}
+            </erd-button>
+            <erd-button
+                :disabled="btnDisabled"
+                :loading="btnLoading"
+                @click="saveFilters"
+            >
+                {{i18n.save}}
+            </erd-button>
+            <erd-button
+                :disabled="btnDisabled"
+                @click="clearAllConditions"
+            >
+                {{i18n.clear}}
+            </erd-button>
+        </div>
+    </div>
+</div>

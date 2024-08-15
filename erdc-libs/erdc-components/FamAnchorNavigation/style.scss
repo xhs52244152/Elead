@@ -1,0 +1,39 @@
+#FamAnchorNavigation {
+    & > .el-tabs > .el-tabs__content .el-tab-pane {
+        padding: 0 !important;
+    }
+
+    .fam-anchor-navigation-scrollbar {
+
+        .el-scrollbar__view {
+            > *:first-child {
+                padding-bottom: var(--bigPadding);
+            }
+
+            > * ~ * {
+                padding: var(--bigPadding) var(--largePadding);
+                margin-top: 0;
+            }
+        }
+
+        > .el-scrollbar__bar {
+            right: -4px;
+        }
+        .contraction-panel__content {
+            padding: var(--normalPadding) 0 0;
+        }
+    }
+    .navigation-top {
+        width: 100%;
+        height: var(--largePadding);
+        background-color: var(--colorFullBg);
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .ContractionPanel {
+        padding: 0 var(--largePadding);
+    }
+    .z-199{
+        z-index: 199;
+    }
+}

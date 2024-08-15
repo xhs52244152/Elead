@@ -1,0 +1,172 @@
+<div v-loading="myLoading">
+    <fam-advanced-table
+        ref="table"
+        :table-height="300"
+        :view-table-config="viewTableConfig"
+        :app-name="appName"
+        @callback="callback"
+    >
+        <template #column:default:name:content="{ scope }">
+            <span>{{ scope.row.name }}</span>
+            <erd-tag v-show="scope.row.isFirst">{{i18nMappingObj.firstPage}}</erd-tag>
+        </template>
+        <template #column:default:pinned:content="{ scope }">
+            <erd-switch
+                v-model="scope.row.pinned"
+                :disabled="scope.row.layoutType === 'GLOBAL' || scope.row.isFirst"
+                @change="switchPinned(scope.row)"
+            >
+            </erd-switch>
+        </template>
+        <template #column:default:layoutType:content="{ scope }">
+            <span>{{ getLayoutType(scope.row.layoutType) }}</span>
+        </template>
+        <template #column:default:appName:content="{ scope }">
+            {{appMap[scope.row.appName] && appMap[scope.row.appName].nameI18nJson &&
+            appMap[scope.row.appName].nameI18nJson[currentLan] ? appMap[scope.row.appName].nameI18nJson[currentLan] :
+            appMap[scope.row.appName] ? appMap[scope.row.appName].displayName : '' }}
+        </template>
+        <template #column:default:createBy:content="{ scope }">
+            <span>{{ scope.row?.createUser?.displayName || '--' }}</span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                :disabled="scope.row.isFirst"
+                @click="setFirstLayout(scope.row.oid)"
+            >
+                {{i18nMappingObj.setDefault}}
+            </erd-button>
+            <erd-button
+                v-if="scope.row.layoutType === 'PERSONAL'"
+                type="text"
+                @click="handleEditlayout(scope.row)"
+            >
+                {{i18nMappingObj.edit}}
+            </erd-button>
+            <erd-button
+                v-if="scope.row.layoutType === 'PERSONAL'"
+                type="text"
+                @click="handleOpenRelateUser(scope.row)"
+            >
+                {{i18nMappingObj.share}}
+            </erd-button>
+            <erd-button
+                type="text"
+                :disabled="scope.row.isFirst"
+                v-if="$refs.table.pagination.total > 1 && scope.row.layoutType === 'PERSONAL'"
+                @click="handleDeletelayout(scope.row)"
+            >
+                {{i18nMappingObj.deletelayout}}
+            </erd-button>
+        </template>
+    </fam-advanced-table>
+    <erd-ex-dialog
+        :title="currentLayout.oid?i18nMappingObj.updatelayout:i18nMappingObj.createlayout"
+        :visible.sync="visible"
+        width="800px"
+        @close="close"
+    >
+        <layout-form
+            ref="layoutForm"
+            layout-type="PERSONAL"
+            :resource-ref="menuInfo && menuInfo.oid ? menuInfo.oid : ''"
+            :oid="currentLayout.oid"
+            :exclude-field="currentLayout.oid ? ['state', 'appName'] : ['state']"
+            :validators="validators"
+            :app-name="appName"
+        ></layout-form>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submitCreateLayout"
+            >
+                {{ i18nMappingObj.confirm }} </erd-button
+            ><erd-button @click="close">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :title="i18nMappingObj.shareLayout"
+        :visible.sync="visibleForShare"
+        width="1200px"
+        @closed="handleCloseRelateUser"
+    >
+        <div class="participant-panel">
+            <!--人员-->
+            <div class="topItem flex">
+                <fam-participant-select
+                    ref="famParticipantSelect"
+                    multiple
+                    collapseTags
+                    clearable
+                    v-model="participantVal"
+                    width="416px"
+                    :default-value="participantSelectValue.value"
+                    :query-params="{ data: { isGetVirtualRole: true } }"
+                    :show-type="['USER', 'GROUP', 'ORG']"
+                    @input="handleParticipantInput"
+                    @change="handleParticipantChange"
+                ></fam-participant-select>
+            </div>
+
+            <!--管理组表格-->
+            <erd-table
+                border
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :max-height="300"
+                :loading="loadingForRelateUser"
+                :data="relationUserData"
+                :column="relationUserDataColumn"
+                show-overflow
+                style="margin-top: 12px"
+                ref="erdTable"
+            >
+                <template #column:default:participantType="{data}">
+                    <span>{{ i18nMappingObj[data.row.participantType] ?? '' }}</span>
+                </template>
+                <!--操作-->
+                <template #column:default:operation="{data}">
+                    <el-button
+                        type="text"
+                        @click="removeRelation(data)"
+                        >{{ i18nMappingObj.remove }}
+                    </el-button>
+                </template>
+            </erd-table>
+            <!--小于等于一页不展示-->
+            <erd-pagination
+                style="margin-top: 15px"
+                :current-page.sync="relationTablePagination.pageIndex"
+                :page-size.sync="relationTablePagination.pageSize"
+                :total="relationTablePagination.total"
+                :hide-on-single-page="false"
+                @current-change="loadRelateUserData"
+                @size-change="loadRelateUserData"
+            >
+            </erd-pagination>
+        </div>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveMember"
+                :loading="loading"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button
+                @click="handleCloseRelateUser"
+                :loading="loading"
+                >{{ i18nMappingObj.cancel }}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+</div>

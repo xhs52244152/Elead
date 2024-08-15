@@ -1,0 +1,163 @@
+<div class="fam-organization-manager">
+    <ResizableContainer>
+        <template v-slot:left>
+            <FamOrganizationTree
+                ref="orgTree"
+                :lock-org="showLockOrg"
+                :show-count="false"
+                @nodeClick="onNodeClick"
+            >
+                <template v-slot:node-operator="scope">
+                    <div
+                        class="fam-organization-manager__node-operation"
+                        style="margin-right: calc(0 - var(--normalSpace))"
+                        @click.stop
+                    >
+                        <erd-button
+                            v-if="importPerm && !scope.data.parentKey"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-import"
+                            @click="onImport"
+                        ></erd-button
+                        ><erd-button
+                        v-if="exportPerm && !scope.data.parentKey"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-export"
+                            @click="onExport"
+                        ></erd-button>
+                        <erd-button
+                            v-if="createPerm && scope.data.addSub && specialOrg.indexOf(scope.data?.identifierNo) == -1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-add-document fontSize18"
+                            size="mini"
+                            @click="onCreate(scope.data, scope.node)"
+                        ></erd-button>
+                        <erd-button
+                            v-if="editPerm && scope.data.edit && specialOrg.indexOf(scope.data?.identifierNo) == -1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-edit3"
+                            size="mini"
+                            @click="onEdit(scope.data, scope.node)"
+                        ></erd-button>
+                        <!-- 一级部门不允许删除 -->
+                        <erd-button
+                            v-if="deletePerm && scope.data.delete && scope.data.parentKey && specialOrg.indexOf(scope.data?.identifierNo) == -1"
+                            type="icon"
+                            icon="el-icon-delete"
+                            size="mini"
+                            @click="onDeleteConfirm(scope.data, scope.node)"
+                        ></erd-button>
+                        <!-- <erd-pulldown-button
+                            v-if="getOrganizationMoreOperation(scope.data, scope.node)"
+                            :list="getOrganizationMoreOperation(scope.data, scope.node)"
+                            fixed
+                            right
+                            type="icon"
+                            icon="el-icon-more"
+                            size="mini"
+                            @item-click="onNodeOperate"
+                        ></erd-pulldown-button> -->
+                    </div>
+                </template>
+            </FamOrganizationTree>
+        </template>
+        <template v-slot:right>
+            <div class="right-contaienr">
+                <el-tabs v-model="activeTab">
+                    <erd-tab-pane
+                        :label="i18nMappingObj.members"
+                        name="members"
+                    >
+                        <member-lock-table
+                            v-if="isUnlockTable"
+                            ref="memberLockTable"
+                            @refresh-tree="refreshOrgTree"
+                           :org-row="currentOrgObj"
+                           :org-id="orgId"
+                           :app-name="appName"
+                        ></member-lock-table>
+                        <member-table
+                            v-else
+                            ref="memberTable"
+                            @refresh-tree="refreshOrgTree"
+                            :org-id="orgId"
+                            :org-code="orgCode"
+                            :org-row="currentOrgObj"
+                            :app-name="appName"
+                        ></member-table>
+                    </erd-tab-pane>
+                    <erd-tab-pane
+                        v-if="isShowOrgInfo"
+                        :label="i18nMappingObj.infos"
+                        name="infos"
+                    >
+                        <organization-view
+                            v-if="activeTab=='infos'"
+                            ref="msgContent"
+                            :visible="activeTab=='infos'"
+                            :oid="currentOrgObj?.oid"
+                            :current-organization="currentOrgObj"
+                            :app-name="appName"
+                            :orgInfoMenu="orgInfoMenu"
+                        >
+                            <template v-slot:panelRight>
+                                <div v-if="activeTab == 'infos' && orgInfoMenu.includes('ORG_TEAM_EDIT')">
+                                    <erd-button
+                                        type="primary"
+                                        @click="onEdit(currentSelectNode, 'editMsg')"
+                                    >
+                                        {{i18nMappingObj.edit}}
+                                    </erd-button>
+                                </div>
+                            </template>
+                        </organization-view>
+                    </erd-tab-pane>
+                </el-tabs>
+            </div>
+        </template>
+    </ResizableContainer>
+
+    <!--新增、编辑部门-->
+    <erd-ex-dialog
+        class="org-dialog-form"
+        ref="dialog"
+        size="large"
+        :visible.sync="form.visible"
+        :title="form.editable ? i18nMappingObj.editOrg : i18nMappingObj.addOrg"
+    >
+        <OrganizationForm
+            v-if="form.visible"
+            ref="orgForm"
+            :oid="form.oid"
+            :default-value="form.defaultValue"
+            :editable="form.editable"
+            class="orgForm"
+        ></OrganizationForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="form.loading"
+                @click="onSubmit('orgForm')"
+                >{{ i18nMappingObj.ok }}</erd-button
+            >
+            <erd-button
+                @click="closeOrganizationForm"
+                >{{ i18nMappingObj.cancel }}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+    <!-- 导入 -->
+    <fam-import
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="OrganizationImport"
+        @submit-success-callback="importSuccess"
+    ></fam-import>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="OrganizationExport"
+        :requestConfig="requestConfig"
+    ></fam-export>
+</div>

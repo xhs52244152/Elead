@@ -1,0 +1,46 @@
+<div
+    class="object-common-space"
+    v-loading="isSpaceLoading"
+>
+    <FamSecondaryMenu
+        v-if="showSecondaryMenu"
+        :outerRootResource="rootResource"
+        :outerResources="secondaryResources"
+        :handleRoute="handleRoute"
+    >
+        <SpaceSelect
+            v-if="!readonly"
+            :value="objectOid"
+            :type-name="typeName"
+            :extend-params="extendParams"
+            @update:value="onObjectChange"
+            @spaceObjectChange="onSpaceObjectChanged"
+        >
+            <template #after>
+                <erd-pulldown-menu-item
+                    class="fam-space__space-all"
+                    @click="gotoObjectList"
+                >
+                    <span>{{ viewAllText }}</span>
+                    <erd-icon icon="arrow-right"></erd-icon>
+                </erd-pulldown-menu-item>
+            </template>
+        </SpaceSelect>
+        <div
+            v-else
+            class="fam-space-readonly-title"
+        >
+            {{ objectInfo && objectInfo.name }}
+        </div>
+    </FamSecondaryMenu>
+    <FamThirdMenu
+        v-if="showThirdMenu"
+        :outerResources="thirdResources"
+    ></FamThirdMenu>
+    <erd-scrollbar
+        wrap-class="object-common-space__content"
+        class="w-100p"
+    >
+        <router-view></router-view>
+    </erd-scrollbar>
+</div>

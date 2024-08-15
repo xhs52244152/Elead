@@ -1,0 +1,14 @@
+#fam-type-group {
+  .type-search {
+    display: flex;
+    justify-content: space-between;
+    .fam-type-tree__search {
+      width: 220px;
+      margin-top: 0;
+      vertical-align: middle;
+    }
+  }
+  .group-table {
+    margin-top: 16px;
+  }
+}

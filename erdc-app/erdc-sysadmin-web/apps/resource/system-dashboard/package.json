@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-dashboard",
+  "version": "3.1.0",
+  "description": "仪表盘",
+  "erdcData": {},
+  "appId": "plat"
+}

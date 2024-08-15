@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-participant",
+  "version": "3.1.0",
+  "description": "参与者管理",
+  "erdcData": {},
+  "appId": "plat"
+}

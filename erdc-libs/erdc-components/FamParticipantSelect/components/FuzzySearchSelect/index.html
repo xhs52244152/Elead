@@ -1,0 +1,42 @@
+<div
+    id="FuzzySearchSelect"
+    class="ptb-16"
+>
+    <div class="flex justify-between plr-16 mb-8">
+        <span> {{title}} </span>
+    </div>
+    <div class="mb-8 plr-16">
+        <erd-input
+            ref="searchValue"
+            v-model="searchValue"
+            :placeholder="placeholder"
+            clearable
+        >
+            <template
+                slot="suffix"
+                class="flex"
+            >
+                <erd-icon
+                    class="align-items-center cursor-pointer"
+                    icon="search"
+                    @click="onSearch(searchValue)"
+                ></erd-icon>
+            </template>
+        </erd-input>
+    </div>
+    <erd-table
+        ref="erdTable"
+        v-loading="loading"
+        align="left"
+        height="232"
+        :row-config="{isCurrent: true, isHover: true}"
+        :data="tableData"
+        :column="innerColumn"
+        :checkbox-config="{checkField: 'checked', trigger: 'row', checkMethod}"
+        border
+        show-overflow
+        @cell-click="cellClick"
+        @checkbox-all="selectAllEvent"
+        @checkbox-change="selectChangeEvent"
+    ></erd-table>
+</div>

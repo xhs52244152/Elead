@@ -1,0 +1,79 @@
+<div
+    id="ManageTeamTree"
+    class="h-100p"
+>
+    <fam-tree
+        :title="i18nMappingObj.manageTeam"
+        :data="treeList"
+        :props="defaultProps"
+        class="tree-list"
+        :filter-node-method="filterSearch"
+        :highlight-current="true"
+        node-key="key"
+        :default-expanded-keys="defaultExpandedKeys"
+        :expand-on-click-node="false"
+        ref="famTree"
+        @node-click="onCheck"
+    >
+        <template #search-operation>
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-import"
+                @click="onImportAll"
+            ></erd-button>
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-export"
+                @click="onExportAll"
+            ></erd-button>
+        </template>
+        <template #node-operation="scope">
+            <erd-button
+                v-if="scope.node.level==1"
+                type="icon"
+                icon="erd-iconfont erd-icon-import"
+                @click="onImport(scope)"
+            ></erd-button>
+            <erd-button
+                v-if="scope.node.level==1"
+                type="icon"
+                icon="erd-iconfont erd-icon-export"
+                @click="onExport(scope)"
+            ></erd-button>
+            <erd-button
+                type="icon"
+                icon="erd-iconfont erd-icon-add-document fontSize18"
+                v-if="scope.node.level == 1"
+                size="mini"
+                class="drag"
+                @click="onCreate(scope)"
+            >
+            </erd-button>
+        </template>
+    </fam-tree>
+
+    <base-info-config
+        v-if="innerVisible"
+        :visible.sync="innerVisible"
+        :title="i18nMappingObj.createTemplate"
+        :type="'create'"
+        :appName="appName"
+        @onsubmit="onSubmit"
+    >
+    </base-info-config>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="TeamTemplateImport"
+        :request-config="importRequestConfig"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="TeamTemplateExport"
+        :request-config="exportRequestConfig"
+    ></fam-export>
+</div>

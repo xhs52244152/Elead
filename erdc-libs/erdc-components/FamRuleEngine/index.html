@@ -1,0 +1,21 @@
+<div
+    id="rule-engine"
+    v-loading="loading"
+>
+    <el-scrollbar>
+        <div
+            class="border-1 border-dashed border-table p-12"
+            style="min-height: 68px"
+        >
+            <fam-advanced-group
+                ref="advancedGroup"
+                :value="conditionDtos"
+                :main-model-type="oid"
+                :conditionColumnsList="conditionsColumnsList"
+                :footerBtnShow="false"
+                @changeConditionsList="changeConditionsList"
+            >
+            </fam-advanced-group>
+        </div>
+    </el-scrollbar>
+</div>

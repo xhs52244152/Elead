@@ -1,0 +1,18 @@
+<div
+    id="attrPermissionManage"
+    class="flex flex-column grow-1"
+>
+    <permission-layout :attrName="'isAttrAccess'">
+        <template v-slot:resizableContainer:rightBox="scope">
+            <attr-permission-setting
+                ref="attrPermissionSetting"
+                :max-height="maxHeight"
+                :typeOid="scope.currentMenu && scope.currentMenu.id"
+                :containerOid="scope.productInfo && scope.productInfo.oid"
+                :showReturnBack="false"
+                :isShowAdd="false"
+                :typeName="scope.currentMenu && scope.currentMenu.name"
+            ></attr-permission-setting>
+        </template>
+    </permission-layout>
+</div>

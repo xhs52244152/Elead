@@ -1,0 +1,181 @@
+<div
+    id="fam-type-attr"
+    class="h_100p flex flex-column"
+>
+    <template>
+        <div
+            ref="header"
+            class="type-search"
+        >
+            <erd-input
+                :placeholder="i18nMappingObj.enter"
+                class="fam-type-tree__search"
+                @input="search"
+                v-model="searchValue"
+                clearable
+            >
+                <template slot="suffix">
+                    <i
+                        class="erd-iconfont erd-icon-search text-16 cursor-pointer fam-type-attr-icon-search"
+                        @click="search"
+                    ></i>
+                </template>
+            </erd-input>
+            <div class="flex">
+                <erd-button
+                    type="primary"
+                    :disabled="isDisabled"
+                    @click="onCreate"
+                    >{{i18nMappingObj.create}}</erd-button
+                >
+                <erd-button
+                    v-if="!abstractType"
+                    @click="onExport"
+                    >{{i18nMappingObj.export}}</erd-button
+                >
+                <erd-button
+                    v-if="isPermissionBtn"
+                    @click="onAttrConfig"
+                >
+                    {{i18nMappingObj.attrConfig}}
+                </erd-button>
+            </div>
+        </div>
+        <div class="position-relative grow-1">
+            <erd-table
+                border
+                ref="erdTable"
+                show-overflow
+                height="100%"
+                :column="columns"
+                :data="viewData"
+                :sort-config="{showIcon:true,multiple:false,sortMethod:sortMethod}"
+                :filter-config="{iconNone: 'erd-iconfont erd-icon-filter', iconMatch: 'erd-iconfont erd-icon-filter on'}"
+                :tooltip-config="{contentMethod: contentMethod}"
+                class="position-absolute w-100p h-100p"
+                @sort-change="customSortMethod"
+                @clear-filter="clearFilter"
+            >
+                <template #column:default:oper="{data}">
+                    <erd-tooltip
+                        :content="i18nMappingObj.nonCurrentTenant"
+                        :disabled="!data.row.isShare"
+                        placement="top"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="data.row.isShare"
+                            @click="onEdit(data)"
+                            >{{ i18nMappingObj.edit }}
+                        </erd-button>
+                    </erd-tooltip>
+                    <erd-tooltip
+                        :content="i18nMappingObj.permission"
+                        placement="top"
+                    >
+                        <erd-button
+                            v-if="(isPermissionBtn && !isDisabled) && data.row.attrCategory !== 'RELATION'"
+                            type="text"
+                            @click="onEditPermission(data)"
+                            >{{ i18nMappingObj.permission }}
+                        </erd-button>
+                    </erd-tooltip>
+                    <erd-tooltip
+                        :content="i18nMappingObj.nonCurrentTenant"
+                        :disabled="!data.row.isShare"
+                        placement="top"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="data.row.isShare"
+                            v-if="!data.row.isExtends && data.row.attrCategory !== 'HARD'"
+                            @click="onDelete(data)"
+                        >
+                            {{ i18nMappingObj.remove }}
+                        </erd-button>
+                    </erd-tooltip>
+                </template>
+                <template #column:default:icon="{data}">
+                    <i
+                        class="font-18"
+                        :class="getIconByLineData(data.row)"
+                    ></i>
+                </template>
+                <template #column:default:displayName="{data}">
+                    <erd-button
+                        type="text"
+                        @click="onDetail(data)"
+                        >{{data.row.displayName}}</erd-button
+                    >
+                </template>
+
+                <!--自定义头部筛选项 address-->
+                <template #column:filter:displayName="{data}">
+                    <erd-input
+                        clearable
+                        v-model="data.filter.value"
+                        placeholder="请输入"
+                    ></erd-input>
+                    <!--确认按钮-->
+                    <div class="filterBtn">
+                        <erd-button
+                            type="primary"
+                            size="mini"
+                            @click="customSubmit('confirm',data)"
+                            >{{i18nMappingObj.confirm}}</erd-button
+                        >
+                        <erd-button
+                            class="cancel"
+                            size="mini"
+                            @click="customSubmit('cancel',data)"
+                            >{{i18nMappingObj.cancel}}</erd-button
+                        >
+                    </div>
+                </template>
+                <template #column:filter:attrName="{data}">
+                    <erd-input
+                        clearable
+                        v-model="data.filter.value"
+                        placeholder="请输入"
+                    ></erd-input>
+                    <!--确认按钮-->
+                    <div class="filterBtn">
+                        <erd-button
+                            type="primary"
+                            size="mini"
+                            @click="customSubmit('confirm',data)"
+                            >{{i18nMappingObj.confirm}}</erd-button
+                        >
+                        <erd-button
+                            class="cancel"
+                            size="mini"
+                            @click="customSubmit('cancel',data)"
+                            >{{i18nMappingObj.cancel}}</erd-button
+                        >
+                    </div>
+                </template>
+            </erd-table>
+        </div>
+    </template>
+    <type-attr-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="title"
+        :oid="oid"
+        :type-info-data="typeInfoData"
+        :open-type="openType"
+        :row-data="rowData"
+        :app-name="appName"
+        :use-form="useForm"
+        @onsubmit="onSubmit"
+    >
+    </type-attr-config>
+    <single-attr-permission-setting ref="PermissionSettingDialog"></single-attr-permission-setting>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        :businessName="useForm === 'classify' ? 'ClassifyBizExport' : 'TypeDefinitionExport'"
+        :request-config="requestConfig"
+    ></fam-export>
+</div>

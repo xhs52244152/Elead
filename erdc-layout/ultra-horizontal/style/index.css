@@ -1,0 +1,55 @@
+.fam-main {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  transition: all 0.25s ease-out;
+  overflow: hidden;
+}
+.fam-main.fam-main--collapsed .fam-main__right {
+  width: calc(100% - 40px);
+}
+.fam-main .fam-main__left {
+  width: 200px;
+  overflow: hidden;
+  box-shadow: 2px 0 6px 0 rgba(109, 109, 109, 0.1);
+}
+.fam-main .fam-main__left.fam-main__left--collapsed {
+  width: 40px;
+}
+.fam-main .fam-main__left .fam-sidemenu {
+  height: 100%;
+}
+.fam-main .fam-main__right {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 200px);
+  height: 100%;
+  transition: 0.25s all ease-out;
+  background: var(--colorFullBg);
+}
+.fam-main .fam-main__right.fam-main__right--full-width {
+  width: 100% !important;
+}
+.fam-main .fam-main__right .fam-main__right-content {
+  flex-grow: 1;
+  height: 100%;
+  overflow: auto;
+}
+.fam-main .fam-main__right .fam-main__right-content.fam-main__right-content--include-margin {
+  margin: var(--bigSpace);
+  height: calc(100% - 24px);
+  background: #FFFFFF;
+}
+.fam-main .fam-main__right .fam-main__right-content.fam-main__right-content--include-margin .el-scrollbar__view {
+  background: #FFFFFF;
+}
+
+.ultra-container {
+  height: 100%;
+}
+.ultra-container.ultra-container--collapsed .fam-main {
+  left: 0px;
+  width: 100%;
+}
+
+/*# sourceMappingURL=index.css.map */

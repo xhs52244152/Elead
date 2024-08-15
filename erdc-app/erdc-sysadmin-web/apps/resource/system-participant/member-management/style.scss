@@ -1,0 +1,27 @@
+#fam-member-management {
+    .page-content {
+        .right-contaienr {
+            height: 100%;
+            > .el-tabs {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                > .el-tabs__content {
+                    flex-grow: 1;
+                    .el-tab-pane {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+    .fam-organization-manager,
+    .fam-resizable-container,
+    .fam-resizable-container__left,
+    .fam-organization-tree {
+        height: 100%;
+    }
+    .el-tabs__content .el-tab-pane  {
+        padding: 0;
+    }
+}

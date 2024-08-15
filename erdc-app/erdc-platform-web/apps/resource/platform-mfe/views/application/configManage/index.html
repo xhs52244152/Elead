@@ -1,0 +1,154 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    width="1200px"
+    id="config-manage"
+>
+    <div
+        class="flex justify-between mb-16"
+        v-if="type === 0"
+    >
+        <div class="flex">
+            <erd-select
+                v-model="appType"
+                style="width: 96px"
+                filterable
+                @change="changeAppType"
+            >
+                <erd-option
+                    v-for="item in appList"
+                    :key="item.value"
+                    :label="item.name"
+                    :value="item.value"
+                ></erd-option>
+            </erd-select>
+            <erd-input
+                class="flex-1 ml-8"
+                v-model="searchKey"
+                :placeholder="i18nMappingObj.configTips"
+                @keyup.enter.native="searchConfig"
+                @clear="clearSearch"
+                :clearable="true"
+            >
+                <template #suffix>
+                    <erd-icon
+                        icon="search"
+                        class="el-input__icon search-suffix-icon cursor-pointer"
+                        @click.native="searchConfig"
+                    ></erd-icon>
+                </template>
+            </erd-input>
+        </div>
+        <div>
+            <erd-upload
+                class="inline-block"
+                action="/mfe/config/config/import"
+                :headers="CONST.defaultHeaders"
+                accept=".json"
+                :auto-upload="true"
+                :show-file-list="false"
+                :on-success="handleConfigSuccess"
+                :on-remove="handleRemoveConfig"
+                :on-exceed="handleExceedConfig"
+                :before-upload="onBeforeUploadConfig"
+            >
+                <erd-button>{{ i18nMappingObj.import }}</erd-button>
+            </erd-upload>
+            <erd-button @click="exportData">{{ i18nMappingObj.export }}</erd-button>
+        </div>
+    </div>
+    <erd-scrollbar class="h-500 pr-16">
+        <erd-form
+            :model="formData"
+            ref="groupForm"
+            label-width="110px"
+        >
+            <div v-for="item in formData.data">
+                <div
+                    v-if="item.metadata?.length > 0 && type === 0"
+                    class="text-16 font-bold mb-24"
+                >
+                    {{ item.displayName }}
+                </div>
+                <erd-form-item
+                    v-for="(formItem, index) in item.metadata"
+                    :key="index"
+                    :label="formItem.name"
+                    :prop="formItem.name"
+                >
+                    <div class="w-100p">
+                        <div class="flex justify-between">
+                            <div class="form-desc">{{ formItem.description }}</div>
+                            <div><erd-button @click="resetData(formItem)">{{ i18nMappingObj.reset }}</erd-button></div>
+                        </div>
+                        <div>
+                            <erd-select
+                                v-if="formItem.type === 'select'"
+                                v-model="formItem.value"
+                            >
+                                <erd-option
+                                    v-for="option in formItem.options"
+                                    :key="option.value"
+                                    :label="option.text"
+                                    :value="option.value"
+                                ></erd-option>
+                            </erd-select>
+                            <erd-radio-group
+                                v-else-if="formItem.type === 'radio'"
+                                v-model="formItem.value"
+                            >
+                                <erd-radio
+                                    :label="option.value"
+                                    :key="option.value"
+                                    v-for="option in formItem.options"
+                                >
+                                    {{ option.text }}
+                                </erd-radio>
+                            </erd-radio-group>
+                            <erd-checkbox-group
+                                v-else-if="formItem.type === 'checkbox'"
+                                v-model="formItem.value"
+                            >
+                                <erd-checkbox
+                                    :label="option.value"
+                                    :key="option.value"
+                                    v-for="option in formItem.options"
+                                >
+                                    {{ option.text }}
+                                </erd-checkbox>
+                            </erd-checkbox-group>
+                            <erd-input
+                                v-else-if="formItem.type === 'textarea'"
+                                v-model="formItem.value"
+                                type="textarea"
+                                rows="3"
+                                class="w-75p"
+                            />
+                            <erd-input
+                                v-else
+                                v-model="formItem.value"
+                                v-bind="formItem.props || {}"
+                                class="w-75p"
+                            />
+                        </div>
+                    </div>
+                </erd-form-item>
+                <div v-if="item.metadata?.length <= 0 && type === 0 && appType !== 'all'">
+                    <fam-empty :description="noData"></fam-empty>
+                </div>
+            </div>
+        </erd-form>
+        <div v-if="type === 1 && (formData.data?.length === 0 || formData.data?.[0].metadata?.length === 0)">
+            <fam-empty :description="noData"></fam-empty>
+        </div>
+    </erd-scrollbar>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

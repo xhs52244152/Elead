@@ -1,0 +1,81 @@
+<div id="fam-team">
+    <div
+        ref="header"
+        class="team-search"
+    >
+        <div class="team-search-left">
+            <erd-input
+                v-model.trim="searchValue"
+                class="fam-team-tree__search mr-normal"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18nMappingObj.keys"
+                clearable
+                autofocus
+            >
+            </erd-input>
+            <erd-checkbox
+                v-model="onlyShowRole"
+                @change="handleChecked"
+            >
+                {{i18nMappingObj.onlyShowRole}}
+            </erd-checkbox>
+        </div>
+
+        <div class="team-search-btn">
+            <fam-action-button
+                :action-config="actionConfig"
+                @click="actionClick"
+                :args="[vm, {}]"
+            >
+            </fam-action-button>
+            <erd-tooltip
+                placement="top"
+                :content="i18n.refresh"
+            >
+                <erd-button
+                    class="refreshBtn ml-8"
+                    icon="el-icon-refresh"
+                    @click="onRefresh"
+                >
+                </erd-button>
+            </erd-tooltip>
+        </div>
+    </div>
+    <div class="team-table">
+        <ProductTeamTable
+            ref="teamTable"
+            :show-create-role="showCreateRole"
+            :container-team-ref="containerTeamRef"
+            :keyword="searchValue"
+            :visible="true"
+            :org-oid="productOid"
+            :type="teamTableType"
+            :is-edit="isEdit"
+            :query-params="queryParams"
+            :only-show-role="onlyShowRole"
+            :class-name="className"
+            :height="height"
+            :containerOid="productOid"
+            :app-name="appName"
+            v-bind="$attrs"
+            @teamevent="teamFn"
+            @getrolelist="getRoleList"
+        >
+        </ProductTeamTable>
+    </div>
+    <open-create-team
+        v-if="dialogVisible"
+        :show-add-member="showCreateRole"
+        type="addRole"
+        :team-oid="createTeamOid"
+        :visible.sync="dialogVisible"
+        :title="dialogTitle"
+        :query-params="queryParams"
+        :first-role="firstRole"
+        :show-participant-type="showParticipantType"
+        :class-name="className"
+        :app-name="appName"
+        @onsubmit="onSubmit"
+    >
+    </open-create-team>
+</div>

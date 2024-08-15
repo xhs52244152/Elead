@@ -1,0 +1,26 @@
+.object-common-space {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+}
+.object-common-space .ultra-third {
+    width: 100%;
+}
+.object-common-space .router-view-conatainer {
+    min-height: 0;
+}
+
+.fam-space-readonly-title {
+    font-size: 16px;
+    color: var(--colorTextNormal);
+    letter-spacing: 0;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0 var(--largePadding) 0 var(--normalPadding);
+}
+.erd-pulldown-menu-item.fam-space__space-all {
+    padding: 4px 0 8px;
+    margin: 0;
+    border-top: 1px solid #ebebeb;
+}

@@ -1,0 +1,68 @@
+.fam-type-manager-info {
+    height: 100%;
+
+    .fam-type-info__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--largePadding) var(--largePadding) 0 var(--largePadding);
+    }
+
+    .fam-type-info__title {
+        font-size: var(--fontSizeSupper);
+        color: var(--colorTextNormal);
+        letter-spacing: 0;
+        line-height: var(--fontSizeSupper);
+        display: flex;
+        align-items: center;
+        min-width: 0;
+
+        span {
+            font-size: var(--fontSizeLarge);
+            font-weight: 700;
+            padding-left: var(--normalPadding);
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .fam-type-info__base {
+        .el-tabs {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            .el-tabs__content {
+                flex-grow: 1;
+                > .el-tab-pane {
+                    height: 100%;
+                }
+            }
+        }
+        padding-left: 4px;
+        .el-tabs__nav-scroll {
+            padding: 0;
+        }
+        .baseInfo {
+            margin-top: 12px;
+
+            span {
+                font-size: 14px;
+                font-size: var(--fontSize);
+                color: var(--colorTextNormal);
+                letter-spacing: 0;
+                line-height: 22px;
+                font-weight: 400;
+            }
+        }
+
+        .el-tabs__content {
+            padding: var(--largePadding);
+
+            .el-tab-pane {
+                padding: 0;
+            }
+        }
+    }
+}

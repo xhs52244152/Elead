@@ -1,0 +1,27 @@
+<div id="StateManagementAdd">
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="title"
+    >
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="data"
+            @form-change="formChange"
+            :editable-attr="editableAttr"
+        >
+        </FamDynamicForm>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button
+                type="primary"
+                @click="onSubmit"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</el-button
+            >
+            <el-button @click="toogleShow">{{i18nMappingObj.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

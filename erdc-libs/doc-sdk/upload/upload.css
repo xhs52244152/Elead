@@ -1,0 +1,50 @@
+.upload-panel {
+  width: 520px;
+  position: fixed;
+  z-index: 200;
+  right: 15px;
+  bottom: 15px;
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.upload-panel .upload-panel-header {
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  border-bottom: 1px solid #ddd;
+}
+.upload-panel .upload-panel-header .title {
+  font-size: 15px;
+  color: var(--colorTextNormal);
+}
+.upload-panel .upload-panel-header .operate {
+  flex: 1;
+  text-align: right;
+}
+.upload-panel .upload-panel-content {
+  position: relative;
+  height: 240px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #fff;
+}
+.upload-panel .upload-panel-content .uploader-btn {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+.upload-panel .upload-panel-content .no-file {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+}
+
+.collapsed .upload-panel-header {
+  background-color: #e7ecf2;
+}
+
+/*# sourceMappingURL=upload.css.map */

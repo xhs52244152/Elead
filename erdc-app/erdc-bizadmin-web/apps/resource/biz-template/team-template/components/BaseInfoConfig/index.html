@@ -1,0 +1,29 @@
+<div id="BaseInfoConfig">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+    >
+        <div class="basic-infor-config">
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form.sync="formData"
+                :data="formConfig"
+                @form-change="formChange"
+            >
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveSubmit"
+                :loading="loading"
+                :disabled="disabled"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

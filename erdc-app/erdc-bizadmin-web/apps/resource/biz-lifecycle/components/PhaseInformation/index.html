@@ -1,0 +1,149 @@
+<div
+    id="PhaseInformation"
+    :style="style"
+>
+    <div class="state">
+        <span>{{i18nMappingObj.currentState}}：</span>
+        <span>{{stateName}}</span>
+    </div>
+
+    <erd-contraction-panel
+        :unfold.sync="stateUnfold"
+        class="pt-16"
+        :title="i18nMappingObj.stateCondition"
+        :tips="i18nMappingObj.stateTooltip"
+    >
+        <template v-slot:content>
+            <erd-table
+                border
+                :data="stateTableData"
+                :column="columnState"
+                :cell-class-name="cellClassName"
+                :header-cell-class-name="headerCellClassName"
+                :is-embed-table="true"
+                show-overflow
+            >
+                <template
+                    v-for="item in phaseEnumData"
+                    v-slot:[item.slotName]="{data}"
+                >
+                    <el-checkbox
+                        v-model="data.row[data.column.property]"
+                        :disabled="type=='check' || type == 'checkHistory'"
+                        @change="(value)=>(onChangePhaseState(value, data))"
+                    ></el-checkbox>
+                </template>
+            </erd-table>
+        </template>
+    </erd-contraction-panel>
+
+    <erd-contraction-panel
+        v-if="!formData.basic"
+        :unfold.sync="aclUnfold"
+        :title="i18nMappingObj.accessControl"
+    >
+        <template v-slot:content>
+            <div>
+                <div
+                    class="flex addUser"
+                    v-if="type != 'check' && type != 'checkHistory'"
+                >
+                    <ParticipantSelect
+                        ref="ParticipantSelect"
+                        class="search_component"
+                        :isgetdisable="true"
+                        v-model="searchParticipantVal"
+                        :showType="showParticipantType"
+                        :query-params="queryParams"
+                        :query-scope="queryScope"
+                        multiple
+                        @change="onChange"
+                    >
+                    </ParticipantSelect>
+                    <div class="pl-8"><erd-button @click="addUser">{{i18nMappingObj.addMembers}}</erd-button></div>
+                </div>
+                <erd-table
+                    ref="aclTable"
+                    border
+                    :data="aclTableData"
+                    :column="columnAcl"
+                    :cell-class-name="cellClassName"
+                    :header-cell-class-name="headerCellClassName"
+                    :is-embed-table="true"
+                    show-overflow
+                >
+                    <template
+                        v-for="item in aclEnumData"
+                        v-slot:[item.slotName]="{data}"
+                    >
+                        <el-checkbox
+                            v-model="data.row[`${data.column.property}`]"
+                            :disabled="type=='check' || type == 'checkHistory'"
+                            @change="(value)=>(onChangeAcl(value, data))"
+                        ></el-checkbox>
+                    </template>
+                    <template #column:default:oper="{data}">
+                        <erd-button
+                            type="text"
+                            :disabled="type=='check' || type == 'checkHistory'"
+                            @click="onRemove(data)"
+                            >{{i18nMappingObj.remove}}</erd-button
+                        >
+                    </template>
+                </erd-table>
+            </div>
+        </template>
+    </erd-contraction-panel>
+
+    <erd-contraction-panel
+        v-if="!formData.basic"
+        :unfold.sync="processUnfold"
+        :title="i18nMappingObj.associatedProcess"
+    >
+        <template v-slot:content>
+            <div class="flex process-content">
+                <div class="process-title">{{i18n.processName}}</div>
+                <erd-button
+                    v-if="type != 'check' && type != 'checkHistory'"
+                    class="process-btn ml-8"
+                    @click="selectProcess"
+                >
+                    {{i18n.selectProcess}}
+                </erd-button>
+                <div class="process-name">
+                    <div
+                        v-for="item in processName"
+                        class="flex align-center"
+                        @mouseover="showDeleteButton(item)"
+                        @mouseleave="hideDeleteButton(item)"
+                    >
+                        <erd-show-tooltip
+                            placement="bottom-start"
+                            :key="item.processName || item.name || item.displayName"
+                            :content="item.processName || item.name || item.displayName"
+                            :enterable="false"
+                            :flex="false"
+                            padding-width="12"
+                            class="mr-4 inline-block"
+                        ></erd-show-tooltip>
+                        <erd-button
+                            v-if="type != 'check' && type != 'checkHistory'"
+                            v-show="item.isShowDelete"
+                            type="icon"
+                            icon="el-icon-delete"
+                            @click="deleteAssociatedProcess(item)"
+                        >{{i18n.delete}}</erd-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </erd-contraction-panel>
+
+    <associated-process
+        v-if="associatedProcessVisible"
+        :visible.sync="associatedProcessVisible"
+        :default-process-data="processName"
+        @onsubmit="addAssociatedProcess"
+    >
+    </associated-process>
+</div>

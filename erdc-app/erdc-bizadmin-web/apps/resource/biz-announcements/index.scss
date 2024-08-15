@@ -1,0 +1,18 @@
+.fam-notice-list {
+    height: 100%;
+    .fam-advanced-table-component {
+        &.adaptive-height {
+            .viewtable-body-container {
+                > .el-pagination {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    .participant-add {
+        margin-left: 12px;
+    }
+    .participant-panel {
+        flex: 1
+    }
+}

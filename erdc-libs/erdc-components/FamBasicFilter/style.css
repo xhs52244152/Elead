@@ -1,0 +1,55 @@
+/* 基础筛选 */
+.fam-basicfilter-popover {
+    padding: 0;
+}
+.fam-basicfilter-popover .el-input {
+    margin: var(--normalSpace);
+    width: auto;
+}
+.fam-basicfilter-popover .el-input__suffix {
+    cursor: pointer;
+}
+.viewtable-header-container .custom-left-slot .el-button-group {
+    display: inline-flex;
+    flex-wrap: nowrap;
+}
+
+.fam-basicfilter-popover-btn {
+    color: var(--colorArrow);
+    border-color: var(--inputBorderColor);
+    margin-right: var(--normalSpace);
+}
+.fam-basicfilter-container>form {
+    word-spacing: -4px;
+}
+.fam-basicfilter-container>form>.el-form-item {
+    margin-bottom: 0;
+    margin-right: var(--normalSpace);
+}
+.fam-view-table-header-component .viewtable-header-container:has(.fam-basicfilter-container) {
+    flex-wrap: unset;
+}
+.fam-view-table-header-component .viewtable-header-container:has(.fam-advanced-group-panel) {
+    flex-wrap: wrap;
+}
+.fam-basicfilter-ul {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 0 0 var(--normalSpace) 0;
+}
+.fam-basicfilter-container .fam-form-item-width-label .el-input .el-input__inner {
+    width: var(--placeholderContentWidth);
+}
+.fam-basicfilter-container .fam-form-item-width-label .el-date-editor--datetime.el-input .el-input__inner  {
+    width: 160px;
+}
+/* .fam-basicfilter-container .fam-form-item-width-label #ComponentWapper-famMemberSelect .el-input .el-input__inner {
+    width: 160px;
+} */
+.fam-basicfilter-container .erd-tree-select .el-input .el-input__inner{
+    min-width: 160px;
+    padding-left: 4px;
+}
+.fam-basicfilter-container #FamParticipantSelect {
+    min-width: 180px;
+}

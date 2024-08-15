@@ -1,0 +1,113 @@
+<div
+    id="global-search-list"
+    class="flex flex-column grow-1 h-100p"
+>
+    <FamPageTitle
+        v-if="showTitle"
+        class="pl-xl pb-xl bg-normal"
+    ></FamPageTitle>
+    <div class="flex flex-column grow-1 w-100p p-xl">
+        <fam-advanced-table
+            ref="famAdvancedTable"
+            :view-table-config="viewTableConfig"
+            is-adaptive-height
+        >
+            <template #left:toolbar:first>
+                <div class="toolbar-search-component flex justify-center align-items-center">
+                    <erd-select
+                        v-model="applicationOid"
+                        :placeholder="`${i18n.pleaseSelect}${i18n.app}`"
+                        clearable
+                        class="mr-8"
+                        @change="handleFilterChange('appName')"
+                        @clear="handleFilterChange('appName')"
+                    >
+                        <erd-option
+                            v-for="item in applicationList"
+                            :key="item.oid"
+                            :label="item.displayName"
+                            :value="item.oid"
+                        ></erd-option>
+                    </erd-select>
+                    <erd-tree-select
+                        v-model="mainModelType"
+                        node-key="typeName"
+                        :data="treeSelectData"
+                        :props="{
+                            children: 'childList',
+                            label: 'displayName',
+                            value: 'typeName'
+                        }"
+                        defaultExpandAll
+                        :placeholder="`${i18n.pleaseSelect}${i18n.mainModelType}`"
+                        class="mr-8"
+                        clearable
+                        @change="handleFilterChange('mainModelType')"
+                        @clear="handleFilterChange('mainModelType')"
+                    >
+                    </erd-tree-select>
+                    <erd-input
+                        v-model="nameI18nJson"
+                        :placeholder="`${i18n.pleaseEnterTips}${i18n.name}`"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                        clearable
+                        @blur="handleFilterChange"
+                        @keyup.enter.native="handleFilterChange"
+                        @clear="handleFilterChange"
+                    ></erd-input>
+                </div>
+            </template>
+            <template #right:toolbar:first>
+                <div class="toolbar-search-component flex justify-center align-items-center">
+                    <erd-button @click="configModel"> {{ i18n.configure }} </erd-button>
+                </div>
+            </template>
+            <template #column:default:descriptionI18nJson:content="{ scope }"> </template>
+            <template #column:default:operation:content="{ scope }">
+                <el-button
+                    type="text"
+                    @click="editViewTable(scope.row)"
+                >
+                    {{ i18n.edit }}
+                </el-button>
+                <el-button
+                    type="text"
+                    @click="deleteViewTable(scope.row)"
+                >
+                    {{ i18n.delete }}
+                </el-button>
+            </template>
+        </fam-advanced-table>
+    </div>
+
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="dialogObj.visible"
+        :title="dialogObj.title"
+        size="large"
+    >
+        <!-- 配置 -->
+        <global-search-config
+            v-if="isConfigDialog"
+            ref="globalSearchConfig"
+        ></global-search-config>
+
+        <!-- 创建、编辑视图 -->
+        <view-table-form
+            v-else
+            ref="viewTableForm"
+            :oid="viewTableFormObj.oid"
+            :editable="viewTableFormObj.editable"
+        ></view-table-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="btnLoading"
+                @click="onSubmit"
+            >
+                {{i18n.confirm}}
+            </erd-button>
+            <erd-button @click="toggleDialog(false)"> {{i18n.cancel}} </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

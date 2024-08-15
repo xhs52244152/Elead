@@ -1,0 +1,31 @@
+.fam-user-group-manager {
+  height: 100%;
+}
+.fam-user-group-manager .fam-resizable-container__left {
+  position: relative;
+}
+.fam-user-group-manager .fam-resizable-container__left .fam-user-group-tree .tree-node-content {
+  position: relative;
+}
+.fam-user-group-manager .fam-resizable-container__left .fam-user-group-tree .tree-node-content .fam-organization-manager__node-operation {
+  height: 26px;
+  line-height: 26px;
+}
+.fam-user-group-manager .fontSize18 {
+  font-size: 18px !important;
+}
+.fam-user-group-manager .user-group-info-container {
+  padding: 12px;
+}
+.fam-user-group-manager .right-contaienr {
+  position: relative;
+}
+.fam-user-group-manager .right-operateBtns {
+  position: absolute;
+  top: 3px;
+  right: 12px;
+}
+
+.radio-form-item {
+  margin-bottom: 0;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,125 @@
+<div
+    id="FamAdvancedConditions"
+    class="fam-advanced-conditions"
+    :style="{'--conditionMaxHeight': maxHeight}"
+>
+    <erd-form ref="form">
+        <div class="conditions-container">
+            <erd-row
+                class="condition-row-item"
+                v-for="(item,index) in conditionsList"
+                :key="item.attrName"
+                :gutter="8"
+                type="flex"
+                justify-content="space-around"
+            >
+                <!-- <erd-col :span="3">
+                    <label v-if="index==0" :class="{'el-form-item__label': true, 'my-title-label': true}">
+                        设置条件
+                    </label>
+                </erd-col> -->
+                <erd-col :span="10">
+                    <erd-form-item>
+                        <erd-select
+                            v-model="item.field"
+                            clearable
+                            @change="fnSelectColumn(item)"
+                        >
+                            <erd-option
+                                v-for="item in columnsList"
+                                :key="item.attrName"
+                                :label="item.label"
+                                :value="item.attrName"
+                            ></erd-option>
+                        </erd-select>
+                    </erd-form-item>
+                </erd-col>
+                <erd-col :span="4">
+                    <erd-form-item>
+                        <erd-select
+                            v-model="item.operator"
+                            @change="fnOperChange(item)"
+                            clearable
+                        >
+                            <erd-option
+                                v-for="item in item.operationList"
+                                :key="item.value"
+                                :label="item.displayName"
+                                :value="item.value"
+                            ></erd-option>
+                        </erd-select>
+                    </erd-form-item>
+                </erd-col>
+                <!-- 选中字段则显示对应组件 -->
+                <erd-col
+                    :span="8"
+                    v-if="item.field && fnOperatorHandle(item)"
+                >
+                    <!-- 显示组件根据字段对应的类型来映射生成 -->
+                    <erd-form-item>
+                        <!-- 自定义动态组件，根据传入的组件名称显示对应组件，逻辑在组件里面自己判断，
+                            每个字段所有字段都以对象传进去了，这样如果后续有拓展组件，自己写组件判断逻辑就行，组件名称规则 custom-组件名称 -->
+                        <component
+                            :is="`${item.showComponent}`"
+                            :oper="item.operator"
+                            :key="`${item.field}-${item.componentName}-${item.operator}-${index}`"
+                            :row="item"
+                            :item-name="item?.dataKey || ''"
+                            @callback="fnComponentCallback"
+                            v-model="item.value"
+                        ></component>
+                    </erd-form-item>
+                </erd-col>
+                <erd-col :span="2">
+                    <erd-button
+                        type="fill-icon"
+                        icon="el-icon-delete"
+                        @click="fnDeleteCondition(item,index)"
+                    >
+                    </erd-button>
+                </erd-col>
+            </erd-row>
+        </div>
+        <erd-row
+            :gutter="8"
+            type="flex"
+            justify-content="space-around"
+        >
+            <erd-col :span="21">
+                <erd-button
+                    type="text"
+                    class="my-icon-btn"
+                    icon="el-icon-plus"
+                    @click="fnShowFieldDialog"
+                >
+                    {{ i18nMappingObj['添加条件']}}
+                </erd-button>
+            </erd-col>
+        </erd-row>
+        <erd-form-item
+            class="footer-form-item"
+            v-if="footerBtnShow"
+        >
+            <div class="footer-btn-container">
+                <el-button
+                    v-for="(item, index) in buttonsList"
+                    :type="item.btnType"
+                    :key="item.type"
+                    @click="buttonClick(item.type)"
+                >{{ item.name }}</el-button
+                >
+            </div>
+        </erd-form-item>
+    </erd-form>
+    <!-- 属性选择组件 -->
+    <fam-table-col-set
+        v-if="colSettingVisible"
+        :visible.sync="colSettingVisible"
+        :title="title || i18nMappingObj['添加条件']"
+        :columns-list="columnsList"
+        :show-label="showLabel"
+        :value-key="valueKey"
+        @onsubmit="fnFieldSelectCallBack"
+    >
+    </fam-table-col-set>
+</div>

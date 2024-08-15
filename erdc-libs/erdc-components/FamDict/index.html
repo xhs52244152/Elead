@@ -1,0 +1,47 @@
+<div id="FamDict">
+    <erd-tree-select
+        ref="famDict"
+        v-if="!readonly"
+        style="width: 100%"
+        v-model="selectVal"
+        :data="listTreeData"
+        :node-key="nodeKey"
+        :popper-class="popperClass"
+        :props="{
+            label: 'displayName',
+            children: 'children'
+        }"
+        :multiple="innerMultiple"
+        :clearable="clearable"
+        :disabled="disabled"
+        :filterable="filterable"
+    >
+        <template #prefix="scoped">
+            <slot
+                name="prefix"
+                v-bind="scoped"
+            ></slot>
+        </template>
+    </erd-tree-select>
+    <erd-show-tooltip
+        v-else
+        placement="top"
+        :content="staticText"
+        popper-class="fam-tooltip-max-width"
+        flex
+        class="align-items-center"
+    >
+        <span
+            class="title_text"
+            v-fam-clamp="{ truncationStyle: 'inline' }"
+        >
+            <fam-link
+                v-if="path"
+                :link-name="staticText"
+                :form-data="formData"
+                :path="path"
+            ></fam-link>
+            <span v-else>{{ staticText }}</span>
+        </span>
+    </erd-show-tooltip>
+</div>

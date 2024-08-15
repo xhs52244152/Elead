@@ -1,0 +1,113 @@
+<div id="InstanceList">
+    <erd-ex-dialog
+        :title="listTitle"
+        :visible.sync="innerVisible"
+        custom-class="instance-list-dialog"
+        width="1200px"
+    >
+        <div class="instance-list">
+            <div class="flex operation">
+                <div class="flex searchDone">
+                    <span class="time-label">{{i18nMappingObj.triggeringTime}}</span>
+                    <erd-date-picker
+                        v-model="searchTime"
+                        type="daterange"
+                        range-separator="-"
+                        :start-placeholder="i18nMappingObj.startDate"
+                        :end-placeholder="i18nMappingObj.endDate"
+                        @change="onSelectTime"
+                    >
+                    </erd-date-picker>
+                    <span class="time-label searchDone-ml16">状态</span>
+                    <erd-ex-select
+                        v-model="status"
+                        clearable
+                        :options="options"
+                        :default-props="defaultProps"
+                    ></erd-ex-select>
+                    <erd-button
+                        class="searchDone-ml8"
+                        type="primary"
+                        icon="erd-iconfont erd-icon-search"
+                        @click="refresh"
+                        >搜索</erd-button
+                    >
+                </div>
+                <div>
+                    <erd-button
+                        type="fill-icon"
+                        icon="erd-iconfont erd-icon-reset"
+                        @click="refresh"
+                    ></erd-button>
+                </div>
+            </div>
+            <erd-table
+                ref="aclTable"
+                border
+                v-loading="loading"
+                :data="listData"
+                :column="columns"
+                :height="tableHeight"
+                show-overflow
+            >
+                <template #column:default:oper="{data}">
+                    <erd-button
+                        type="text"
+                        @click="onCheck(data)"
+                        >{{i18nMappingObj.details}}</erd-button
+                    >
+                    <erd-button
+                        type="text"
+                        @click="onCheckLog(data)"
+                        >{{i18nMappingObj.LOG}}</erd-button
+                    >
+                    <erd-dropdown
+                        trigger="click"
+                        style="margin-left: 8px"
+                    >
+                        <erd-button
+                            type="text"
+                            class="more-button"
+                        >
+                            {{i18nMappingObj.more}}<em class="el-icon-arrow-down el-icon--right"></em>
+                        </erd-button>
+                        <erd-dropdown-menu slot="dropdown">
+                            <erd-dropdown-item @click.native="onRetry(data)"
+                                >{{i18nMappingObj.retry}}</erd-dropdown-item
+                            >
+                            <erd-dropdown-item @click.native="onStop(data)">{{i18nMappingObj.stop}}</erd-dropdown-item>
+                        </erd-dropdown-menu>
+                    </erd-dropdown>
+                </template>
+            </erd-table>
+            <erd-pagination
+                style="padding-top: 16px"
+                :total="total"
+                :page-size="pageSize"
+                :current-page="currentPage"
+                :hide-on-single-page="false"
+                @size-change="sizeChange"
+                @current-change="currentChange"
+            >
+            </erd-pagination>
+        </div>
+        <!-- <span slot="footer">
+            <erd-button type="primary" @click="onSubmit">确定</erd-button>
+            <erd-button @click="onCancle">取消</erd-button>
+        </span> -->
+    </erd-ex-dialog>
+
+    <instance-detail
+        v-if="instanceDetailVisible"
+        :visible.sync="instanceDetailVisible"
+        :instanceId="instanceId"
+    >
+    </instance-detail>
+
+    <instance-log
+        v-if="instanceLogVisible"
+        :visible.sync="instanceLogVisible"
+        :instanceId="instanceId"
+    >
+    </instance-log>
+</div>

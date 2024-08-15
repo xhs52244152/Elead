@@ -1,0 +1,50 @@
+<div class="fam-checker-content">
+    <ResizableContainer :left="{ width: '260px' }">
+        <template v-slot:left>
+            <checker-tree
+                ref="checkerTree"
+                @nodeClick="onNodeClick"
+            >
+            </checker-tree>
+        </template>
+        <template v-slot:right>
+            <div class="right-contaienr">
+                <div class="right-contaienr_input">
+                    <erd-input
+                    v-model="searchKey"
+                    clearable
+                    placeholder="请输入"
+                    suffix-icon='el-input__icon erd-iconfont erd-icon-search'
+                    @input="searchKeyChange"
+                    @change="searchKeyChange">
+                    </erd-input>
+                </div>
+                <erd-table
+                    v-loading="loading"
+                    border
+                    height="500"
+                    :row-config="{isCurrent: true, isHover: true}"
+                    :column-config="{resizable: true}"
+                    align="left"
+                    :data="tableData"
+                    :column="column"
+                    show-overflow
+                    @checkbox-all="selectionChange" 
+                    @checkbox-change="selectionChange"
+                    ref="erdTable"
+                >
+                </erd-table>
+                <!--小于等于一页不展示-->
+                <erd-pagination
+                    style="margin-top:16px;"
+                    :current-page.sync="pagination.pageIndex"
+                    :page-size.sync="pagination.pageSize"
+                    :total="pagination.total"
+                    @current-change="handlePageChange"
+                    @size-change="handleSizeChange"
+                >
+                </erd-pagination>
+            </div>
+        </template>
+    </ResizableContainer>
+</div>

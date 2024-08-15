@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="renderer"
+            content="webkit"
+        />
+        <meta
+            http-equiv="X-UA-Compatible"
+            content="IE=edge,chrome=1"
+        />
+        <meta
+            name="viewport"
+            content="width=1200"
+        />
+
+        <link
+            rel="shortcut icon"
+            href="/erdc-app/erdc-platform-web/favicon.ico"
+        />
+        <title>平台管理</title>
+        <style>
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+            #app {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            .el-loading-spinner {
+                margin-top: -25px;
+                position: absolute;
+                text-align: center;
+                top: 50%;
+                width: 100%;
+            }
+            .el-loading-mask.is-fullscreen .el-loading-spinner .circular {
+                height: 50px;
+                width: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div></div>
+        </div>
+
+        <div
+            id="global-loading"
+            class="el-loading-mask is-fullscreen"
+            style="z-index: 2000"
+        >
+            <div class="el-loading-spinner">
+                <svg
+                    t="1686210620992"
+                    class="circular"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="6378"
+                    width="200"
+                    height="200"
+                >
+                    <path
+                        d="M546.406 737.73A81.92 81.92 0 1 1 664.29 851.559a81.92 81.92 0 0 1-117.842-113.827z m-154.255-24.575a81.92 81.92 0 1 1 17.121 162.98 81.92 81.92 0 0 1-17.121-162.98zM761.733 581.18l6.144 0.205a81.92 81.92 0 1 1-11.469 163.43 81.92 81.92 0 0 1 11.47-163.43z m-585.728 36.127a81.92 81.92 0 1 1 135.864 91.587 81.92 81.92 0 0 1-135.823-91.587z m573.563-222.044a81.92 81.92 0 1 1 96.297 132.506 81.92 81.92 0 0 1-96.297-132.506z m-563.732-12.493a81.92 81.92 0 1 1 45.178 157.491 81.92 81.92 0 0 1-45.178-157.49zM615.875 264.48a81.92 81.92 0 1 1 158.965 39.608 81.92 81.92 0 0 1-158.965-39.608z m-379.986-13.517a81.92 81.92 0 1 1 149.667 66.642 81.92 81.92 0 0 1-149.626-66.601z m231.26-110.305a81.92 81.92 0 1 1 71.803 147.25 81.92 81.92 0 0 1-71.803-147.25z"
+                        p-id="6379"
+                        fill="#2779FF"
+                    ></path>
+                </svg>
+            </div>
+        </div>
+
+        <script
+            src="/erdc-thirdparty/platform/requirejs/require.min.js?ver=__VERSION__"
+            data-main="./index.js"
+        ></script>
+    </body>
+</html>

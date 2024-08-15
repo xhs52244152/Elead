@@ -1,0 +1,63 @@
+.fam-type-manager-info {
+  height: 100%;
+}
+.fam-type-manager-info .fam-type-info__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--largePadding) var(--largePadding) 0 var(--largePadding);
+}
+.fam-type-manager-info .fam-type-info__title {
+  font-size: var(--fontSizeSupper);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  line-height: var(--fontSizeSupper);
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.fam-type-manager-info .fam-type-info__title span {
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  padding-left: var(--normalPadding);
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.fam-type-manager-info .fam-type-info__base {
+  padding-left: 4px;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs .el-tabs__content {
+  flex-grow: 1;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs .el-tabs__content > .el-tab-pane {
+  height: 100%;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs__nav-scroll {
+  padding: 0;
+}
+.fam-type-manager-info .fam-type-info__base .baseInfo {
+  margin-top: 12px;
+}
+.fam-type-manager-info .fam-type-info__base .baseInfo span {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  line-height: 22px;
+  font-weight: 400;
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs__content {
+  padding: var(--largePadding);
+}
+.fam-type-manager-info .fam-type-info__base .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

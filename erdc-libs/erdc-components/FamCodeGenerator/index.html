@@ -1,0 +1,45 @@
+<div
+    id="FamCodeGenerator"
+    class="color-normal"
+>
+    <div v-if="type === 'system'">{{i18nMappingObj.systemDefault}}</div>
+    <div v-if="type === 'custom'">
+        <erd-input
+            v-model="defaultValue"
+            @input="onInput"
+        ></erd-input>
+    </div>
+    <div v-if="type === 'autoGeneration'">{{code}}</div>
+    <div
+        v-if="type === 'codeGenerate'"
+        class="flex"
+    >
+        <erd-input
+            v-model="defaultValue"
+            :disabled="true"
+        ></erd-input>
+        <erd-button @click="onCreate">{{i18nMappingObj.generatedCode}}</erd-button>
+    </div>
+
+    <erd-ex-dialog
+        v-if="visible"
+        :visible.sync="visible"
+        :title="i18nMappingObj.generatedCode"
+        :custom-class="customClass"
+    >
+        <signatrue-form
+            ref="signatrueForm"
+            type="code"
+            :code-rule-data="codeRuleData"
+            :code-rule-default="codeRuleDefault"
+        ></signatrue-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="onSubmit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onClose">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

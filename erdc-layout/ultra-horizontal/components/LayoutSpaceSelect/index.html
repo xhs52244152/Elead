@@ -1,0 +1,25 @@
+<div class="space-layout">
+    <SpaceSelect
+        :readonly="readonly"
+        :value="spaceDetail.oid"
+        :type-name="typeName"
+        :extend-params="extendParams"
+        @change="changeSpace"
+    >
+        <template #after>
+            <erd-pulldown-menu-item
+                class="fam-space__space-all"
+                @click="clickItem"
+            >
+                <span>{{i18n.viewAll}}</span>
+                <erd-icon icon="arrow-right"></erd-icon>
+            </erd-pulldown-menu-item>
+        </template>
+    </SpaceSelect>
+    <!-- <div
+        v-else
+        class="fam-space-readonly-title"
+    >
+        {{ spaceDetail && spaceDetail.name }} -->
+    </div>
+</div>

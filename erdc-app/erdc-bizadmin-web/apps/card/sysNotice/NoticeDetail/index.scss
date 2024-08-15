@@ -1,0 +1,35 @@
+.notice-detail {
+    font-size: 14px;
+    font-size: var(--fontSize);
+    line-height: 22px;
+    .detail-content{
+        display: grid;
+        grid-row-gap: 12px;    
+        > div {
+            display: flex;
+            font-size: 14px;
+            font-size: var(--fontSize);
+            line-height: 32px;
+            label {
+                    display: inline-block;
+                    flex: 0 0 100px;
+                    text-align: right;
+                    color: var(--colorTextPlaceholder);
+                    margin-right: 8px;
+            }
+            .value {
+                color: var(--colorTextNormal);
+                flex: 1 1 auto;
+            }
+        }
+
+        .file-link {
+            cursor: pointer;
+            color: var(--colorPrimary);
+            margin-right: 10px;
+        }
+        .file-link:hover {
+            color: var(--colorPrimaryLighter);
+        }
+    }
+}

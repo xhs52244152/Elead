@@ -1,0 +1,55 @@
+<div class="h-100p flex flex-column SignatureDocTmplHistory">
+    <FamPageTitle
+        class="plr-xl bg-normal"
+        :title="title"
+        static-title
+        show-back-button
+        @back="goBack"
+    ></FamPageTitle>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+    >
+        <template
+            :slot="`column:default:${CONST.className.docTmpl}#isDefault:content`"
+            slot-scope="{scope}"
+        >
+            <div class="text-center">
+                <input
+                    v-if="scope.row['lifecycleStatus.status'] === 'RELEASED'"
+                    type="radio"
+                    class="cursor-pointer"
+                    @change="setDefaultTemplate(scope.row.id, scope.row)"
+                    :value="scope.row.id"
+                    :checked="scope.row.isDefault"
+                />
+            </div>
+        </template>
+        <template
+            slot="column:default:operation:content"
+            slot-scope="{scope}"
+        >
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="{
+                    name: CONST.operationKey.docTmplHistory.row,
+                    objectOid: scope.row.oid,
+                    className: CONST.className.docTmpl,
+                }"
+                :action-data="scope.row"
+                @click="onCommand"
+                :default-btn-config="defaultBtnConfig"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+    <DocTmplDesign
+        ref="docTmplDesign"
+        @done="refreshTable"
+        @cancel="handleCancel"
+    ></DocTmplDesign>
+    <ReviseOperate
+        ref="reviseOperate"
+        @done="refreshTable"
+    ></ReviseOperate>
+</div>

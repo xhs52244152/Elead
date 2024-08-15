@@ -1,0 +1,17 @@
+.doc-site-timing-task .timeExpression {
+  position: relative;
+  width: 100%;
+}
+.doc-site-timing-task .timeExpression .intermation {
+  cursor: pointer;
+  position: absolute;
+  top: 7px;
+  right: 5px;
+  color: #567FFD;
+  font-size: 20px;
+}
+.doc-site-timing-task .timeExpression .intermation:hover {
+  color: #7395FF;
+}
+
+/*# sourceMappingURL=index.css.map */

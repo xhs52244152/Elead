@@ -1,0 +1,60 @@
+<div
+    id="OrganizationRoleTable"
+    class="organization-role-table"
+>
+    <fam-erd-table
+        v-if="tableVisible"
+        v-bind="tableConfig"
+        :data="tableData"
+        :column-config="{ resizable: true }"
+        :max-height="maxHeight"
+        :is-embed-table="true"
+        ref="OrgRoleTable"
+    >
+        <template #column:default:principalTarget="{data}">
+            <span> {{filterType(data.row?.principalTarget)}} </span>
+        </template>
+        <!--自定义模板 default[自定义内容] 命名规则: column:slotType:prop-->
+        <template #column:default:operation="{data}">
+            <erd-button
+                v-if="createPerm && !data.row?.parentId"
+                type="text"
+                @click="fnAddRole(data.row)"
+            >
+                {{ i18nMappingObj.add}}
+            </erd-button>
+            <erd-button
+                v-if="removePerm && data.row?.parentId"
+                type="text"
+                @click="fnRemoveRole(data.row)"
+            >
+                {{ i18nMappingObj.remove}}
+            </erd-button>
+        </template>
+    </fam-erd-table>
+
+    <!-- 增加角色 -->
+    <erd-ex-dialog
+        ref="addOrganizationRoleDialog"
+        :visible.sync="roleForm.visible"
+        :title="i18nMappingObj.addOrganizationRole"
+    >
+        <AddOrganizationRole
+            ref="addOrgRole"
+            v-if="roleForm.visible"
+            app-name="ALL"
+            :oldParticipantIds="oldParticipantIds"
+            :show-type="showParticipantType"
+            :current-role-name="roleForm.roleName"
+            multiple
+        ></AddOrganizationRole>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="fnOnSubmitForm"
+                >{{ i18nMappingObj.ok }}
+            </erd-button>
+            <erd-button @click="fnCloseFormDialog">{{ i18nMappingObj.cancel }} </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

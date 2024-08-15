@@ -1,0 +1,20 @@
+{
+  "name": "@erdc-app/erdc-platform-web",
+  "description": "平台管理",
+  "i18n": {
+    "zh_cn": "平台管理",
+    "en_us": "platform management"
+  },
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat",
+  "scripts": {
+    "serve": "npx erdc-cli serve --proxy http://192.168.11.165/",
+    "clean": "npx erdc-cli clean",
+    "build": "npx erdc-cli build"
+  },
+  "devDependencies": {
+    "erdc-cli": "workspace:*",
+    "@erdc-libs/erdc-app": "workspace:*"
+  }
+}

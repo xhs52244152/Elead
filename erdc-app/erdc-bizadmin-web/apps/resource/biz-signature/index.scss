@@ -1,0 +1,230 @@
+//签章历史记录
+.signature-manage-history {
+    .signature-manage-history_content{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .signature-manage-history_item{
+            width: 400px;
+            overflow: hidden;
+            margin-top: 5px;
+            background-color: var(--colorFullBg);
+            .signature-manage-history_item_body{
+                background-color: var(--colorWhite);
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 200px;
+                margin: var(--bigSpace);
+                img {
+                    width: 376px;
+                }
+            }
+            .signature-manage-history_item_info {
+                font-size: var(--fontSize);
+                line-height: 30px;
+                padding: var(--bigPadding);
+                background-color: var(--colorBan);
+                &.active {
+                    background-color: var(--colorPrimaryLightest);
+                }
+            }
+            &.empty {
+                background-color: var(--colorWhite);
+            }
+        }
+        .signature-manage-history_item:nth-child(-n+3) {
+            margin-top: 0;
+        }
+    }
+}
+
+//签名模板设计
+.signature-doc-tmpl-placeholder{
+    z-index: 1;
+    //text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    position: absolute;
+    opacity: .9;
+    outline: dashed 2px #ffc53d;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    text-align: center;
+}
+.signature-pdf-design {
+    height: 500px;
+    width: 100%;
+    .signature-doc-tmpl-img_thumbs{
+        border-right: var(--borderWidth) var(--borderStyle) var(--colorBorder);
+        .signature-doc-tmpl-img_thumb{
+            position: relative;
+            cursor: pointer;
+            border: var(--borderWidth) var(--borderStyle) var(--colorBorder);
+            padding: 10px;
+            &:hover{
+                border-color: var(--colorPrimary);
+                .signature-doc-tmpl-thumb_btns{
+                    display: block;
+                }
+            }
+            &.signature-doc-tmpl-img_thumb_active{
+                border-color: var(--colorPrimary);
+            }
+            .signature-doc-tmpl-img_thumb_wrapper{
+                height: 200px;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                }
+            }
+            &+.signature-doc-tmpl-img_thumb{
+                margin-top: 10px;
+            }
+            .signature-doc-tmpl-thumb_btns{
+                display: none;
+                position: absolute;
+                right: 2px;
+                top: 2px;
+                font-size: 18px;
+                .icon-trash{
+                    color: var(--colorError);
+                }
+            }
+            .layui-icon-about{
+                font-size: 12px;
+            }
+        }
+    }
+    .signature-doc-tmpl-placeholder{
+        z-index: 1;
+        text-align: left;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        position: absolute;
+        opacity: .9;
+        outline: dashed 2px var(--colorWarning);
+        user-select: none;
+        .el-icon-close {
+            position: absolute;
+            color:  var(--colorError);
+            right: -10px;
+            top: -10px;
+            line-height: 1;
+            font-size: 20px;
+            visibility: hidden;
+        }
+        .el-icon-copy-document {
+            position: absolute;
+            right: -10px;
+            line-height: 1;
+            font-size: 20px;
+            visibility: hidden;
+            bottom: -10px;
+            color: var(--colorPrimary);
+        }
+        &:hover {
+            .el-icon-close,
+            .el-icon-copy-document {
+                visibility: visible;
+            }
+        }
+    }
+    .signature-doc-tmpl_move {
+        cursor: move;
+    }
+}
+.signature-tmpl-design-form {
+    .el-list-enter-active,
+    .el-list-leave-active {
+        transition: none;
+    }
+    .el-list-enter,
+    .el-list-leave-active {
+        opacity: 0;
+    }
+    .el-upload-list {
+        height: 40px;
+    }
+}
+.signature-tmpl-form {
+    .erd-table-select .vxe-table--render-default tbody .vxe-cell {
+        padding: 10px;
+        white-space: pre-line;
+        word-break: break-all;
+    }
+}
+
+// 签名模板历史记录
+.SignatureDocTmplHistory {
+    .fam-page-title {
+        background-color: var(--colorFullBg);
+    }
+}
+
+//水印管理
+.watermark-form .el-col:nth-child(6) {
+    clear: left;
+}
+.SignatureWatermarkManage {
+    background-color: var(--colorWhite);
+}
+.signature_watermark_preview{
+    position: relative;
+    height: 400px;
+    flex-grow: 1;
+    border: 3px dashed var(--colorSplit);
+    text-align: center;
+    .signature_watermark_preview_tools{
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        z-index: 1;
+    }
+    img {
+        height: 500px;
+    }
+}
+
+// 任务中心
+#signature-task-center {
+    .center-table {
+        height: calc(100% - 48px);
+    }
+
+    .erd-dropdown-link {
+        color: #567ffd;
+        cursor: pointer;
+    }
+}
+
+.convert-form {
+    &-table {
+        margin-left: 143px;
+    }
+}
+
+// 签章管理
+.signature-manage-preview-container {
+    width: 320px;
+    height: 320px;
+    background-color: var(--colorFullBg);
+    padding: 10px;
+    .signature-manage-input_tools {
+        top: 3px;
+        right: 3px;
+        z-index: 1;
+    }
+    .signature-preview {
+        position: absolute;
+        box-sizing: content-box;
+    }
+}
+
+
+.newEdit {
+    color: #999999;
+}

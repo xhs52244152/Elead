@@ -1,0 +1,60 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.groupMange"
+    :visible.sync="visible"
+    width="800px"
+    @close="cancel"
+>
+    <div class="mb-16 bg-normal p-4 text-sm">{{ i18nMappingObj.groupDesc }}</div>
+    <erd-scrollbar class="h-300 pr-16">
+        <erd-form
+            :model="formData"
+            ref="groupForm"
+        >
+            <draggable
+                v-model="formData.groupList"
+                handle=".mover"
+                animation="300"
+            >
+                <erd-form-item
+                    v-for="(item, index) in formData.groupList"
+                    :key="index"
+                    :prop="'groupList.' + index + '.name'"
+                    class="mover cursor-move"
+                >
+                    <erd-icon
+                        icon="double-drag"
+                        class="mr-8"
+                    ></erd-icon>
+                    <fam-i18nbasics
+                        :value="{attrName: 'name', value: item.name}"
+                        i18n-name="名称"
+                        :autofocus="true"
+                        :required="true"
+                        v-model="item.name"
+                        class="w-100p"
+                    >
+                    </fam-i18nbasics>
+                    <erd-button
+                        class="ml-8"
+                        type="icon"
+                        icon="erd-iconfont erd-icon-delete"
+                        @click="deleteItem(item, index)"
+                    ></erd-button>
+                </erd-form-item>
+            </draggable>
+        </erd-form>
+    </erd-scrollbar>
+    <erd-button
+        @click="addItem"
+        class="add-btn"
+        >{{ i18nMappingObj.addBtn }}</erd-button
+    >
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

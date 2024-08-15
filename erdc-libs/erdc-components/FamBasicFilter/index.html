@@ -1,0 +1,82 @@
+<div class="fam-basicfilter-container flex align-items-center" ref="FamBasicFilter">
+    <!-- 默认展示的前几个 -->
+    <erd-form
+        inline
+        class="flex align-items-center flex-wrap"
+        @submit.native.prevent
+    >
+        <slot name="table:toolbar:basicfilter:first"></slot>
+        <component-width-label
+            v-for="(item, index) in formattedBasicFilterConditions"
+            data-type="string"
+            :ref="item.attrName"
+            v-model="item.value"
+            :label="item.label"
+            :is-render="item.showComponent"
+            :oper="item.operator"
+            :key="item.attrName"
+            :row="item"
+            :options="item.options || []"
+            @callback="fnComponentCallback"
+            @remove="removeBasicFilter(item)"
+            @focus="onFilterFocus"
+            @after-change="fnOnConditionChange"
+        >
+        </component-width-label>
+        <div class="fam-basicfilter-btn">
+            <!-- 添加条件 -->
+            <el-popover
+                v-model="showMoreBasicFilter"
+                width="180"
+                popper-class="fam-basicfilter-popover"
+                trigger="manual"
+            >
+                <erd-button
+                    v-show="allConditionList.length > 0 && allConditionList.length - basicFilterConditions.length > 0"
+                    slot="reference"
+                    type="fill-icon"
+                    icon="el-icon-plus"
+                    :title="i18nMappingObj['add_conditions']"
+                    class="fam-basicfilter-popover-btn"
+                    @click="showMoreBasicFilter = true"
+                ></erd-button>
+                <div class="more-base-filters-container">
+                    <erd-input
+                        v-model="searchKey"
+                        clearable
+                        :placeholder="i18nMappingObj['tips_enter']"
+                        @keyup.enter.native="onMoreBasicFilterSearch"
+                        @clear="onMoreBasicFilterSearch"
+                    >
+                        <template #suffix>
+                            <em
+                                class="el-input__icon erd-iconfont erd-icon-search search-suffix-icon"
+                                @click="onMoreBasicFilterSearch"
+                            ></em>
+                        </template>
+                    </erd-input>
+                    <ul class="el-scrollbar__view el-select-dropdown__list fam-basicfilter-ul">
+                        <template v-for="(item, index) in moreBasicFilterField">
+                            <li
+                                v-show="item.isShow"
+                                class="el-select-dropdown__item"
+                                :title="item.label"
+                                @click="addBasicFilter(item)"
+                            >
+                                {{ item.label }}
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </el-popover>
+            <!-- 清空条件 -->
+            <erd-button
+                v-show="allConditionList.length > 0"
+                type="text"
+                class="fam-basicfilter-close-all"
+                @click="clearAllBasicFilter"
+                >{{ i18nMappingObj['clear_conditions'] }}</erd-button
+            >
+        </div>
+    </erd-form>
+</div>

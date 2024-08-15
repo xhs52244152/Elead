@@ -1,0 +1,98 @@
+<div id="ViewUsers">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        close-on-press-escape
+        size="large"
+    >
+        <erd-contraction-panel
+            :unfold.sync="unfoldGroup"
+            :title="i18nMappingObj.groupInformation"
+        >
+            <template v-slot:content>
+                <div>
+                    <erd-row style="display: flex; align-items: center;">
+                        <erd-col
+                            :span="3"
+                            style="text-align: right; margin-right: 10px"
+                        >
+                            <label>
+                                {{i18nMappingObj.group}}
+                            </label>
+                        </erd-col>
+                        <erd-col :span="21" style="display: flex; align-items: center;">
+                            <!-- 传入值来回写群组信息 -->
+                            <fam-custom-select-static-text
+                                style="align-items: center"
+                                v-model="currentRow.roleBObjectRef"
+                                v-bind="selectProps">
+                            </fam-custom-select-static-text>
+                        </erd-col>
+                    </erd-row>
+                </div>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :unfold.sync="unfoldUsers"
+            :title="i18nMappingObj.usersInformation"
+        >
+            <template v-slot:content>
+                <div>
+                    <erd-table
+                        border
+                        ref="erdTable"
+                        auto-resize
+                        show-overflow
+                        height="300"
+                        :column="columns"
+                        :data="tableData"
+                        :row-config="{isCurrent: true, isHover: true, useKey: true, keyField: 'id', height: 36 }"
+                        :column-config="{resizable: true}"
+                    >
+                        <!--department-->
+                        <template #column:default:department="{data}">
+                            <span v-if="data.row.department!=undefined">{{data.row.department}}</span>
+                            <span v-else>—</span>
+                        </template>
+
+                        <!--phone-->
+                        <template #column:default:phone="{data}">
+                            <span v-if="data.row.phone!=undefined">{{data.row.phone}}</span>
+                            <span v-else>—</span>
+                        </template>
+
+                        <!--email-->
+                        <template #column:default:email="{data}">
+                            <span v-if="data.row.email!=undefined">{{data.row.email}}</span>
+                            <span v-else>—</span>
+                        </template>
+                    </erd-table>
+                    <!--小于等于一页不展示-->
+                    <erd-pagination
+                        v-if="tableData.length"
+                        style="margin-top:15px;"
+                        :current-page.sync="pagination.pageIndex"
+                        :page-size.sync="pagination.pageSize"
+                        :total="pagination.total"
+                        :hide-on-single-page="false"
+                        @current-change="handlePageChange"
+                        @size-change="handleSizeChange"
+                    >
+                    </erd-pagination>
+                </div>
+            </template>
+        </erd-contraction-panel>
+
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="Submit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>>
+</div>

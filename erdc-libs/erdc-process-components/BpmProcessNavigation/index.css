@@ -1,0 +1,32 @@
+.bpm-process-navigation-content {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s linear;
+  background-color: #ffffff;
+  height: 100%;
+}
+.bpm-process-navigation-content .navigation-content_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  color: var(--colorTextExplain);
+  letter-spacing: 0;
+  font-weight: 400;
+  transition-delay: 0.25s;
+  padding: 0 16px;
+}
+.bpm-process-navigation-content .navigation-content_header .header_text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--colorTextNormal);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.25s linear;
+}
+.bpm-process-navigation-content .navigation-content_box {
+  min-height: 0;
+}/*# sourceMappingURL=index.css.map */

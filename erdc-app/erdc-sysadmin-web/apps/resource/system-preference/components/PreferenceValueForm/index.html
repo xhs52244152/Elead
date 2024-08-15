@@ -1,0 +1,35 @@
+<div id="preference-value-form">
+    <FamDynamicForm
+        ref="dynamicFormItem"
+        :form="itemFormData"
+        :data="formConfigItem"
+    >
+    </FamDynamicForm>
+    <erd-contraction-panel
+        :unfold.sync="unfold"
+        :title="'配置信息'"
+    ></erd-contraction-panel>
+    <div v-if="unfold">
+        <template v-if="data.realType === 'object'">
+            <component
+                ref="preferenceForm"
+                v-for="(item, index) in customComponent"
+                class="component"
+                :key="index"
+                :is="item.component"
+                :data="item.formData"
+                :readonly="readonly"
+            ></component>
+        </template>
+        <template v-else>
+            <FamDynamicForm
+                ref="preferenceForm"
+                :form="formDataMailResource"
+                :data="formConfig"
+                :readonly="readonly"
+                @form-change="formChange"
+            >
+            </FamDynamicForm>
+        </template>
+    </div>
+</div>

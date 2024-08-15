@@ -1,0 +1,48 @@
+#FamInternationalization {
+    font-size: 14px;
+font-size: var(--fontSize);
+}
+
+#FamInternationalizationContent .Internationalization-headerTitle {
+    height: 32px;
+    width: 100%;
+    background-color: #ECECEC;
+    border-radius: 2px;
+    vertical-align: middle;
+    line-height: 32px;
+    font-size: 12px;
+    color: rgba(0,0,0,0.45);
+    letter-spacing: 0;
+    font-weight: 400;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+}
+
+#FamInternationalizationContent .fam-dynamic-form .el-col:last-of-type .ContractionPanel {
+    margin-top: 16px;
+}
+
+#FamInternationalizationContent .fam-dynamic-form > .el-row--flex > .el-col {
+    margin-bottom: 0;
+}
+
+#FamInternationalizationContent .fam-dynamic-form > .el-row--flex > .el-col-24:first-of-type .el-col-24:first-of-type {
+    margin-top: 8px;
+}
+
+#FamInternationalizationContent .fam-dynamic-form > .el-row--flex > .el-col-24:first-of-type .el-col-24:last-of-type {
+    margin-bottom: 8px;
+}
+
+#FamInternationalizationContent .fam-dynamic-form > .el-row--flex > .el-col-24:last-of-type .el-col-24:first-of-type {
+    margin-top: 8px;
+}
+
+#FamInternationalizationContent .fam-dynamic-form > .el-row--flex > .el-col .el-col-12 {
+    margin: 8px 0;
+}
+
+#FamInternationalizationContent .fam-dynamic-form > .el-row--flex > .el-col:last-of-type .el-col-12 {
+    margin-bottom: 0;
+}

@@ -1,0 +1,53 @@
+<div
+    class="new-message-ctt"
+    style="height: 100%"
+>
+    <div class="x_title">
+        <span
+            >{{ this.title || i18n.latestNews }}<span
+                v-if="datas && datas.length"
+                class="ml-8 text-12 title-desc"
+                >{{$t('messageCount', { total: total })}}</span
+            ></span
+        >
+    </div>
+    <div style="height: calc(100% - 40px)">
+        <div
+            class="list-group"
+            style="height: 100%"
+        >
+            <template v-if="datas && datas.length">
+                <el-scrollbar
+                    style="height: calc(100% - 40px)"
+                    wrap-style="height: calc(100% + 0px);"
+                >
+                    <a
+                        class="list-group-item"
+                        href="javascript:;"
+                        v-for="data in datas"
+                        @click="handleMsgDetail(data)"
+                    >
+                        <div class="data-list">
+                            <el-tooltip>
+                                <template #content>
+                                    {{data.subject_name}}{{data.subjectTitle}} {{data.notify_name}}
+                                </template>
+                                <div class="data-list-title title-text">
+                                    {{data.subject_name}}{{data.subjectTitle}} {{data.notify_name}}
+                                </div>
+                            </el-tooltip>
+                            <div class="data-list-content">
+                                <div class="data-list-content-desc">{{data.userName}}</div>
+                                <div class="data-list-content-date">{{data.createTime}}</div>
+                            </div>
+                        </div>
+                    </a>
+                </el-scrollbar>
+            </template>
+            <template v-else>
+                <fam-empty></fam-empty>
+            </template>
+        </div>
+    </div>
+    <message-content ref="msgContent"></message-content>
+</div>

@@ -1,0 +1,66 @@
+.fam-upload .upload--readonly .el-upload {
+    display: none;
+}
+
+.fam-upload .upload--readonly .el-upload-list--text .el-upload-list__item {
+    margin-top: 0;
+}
+/* 取消回显文件时，从右到左的动画 */
+.fam-upload .el-upload-list,
+.fam-upload .el-upload-list__item {
+    animation: none !important;
+    transition: none !important;
+}
+
+.fam-upload .el-icon-close-tip {
+    display: none !important;
+}
+
+.fam-upload .upload--readonly .el-upload-list--text .el-upload-list__item .el-icon-upload-success {
+    display: none;
+}
+
+.fam-upload .upload--readonly .el-upload-list--text .el-upload-list__item .el-icon-close {
+    display: none;
+}
+
+.fam-upload .upload--readonly .el-upload__tip {
+    display: none;
+}
+
+.fam-upload:not(.fam-upload--readonly) .fam-upload__file-list {
+    column-gap: var(--bigSpace);
+}
+
+.fam-upload .fam-upload__file-item {
+    max-width: 200px;
+}
+
+.fam-upload .fam-upload__file-item:hover {
+    background-color: var(--colorHover);
+}
+
+.fam-upload .fam-upload__file-list--flex .fam-upload__file-item {
+    width: calc(50% - calc(var(--bigSpace) / 2));
+    max-width: unset;
+}
+
+.fam-upload--security .upload--security{
+    line-height: 0;
+}
+.upload-security-popover {
+    padding: 0
+}
+.upload-security-popover .upload-security--list {
+    margin-bottom: 0;
+    padding: 10px 0;
+    line-height: 30px;
+    cursor: pointer;
+}
+.upload-security-popover .upload-security--list li {
+    padding: 0 10px;
+}
+.upload-security-popover .upload-security--list li:hover{
+    background-color: var(--navMenuItemActiveBg);
+}
+

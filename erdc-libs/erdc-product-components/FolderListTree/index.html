@@ -1,0 +1,123 @@
+<div
+    id="FolderListTree"
+    :lan="lan"
+    class="h-100p"
+>
+    <div class="FolderListTree tree-management h-100p">
+        <div
+            ref="header"
+            class="tree-header"
+        >
+            <div class="tree-title">{{ title }}</div>
+            <div class="search">
+                <erd-input
+                    v-model="searchValue"
+                    :placeholder="i18nMappingObj.searchKeyword"
+                    suffix-icon="erd-iconfont erd-icon-search"
+                    clearable
+                    style="width: 100%"
+                >
+                </erd-input>
+                <slot name="tree-search-right"></slot>
+            </div>
+        </div>
+        <div ref="treeSplit"></div>
+        <erd-scrollbar :style="{height: treeHeight}">
+            <ul class="typelist">
+                <erd-ex-tree
+                    ref="globalTree"
+                    :data="treeData"
+                    :props="defaultProps"
+                    node-key="key"
+                    :default-expanded-keys="defaultExpandedKeys"
+                    :default-current-keys="selectKey"
+                    draggable
+                    :allow-drag="allowDrag"
+                    :allow-drop="allowDrop"
+                    :expand-on-click-node="false"
+                    :filter-node-method="filterSearch"
+                    highlight-current
+                    default-expand-all
+                    @node-click="onCheck"
+                    @node-drag-start="handleNodeDragStart"
+                    @node-drop="handleNodeDrop"
+                >
+                    <template v-slot="scope">
+                        <slot
+                            name="custom-tree-node"
+                            :scope="{data: scope.data, node: scope.node}"
+                        >
+                            <div
+                                class="custom-tree-node"
+                                @mouseenter="mouseenter(scope)"
+                                @mouseleave="mouseleave(scope)"
+                            >
+                                <div
+                                    class="tree-text"
+                                    :title="scope.node.label"
+                                >
+                                    <em class="erd-iconfont erd-icon-folder"></em>
+                                    <span>{{scope.node.label}}</span>
+                                </div>
+                                <div
+                                    class="tree-operation"
+                                    v-show="scope.data.show"
+                                    @click.stop
+                                >
+                                    <erd-button
+                                        v-if="scope.node.level == 1"
+                                        type="icon"
+                                        size="mini"
+                                        icon="erd-iconfont erd-icon-add-document fontSize18"
+                                        :disabled="!addEnabled"
+                                        @click="createFolder(scope.node, scope.data)"
+                                    >
+                                    </erd-button>
+                                    <span
+                                        class="edit-hover"
+                                        v-if="editingNodeId !== scope.data.id && scope.node.level !== 1"
+                                    >
+                                        <erd-button
+                                            type="icon"
+                                            size="mini"
+                                            icon="erd-iconfont erd-icon-add-document"
+                                            :disabled="!addEnabled"
+                                            @click="createFolder(scope.node, scope.data)"
+                                        >
+                                        </erd-button>
+                                        <el-button
+                                            type="icon"
+                                            size="mini"
+                                            icon="erd-iconfont erd-icon-edit3"
+                                            :disabled="!editEnabled"
+                                            @click.stop="onEdit(scope.data)"
+                                        ></el-button>
+                                        <el-button
+                                            type="icon"
+                                            size="mini"
+                                            icon="erd-iconfont erd-icon-delete2"
+                                            :disabled="!delEnabled"
+                                            @click.stop="onRemove(scope.node, scope.data)"
+                                        ></el-button>
+                                    </span>
+                                </div>
+                            </div>
+                        </slot>
+                    </template>
+                </erd-ex-tree>
+            </ul>
+        </erd-scrollbar>
+    </div>
+    <!-- 创建文件夹 -->
+    <folder-list-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="folderTitle"
+        :rowData="rowData"
+        formType="FOLDER_FORM"
+        :openType="openType"
+        :container-ref="containerRef"
+        v-bind="$attrs"
+        @onsubmit="onSubmit"
+    ></folder-list-config>
+</div>

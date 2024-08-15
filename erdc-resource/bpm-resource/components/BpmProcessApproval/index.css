@@ -1,0 +1,21 @@
+.bpm-process-approval {
+  padding-bottom: 12px;
+}
+.bpm-process-approval .opinion-class {
+  width: 100%;
+}
+.bpm-process-approval .opinion-class > button {
+  margin-top: 4px;
+}
+.bpm-process-approval .sign-submit {
+  margin-left: 8px;
+  min-width: 80px;
+  width: auto;
+}
+.bpm-process-approval .w-416 {
+  width: 416px !important;
+}
+.bpm-process-approval .opinion-tag {
+  background-color: #f0f4fb;
+  color: var(--colorTextNormal);
+}/*# sourceMappingURL=index.css.map */

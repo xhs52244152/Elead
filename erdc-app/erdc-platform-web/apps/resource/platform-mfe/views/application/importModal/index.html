@@ -1,0 +1,48 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.backOrRestore"
+    :visible.sync="visible"
+    width="600px"
+    @close="cancel"
+>
+    <div class="mb-16 bg-normal p-4 text-sm">{{ i18nMappingObj.backDesc }}</div>
+    <div class="flex">
+        <erd-upload
+            class="w-200"
+            action="*"
+            :headers="CONST.defaultHeaders"
+            accept=".zip"
+            :limit="1"
+            :auto-upload="false"
+            :file-list="fileList"
+            :on-change="handleChange"
+            :on-remove="handleRemove"
+            :on-exceed="handleExceed"
+            :before-upload="onBeforeUpload"
+        >
+            <erd-button
+                slot="trigger"
+                type="primary"
+                >{{ i18nMappingObj.restoreMicro }}</erd-button
+            >
+            <erd-button
+                @click="exportData"
+                type="text"
+                class="ml-8"
+                >{{ i18nMappingObj.backMicro }}</erd-button
+            >
+        </erd-upload>
+    </div>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            :loading="loading"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button
+            @click="cancel"
+            :loading="loading"
+            >{{ i18nMappingObj.cancel }}</erd-button
+        >
+    </template>
+</erd-ex-dialog>

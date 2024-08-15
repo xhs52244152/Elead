@@ -1,0 +1,29 @@
+#FamAnchorNavigation > .el-tabs > .el-tabs__content .el-tab-pane {
+  padding: 0 !important;
+}
+#FamAnchorNavigation .fam-anchor-navigation-scrollbar .el-scrollbar__view > *:first-child {
+  padding-bottom: var(--bigPadding);
+}
+#FamAnchorNavigation .fam-anchor-navigation-scrollbar .el-scrollbar__view > * ~ * {
+  padding: var(--bigPadding) var(--largePadding);
+  margin-top: 0;
+}
+#FamAnchorNavigation .fam-anchor-navigation-scrollbar > .el-scrollbar__bar {
+  right: -4px;
+}
+#FamAnchorNavigation .fam-anchor-navigation-scrollbar .contraction-panel__content {
+  padding: var(--normalPadding) 0 0;
+}
+#FamAnchorNavigation .navigation-top {
+  width: 100%;
+  height: var(--largePadding);
+  background-color: var(--colorFullBg);
+  padding: 0 !important;
+  margin: 0 !important;
+}
+#FamAnchorNavigation .ContractionPanel {
+  padding: 0 var(--largePadding);
+}
+#FamAnchorNavigation .z-199 {
+  z-index: 199;
+}/*# sourceMappingURL=style.css.map */

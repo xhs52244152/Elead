@@ -1,0 +1,30 @@
+#GlobalAttributesDetail {
+    padding: 16px;
+    .measure-header {
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        .global-left {
+            font-size: var(--fontSizeLarge);
+            color: var(--colorTextNormal);
+            letter-spacing: 0;
+            line-height: 28px;
+            font-weight: 700;
+        }
+    }
+    .global-search {
+        display: flex;
+        justify-content: space-between;
+
+        .fam-global-tree__search {
+            width: 220px;
+            margin-top: 0;
+            vertical-align: middle;
+        }
+
+        button {
+            min-width: 80px;
+            overflow: hidden;
+        }
+    }
+}

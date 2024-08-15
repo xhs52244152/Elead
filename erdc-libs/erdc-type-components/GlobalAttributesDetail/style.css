@@ -1,0 +1,30 @@
+#GlobalAttributesDetail {
+  padding: 16px;
+}
+#GlobalAttributesDetail .measure-header {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+#GlobalAttributesDetail .measure-header .global-left {
+  font-size: var(--fontSizeLarge);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  line-height: 28px;
+  font-weight: 700;
+}
+#GlobalAttributesDetail .global-search {
+  display: flex;
+  justify-content: space-between;
+}
+#GlobalAttributesDetail .global-search .fam-global-tree__search {
+  width: 220px;
+  margin-top: 0;
+  vertical-align: middle;
+}
+#GlobalAttributesDetail .global-search button {
+  min-width: 80px;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=style.css.map */

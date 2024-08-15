@@ -1,0 +1,187 @@
+<div class="fam-scenario-details-content">
+    <FamInfoTitle
+        :title="buttonInfo.displayName"
+        staticTitle
+        style="padding-left: 0"
+        class="mb-normal pl-0"
+    ></FamInfoTitle>
+    <div class="fam-scenario-details-content-panel">
+        <erd-contraction-panel
+            :unfold.sync="unfold.basicInform"
+            :title="i18nMappingObj.basicInform"
+        >
+            <template v-slot:content>
+                <div class="basic-information">
+                    <FamDynamicForm
+                        ref="dynamicForm"
+                        :form.sync="buttonComDetails"
+                        :data="buttonComFromList"
+                        :readonly="readonly"
+                        label-position="right"
+                    >
+                    </FamDynamicForm>
+                </div>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :unfold.sync="unfold.buttonInformation"
+            :title="i18nMappingObj.buttonInformation"
+        >
+            <template v-slot:content>
+                <div class="parity-regulator-association">
+                    <div
+                        class="parity-regulator-association__header"
+                        ref="header"
+                        v-if="false"
+                    >
+                        <erd-input
+                            :placeholder="i18nMappingObj.actionSearchPlaceholder"
+                            class="fam-usage-scenario-tree__search"
+                            v-model="shearchKey"
+                            suffix-icon="el-input__icon erd-iconfont erd-icon-search"
+                            clearable
+                            @change="() => {}"
+                        ></erd-input>
+                    </div>
+                    <erd-table
+                        v-loading="loading"
+                        border
+                        :max-height="maxHeight"
+                        :validator="validRules"
+                        :edit-rules="validRules"
+                        :edit-config="{trigger: 'click', mode: 'cell'}"
+                        :custom-valid="true"
+                        :tooltip-config="{contentMethod: contentMethod}"
+                        @edit-actived="editActived"
+                        :row-config="{isCurrent: true, isHover: true}"
+                        :column-config="{resizable: true}"
+                        align="left"
+                        :tree-config="{ children: 'children', iconClose: 'erd-iconfont erd-icon-arrow-right', iconOpen: 'erd-iconfont erd-icon-arrow-down', indent: '15' }"
+                        :data="tableData"
+                        :column="column"
+                        :is-embed-table="true"
+                        show-overflow
+                        ref="erdTable"
+                    >
+                        <template #column:default:anotherName="{data}">
+                            <span>{{data.row[data.column.property]?.value}}</span>
+                            <!-- <fam-i18nbasics
+                                popper-class="vxe-table--ignore-clear"
+                                :value="{attrName: 'anotherName', value: data.row.anotherName}"
+                                :i18n-name="i18nMappingObj.anotherName"
+                                :required="true"
+                                type="tableReadOnly"
+                                @input="(value)=>(i18nValueInput(value, data, 'anotherName'))"
+                            >
+                            </fam-i18nbasics> -->
+                        </template>
+                        <template #column:edit:anotherName="{data}">
+                            <fam-i18nbasics
+                                popper-class="vxe-table--ignore-clear"
+                                :value="{attrName: 'anotherName', value: data.row.anotherName}"
+                                :i18n-name="i18nMappingObj.anotherName"
+                                :autofocus="true"
+                                :required="true"
+                                @input="(value)=>(i18nValueInput(value, data, 'anotherName'))"
+                            >
+                            </fam-i18nbasics>
+                        </template>
+                        <!--name-->
+                        <template #column:default:nameI18nJson="{ data: { row } }">
+                            <span
+                                class="link"
+                                @click="viewButtonDetails(row)"
+                                >{{ row.nameI18nJson }}</span
+                            >
+                        </template>
+                        <template #column:default:status="{ data: { row } }">
+                            <span>
+                                {{ row.status === 0 ? i18nMappingObj.enable : row.status === 1 ? i18nMappingObj.disable
+                                : i18nMappingObj.hide }}
+                            </span>
+                        </template>
+                        <template #column:default:operation="{ data }">
+                            <span>
+                                <template
+                                    v-for="(button, index) in data.row.buttonList"
+                                    v-if="button.show"
+                                >
+                                    <erd-tooltip
+                                        effect="dark"
+                                        :content="isEdit ? button.title : i18n.noCurrentTenant"
+                                        placement="top"
+                                    >
+                                        <erd-button
+                                            type="text"
+                                            :disabled="button.disabled({ index: data.$rowIndex, row: data }) || !isEdit"
+                                            v-if="_.isArray(button.children) && !button.children.length"
+                                            @click="clickTableButton(button, data.row)"
+                                        >
+                                            {{ button.title }}
+                                        </erd-button>
+                                        <erd-dropdown
+                                            trigger="click"
+                                            v-else
+                                            @command="(command) => { clickTableButton(_.filter(button.children, button => button.command === command)[0], data.row) }"
+                                            style="margin-left: 8px"
+                                        >
+                                            <erd-button
+                                                type="text"
+                                                :disabled="!isEdit"
+                                                >{{ button.title }}<em class="el-icon-arrow-down el-icon--right"></em
+                                            ></erd-button>
+                                            <erd-dropdown-menu slot="dropdown">
+                                                <erd-tooltip
+                                                    v-for="(sbutton, sindex) in button.children"
+                                                    effect="dark"
+                                                    placement="top"
+                                                    :content="i18n.noCurrentTenant"
+                                                    :disabled="isEdit"
+                                                >
+                                                    <erd-dropdown-item
+                                                        v-if="sbutton.show"
+                                                        :key="sindex"
+                                                        :command="sbutton.command"
+                                                    >
+                                                        {{ sbutton.title }}
+                                                    </erd-dropdown-item>
+                                                </erd-tooltip>
+                                            </erd-dropdown-menu>
+                                        </erd-dropdown>
+                                    </erd-tooltip>
+                                </template>
+                            </span>
+                        </template>
+                    </erd-table>
+                </div>
+            </template>
+        </erd-contraction-panel>
+    </div>
+    <!--查看按钮或者按钮组合详情-->
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="functionButton.visible"
+        size="large"
+        :title="functionButton.type === 'button' ? i18nMappingObj.buttonDetails : i18nMappingObj.menuDetails"
+        @close="operatingPopover({})"
+    >
+        <action-list-table
+            v-if="functionButton.type === 'button'"
+            :button-info="functionButton.detailsInfo"
+            ref="actionListTable"
+        ></action-list-table>
+        <div
+            class="basic-information"
+            v-if="functionButton.type === 'menu'"
+        >
+            <FamDynamicForm
+                ref="dynamicForm"
+                :form.sync="functionButton.detailsInfo"
+                :data="buttonComFromList"
+                :readonly="readonly"
+                label-position="right"
+            >
+            </FamDynamicForm>
+        </div>
+    </erd-ex-dialog>
+</div>

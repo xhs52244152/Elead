@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/newMessage",
+  "version": "3.1.0",
+  "description": "最新消息卡片",
+  "appId": "plat",
+  "dependencies": {}
+}

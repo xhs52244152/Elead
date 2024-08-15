@@ -1,0 +1,131 @@
+.detail-list-content {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    .detail-list-content-item {
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px;
+        cursor: pointer;
+        position: relative;
+
+        .box-list-item {
+            flex: 1;
+            width: 100%;
+            padding: 12px 0px;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #EBEBEB;
+
+            .box-list-top {
+                display: flex;
+                align-items: center;
+                line-height: 22px;
+            }
+
+            .box-list-top-title {
+                font-size: 14px;
+                font-size: var(--fontSize);
+                color: var(--colorTextNormal);
+                font-weight: 400;
+                overflow: hidden; //文本溢出隐藏
+                text-overflow: ellipsis; //文本溢出显示省略号
+                white-space: nowrap; //不换行
+                margin-left: 8px;
+            }
+
+            .box-list-bot {
+                margin-top: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .box-list-bot-left {
+                display: flex;
+                align-items: center;
+            }
+
+            .box-list-bot-bgbox {
+                padding: 0px 10px;
+                height: 22px;
+                border-radius: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+
+                &>span {
+                    font-size: 12px;
+                    line-height: 22px;
+                    font-weight: 400;
+                }
+            }
+
+            .LIFECYCLE_RUNNING {
+                background-color: rgba(86, 127, 253, 0.08);
+                color: #567FFD;
+            }
+
+            .LIFECYCLE_SUSPENDED {
+                background-color: rgba(255, 191, 0, 0.08);
+                color: #FFBF00;
+            }
+
+            .LIFECYCLE_EXCEPTION {
+                background-color: rgba(240, 65, 52, 0.08);
+                color: #F04134;
+            }
+
+            .LIFECYCLE_COMPLETED {
+                background-color: rgba(102, 102, 102, 0.08);
+                color: var(--colorTextExplain);
+            }
+
+            .box-list-bot-bgbox-duedata {
+                padding: 0px 4px;
+                border-radius: 11px;
+            }
+
+            .not-due-class {
+                background-color: rgba(102, 102, 102, 0.08);
+                color: rgba(0, 0, 0, .65)
+            }
+
+            .due-today-class {
+                background-color: rgba(255, 191, 0, 0.08);
+                color: #FFBF00;
+            }
+
+            .out-date-class {
+                background-color: rgba(240, 65, 52, 0.08);
+                color: #F04134;
+            }
+
+            .box-list-bot-bgtitle {
+                margin-left: 12px;
+                font-size: 12px;
+                color: var(--colorTextExplain);
+                line-height: 22px;
+                font-weight: 400;
+                overflow: hidden; //文本溢出隐藏
+                text-overflow: ellipsis; //文本溢出显示省略号
+                white-space: nowrap; //不换行
+            }
+        }
+    }
+
+    .item-active::before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 0;
+        width: 3px;
+        background-color: #6973E9;
+        background-color: var(--primary-color);
+    }
+}

@@ -1,0 +1,62 @@
+<div id="OrgManagement">
+    <div>
+        <erd-ex-dialog  
+        :title="title"
+        :visible.sync="innerVisible"
+        width="1200px">
+            <div class="OrgManagement">
+                <div class="flex management-header">
+                    <div class="left">
+                        <!-- <erd-input v-model="searchValue" suffix-icon="erd-iconfont erd-icon-search" placeholder="请输入"></erd-input> -->
+                        <erd-button icon="el-icon-plus" type="primary" @click="addComponent">{{i18nMappingObj.create}}</erd-button>
+                    </div>
+                    <div class="right">
+                        <!-- <erd-button icon="el-icon-plus" type="primary" @click="addComponent">{{i18nMappingObj.add}}</erd-button> -->
+                    </div>
+                </div>
+                <div class="content">
+                    <erd-table
+                    border
+                    hieght="500"
+                    :column="columns"
+                    :data="listData"
+                    show-overflow
+                    ref="erdTable">
+                        <template #column:default:oper="{data}">
+                            <erd-button type="text" @click="OnEnabled(data)" v-if="data.row.enabled">{{i18nMappingObj.disable}}</erd-button>
+                            <erd-button type="text" @click="OnEnabled(data)" v-if="!data.row.enabled">{{i18nMappingObj.enable}}</erd-button>
+                            <erd-button type="text" @click="onEdit(data)">{{i18nMappingObj.edit}}</erd-button>
+                            <erd-button type="text" @click="onDelete(data)" :disabled="data.row.isDefault">{{i18nMappingObj.delete}}</erd-button>
+                        </template>
+                        <template #column:default:name="{data}">
+                            <!-- <erd-button type="text" @click="onCheck(data)">{{data.row.name}}</erd-button> -->
+                            <span class="vxe-cell--label link-text" @click="onCheck(data)">
+                                {{data.row.name}}
+                            </span>
+                        </template>
+                        <template #column:default:enabled="{data}">
+                            <span>{{data.row.enabled? i18nMappingObj.enable : i18nMappingObj.disable}}</span>
+                        </template>
+                    </erd-table>
+                    <!--小于等于一页不展示-->
+                    <erd-pagination
+                      style="margin-top:16px;"
+                      :current-page.sync="pagination.pageIndex"
+                      :page-size.sync="pagination.pageSize"
+                      :total="pagination.total"
+                      @size-change="handleSizeChange"
+                      @current-change="handelCurrentChange">
+                    </erd-pagination>
+                </div>
+            </div>
+        </erd-ex-dialog>
+        <new-edit-component
+        v-if="NewEditComponentVisible"
+        :visible.sync="NewEditComponentVisible"
+        :title="componentTitle"
+        :oid="oid"
+        :type="componentType"
+        @onsubmit="refreshList">
+        </new-edit-component>
+    </div>
+</div>

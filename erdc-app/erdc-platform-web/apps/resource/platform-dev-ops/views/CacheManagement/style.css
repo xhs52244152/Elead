@@ -1,0 +1,14 @@
+.fam-erd-table-container {
+    position: relative;
+    flex-grow: 1;
+
+    > #ComponentWapper-erdTable {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.table-list {
+    height: calc(100% - 60px);
+}

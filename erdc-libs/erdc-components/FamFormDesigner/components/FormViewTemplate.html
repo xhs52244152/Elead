@@ -1,0 +1,76 @@
+<div
+    :class="{
+        'fam-form-view': true,
+        'fam-form-view--readonly': readonly
+    }"
+    @click.capture="setSelected(null)"
+>
+    <div class="fam-form-view__header">
+        <div class="fam-form-view__header--title">{{i18nMappingObj.workArea}}</div>
+        <div class="fam-form-view__header--info">
+            <fam-user
+                v-if="user"
+                :users="[user]"
+                with-avatar
+            >
+                <template #default="scope">
+                    <span class="fam-form-view__header--info-user">
+                        <erd-avatar
+                            :src="scope.user.avatar"
+                            class="fam-user__avatar"
+                            :size="24"
+                        >
+                            <img
+                                :src="scope.user.avatar"
+                                alt=""
+                            />
+                        </erd-avatar>
+                        <span
+                            class="fam-user__display"
+                            @mouseenter="scope.showPopover(scope.index)"
+                        >
+                            {{scope.display(scope.user)}}
+                            <span v-if="scope.index !== scope.users.length - 1">; </span>
+                        </span>
+                    </span>
+                </template>
+            </fam-user>
+            <span class="fam-form-view__header--info-datetime"> {{i18nMappingObj.createTime}}： {{createTime}} </span>
+        </div>
+    </div>
+    <erd-main>
+        <erd-scrollbar
+            ref="scrollbar"
+            class="fam-form-view__view"
+        >
+            <div
+                v-if="!designer.widgetList || designer.widgetList.length <= 0"
+                class="fam-form-view__empty"
+            >
+                <p class="fam-form-view__empty-text">{{i18nMappingObj.dragTips}}</p>
+            </div>
+
+            <fam-dynamic-form
+                ref="dynamicForm"
+                :form.sync="form"
+                :widget-list="designer.widgetList"
+            >
+                <template v-slot="scope">
+                    <FormViewItem
+                        :form="form"
+                        :designer="designer"
+                        :parent-widget="designer"
+                        :widget-list.sync="designer.widgetList"
+                        :readonly="readonly"
+                        :scope="scope"
+                        :lastLineChildClass="lastLineChildClass"
+                        :form-readonly="formReadonly"
+                        :is-designer-form="isDesignerForm"
+                        @container-mousemove="onMouseMove"
+                        @update="onWidgetListUpdate"
+                    ></FormViewItem>
+                </template>
+            </fam-dynamic-form>
+        </erd-scrollbar>
+    </erd-main>
+</div>

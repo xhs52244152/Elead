@@ -1,0 +1,286 @@
+<div id="OpenCreateTeam">
+    <erd-ex-dialog
+        :title="title"
+        custom-class="OpenCreateTeam"
+        :visible.sync="innerVisible"
+        close-on-press-escape
+        size="large"
+    >
+        <erd-contraction-panel
+            v-if="!isReplacement || currentRow.principalTarget === 'ROLE'"
+            :unfold.sync="unfoldRole"
+            :title="i18nMappingObj.selectRole"
+        >
+            <div class="open-create">
+                <erd-row style="display: flex; align-items: center">
+                    <erd-col
+                        :span="3"
+                        style="text-align: right; margin-right: 8px"
+                    >
+                        <label>
+                            <span
+                                style="color: #f04134"
+                                v-if="!disMember"
+                                >*</span
+                            >
+                            {{i18nMappingObj.selectRole}}
+                        </label>
+                    </erd-col>
+                    <erd-col
+                        :span="21"
+                        style="display: flex; align-items: center"
+                    >
+                        <!-- <custom-select
+                            v-if="!disMember"
+                            v-model="selectRole"
+                            v-bind="selectProps"
+                            @change="changeRole"
+                        >
+                        </custom-select> -->
+
+                        <fam-participant-select
+                            v-if="!disMember"
+                            v-model="selectRole"
+                            query-scope="fullTenant"
+                            :showType="['ROLE']"
+                            :query-params="queryParamsSelect"
+                            :disableIds="firstRole"
+                            :app-name="appName"
+                            :is-auto-container-ref="false"
+                            isFetchValue
+                            ref="famParticipantSelect"
+                            @change="changeRole"
+                        ></fam-participant-select>
+                        <fam-custom-select-static-text
+                            v-else
+                            style="align-items: center"
+                            v-model="selectRole"
+                            v-bind="selectProps"
+                        >
+                        </fam-custom-select-static-text>
+                    </erd-col>
+                </erd-row>
+            </div>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :unfold.sync="unfoldMember"
+            :title="!isReplacement ? i18nMappingObj.member : i18nMappingObj.memberReplacement"
+            v-if="showAddMember"
+        >
+            <template
+                v-if="isReplacement"
+                #title
+            >
+                <span>
+                    <erd-tooltip placement="top">
+                        <template #content>
+                            <p class="whitespace-pre">{{i18nMappingObj.memberReplacementTips}}</p>
+                        </template>
+                        <erd-icon
+                            icon="help"
+                            class="color-primary"
+                        ></erd-icon>
+                    </erd-tooltip>
+                    <span class="panel-title ml-sm">{{ i18nMappingObj.memberReplacement }}</span>
+                </span>
+            </template>
+            <div class="open-create">
+                <erd-row
+                    v-if="!isReplacement || currentRow.principalTarget === 'ROLE'"
+                    style="display: flex; align-items: center; margin-bottom: 10px"
+                >
+                    <erd-col
+                        :span="3"
+                        style="text-align: right; margin-right: 10px"
+                    >
+                        <label>
+                            <!-- <span style="color:red;">*</span> -->
+                            {{i18nMappingObj.selectMember}}
+                        </label>
+                    </erd-col>
+                    <erd-col
+                        :span="21"
+                        class="select-user"
+                        style="min-height: 34px"
+                    >
+                        <AddParticipantSelect
+                            ref="groupParticipantSelect"
+                            class="el-col-22"
+                            :all-table-data.sync="allTableDataValue"
+                            :visible="form.visible"
+                            :label-visible="false"
+                            :query-params="queryParams"
+                            :show-type="isReplacement ? [ 'USER', 'GROUP' ] : showParticipantType"
+                            :right-span="24"
+                            :query-scope="queryScope"
+                            :default-value="participantSelectValue.value"
+                            :app-name="appName"
+                            :container-ref="containerRef"
+                            :is-auto-container-ref="false"
+                            multiple
+                            isSaveSelected
+                            @change="changeMember"
+                            @input="input"
+                        >
+                        </AddParticipantSelect>
+
+                        <erd-button
+                            style="margin-left: 8px"
+                            @click="onRemove"
+                            >{{i18nMappingObj.remove}}
+                        </erd-button>
+                    </erd-col>
+                </erd-row>
+
+                <fam-erd-table
+                    ref="erdTable"
+                    :column="columns"
+                    :data="tableData"
+                    :row-config="{isCurrent: true, isHover: true, useKey: true, keyField: 'id', height: 36 }"
+                    :edit-config="{showStatus:isReplacement,trigger: 'click', mode: 'cell', beforeEditMethod: beforeEditMethod}"
+                    :column-config="{resizable: true}"
+                    :keep-source="isReplacement"
+                    height="300"
+                    border
+                    auto-resize
+                    show-overflow
+                    @checkbox-all="selectChangeEvent"
+                    @checkbox-change="selectChangeEvent"
+                >
+                    <!-- 类型 -->
+                    <template #column:default:principalTarget="{data}">
+                        <span> {{ data.row?.principalTarget | filterType}} </span>
+                    </template>
+                    <template #column:default:operation="{data}">
+                        <template v-if="data.row.principalTarget === 'USER' && !isReplacement">
+                            <erd-button
+                                type="text"
+                                v-if="!data.row.primarily"
+                                @click="onSetResp(data)"
+                                >{{ i18nMappingObj.responsible }}
+                            </erd-button>
+                            <erd-button
+                                type="text"
+                                v-else
+                                @click="onCancelResp(data)"
+                                >{{ i18nMappingObj.cancelResponsible }}
+                            </erd-button>
+                        </template>
+                        <erd-button
+                            type="text"
+                            @click="fnRemoveRole(data)"
+                            >{{ i18nMappingObj.remove }}
+                        </erd-button>
+                    </template>
+                    <template #column:default:principalName="{data}">
+                        <span
+                            v-if="data.row.primarily"
+                            class="team-responsible"
+                            >主责任人</span
+                        >
+                        <span>{{data.row.principalName}}</span>
+                    </template>
+                    <!--department-->
+                    <template #column:default:department="{data}">
+                        <span v-if="data.row.department!=undefined">{{data.row.department}}</span>
+                        <span v-else>--</span>
+                    </template>
+
+                    <!--phone-->
+                    <template #column:default:phone="{data}">
+                        <span v-if="data.row.phone!=undefined">{{data.row.phone}}</span>
+                        <span v-else>--</span>
+                    </template>
+
+                    <!--email-->
+                    <template #column:default:email="{data}">
+                        <span v-if="data.row.email!=undefined">{{data.row.email}}</span>
+                        <span v-else>--</span>
+                    </template>
+
+                    <template
+                        v-if="false"
+                        #column:default:replacement="{data}"
+                    >
+                        <span>
+                            <span
+                                v-if="data.row.replaceWith && data.row.replaceWith.value && data.row.replaceWith.value.length"
+                            >
+                                <template v-if="data.row.replaceWith.value.length <= 3">
+                                    <erd-tag
+                                        v-for="oid in data.row.replaceWith.value"
+                                        :key="oid"
+                                        type="info"
+                                    >
+                                        {{ replacementMemberCache[oid].displayName }}
+                                    </erd-tag>
+                                </template>
+                                <template v-else>
+                                    <erd-tag
+                                        v-for="oid in data.row.replaceWith.value.slice(0, 2)"
+                                        :key="oid"
+                                        type="info"
+                                    >
+                                        {{ replacementMemberCache[oid].displayName }}
+                                    </erd-tag>
+                                    <erd-popover
+                                        trigger="hover"
+                                        placement="top-end"
+                                    >
+                                        <template #reference>
+                                            <erd-tag type="info">
+                                                +{{ data.row.replaceWith.value.length - 2 }}
+                                            </erd-tag>
+                                        </template>
+                                        <div>
+                                            <erd-tag
+                                                v-for="oid in data.row.replaceWith.value.slice(2)"
+                                                :key="oid"
+                                                type="info"
+                                            >
+                                                {{ replacementMemberCache[oid].displayName }}
+                                            </erd-tag>
+                                        </div>
+                                    </erd-popover>
+                                </template>
+                            </span>
+                            <span v-else>--</span>
+                            <span class="float-right text-link cursor-pointer"><erd-icon icon="group"></erd-icon></span>
+                        </span>
+                    </template>
+
+                    <template #column:default:replacement="{data}">
+                        <fam-participant-select
+                            v-model="data.row.replaceWith"
+                            width="100%"
+                            popper-class="vxe-table--ignore-clear"
+                            :disableIds="replacementDisabledIds"
+                            :selectedParticipant="selectedReplacementParticipant"
+                            :showType="['USER', 'GROUP']"
+                            :app-name="appName"
+                            collapseTags
+                            multiple
+                            @input="handleReplacementInput(data.row)"
+                            @change="handleReplacementChange"
+                        ></fam-participant-select>
+                    </template>
+                </fam-erd-table>
+            </div>
+        </erd-contraction-panel>
+
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                :loading="loading"
+                :disabled="disabled"
+                @click="fnOnSubmitForm"
+            >
+                {{i18nMappingObj.confirm}}
+            </erd-button>
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

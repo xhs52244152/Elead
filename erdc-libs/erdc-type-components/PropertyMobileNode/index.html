@@ -1,0 +1,28 @@
+<div
+    v-if="visible"
+    id="PropertyMobileNode"
+>
+    <erd-ex-dialog
+        :visible.sync="innerVisible"
+        :title="i18nMappingObj.moveToOtherClass"
+    >
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="data"
+        >
+        </FamDynamicForm>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <el-button
+                type="primary"
+                @click="onSubmit"
+                :loading="loading"
+                >{{i18nMappingObj.confirm}}</el-button
+            >
+            <el-button @click="toggleShow">{{i18nMappingObj.cancel}}</el-button>
+        </span>
+    </erd-ex-dialog>
+</div>

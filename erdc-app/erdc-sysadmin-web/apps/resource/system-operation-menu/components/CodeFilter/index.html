@@ -1,0 +1,9 @@
+<div id="codeFilter">
+    <component
+        :ref="type"
+        :is="customComponent"
+        :data.sync="innerData"
+        v-bind="$attrs"
+        v-on="$listeners"
+    ></component>
+</div>

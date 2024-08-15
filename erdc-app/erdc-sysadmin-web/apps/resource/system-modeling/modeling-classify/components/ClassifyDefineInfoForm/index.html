@@ -1,0 +1,33 @@
+<div id="classify_define_info_form">
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form="innerFormData"
+        :data="formConfig"
+        :editable-attr="['status', 'appName']"
+        :readonly="readonly"
+        :validate-on-rule-change="false"
+        @form-change="formChange"
+    >
+        <template v-slot:typeNameComponent="scope">
+            <template v-if="type === 'create'">
+                <span class="w-56">{{defaultTypeName}}</span>
+                <label class="w-100p">
+                    <erd-input v-model="scope.data[scope.formConfig.field]"></erd-input>
+                </label>
+            </template>
+            <template v-else>
+                <erd-input
+                    v-model="scope.data[scope.formConfig.field]"
+                    disabled
+                    readonly
+                ></erd-input>
+            </template>
+        </template>
+        <template v-slot:typeNameReadonly="scope">
+            <span>{{scope.data[scope.formConfig.field]}}</span>
+        </template>
+        <template v-slot:iconReadonlyComponent="scope">
+            <FamIconSelect v-model="scope.data[scope.formConfig.field]"></FamIconSelect>
+        </template>
+    </FamDynamicForm>
+</div>

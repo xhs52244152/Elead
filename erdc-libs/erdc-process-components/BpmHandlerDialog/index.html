@@ -1,0 +1,23 @@
+<erd-ex-dialog
+    :visible.sync="dialogVisible"
+    :title="dialogTitle"
+    :width="dialogConfig.width"
+    :show-fullscreen="dialogConfig.showFullscreen"
+    destroy-on-close
+    @closed="cancel"
+>
+    <component
+        v-if="handlerComponent"
+        :is="handlerComponent"
+        :ref="handlerComponent"
+        :is-secret="isSecret"
+        :security-label="securityLabel"
+        v-bind="handlerData"
+    ></component>
+    <div v-else>{{dialogComponent}}</div>
+
+    <template #footer>
+        <erd-button v-loading="loading" type="primary" @click="submit">{{i18n.confirm}}</erd-button>
+        <erd-button @click="cancel">{{i18n.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

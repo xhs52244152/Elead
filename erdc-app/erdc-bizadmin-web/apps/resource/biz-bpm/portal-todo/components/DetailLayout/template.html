@@ -1,0 +1,71 @@
+<div
+    id="detail-layout-content"
+    class="detail-layout-content"
+    v-cloak
+    :style="{ 'height': height + 59 + 'px' }"
+>
+    <div class="wide-detail-ctt-left-box">
+        <erd-scrollbar
+            :style="{ height: height + 6 + 'px' }"
+            v-loading="loading"
+        >
+            <DetailList
+                style="width: 344px !important"
+                :list="list"
+                :current.sync="current"
+                @click-detail="clickDetail"
+                v-on="$listeners"
+            ></DetailList>
+        </erd-scrollbar>
+        <div class="wide-detail-ctt-left-p">
+            <erd-pagination
+                background
+                layout="prev, pager, next"
+                :total="pageConfig.total"
+                :page-size="pageConfig.pageSize"
+                :pager-count="pagerCount"
+                @current-change="handleCurrentChange"
+                :current-page="pageConfig.currentPage"
+            ></erd-pagination>
+        </div>
+    </div>
+    <div class="wide-detail-ctt-middle-box"></div>
+    <div class="wide-detail-ctt-right-box">
+        <BpmProcessDetails
+            ref="bpmProcessDetails"
+            :process-instance-o-id="processInstanceOId"
+            :task-def-key="taskDefKey"
+            :task-o-id="taskOId"
+            :height="detailHeight"
+            :current-node-name="currentNodeName"
+            @update-node-map="updateNodeMapChange"
+            @update-task-defKey-users="updateTaskDefKeyUsersChange"
+        >
+            <template slot="horse">
+                <BpmProcessHorse
+                    v-if="activities.length"
+                    :activities="activities"
+                    :users="users"
+                    :current-activity-id="currentActivityId"
+                    :vertical="false"
+                >
+                    <template
+                        slot="title"
+                        slot-scope="scope"
+                    >
+                        <span
+                            style="max-width: 10em; cursor: pointer"
+                            class="p-0 text-left"
+                            :style="{ 'color': scope.activity.thumbnailType === 'FINISHED' ? '#000000' : 'inherit' }"
+                            :title="scope.activity.properties.name"
+                            @click="switchWorkshopView(scope.activity)"
+                            v-fam-clamp
+                        >
+                            {{scope.activity.properties.name}}
+                        </span>
+                    </template>
+                </BpmProcessHorse>
+            </template>
+        </BpmProcessDetails>
+    </div>
+</div>

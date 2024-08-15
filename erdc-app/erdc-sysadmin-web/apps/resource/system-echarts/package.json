@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-echarts",
+  "description": "echarts",
+  "version": "3.1.0",
+  "erdcData": {},
+  "appId": "plat"
+}

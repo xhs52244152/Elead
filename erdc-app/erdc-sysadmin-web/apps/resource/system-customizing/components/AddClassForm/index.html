@@ -1,0 +1,39 @@
+<div id="add-class-form">
+    <div class="mb-12 ptb-8 pl-12 bg-normal text-sm">{{i18nMappingObj.noteInherit}}</div>
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form="formData"
+        :data="dataConfig"
+        :schema-mapper="schemaMapper"
+        v-cloak
+    >
+        <template v-slot:interface-list="scope">
+            <div class="flex w-100p">
+                <custom-select
+                    v-model="scope.data[scope.formConfig.field]"
+                    multiple
+                    filterable
+                    :tag-show-close="false"
+                    :row="interfaceRow"
+                >
+                    <template v-slot:option-title-text="{data}">
+                        <div
+                            class="flex align-items-center"
+                            style="pointer-events: all"
+                        >
+                            <span>{{data.label}}</span>
+                            <erd-tooltip
+                                v-if="Object.keys(specialInterfaceObj).includes(data.value)"
+                                placement="top-start"
+                                class="ml-4 text-14 color-primary cursor-not-allowed"
+                                :content="specialInterfaceObj[data.value]"
+                            >
+                                <i class="erd-iconfont erd-icon-help"></i>
+                            </erd-tooltip>
+                        </div>
+                    </template>
+                </custom-select>
+            </div>
+        </template>
+    </FamDynamicForm>
+</div>

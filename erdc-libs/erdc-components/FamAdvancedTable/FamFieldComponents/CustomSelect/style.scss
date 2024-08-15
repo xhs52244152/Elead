@@ -1,0 +1,34 @@
+#customSelect {
+    display: inline-flex;
+    .el-select {
+        width: 100%;
+    }
+}
+.fam-custom-select-popper {
+    .el-checkbox,
+    .el-checkbox__label {
+        width: 100%;
+    }
+    .el-checkbox__label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .el-tree {
+        .el-checkbox {
+            width: auto;
+        }
+    }
+}
+.fam-custom-check-all {
+    height: 32px;
+    line-height: 32px;
+    &:hover {
+        background-color: var(--selectDropdownSelectedBg);
+    }
+}
+.tree-select-popper {
+    .el-select-dropdown__item {
+        min-width: 12rem !important;
+    }
+}

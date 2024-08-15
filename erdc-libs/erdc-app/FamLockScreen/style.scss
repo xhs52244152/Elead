@@ -1,0 +1,102 @@
+#fam-lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    .lock-screen-content {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 500px;
+        height: 300px;
+        .user-profile {
+            margin-bottom: 16px;
+            width: 100px;
+            height: 100px;
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+        }
+        .user-name {
+            margin-bottom: 46px;
+            font-size: 28px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .password-error {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--colorWhite);
+            .el-button {
+                width: 120px;
+                color: var(--colorWhite);
+                background-color: rgba(255, 255, 255, 0.25);
+            }
+        }
+        .user-password {
+            display: flex;
+            .el-input {
+                width: 240px;
+            }
+            .submit-btn {
+                width: var(--inputHeightLarge);
+                height: var(--inputHeightLarge);
+                background-color: #d9d9d9;
+                cursor: pointer;
+                i {
+                    line-height: var(--inputHeightLarge);
+                    font-size: 32px;
+                    color: var(--colorWhite);
+                }
+            }
+            &:hover {
+                .submit-btn {
+                    background-color: #98a6b8;
+                }
+            }
+        }
+    }
+    .lock-screen-footer {
+        position: absolute;
+        bottom: 50px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .exit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--colorWhite);
+            cursor: pointer;
+            .exit-btn {
+                margin-bottom: 8px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.25);
+                i {
+                    margin-top: 10px;
+                    font-size: 28px;
+                }
+            }
+            p {
+                font-size: 14px;
+                font-size: var(--fontSize);
+            }
+            &:hover {
+                .exit-btn {
+                    background-color: rgba(255, 255, 255, 0.5);
+                }
+            }
+        }
+    }
+}

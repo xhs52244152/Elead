@@ -1,0 +1,28 @@
+#FamRoleTree {
+  background-color: #FFFFFF;
+}
+#FamRoleTree .fam-role-tree_header {
+  margin-bottom: 12px;
+}
+#FamRoleTree .el-scrollbar {
+  height: 100%;
+}
+#FamRoleTree .fam-role-tree__node-content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+font-size: var(--fontSize);
+  width: calc(100% - 25px);
+}
+#FamRoleTree .fam-role-tree__slot {
+  display: none;
+  align-items: center;
+  background: #EBF1FF;
+}
+#FamRoleTree .fam-role-tree__node-content:hover {
+  color: #567FFD;
+  background: #EBF1FF;
+}
+#FamRoleTree .fam-role-tree__node-content:hover .fam-role-tree__slot {
+  display: flex;
+}/*# sourceMappingURL=style.css.map */

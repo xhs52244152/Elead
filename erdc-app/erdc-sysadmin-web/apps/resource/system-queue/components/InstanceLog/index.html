@@ -1,0 +1,20 @@
+<div class="InstanceDetail">
+    <erd-ex-dialog
+        title="日志"
+        :visible.sync="innerVisible"
+    >
+        <!-- <erd-input v-model="logData" :disabled="true" style="margin-top: 16px;" :autosize="true" type="textarea"></erd-input> -->
+        <div
+            class="dataLog"
+            v-loading="loading"
+        >
+            <div
+                v-for="(item, index) in logData"
+                :key="index"
+                class="dataLogItem"
+            >
+                {{item}}
+            </div>
+        </div>
+    </erd-ex-dialog>
+</div>

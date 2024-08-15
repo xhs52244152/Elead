@@ -1,0 +1,64 @@
+<div class="common-page-detail-info__top__section">
+    <div class="flex detail-info-title__line">
+        <div :class="['flex','detail-info-title__line__left', this.openType === 'detail' ? '' : 'title_margin']">
+            <fam-page-title
+                :title="title"
+                :icon="icon"
+                :show-back-button="showBackButton"
+                v-bind="$attrs"
+                @back="onBack">
+                <template v-slot:title="scope">
+                    <div class="flex w_100p" style="align-items: center;">
+                        <slot name="titleBefore"></slot>
+                        <div :title="title" class="detail-info-title__line__left__content">{{title}}</div>
+                        <slot name="titleAfter" :data="detailInfo"></slot>
+                    </div>
+                </template>
+            </fam-page-title>
+            
+            
+            <!-- <div class="flex detail-info-title__line__left__tag">
+                <span
+                    v-for="item in specialTags"
+                    :key="item.name"
+                    :style="calcTagStyle(item)"
+                    class="detail-info-title__line__left__tag__item"
+                    >{{item.name}}
+                </span>
+            </div> -->
+        </div>
+        <div class="detail-info-title__line__right flex">
+            <!-- <fam-action-button
+                :action-data="detailInfo"
+                :action-config="actionConfig"
+                @click="actionClick"
+            ></fam-action-button> -->
+            <slot name="customBtn" :data="detailInfo"></slot>
+            <fam-action-pulldown
+                v-if="formShowType === 'detail'"
+                :is-operation="true"
+                :action-config="actionConfig"
+                :action-data="detailInfo"
+                :default-btn-config="defaultBtnConfig"
+                :args="[vm, detailInfo, actionParams]"
+                @click="onCommand"
+            ></fam-action-pulldown>
+        </div>
+    </div>
+    <div class="flex detail-info-special-attr__line" v-if="formShowType === 'detail' && showSpecialAttr">
+        <div
+            class="flex detail-info-special-attr__line__item"
+            v-for="(item, index) in keyAttrs"
+            :key="index"
+        >
+            <div class="detail-info-special-attr__line__item__icon">
+                <!-- <i :class="item.icon"></i> -->
+                <img :src="item.img" alt=""/>
+            </div>
+            <div class="flex detail-info-special-attr__line__item__attr">
+                <span class="item__attr__name">{{item.name || '--'}}</span>
+                <span class="item__attr__label">{{item.label}}</span>
+            </div>
+        </div>
+    </div>
+</div>

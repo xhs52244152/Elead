@@ -1,0 +1,12 @@
+#PermissionLayout {
+  background: var(--colorFullBg);
+}
+#PermissionLayout .left-custom-class,
+#PermissionLayout .fam-sidemenu {
+  height: 100%;
+}
+#PermissionLayout .fam-sidemenu__search {
+  padding: var(--largePadding);
+}
+
+/*# sourceMappingURL=style.css.map */

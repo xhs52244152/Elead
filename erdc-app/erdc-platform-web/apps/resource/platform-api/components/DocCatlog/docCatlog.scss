@@ -1,0 +1,25 @@
+.doc-catlog {
+    li {
+        letter-spacing: 0;
+        line-height: 32px;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a {
+            color: #999999;
+            font-size: 12px;
+        }
+        a:hover {
+            color: #7395ff;
+        }
+        .anchor-selected {
+            color: #3b69f4;
+        }
+    }
+    .catlog_level_2 {
+            margin-left: 8px;
+    }
+    .catlog_level_3 {
+    }
+}

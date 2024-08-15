@@ -1,0 +1,61 @@
+<erd-form-item
+    ref="formItem"
+    :label="label"
+    :class="['fam-form-item-width-label', {
+        'fam-form-item-width-value': cancelStatus === 'clear',
+        'fam-form-item-hide-label': isHideLabel,
+        'fam-form-item-disabled': disabled,
+        'fam-form-item-hide-form-label': hideFormLabel
+    }]"
+    @click.native="onLabelClick"
+>
+    <slot name="component">
+        <component
+            ref="component"
+            :popper-class="popperClass"
+            :is="showComponent"
+            v-model="dataValue"
+            :options="dataOptions"
+            :placeholder="dataPlaceholder"
+            :style="styleVar"
+            class="flex align-items-center"
+            :width="width"
+            :range-separator="rangeSeparator"
+            :type="componentType"
+            v-bind="getComponentProps()"
+            v-on="{
+                ...$listeners,
+                ...event
+            }"
+            :disabled="disabled"
+            :clearable="clearable"
+            @hook:mounted="handleComponentMounted"
+            @keyup.enter.native="event['keyup.enter.native'] && event['keyup.enter.native']()"
+        >
+            <template
+                v-for="(slot, name) in $scopedSlots"
+                v-slot:[name]="scope"
+            >
+                <slot
+                    :name="name"
+                    v-bind="scope"
+                ></slot>
+            </template>
+            <slot></slot>
+            <template #prefix><span>{{label}}</span></template>
+        </component>
+    </slot>
+    <span
+        v-if="removeable"
+        :title="cancelTitle"
+        class="fam-basicfilter-remove"
+        @mousedown="onCancel"
+    >
+        <i
+            :class="{
+            'erd-iconfont erd-icon-minify': cancelStatus === 'remove',
+            'el-icon-close scale-config': cancelStatus === 'clear',
+        }"
+        ></i>
+    </span>
+</erd-form-item>

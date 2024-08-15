@@ -1,0 +1,50 @@
+<div id="FolderListConfig">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        :before-close="onCancel"
+    >
+        <div v-if="showInfo">
+            <FamDynamicForm
+                ref="editForm"
+                :form.sync="formData"
+                :data="formConfig"
+                v-cloak
+                label-width="120px"
+                :readonly="openType === 'detail'"
+                @form-change="formChange"
+            >
+                <template v-slot:positionComponent="scope">
+                    <erd-cascader
+                        v-model="formData.folderRef"
+                        style="width: 100%"
+                        :options="treeData"
+                        :props="{
+                            checkStrictly: true,
+                            emitPath: false,
+                            children: 'childList',
+                            label: 'name',
+                            value: 'oid'
+                        }"
+                        @change="visibleChange"
+                    >
+                    </erd-cascader>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+            v-if="openType !== 'detail'"
+        >
+            <erd-button
+                type="primary"
+                :disabled="disabled"
+                :loading="loading"
+                @click="submit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

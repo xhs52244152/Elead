@@ -1,0 +1,23 @@
+#signatureTable .signature-header {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#signatureTable .signature-header .h-left {
+    display: flex;
+}
+
+#signatureTable .table {
+    margin-top: 16px;
+}
+
+#signatureTable .pagination {
+    margin-top: 16px;
+}
+#signatureTable .back .el-button--text {
+    color: var(--colorTextExplain);
+}
+#signatureTable .back .el-button--text:hover {
+    color: var(--buttonTextColor__hover);
+}

@@ -1,0 +1,28 @@
+.agent_process_configuration {
+
+    .agent_process_configuration-body {
+        border: 1px solid #ebebeb;
+    }
+    .left {
+        margin: 16px;
+
+        .select-process {
+            font-size: 16px;
+            color: var(--colorTextNormal);
+            line-height: 22px;
+            font-weight: bold;
+        }
+        .search {
+            margin: 12px 0 12px;
+
+            .el-input__suffix {
+                cursor: pointer;
+                line-height: 32px;
+            }
+        }
+    }
+
+    .right {
+        margin: 16px 16px 16px 0;
+    }
+}

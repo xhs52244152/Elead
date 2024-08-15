@@ -1,0 +1,194 @@
+<div
+    id="fam-view-manager"
+    class="fam-view-manager-container h-100p flex flex-column"
+>
+    <div
+        class="head-form-container"
+        v-if="!showBack && viewType == 'system'"
+    >
+        <erd-row>
+            <erd-col
+                :span="12"
+                class="un-exceed"
+            >
+                <label>{{ i18nMappingObj['内部名称'] }}：</label>
+                <erd-tooltip
+                    effect="dark"
+                    placement="top-start"
+                    :content="row.tableKey"
+                >
+                    <span>{{ row.tableKey }}</span>
+                </erd-tooltip>
+            </erd-col>
+            <erd-col
+                :span="12"
+                class="un-exceed"
+            >
+                <label>{{ i18nMappingObj['表格视图名称'] }}：</label>
+                <erd-tooltip
+                    effect="dark"
+                    placement="top-start"
+                    :content="row.nameI18nJson"
+                >
+                    <span>{{ row.nameI18nJson }}</span>
+                </erd-tooltip>
+            </erd-col>
+        </erd-row>
+    </div>
+    <div class="grow-1">
+        <fam-advanced-table
+            ref="FamAdvancedViewTable"
+            :view-table-config="viewTableConfig"
+            :table-max-height="tableMaxHeight"
+            :is-adaptive-height="viewType === 'system'"
+            :app-name="appName"
+            @table-data="fnTableData"
+            @callback="fnTableCallback"
+            @handler-data="fnHandlerTableData"
+        >
+            <template
+                v-if="showBack"
+                #left:toolbar:first
+            >
+                <FamPageTitle
+                    :title="title"
+                    show-back-button
+                    @back="$emit('back')"
+                ></FamPageTitle>
+            </template>
+            <template
+                v-if="row.enabledCreate"
+                #right:toolbar:first
+            >
+                <erd-button
+                    type="primary"
+                    @click="fnShowDialog('create')"
+                    class="m-n-8"
+                >
+                    {{ i18nMappingObj['createView'] }}
+                </erd-button>
+            </template>
+            <!-- 默认视图字段插槽 -->
+            <template #column:default:isDefault:content="{ scope }">
+                <erd-show-tooltip
+                    placement="top"
+                    popperClass="fam-tooltip-max-width fam-action-pulldown-tip"
+                    :content="getOperationTip(scope.row)"
+                    :enterable="false"
+                    :customMouseOver="(el, dom, callback) => callback(getIsDiffTenant(scope.row))"
+                >
+                    <erd-radio
+                        :value="defaultModel(scope)"
+                        :label="true"
+                        :disabled="getConfigIsDisabled(scope.row)|| getIsDiffTenant(scope.row)"
+                        name="isDefault"
+                        @input="setRadioValue(scope.row)"
+                    >
+                        {{ }}
+                    </erd-radio>
+                </erd-show-tooltip>
+            </template>
+            <!-- 启动视图 -->
+            <template #column:default:enabled:content="{ scope }">
+                <erd-show-tooltip
+                    placement="top"
+                    popperClass="fam-tooltip-max-width fam-action-pulldown-tip"
+                    :content="getOperationTip(scope.row)"
+                    :enterable="false"
+                    :customMouseOver="(el, dom, callback) => callback(getIsDiffTenant(scope.row))"
+                >
+                    <erd-switch
+                        v-model="scope.row.enabled"
+                        :disabled="getConfigIsDisabled(scope.row)|| getIsDiffTenant(scope.row)"
+                        @change="switchChange(scope.row)"
+                    ></erd-switch>
+                </erd-show-tooltip>
+            </template>
+            <!-- 视图类型 -->
+            <template #column:default:viewType:content="{ scope }">
+                <span> {{ scope.row?.viewType ? i18nMappingObj['系统视图'] : i18nMappingObj['个人视图']}} </span>
+            </template>
+            <!-- 列操作 -->
+            <template #column:default:operation:content="{ scope }">
+                <div
+                    v-if="scope.row.whetherOpreator || isOpreator(scope.row)"
+                    class="flex"
+                >
+                    <!-- 个人视图里面，系统视图不允许操作 -->
+                    <erd-show-tooltip
+                        placement="top"
+                        popperClass="fam-tooltip-max-width fam-action-pulldown-tip"
+                        :content="getOperationTip(scope.row)"
+                        :enterable="false"
+                        :customMouseOver="(el, dom, callback) => callback(getIsDiffTenant(scope.row))"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="getConfigIsDisabled(scope.row) || getIsDiffTenant(scope.row)"
+                            @click="fnEditView(scope.row)"
+                            class="mr-8"
+                        >
+                            {{ i18nMappingObj.edit }}
+                        </erd-button>
+                    </erd-show-tooltip>
+                    <erd-show-tooltip
+                        placement="top"
+                        popperClass="fam-tooltip-max-width fam-action-pulldown-tip"
+                        :content="getOperationTip(scope.row)"
+                        :enterable="false"
+                        :customMouseOver="(el, dom, callback) => callback(getIsDiffTenant(scope.row))"
+                    >
+                        <erd-button
+                            type="text"
+                            :disabled="getConfigIsDisabled(scope.row) || getIsDiffTenant(scope.row)"
+                            @click="fnDeleteTableRow(scope.row)"
+                        >
+                            {{ i18nMappingObj.delete }}
+                        </erd-button>
+                    </erd-show-tooltip>
+                </div>
+            </template>
+        </fam-advanced-table>
+    </div>
+    <!-- 创建、编辑 -->
+    <erd-ex-dialog
+        ref="createViewTableDialog"
+        :visible.sync="viewForm.visible"
+        width="1200px"
+        :title="viewForm.editable ? i18nMappingObj.edit : i18nMappingObj.create"
+        custom-class="fam-view-form-dialog"
+        @close="fnCloseForm"
+    >
+        <!-- 表单组件 -->
+        <view-form
+            ref="viewForm"
+            v-if="viewForm.visible"
+            :oid="viewForm.oid"
+            :row="viewRow"
+            :baseFilterFieldDtos="baseFilterFieldDtos"
+            :table-row="row"
+            :table-key="row?.tableKey"
+            :visible="viewForm.visible"
+            :editable="viewForm.editable"
+            :view-type="viewType"
+            :is-relation-type="isRelationType"
+        ></view-form>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="viewForm.loading"
+                @click="fnFormSubmit('viewForm')"
+                :disabled="viewForm.loading"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button
+                :disabled="viewForm.loading"
+                @click="fnCloseForm"
+            >
+                {{ i18nMappingObj.cancel }}
+            </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

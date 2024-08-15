@@ -1,0 +1,57 @@
+<div
+    id="view-task-content"
+    class="view-task-content"
+    style=""
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        :is-adaptive-height="false"
+        :tableMaxHeight="400"
+        :view-table-config="viewTableConfig"
+        @handler-data="handlerData"
+    >
+        <!-- 优先级 -->
+        <template v-slot:[slotName.priority]="{ scope }">
+            <BpmPriority v-bind="getPriority(scope)"></BpmPriority>
+        </template>
+        <!-- 到期日期 -->
+        <template v-slot:[slotName.dueDate]="{ scope }">
+            <BpmDueData :due-data="getDueDate(scope)"></BpmDueData>
+        </template>
+        <!-- 流程状态 -->
+        <template v-slot:[slotName.processStatus]="{ scope }">
+            <BpmProcessStatus :status="getStatus(scope)"></BpmProcessStatus>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="actionClick"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+
+    <!-- 委派 -->
+    <erd-ex-dialog
+        :title="delegateForm.title"
+        :visible.sync="delegateForm.visible"
+        @close="delegateForm.taskOId = []"
+    >
+        <bpm-delegate-form
+            v-if="delegateForm.visible"
+            ref="delegateForm"
+        ></bpm-delegate-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="!loading && delegateHandleClick()"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'delegateForm' })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

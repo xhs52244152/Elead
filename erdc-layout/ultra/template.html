@@ -1,0 +1,217 @@
+<script
+    id="fam-layout-ultra-Layout-tmpl"
+    type="text/template"
+>
+    <erd-container
+        :class="{
+            'h_100p': true,
+            'ultra-container': true,
+            'ultra-container--collapsed': collapsed
+        }"
+    >
+        <AppMain
+            v-if="showAppMain"
+            :collapsed="collapsed"
+        ></AppMain>
+    </erd-container>
+</script>
+
+<script
+    id="fam-layout-ultra-SideMenu-tmpl"
+    type="text/template"
+>
+    <erd-scrollbar
+        class="h-100p"
+        :wrap-style="{ 'padding-bottom': 'var(--superPadding)', 'overflow-x': 'hidden' }"
+    >
+        <erd-menu
+            id="sidebar-menu"
+            ref="menu"
+            class="ultra-menu"
+            :default-active="currentActive"
+            :text-color="menuTheme.textColor"
+            :active-text-color="menuTheme.activeTextColor"
+            :background-color="menuTheme.backgroundColor"
+            :collapse-transition="false"
+            @select="onRoute"
+        >
+            <erd-menu-item
+                v-for="resource in resources"
+                :key="resource.oid"
+                :class="{ 'is-active': currentActive === resource.oid }"
+                style="padding-left: 16px;"
+                :index="resource.oid"
+            >
+                <i :class="resource.icon"></i>
+                <span slot="title">{{ resource.displayName }}</span>
+            </erd-menu-item>
+        </erd-menu>
+    </erd-scrollbar>
+</script>
+
+<script
+    id="fam-layout-ultra-AppMain-tmpl"
+    type="text/template"
+>
+    <erd-main class="p-0 h-100p ultra-main" :style="{ overflow: 'hidden' }">
+        <AppHeader
+            :height="headerHeight"
+            :collapsed="collapsed"
+        ></AppHeader>
+        <keep-alive :include="cachedViews">
+            <router-view :key="keepAliveKey"></router-view>
+        </keep-alive>
+    </erd-main>
+</script>
+
+<script
+    id="fam-layout-ultra-AppHeader-tmpl"
+    type="text/template"
+>
+    <erd-header
+        :class="{
+            'ultra-header': true,
+            'p-0': true,
+            'collapsed': collapsed
+        }"
+        :height="height"
+    >
+        <div class="ultra-header-inline-flex h_100p w-100p">
+            <div class="ultra-header-left-tags-container flex w-100p">
+                <FamSwitchApp></FamSwitchApp>
+                <template v-for="item in leftWidget">
+                    <component
+                        :is="item.component"
+                        :key="item.key"
+                        :meta="item.meta"
+                    ></component>
+                </template>
+                <HeaderView
+                    ref="headerView"
+                    class="w-100p"
+                    :width="headerViewWidth"
+                    :collapsed="collapsed"
+                    @hook:mounted="headerViewMounted()"
+                ></HeaderView>
+                <div
+                    ref="rightButtonsPane"
+                    class="ultra-header-right-button-pane"
+                >
+                    <template
+                        v-for="widget in layoutHeaderWidgets"
+                    >
+                        <component
+                            :is="widget.component"
+                            :key="widget.key"
+                            :meta="widget.meta"
+                            @hook:mounted="rightButtonsPaneMounted()"
+                        ></component>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </erd-header>
+</script>
+
+<script
+    id="fam-layout-ultra-HeaderView-tmpl"
+    type="text/template"
+>
+    <div
+        ref="view"
+        class="ultra-tags-view inline-flex align-items-center pl-lg overflow-hidden grow-1 w-0"
+    >
+        <span
+            v-for="route in visibleRoutes"
+            class="flex align-items-center flex-nowrap mr-sm rounded cursor-pointer word-break-keep-all	text-sm"
+            :class="{
+                'left-tag': true,
+                'is-active': isActiveRoute(route)
+            }"
+            :key="route.fullPath"
+            :data-path="route.fullPath"
+            :title="getRouteTitle(route)"
+            @click="routeTo(route)"
+        >
+            <span class="left-tag__text">
+                {{ getRouteTitle(route) }}
+            </span>
+            <span
+                class="left-tag__close"
+                @click.prevent.stop="delVisitedRoute(route)"
+            >
+                <i class="el-icon-close"></i>
+            </span>
+        </span>
+        <erd-dropdown
+            ref="dropdown"
+            trigger="click"
+            placement="bottom"
+            @visible-change="setVisibleStatus"
+            @command="handleCommand"
+        >
+           <span
+               class="ultra-tags-view__dropdown inline-block text-center cursor-pointer"
+               :class="{ 'ultra-tags-view__dropdown-visible': isDropdownVisible }"
+               size="mini"
+           >
+                <i class="erd-iconfont erd-icon-arrow-down"></i>
+            </span>
+            <template #dropdown>
+                <erd-dropdown-menu class="ultra-tags-view__dropdownMenu">
+                    <erd-scrollbar>
+                        <erd-show-tooltip
+                            v-for="dropdown in dropdownList"
+                            placement="bottom-start"
+                            :key="dropdown.key"
+                            :content="dropdown.name"
+                            :enterable="false"
+                            :flex="false"
+                            padding-width="12"
+                        >
+                            <template v-slot:show-tooltip-title>
+                                <erd-dropdown-item
+                                    :command="dropdown"
+                                    class="ellipsis"
+                                >
+                                    <span class="title_text"> {{ dropdown.name }} </span>
+                                </erd-dropdown-item>
+                            </template>
+                        </erd-show-tooltip>
+                        <template v-if="invisibleRoutes && invisibleRoutes.length">
+                            <erd-dropdown-item divided></erd-dropdown-item>
+                            <erd-show-tooltip
+                                v-for="route in invisibleRoutes"
+                                placement="bottom-start"
+                                :key="route.fullPath"
+                                :content="getRouteTitle(route)"
+                                :enterable="false"
+                                :flex="false"
+                                :custom-mouse-over="handleMouseOver"
+                                padding-width="12"
+                            >
+                                <template v-slot:show-tooltip-title>
+                                    <erd-dropdown-item
+                                        :command="route"
+                                        class="ellipsis"
+                                    >
+                                        <div
+                                            :class="{ 'ultra-tags-view__right-tag': true, 'is-active': isActiveRoute(route) }"
+                                        >
+                                            <div class="ellipsis">
+                                                <span class="title_text">
+                                                    {{ getRouteTitle(route) }}
+                                                </span>
+                                            </div>
+                                            <span class="el-icon-close" @click.prevent.stop="delVisitedRoute(route)"></span>
+                                        </div>
+                                    </erd-dropdown-item>
+                                </template>
+                            </erd-show-tooltip>
+                        </template>
+                    </erd-scrollbar>
+                </erd-dropdown-menu>
+            </template>
+        </erd-dropdown>
+    </div>
+</script>

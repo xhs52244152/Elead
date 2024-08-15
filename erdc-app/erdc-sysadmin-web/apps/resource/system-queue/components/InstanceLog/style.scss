@@ -1,0 +1,10 @@
+.dataLog {
+    border: 1px solid #eee;
+    padding: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+
+    .dataLogItem+.dataLogItem {
+        padding-top: 12px;
+    }
+}

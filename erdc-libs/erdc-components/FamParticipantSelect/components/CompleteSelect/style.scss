@@ -1,0 +1,30 @@
+#CompleteSelect {
+    .el-input__suffix {
+        display: flex;
+        .el-input__suffix-inner {
+            align-items: center;
+            font-size: 16px;
+        }
+    }
+    .complete-select {
+        line-height: 32px;
+        &:hover {
+            background-color: var(--colorHover);
+        }
+        .complete-icon {
+            top: 8px;
+            right: 16px;
+            font-size: 16px;
+            &:hover {
+                color: var(--colorPrimary);
+            }
+        }
+    }
+    .el-tag {
+        margin-left: 8px !important;
+        margin-top: 8px;
+    }
+    .complete-tag {
+        max-width: 100px;
+    }
+}

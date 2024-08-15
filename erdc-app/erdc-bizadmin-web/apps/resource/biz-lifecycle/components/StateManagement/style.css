@@ -1,0 +1,28 @@
+#StateManagement {
+  padding: 0 16px 0 16px;
+}
+#StateManagement .stateManagement-header {
+  width: 100%;
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+}
+#StateManagement .content {
+  width: 100%;
+}
+#StateManagement .content .operation {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#StateManagement .fam-erd-table-container {
+  position: relative;
+  flex-grow: 1;
+}
+#StateManagement .fam-erd-table-container > #ComponentWapper-erdTable {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

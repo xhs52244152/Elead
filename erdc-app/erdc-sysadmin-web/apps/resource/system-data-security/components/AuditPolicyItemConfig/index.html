@@ -1,0 +1,114 @@
+<div>
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form.sync="form"
+        :data="formLayout"
+    >
+        <template v-slot:model="scope">
+            <div class="flex align-items-center w-100p">
+                <erd-ex-select
+                    v-model="form.appName"
+                    :options="applicationList"
+                    clearable
+                    class="w-100"
+                ></erd-ex-select>
+                <erd-ex-select
+                    v-model="form.typeName"
+                    :options="typeList"
+                    clearable
+                    :placeholder="i18n.modelInputTip"
+                    class="grow-1"
+                ></erd-ex-select>
+            </div>
+        </template>
+        <template v-slot:associated-interface="scope">
+            <div class="w-100p">
+                <div class="flex justify-flex-end mb-8">
+                    <erd-button @click="dialogVisible = true">{{i18n.add}}</erd-button>
+                </div>
+                <fam-erd-table
+                    ref="erdTable"
+                    :maxLine="10"
+                    :data="tableData"
+                    :column="columns"
+                    :edit-config="{trigger: 'manual', mode: 'row', autoClear: false}"
+                >
+                    <template #column:default:apiName="{data}">
+                        <span>{{data.row.className}}.{{data.row.methodName}}</span>
+                    </template>
+                    <template #column:default:Link#dataCodeExp="{data}">
+                        <span>{{data.row[data.column.property]}}</span>
+                    </template>
+                    <template #column:edit:Link#dataCodeExp="{data}">
+                        <erd-input v-model="data.row[data.column.property]"></erd-input>
+                    </template>
+                    <template #column:default:Link#detailI18nJson="{data}">
+                        <span>{{getI18nValue(data)}}</span>
+                    </template>
+                    <template #column:edit:Link#detailI18nJson="{data}">
+                        <fam-i18nbasics
+                            v-model="data.row[data.column.property]"
+                            :autofocus="true"
+                        >
+                        </fam-i18nbasics>
+                    </template>
+                    <template #column:default:operation="{data}">
+                        <template v-if="getIsEditing(data)">
+                            <erd-button
+                                type="text"
+                                @click="onSave(data)"
+                            >
+                                {{i18n.save}}
+                            </erd-button>
+                            <erd-button
+                                type="text"
+                                @click="onCancle(data)"
+                            >
+                                {{i18n.cancel}}
+                            </erd-button>
+                        </template>
+                        <template v-else>
+                            <erd-button
+                                type="text"
+                                @click="onEdit(data)"
+                            >
+                                {{i18n.edit}}
+                            </erd-button>
+                            <erd-button
+                                type="text"
+                                @click="onDelete(data)"
+                            >
+                                {{i18n.delete}}
+                            </erd-button>
+                        </template>
+                    </template>
+                </fam-erd-table>
+            </div>
+        </template>
+    </FamDynamicForm>
+    <erd-ex-dialog
+        :title="dialogTitle"
+        :visible.sync="dialogVisible"
+        width="1200px"
+        @close="close"
+    >
+        <associate-custom-interface
+            v-if="dialogVisible"
+            ref="associateInterface"
+            :interfaceType="form.interfaceType"
+        >
+        </associate-custom-interface>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submit"
+            >
+                {{ i18n.confirm }}
+            </erd-button>
+            <erd-button @click="handleCancel">{{ i18n.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

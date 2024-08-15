@@ -1,0 +1,685 @@
+<div id="CronConfig">
+    <erd-ex-dialog
+        title="生成CRON表达式"
+        width="1200"
+        :visible.sync="innerVisible"
+    >
+        <div class="configContanier">
+            <erd-row style="padding-top: 26px">
+                <erd-col :span="3">
+                    <span class="config-label">{{i18nMappingObj.expressionField}}</span>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                    style="padding-left: 0px;"
+                >
+                    <div class="config-tip">{{i18nMappingObj.second}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'second'}"
+                        ref="second"
+                        v-model="formData.second"
+                        :readonly="true"
+                        :autofocus="true"
+                        @focus="onFocus('second')"
+                        @blur="onBlur('second')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'second'"
+                    ></div>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                >
+                    <div class="config-tip">{{i18nMappingObj.minute}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'minute'}"
+                        ref="minute"
+                        v-model="formData.minute"
+                        :readonly="true"
+                        :autofocus="false"
+                        @focus="onFocus('minute')"
+                        @blur="onBlur('minute')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'minute'"
+                    ></div>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                >
+                    <div class="config-tip">{{i18nMappingObj.hour}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'hour'}"
+                        ref="hour"
+                        v-model="formData.hour"
+                        :readonly="true"
+                        :autofocus="false"
+                        @focus="onFocus('hour')"
+                        @blur="onBlur('hour')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'hour'"
+                    ></div>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                >
+                    <div class="config-tip">{{i18nMappingObj.day}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'day'}"
+                        ref="day"
+                        v-model="formData.day"
+                        :readonly="true"
+                        :autofocus="false"
+                        @focus="onFocus('day')"
+                        @blur="onBlur('day')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'day'"
+                    ></div>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                >
+                    <div class="config-tip">{{i18nMappingObj.month}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'month'}"
+                        ref="month"
+                        v-model="formData.month"
+                        :readonly="true"
+                        :autofocus="false"
+                        @focus="onFocus('month')"
+                        @blur="onBlur('month')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'month'"
+                    ></div>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                >
+                    <div class="config-tip">{{i18nMappingObj.week}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'week'}"
+                        ref="week"
+                        v-model="formData.week"
+                        :readonly="true"
+                        :autofocus="false"
+                        @focus="onFocus('week')"
+                        @blur="onBlur('week')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'week'"
+                    ></div>
+                </erd-col>
+                <erd-col
+                    :span="3"
+                    class="config-input"
+                >
+                    <div class="config-tip">{{i18nMappingObj.year}}</div>
+                    <erd-input
+                        :class="{'isActive': focusItem === 'year'}"
+                        ref="year"
+                        v-model="formData.year"
+                        :readonly="true"
+                        :autofocus="false"
+                        @focus="onFocus('year')"
+                        @blur="onBlur('year')"
+                    >
+                    </erd-input>
+                    <div
+                        class="nabla"
+                        v-if="focusItem == 'year'"
+                    ></div>
+                </erd-col>
+            </erd-row>
+            <!-- 配置的内容区域 -->
+            <div class="config-content">
+                <div
+                    v-if="focusItem == 'second'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.second.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="wildcard">每秒 允许的通配符[,-*/]</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期从
+                                <erd-input-number
+                                    v-model="configData.second.cycleMin"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.second.cycleMax"
+                                    size="small"
+                                    :min="2"
+                                >
+                                </erd-input-number>
+                                秒
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="execution">
+                                从
+                                <erd-input-number
+                                    v-model="configData.second.startTime"
+                                    size="small"
+                                    :min="0"
+                                    :max="59"
+                                >
+                                </erd-input-number>
+                                秒开始，每
+                                <erd-input-number
+                                    v-model="configData.second.timeCount"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                秒执行一次
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="specify"> 指定 </erd-radio>
+                        </div>
+                        <div class="group-checkbox">
+                            <erd-checkbox-group v-model="configData.second.checkbox">
+                                <div
+                                    v-for="(item, index) in 6"
+                                    :key="index"
+                                >
+                                    <erd-checkbox
+                                        v-for="(item1, index1) in 10"
+                                        :key="index1"
+                                        :label="index1 + index*10"
+                                        >{{index == 0 ? '0' + index1 : index1 + index*10}}</erd-checkbox
+                                    >
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                    </erd-radio-group>
+                </div>
+                <div
+                    v-if="focusItem == 'minute'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.minute.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="wildcard">分钟 允许的通配符[,-*/]</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期从
+                                <erd-input-number
+                                    v-model="configData.minute.cycleMin"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.minute.cycleMax"
+                                    size="small"
+                                    :min="2"
+                                >
+                                </erd-input-number>
+                                分钟
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="execution">
+                                从
+                                <erd-input-number
+                                    v-model="configData.minute.startTime"
+                                    size="small"
+                                    :min="0"
+                                    :max="59"
+                                >
+                                </erd-input-number>
+                                分钟开始，每
+                                <erd-input-number
+                                    v-model="configData.minute.timeCount"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                分钟执行一次
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="specify"> 指定 </erd-radio>
+                        </div>
+                        <div class="group-checkbox">
+                            <erd-checkbox-group v-model="configData.minute.checkbox">
+                                <div
+                                    v-for="(item, index) in 6"
+                                    :key="index"
+                                >
+                                    <erd-checkbox
+                                        v-for="(item1, index1) in 10"
+                                        :key="index1"
+                                        :label="index1 + index*10"
+                                        >{{index == 0 ? '0' + index1 : index1 + index*10}}</span></erd-checkbox>
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                    </erd-radio-group>
+                </div>
+                <div
+                    v-if="focusItem == 'hour'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.hour.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="wildcard">小时 允许的通配符[,-*/]</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期从
+                                <erd-input-number
+                                    v-model="configData.hour.cycleMin"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.hour.cycleMax"
+                                    size="small"
+                                    :min="2"
+                                >
+                                </erd-input-number>
+                                小时
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="execution">
+                                从
+                                <erd-input-number
+                                    v-model="configData.hour.startTime"
+                                    size="small"
+                                    :min="0"
+                                    :max="59"
+                                >
+                                </erd-input-number>
+                                小时开始，每
+                                <erd-input-number
+                                    v-model="configData.hour.timeCount"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                小时执行一次
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="specify"> 指定 </erd-radio>
+                        </div>
+                    </erd-radio-group>
+                    <div class="group-checkbox">
+                        <div class="flex">
+                            <div>AM：</div>
+                            <erd-checkbox-group v-model="configData.hour.checkbox">
+                                <div>
+                                    <erd-checkbox
+                                        v-for="(item, index) in 12"
+                                        :key="index"
+                                        :label="index"
+                                        >{{replenish(index)}}</erd-checkbox
+                                    >
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                        <div class="flex">
+                            <span>PM：</span>
+                            <erd-checkbox-group v-model="configData.hour.checkbox">
+                                <div>
+                                    <erd-checkbox
+                                        v-for="(item, index) in 12"
+                                        :key="index"
+                                        :label="index + 12"
+                                        >{{index + 12}}</erd-checkbox
+                                    >
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    v-if="focusItem == 'day'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.day.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="wildcard">日 允许的通配符[,-*/]</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="unSpecify">不指定</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期从
+                                <erd-input-number
+                                    v-model="configData.day.cycleMin"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.day.cycleMax"
+                                    size="small"
+                                    :min="2"
+                                >
+                                </erd-input-number>
+                                日
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="execution">
+                                从
+                                <erd-input-number
+                                    v-model="configData.day.startTime"
+                                    size="small"
+                                    :min="0"
+                                    :max="59"
+                                >
+                                </erd-input-number>
+                                日开始，每
+                                <erd-input-number
+                                    v-model="configData.day.timeCount"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                天执行一次
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="recentDay">
+                                每月
+                                <erd-input-number
+                                    v-model="configData.day.recentDay"
+                                    size="small"
+                                    :min="1"
+                                    :max="31"
+                                >
+                                </erd-input-number>
+                                号最近的那个工作日
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="lastDay">本月最后一天</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="specify"> 指定 </erd-radio>
+                        </div>
+                        <div class="group-checkbox">
+                            <erd-checkbox-group v-model="configData.day.checkbox">
+                                <div>
+                                    <erd-checkbox
+                                        v-for="(item, index) in 31"
+                                        :key="index"
+                                        :label="index"
+                                        >{{replenish(index)}}</erd-checkbox
+                                    >
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                    </erd-radio-group>
+                </div>
+                <div
+                    v-if="focusItem == 'month'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.month.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="wildcard">月 允许的通配符[,-*/]</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="unSpecify">不指定</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期从
+                                <erd-input-number
+                                    v-model="configData.month.cycleMin"
+                                    size="small"
+                                    :min="1"
+                                    :max="12"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.month.cycleMax"
+                                    size="small"
+                                    :min="2"
+                                    :max="12"
+                                >
+                                </erd-input-number>
+                                月
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="execution">
+                                从
+                                <erd-input-number
+                                    v-model="configData.month.startTime"
+                                    size="small"
+                                    :min="1"
+                                    :max="31"
+                                >
+                                </erd-input-number>
+                                日开始，每
+                                <erd-input-number
+                                    v-model="configData.month.timeCount"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                月执行一次
+                            </erd-radio>
+                        </div>
+                        <!-- <div class="group-radio">
+                            <erd-radio label="recentDay">
+                                每月
+                                <erd-input-number
+                                    v-model="configData.month.recentDay"  
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                                号最近的那个工作日
+                            </erd-radio>
+                        </div> -->
+                        <div class="group-radio">
+                            <erd-radio label="specify"> 指定 </erd-radio>
+                        </div>
+                        <div class="group-checkbox">
+                            <erd-checkbox-group v-model="configData.month.checkbox">
+                                <div>
+                                    <erd-checkbox
+                                        v-for="(item, index) in 12"
+                                        :key="index"
+                                        :label="index"
+                                        >{{replenish(index)}}</erd-checkbox
+                                    >
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                    </erd-radio-group>
+                </div>
+                <div
+                    v-if="focusItem == 'week'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.week.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="wildcard">周 允许的通配符[,-*/]</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="unSpecify">不指定</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期 从星期
+                                <erd-input-number
+                                    v-model="configData.week.cycleMin"
+                                    size="small"
+                                    :min="1"
+                                    :max="7"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.week.cycleMax"
+                                    size="small"
+                                    :min="1"
+                                    :max="7"
+                                >
+                                </erd-input-number>
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="execution">
+                                第
+                                <erd-input-number
+                                    v-model="configData.week.startTime"
+                                    size="small"
+                                    :min="0"
+                                    :max="59"
+                                >
+                                </erd-input-number>
+                                周的星期
+                                <erd-input-number
+                                    v-model="configData.week.timeCount"
+                                    size="small"
+                                    :min="1"
+                                >
+                                </erd-input-number>
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="lastWeek">
+                                本月最后一个星期
+                                <erd-input-number
+                                    v-model="configData.week.lastWeek"
+                                    size="small"
+                                    :min="1"
+                                    :max="7"
+                                >
+                                </erd-input-number>
+                            </erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="specify"> 指定 </erd-radio>
+                        </div>
+                        <div class="group-checkbox">
+                            <erd-checkbox-group v-model="configData.week.checkbox">
+                                <div>
+                                    <erd-checkbox
+                                        v-for="(item, index) in 7"
+                                        :key="index"
+                                        :label="index"
+                                        >{{item}}</erd-checkbox
+                                    >
+                                </div>
+                            </erd-checkbox-group>
+                        </div>
+                    </erd-radio-group>
+                </div>
+                <div
+                    v-if="focusItem == 'year'"
+                    style="padding: 12px 16px"
+                >
+                    <erd-radio-group
+                        v-model="configData.year.radio"
+                        @change="radioChange"
+                    >
+                        <div class="group-radio">
+                            <erd-radio label="unSpecify">不指定 允许的通配符[,-*/] 非必填</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="everyYear">每年</erd-radio>
+                        </div>
+                        <div class="group-radio">
+                            <erd-radio label="cycle">
+                                周期
+                                <erd-input-number
+                                    v-model="configData.year.cycleMin"
+                                    size="small"
+                                >
+                                </erd-input-number>
+                                &nbsp;-&nbsp;
+                                <erd-input-number
+                                    v-model="configData.year.cycleMax"
+                                    size="small"
+                                >
+                                </erd-input-number>
+                            </erd-radio>
+                        </div>
+                    </erd-radio-group>
+                </div>
+            </div>
+            <erd-row style="padding-top: 12px">
+                <erd-col :span="3">
+                    <span class="config-label">{{i18nMappingObj.expression}}</span>
+                </erd-col>
+                <erd-col :span="21">
+                    <erd-input v-model="CRON"></erd-input>
+                </erd-col>
+            </erd-row>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <!-- <erd-button type="primary" @click="onSubmit">编辑</erd-button> -->
+            <erd-button
+                type="primary"
+                @click="onSubmit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancle">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,49 @@
+<div id="fam_create_or_edit_template_form">
+    <fam-dynamic-form
+        v-if="formType === 'templateCategory'"
+        ref="templateCategoryForm"
+        :readonly="readonly"
+        :form="categoryFormData"
+        :data="categoryFormConfig"
+        label-position="right"
+    >
+        <template #appNameReadonly>
+            <span>{{categoryFormData.appName || '--'}}</span>
+        </template>
+    </fam-dynamic-form>
+    <div
+        v-else
+        class="template-form"
+    >
+        <erd-contraction-panel
+            :unfold.sync="unfold"
+            :title="'模板基本信息'"
+        >
+            <template v-slot:content>
+                <fam-dynamic-form
+                    ref="templateBaseInfoForm"
+                    :readonly="readonly"
+                    :form="templateBaseInfoData"
+                    :data="templateBaseInfoFormConfig"
+                    label-position="right"
+                >
+                </fam-dynamic-form>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :unfold.sync="unfold2"
+            :title="'模板内容设置'"
+        >
+            <template v-slot:content>
+                <fam-dynamic-form
+                    ref="templateDocForm"
+                    :readonly="readonly"
+                    :form="templateDocFormData"
+                    :data="templateDocFormFormConfig"
+                    label-position="right"
+                >
+                </fam-dynamic-form>
+            </template>
+        </erd-contraction-panel>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+[
+  {
+    "packageName": "biz-app",
+    "bundle": "erdc-bundle.js",
+    "files": [
+      "index.js",
+      "register.js",
+      "router.js",
+      "locale/index.js"
+    ]
+  }
+]

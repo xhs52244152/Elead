@@ -1,0 +1,82 @@
+.doc-common {
+  padding: var(--normalPadding);
+  height: 100%;
+}
+.doc-common .doc-common-content {
+  height: calc(100% - 50px);
+  display: flex;
+  width: 100%;
+}
+.doc-common .doc-common-content .content-catelog {
+  width: 280px;
+}
+.doc-common .doc-common-content .content-document {
+  width: calc(100% - 280px);
+  height: 100%;
+}
+.doc-common .api-common {
+  padding: 0px 16px;
+}
+.doc-common .api-common .api-common-scrollbar {
+  height: 100%;
+  padding: 0px 32px 0px 16px;
+}
+.doc-common .api-common .base-info {
+  font-size: 16px;
+  color: var(--colorTextNormal);
+}
+.doc-common .api-common .base-info p {
+  line-height: unset;
+  margin-bottom: 12px;
+}
+.doc-common .api-common h1 {
+  font-size: 22px;
+  color: var(--colorTextNormal);
+  line-height: 38px;
+  font-weight: 700;
+}
+.doc-common .api-common h2 {
+  font-size: var(--fontSizeLarge);
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.doc-common .api-common .block-title {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  margin-bottom: 8px;
+}
+.doc-common .api-common table {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  table-layout: auto;
+  margin-bottom: 12px;
+}
+.doc-common .api-common table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.doc-common .api-common table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.doc-common .api-common pre {
+  background: #FAFAFA;
+  padding: 16px 24px;
+  display: block;
+  margin: 0 0 10px;
+  font-size: 12px;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.doc-common .api-common .info-item {
+  line-height: 30px;
+  color: #333333;
+}
+.doc-common .api-common .info-block {
+  margin-top: 40px;
+}
+
+/*# sourceMappingURL=docCommon.css.map */

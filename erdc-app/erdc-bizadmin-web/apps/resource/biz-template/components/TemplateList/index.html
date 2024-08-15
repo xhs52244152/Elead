@@ -1,0 +1,102 @@
+<div
+    id="template-list-section"
+    class="h-100p flex flex-column"
+>
+    <div class="template-manage-list-content flex flex-column h-100p bg-normal bg-normal">
+        <FamPageTitle
+            v-if="showTitle"
+            class="plr-normal bg-normal pb-normal"
+        ></FamPageTitle>
+        <component
+            class="grow-1 ptrl-xl bg-white"
+            :ref="customComponentName"
+            :is="customComponentName"
+            :view-table-config="tableConfig"
+            is-adaptive-height
+            :view-info="viewInfo"
+        >
+            <template #left:toolbar:first="{ scope }">
+                <erd-form
+                    inline
+                    @submit.native.prevent
+                >
+                    <component-width-label
+                        v-model="applyFilter.value"
+                        :label="applyFilter.label"
+                        :is-render="applyFilter.showComponent"
+                        :removeable="false"
+                        @input="typeNameChange"
+                    >
+                        <erd-option
+                            v-for="item in typeNameList"
+                            :key="item.typeName"
+                            :label="item.displayName"
+                            :value="item.typeName"
+                        ></erd-option>
+                    </component-width-label>
+                </erd-form>
+            </template>
+
+            <template #column:default:operation:content="{ scope }">
+                <fam-action-pulldown
+                    :is-operation="true"
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    @click="actionClick"
+                ></fam-action-pulldown>
+            </template>
+        </component>
+    </div>
+    <!-- <fam-advanced-table
+        v-if="showTable"
+        ref="famAdvancedTable"
+        :view-table-config="tableConfig"
+        :table-height="tableHeight"
+    >
+    <template #column:default:operation:content="{ scope }">
+        <erd-button
+            type="text"
+            @click="handlerEdit(scope.row)"
+            >{{i18nMappingObj.edit}}</erd-button
+        >
+        <erd-button
+            type="text"
+            @click="handlerRemove(scope.row)"
+            >{{i18nMappingObj.remove}}</erd-button
+        >
+    </template>
+    </fam-advanced-table> -->
+    <erd-ex-dialog
+        :title="dialogTitle"
+        :visible.sync="dialogVisible"
+        close-on-press-escape
+        width="1200px"
+    >
+        <product-form
+            v-if="dialogVisible"
+            ref="productForm"
+            :oid="rowData && rowData.oid"
+            :form-type="formType"
+            :open-type="openType"
+            :type-name="typeName"
+            :container-ref="containerRef"
+            :query-layout-params="queryLayoutParams"
+            :needSelectType="false"
+            :editable-attr="['templateInfo.tmplTemplated']"
+            @onsubmit="onSubmit"
+        ></product-form>
+
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submit"
+            >
+                {{i18nMappingObj.confirm}}
+            </erd-button>
+            <erd-button @click="dialogVisible = false"> {{i18nMappingObj.cancel}} </erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

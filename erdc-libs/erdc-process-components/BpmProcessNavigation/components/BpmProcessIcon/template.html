@@ -1,0 +1,79 @@
+<div
+    id="bpm-process-icon-content"
+    class="bpm-process-icon-content"
+    v-cloak
+    :style="{ 'border-color': (type === ICON_TYPE_SUSPENDED || type === ICON_TYPE_ABNORMAL) ? '#F5222D' : (type === ICON_TYPE_FINISHED || type === ICON_TYPE_CURRENT) ? 'var(--primary-color)' : '#BEBEBE' }"
+>
+    <!-- 处理人 -->
+    <erd-popover
+        v-if="activity.candidateUsers && activity.candidateUsers.length"
+        :placement="placement"
+        :title="i18nMappingObj['处理人']"
+        trigger="hover"
+        width="250"
+        style="border-color: inherit"
+        :close-delay="0"
+    >
+        <template slot="reference">
+            <div
+                :class="[{'child-node-class': isChildNode }, isChildNode ? vertical ? 'child-node-class-vertical' : 'child-node-class-default' : '' ]"
+            >
+                <i
+                    v-if="type === ICON_TYPE_FINISHED"
+                    class="el-icon-check"
+                    style="color: var(--primary-color)"
+                ></i>
+                <i
+                    v-else-if="type === ICON_TYPE_CURRENT"
+                    class="el-icon-s-custom"
+                    style="color: var(--primary-color)"
+                ></i>
+                <i
+                    v-else-if="type === ICON_TYPE_ABNORMAL"
+                    class="el-step__icon workflow-thumbnail-icon-default"
+                    style="background-color: #f5222d"
+                ></i>
+                <i
+                    v-else-if="type === ICON_TYPE_SUSPENDED"
+                    class="el-icon-minus"
+                    style="color: #f5222d"
+                ></i>
+                <i
+                    v-else
+                    class="el-step__icon workflow-thumbnail-icon-default"
+                ></i>
+            </div>
+        </template>
+        <bpm-avatar :users="activity.candidateUsers"></bpm-avatar>
+    </erd-popover>
+    <template v-else>
+        <div
+            :class="[{ 'child-node-class': isChildNode }, isChildNode ? vertical ? 'child-node-class-vertical' : 'child-node-class-default' : '' ]"
+        >
+            <i
+                v-if="type === ICON_TYPE_FINISHED"
+                class="el-icon-check"
+                style="color: var(--primary-color)"
+            ></i>
+            <i
+                v-else-if="type === ICON_TYPE_CURRENT"
+                class="el-icon-s-custom"
+                style="color: var(--primary-color)"
+            ></i>
+            <i
+                v-else-if="type === ICON_TYPE_ABNORMAL"
+                class="el-step__icon workflow-thumbnail-icon-default"
+                style="background-color: #f5222d"
+            ></i>
+            <i
+                v-else-if="type === ICON_TYPE_SUSPENDED"
+                class="el-icon-minus"
+                style="color: #f5222d"
+            ></i>
+            <i
+                v-else
+                class="el-step__icon workflow-thumbnail-icon-default"
+            ></i>
+        </div>
+    </template>
+</div>

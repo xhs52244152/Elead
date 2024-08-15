@@ -1,0 +1,65 @@
+#FolderList {
+  height: 100%;
+}
+#FolderList .fam-resizable-container__right {
+  padding: var(--normalPadding);
+  margin-bottom: 0;
+  background-color: #ffffff;
+  height: 100%;
+}
+#FolderList .fam-type-tree {
+  background-color: #ffffff;
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__title {
+  display: block;
+  padding: var(--bigPadding) 0;
+  font-size: var(--fontSizeBig);
+  line-height: var(--normalLineHeight);
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--colorTextNormal);
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs {
+  display: block;
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .tabIcon {
+  width: var(--fontSizeSupper);
+  height: var(--fontSizeSupper);
+  line-height: var(--fontSizeSupper);
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .tabIcon i {
+  font-size: var(--fontSizeSupper);
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .el-tabs__item {
+  padding: 0 var(--bigPadding);
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__tabs .el-tabs__item.is-top:nth-child(2) {
+  padding-left: 0;
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__btns {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#FolderList .fam-type-tree .fam-type-tree__header .fam-type-tree__btns .fam-type-tree__typeName {
+  width: 94px;
+  height: 22px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  line-height: 22px;
+  font-weight: 600;
+}
+#FolderList .fam-type-tree .fam-type-tree__search {
+  width: 100%;
+}
+#FolderList .fam-type-tree .el-scrollbar {
+  height: 100%;
+}
+#FolderList .fam-type-tree .el-tree-node .el-tree-node__children {
+  overflow: initial;
+}
+
+/*# sourceMappingURL=style.css.map */

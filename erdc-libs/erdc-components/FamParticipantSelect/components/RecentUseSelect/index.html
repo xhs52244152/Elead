@@ -1,0 +1,123 @@
+<div
+    id="recentUseSelect"
+    class="ptb-16 flex flex-column h-100p"
+>
+    <div class="flex justify-between plr-16 mb-8">
+        <span>{{title}}</span>
+        <erd-checkbox
+            v-if="innerShowCheckbox"
+            v-model="checkAll"
+            @change="onCheckAll"
+        >
+            {{i18n.selectedAll}}
+        </erd-checkbox>
+    </div>
+    <div class="plr-16 mb-8">
+        <erd-input
+            v-model="searchValue"
+            ref="input"
+            :placeholder="placeholder"
+            clearable
+        >
+            <template
+                slot="suffix"
+                class="flex"
+            >
+                <erd-icon
+                    class="align-items-center cursor-pointer"
+                    icon="search"
+                    @click="onSearch"
+                ></erd-icon>
+            </template>
+        </erd-input>
+    </div>
+    <erd-scrollbar class="grow-1">
+        <template v-if="innerShowCheckbox">
+            <erd-checkbox-group
+                v-model="innerValue"
+                @change="handleChange"
+            >
+                <erd-show-tooltip
+                    v-for="item in dataList"
+                    placement="top"
+                    :key="item[nodeKey]"
+                    :content="item.pathDisplayName || item[props.label] || item.roleBDisplayName"
+                    :custom-mouse-over="(...arg) => handleMouseOver(...arg, 'tag_' + item[nodeKey])"
+                >
+                    <div class="plr-16 recent-checkbox cursor-pointer w-100p truncate">
+                        <erd-checkbox
+                            class="w-100p h-32 truncate"
+                            :label="item[nodeKey]"
+                            :key="item[nodeKey]"
+                            :disabled="isDisabled(item)"
+                        >
+                            <div class="flex align-items-center">
+                                <span
+                                    class="title_text truncate"
+                                    :class="{'color-disabled': isDisabled(item)}"
+                                >
+                                    {{item.pathDisplayName || item[props.label] || item.roleBDisplayName}}
+                                </span>
+                                <erd-tag
+                                    v-if="item.roleLevel && item.roleLevel !== 'NORMAL'"
+                                    :ref="'tag_' + item[nodeKey]"
+                                    class="m-4"
+                                    type="success"
+                                    size="mini"
+                                >
+                                    {{item.roleLevelDisplayName}}
+                                </erd-tag>
+                            </div>
+                        </erd-checkbox>
+                    </div>
+                </erd-show-tooltip>
+            </erd-checkbox-group>
+        </template>
+        <template v-else>
+            <ul class="p-0 m-0">
+                <li
+                    v-for="item in dataList"
+                    :ref="'treeContent_' + item[nodeKey]"
+                    class="plr-16 recent-checkbox cursor-pointer flex align-items-center"
+                    :class="{'color-disabled': isDisabled(item), 'cursor-not-allowed': isDisabled(item)}"
+                    @click="handleClick(item)"
+                >
+                    <erd-show-tooltip
+                        placement="top"
+                        :style="styleWidth(item)"
+                        :key="item[nodeKey]"
+                        :content="item.pathDisplayName || item[props.label] || item.roleBDisplayName"
+                        @hook:mounted="tooWide(item)"
+                    >
+                        <template v-slot:show-tooltip-title>
+                            <span
+                                :ref="'titleText_' + item[nodeKey]"
+                                class="title_text"
+                            >
+                                {{item.pathDisplayName || item[props.label] || item.roleBDisplayName}}
+
+                                <erd-tag
+                                    v-if="!item.tooWide && item.roleLevel && item.roleLevel !== 'NORMAL'"
+                                    class="m-4"
+                                    type="success"
+                                    size="mini"
+                                >
+                                    {{item.roleLevelDisplayName}}
+                                </erd-tag>
+                            </span>
+                        </template>
+                    </erd-show-tooltip>
+                    <erd-tag
+                        v-if="item.tooWide && item.roleLevel && item.roleLevel !== 'NORMAL'"
+                        :ref="'tag_' + item[nodeKey]"
+                        class="m-4"
+                        type="success"
+                        size="mini"
+                    >
+                        {{item.roleLevelDisplayName}}
+                    </erd-tag>
+                </li>
+            </ul>
+        </template>
+    </erd-scrollbar>
+</div>

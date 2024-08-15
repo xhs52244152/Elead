@@ -1,0 +1,310 @@
+<div id="date-configure-form" class="date-configure-form">
+    <erd-contraction-panel
+        :title="i18nMappingObj.dateConfigure"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <erd-form
+                :model="formData"
+                label-position="right"
+                label-width="140px"
+            >
+                <erd-form-item :label="i18nMappingObj.setDueTime">
+                    <erd-row>
+                        <erd-col :span="24" class="flex">
+                            <erd-select
+                                v-model="formData.fixTime"
+                                allow-create
+                                filterable
+                                class="select-width"
+                                :disabled="readonly"
+                                @change="saveDueDataConfig"
+                            >
+                                <erd-option
+                                    v-for="item in fixTimeList"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                ></erd-option>
+                            </erd-select
+                            ><div class="el-input-group__append">{{i18nMappingObj.day}}</div>
+                            <span class="ml-8 font-12 black-45">{{i18nMappingObj.setFixTime}}</span>
+                        </erd-col>
+                    </erd-row>
+                </erd-form-item>
+
+                <erd-form-item :label="i18nMappingObj.setNotifier">
+                    <erd-row>
+                        <erd-col :span="24">
+                            <div>
+                                <erd-checkbox
+                                    v-model="formData.participant"
+                                    true-label="true"
+                                    false-label="false"
+                                    :disabled="readonly"
+                                    @change="saveDueDataConfig"
+                                >{{i18nMappingObj.notifyParticipants}}</erd-checkbox
+                                ><erd-checkbox
+                                    v-model="formData.role"
+                                    true-label="true"
+                                    false-label="false"
+                                    :disabled="readonly"
+                                    @change="saveDueDataConfig"
+                                >{{i18nMappingObj.notifyRoles}}</erd-checkbox
+                                ><erd-select
+                                    v-if="formData.role === 'true'"
+                                    v-model="formData.receiverRoleOid"
+                                    class="select-width ml-8"
+                                    clearable
+                                    multiple
+                                    collapse-tags
+                                    :disabled="readonly"
+                                    @visible-change="getRolesList"
+                                    @change="saveDueDataConfig"
+                                >
+                                    <erd-option
+                                        v-for="role in roleList"
+                                        :key="role.id"
+                                        :label="role.name"
+                                        :value="role.oid"
+                                    ></erd-option>
+                                </erd-select>
+                            </div>
+                            <div>
+                                <erd-checkbox
+                                    v-model="formData.starter"
+                                    true-label="true"
+                                    false-label="false"
+                                    :disabled="readonly"
+                                    @change="saveDueDataConfig"
+                                >{{i18nMappingObj.notifyInitiator}}</erd-checkbox
+                                ><erd-checkbox
+                                    v-model="formData.user"
+                                    true-label="true"
+                                    false-label="false"
+                                    :disabled="readonly"
+                                    @change="saveDueDataConfig"
+                                >{{i18nMappingObj.notifyUsers}}</erd-checkbox
+                                ><erd-select
+                                    v-if="formData.user === 'true'"
+                                    v-model="formData.receiverUserOid"
+                                    class="select-width ml-8"
+                                    clearable
+                                    multiple
+                                    collapse-tags
+                                    filterable
+                                    remote
+                                    :remote-method="getUsersList"
+                                    :disabled="readonly"
+                                    @change="saveDueDataConfig"
+                                >
+                                    <erd-option
+                                        v-for="user in userList"
+                                        :key="user.id"
+                                        :label="user.displayName"
+                                        :value="user.oid"
+                                    ></erd-option>
+                                </erd-select>
+                            </div>
+                        </erd-col>
+                    </erd-row>
+                </erd-form-item>
+
+                <erd-form-item :label="i18nMappingObj.dueDate">
+                    <erd-row>
+                        <erd-col :span="24">
+                            <erd-input
+                                v-model="formData.beforeTime.day"
+                                type="number"
+                                class="input-width"
+                                :disabled="readonly"
+                                @input="saveDueDataConfig"
+                            >
+                                <template slot="append">{{i18nMappingObj.day}}</template>
+                            </erd-input>
+                            <erd-input
+                                v-model="formData.beforeTime.hour"
+                                type="number"
+                                class="input-width"
+                                :disabled="readonly"
+                                @input="saveDueDataConfig"
+                            >
+                                <template slot="append">{{i18nMappingObj.hour}}</template>
+                            </erd-input>
+                            <span class="black-85">{{i18nMappingObj.before}}</span>
+                            <span class="black-85">{{i18nMappingObj.sendReminder}}</span>
+                            <erd-select
+                                v-model="formData.msgNotifyRef"
+                                v-select-more="selectMore"
+                                class="select-width"
+                                clearable
+                                filterable
+                                remote
+                                :remote-method="msgNotifySelectSearch"
+                                :disabled="readonly"
+                                @visible-change="msgNotifySelectVisible"
+                                @change="msgNotifyRefChange"
+                            >
+                                <erd-option
+                                    v-for="item in templateList"
+                                    :key="item.code"
+                                    :label="item.formatAttrRawList.title"
+                                    :value="item.code"
+                                ></erd-option>
+                            </erd-select>
+                        </erd-col>
+                    </erd-row>
+                </erd-form-item>
+
+                <erd-form-item :label="i18nMappingObj.dueDate">
+                    <erd-row>
+                        <erd-col :span="24">
+                            <erd-input
+                                v-model="formData.afterTime.day"
+                                type="number"
+                                class="input-width"
+                                :disabled="readonly"
+                                @input="saveDueDataConfig"
+                            >
+                                <template slot="append">{{i18nMappingObj.day}}</template>
+                            </erd-input>
+                            <erd-input
+                                v-model="formData.afterTime.hour"
+                                type="number"
+                                class="input-width"
+                                :disabled="readonly"
+                                @input="saveDueDataConfig"
+                            >
+                                <template slot="append">{{i18nMappingObj.hour}}</template>
+                            </erd-input>
+                            <span class="black-85">{{i18nMappingObj.after}}</span>
+                            <span class="black-85">{{i18nMappingObj.sendReminder}}</span>
+                            <erd-select
+                                v-model="formData.msgNotifyAfterRef"
+                                v-select-more="selectMore"
+                                class="select-width"
+                                clearable
+                                filterable
+                                remote
+                                :remote-method="msgNotifySelectSearch"
+                                :disabled="readonly"
+                                @visible-change="msgNotifySelectVisible"
+                                @change="msgNotifyRefChange"
+                            >
+                                <erd-option
+                                    v-for="item in templateList"
+                                    :key="item.code"
+                                    :label="item.formatAttrRawList.title"
+                                    :value="item.code"
+                                ></erd-option>
+                            </erd-select>
+                        </erd-col>
+                    </erd-row>
+                </erd-form-item>
+
+                <erd-form-item
+                    v-if="formData.msgNotifyRef || formData.msgNotifyAfterRef"
+                    :label="i18nMappingObj.notifySendType"
+                >
+                    <erd-row>
+                        <erd-col :span="24">
+                            <erd-checkbox-group
+                                v-model="formData.sendType"
+                                @change="saveDueDataConfig"
+                            >
+                                <erd-checkbox
+                                    v-for="type in sendTypeList"
+                                    :key="type.name"
+                                    :label="type.value"
+                                    :disabled="readonly"
+                                >{{type.description}}</erd-checkbox>
+                            </erd-checkbox-group>
+                        </erd-col>
+                    </erd-row>
+                </erd-form-item>
+
+                <erd-form-item v-if="false" :label="i18nMappingObj.setNotifyTime">
+                    <erd-row>
+                        <erd-col :span="24">
+                            <div class="h-30">{{i18nMappingObj.setNotifyDate}}</div>
+                            <div>
+                                <erd-input
+                                    v-model="formData.beforeTime.day"
+                                    type="number"
+                                    class="input-width"
+                                    :disabled="readonly"
+                                    @input="saveDueDataConfig"
+                                >
+                                    <template slot="append">{{i18nMappingObj.day}}</template>
+                                </erd-input>
+                                <erd-input
+                                    v-model="formData.beforeTime.hour"
+                                    type="number"
+                                    class="input-width"
+                                    :disabled="readonly"
+                                    @input="saveDueDataConfig"
+                                >
+                                    <template slot="append">{{i18nMappingObj.hour}}</template>
+                                </erd-input>
+                                <span class="black-85">{{i18nMappingObj.beforeDueDate}}</span>
+                            </div>
+                            <div class="bpm-mt-12">
+                                <erd-input
+                                    v-model="formData.afterTime.day"
+                                    type="number"
+                                    class="input-width"
+                                    :disabled="readonly"
+                                    @input="saveDueDataConfig"
+                                >
+                                    <template slot="append">{{i18nMappingObj.day}}</template>
+                                </erd-input>
+                                <erd-input
+                                    v-model="formData.afterTime.hour"
+                                    type="number"
+                                    class="input-width"
+                                    :disabled="readonly"
+                                    @input="saveDueDataConfig"
+                                >
+                                    <template slot="append">{{i18nMappingObj.hour}}</template>
+                                </erd-input>
+                                <span class="black-85">{{i18nMappingObj.afterDueDate}}</span>
+                            </div>
+                            <div class="h-30 mt-8">{{i18nMappingObj.notifyTemplate}}</div>
+                            <div>
+                                <erd-select
+                                    v-model="formData.msgNotifyRef"
+                                    class="select-width"
+                                    clearable
+                                    :disabled="readonly"
+                                    @visible-change="msgNotifySelectVisible"
+                                    @change="msgNotifyRefChange"
+                                >
+                                    <erd-option
+                                        v-for="item in templateList"
+                                        :key="item.code"
+                                        :label="item.formatAttrRawList.title"
+                                        :value="item.code"
+                                    ></erd-option>
+                                </erd-select>
+                            </div>
+                            <div v-if="formData.msgNotifyRef" class="notify-send-type">{{i18nMappingObj.notifySendType}}</div>
+                            <div v-if="formData.msgNotifyRef">
+                                <erd-checkbox-group
+                                    v-model="formData.sendType"
+                                    @change="saveDueDataConfig"
+                                >
+                                    <erd-checkbox
+                                        v-for="type in sendTypeList"
+                                        :key="type.name"
+                                        :label="type.value"
+                                        :disabled="readonly"
+                                    >{{type.description}}</erd-checkbox>
+                                </erd-checkbox-group>
+                            </div>
+                        </erd-col>
+                    </erd-row>
+                </erd-form-item>
+            </erd-form>
+        </template>
+    </erd-contraction-panel>
+</div>

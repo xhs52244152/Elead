@@ -1,0 +1,98 @@
+<div
+    id="FolderListDetail"
+    class="flex flex-column h-100p"
+>
+    <div class="flex measure-header">
+        <span class="global-left">{{ breadLabel }}</span>
+    </div>
+    <div class="content h-100p grow-1">
+        <div class="global-table">
+            <fam-advanced-table
+                ref="famAdvancedTable"
+                border
+                :view-table-config="viewTableConfig"
+                enableScrollLoad
+                :is-adaptive-height="isAdaptiveHeight"
+                @handler-data="handlerData"
+                @action-click="actionClick"
+                @hook:mounted="reloadTable"
+            >
+                <!-- <template #right:toolbar:first>
+                    <erd-button
+                        type="primary"
+                        icon="el-icon-plus"
+                        @click="handleCommand('createFolder')"
+                        >{{i18nMappingObj.createFolder}}
+                    </erd-button>
+                </template> -->
+                <template #column:default:icon:content="{ scope }">
+                    <i
+                        class="font-18"
+                        :class="scope.row.icon"
+                    ></i>
+                </template>
+                <template #column:default:name:content="{ scope }">
+                    <i :class="scope.row.icon"></i>
+                    {{scope.row.name}}
+                </template>
+                <template #column:default:operation:content="{ scope }">
+                    <!-- <erd-button
+                        v-for="item in pulldownList"
+                        :key="item.actionName"
+                        :disabled="item.disabled"
+                        type="text"
+                        @click="onCommand(item.actionName, scope.row)"
+                        >{{item.label}}</erd-button
+                    > -->
+                    <fam-action-pulldown
+                        :is-operation="true"
+                        :action-config="getActionConfig(scope.row)"
+                        :action-data="scope.row"
+                        :args="[vm, scope.row]"
+                        @click="onCommand"
+                    ></fam-action-pulldown>
+                </template>
+                <template #column:default:displayName:content="{ scope }">
+                    <a
+                        href="javascript:;"
+                        @click="onDetail(scope.row)"
+                    >
+                        {{ scope.row.displayName }}</a
+                    >
+                </template>
+                <template #column:default:createBy:content="{ scope }">
+                    <span>{{ scope.row.createUser?.displayName }}</span>
+                </template>
+                <template #column:default:updateBy:content="{ scope }">
+                    <span>{{ scope.row.updateUser?.displayName }}</span>
+                </template>
+                <template
+                    v-for="(slot, slotName) in $scopedSlots"
+                    v-slot:[slotName]="slotProps"
+                >
+                    <slot
+                        :name="slotName"
+                        v-bind="slotProps"
+                    ></slot>
+                </template>
+            </fam-advanced-table>
+        </div>
+    </div>
+    <FolderDetail
+        :visible.sync="detailVisible"
+        :row="currentRow"
+    ></FolderDetail>
+    <component
+        v-if="dialogVisible"
+        :is="is"
+        :visible.sync="dialogVisible"
+        :title="title"
+        :oid="oid"
+        :row-data="rowData"
+        :formType="formType"
+        :openType="openType"
+        :container-ref="containerRef"
+        v-bind="$attrs"
+        @onsubmit="onSubmit"
+    ></component>
+</div>

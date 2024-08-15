@@ -1,0 +1,36 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    :destroy-on-close="true"
+    @close="onClose"
+>
+    <FamDynamicForm
+        ref="form"
+        labelPosition="right"
+        label-width="130px"
+        :form.sync="formData"
+        :data="formConfig"
+    >
+        <template #defineCode="scope">
+            <erd-select v-model="formData.defineCode" style="width: 100%;">
+                <erd-option
+                    v-for="item in fileTypes"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.code"
+                >
+                </erd-option>
+            </erd-select>
+        </template>
+    </FamDynamicForm>
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18nMappingObj.confirm }}
+        </erd-button>
+        <erd-button @click="close">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

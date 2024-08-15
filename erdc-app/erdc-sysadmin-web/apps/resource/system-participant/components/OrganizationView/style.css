@@ -1,0 +1,23 @@
+.organization-view {
+  padding: 12px;
+}
+.organization-view .orgForm {
+  padding: 4px 4px 16px 4px;
+}
+.organization-view .right-operate-btns {
+  position: absolute;
+  padding-top: 12px;
+  padding-right: 12px;
+  right: 0;
+  top: 0;
+}
+.organization-view .role-table-container .list-title {
+  opacity: 0.85;
+  font-size: 15px;
+  color: #000000;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.organization-view .role-table-container .panelTitle {
+  margin-bottom: 8px;
+}/*# sourceMappingURL=style.css.map */

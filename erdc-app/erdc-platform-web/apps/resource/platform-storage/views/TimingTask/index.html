@@ -1,0 +1,38 @@
+<div id="doc-manage-site-sync-record" class="h-100p ptrl-normal">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        isAdaptiveHeight
+        :view-table-config="viewTableConfig"
+    >
+        <template #left:toolbar:first>
+            <FamPageTitle
+                :title="i18nMappingObj.syncStrategy"
+                staticTitle
+                show-back-button
+                @back="goBack"
+            >
+            </FamPageTitle>
+        </template>
+
+        <template #column:default:detail:content="{ scope }">
+            {{ scope.row.sourceSiteCode }} -> {{ scope.row.destSiteCode }}
+        </template>
+
+        <template #column:default:status:content="{ scope }">
+            {{ scope.row.status === 1 ? i18nMappingObj.run : i18nMappingObj.onPause }}
+            <!-- <i v-if="scope.row.status === 1" title='运行中' class='erd-iconfont erd-icon-loading'></i>
+            <i v-else title='暂停中' class='erd-iconfont erd-icon-triangle-right'></i> -->
+        </template>
+
+
+        <template #column:default:operation:content="{ scope }">
+            <erd-button type="text" v-if="scope.row.status === 1"  @click="handleTaskDisable(scope.row)"> {{ i18nMappingObj.pause }}</erd-button>
+            <erd-button type="text" v-else @click="handleTaskEnable(scope.row)"> {{ i18nMappingObj.startUp }}</erd-button>
+            <erd-button type="text" @click="handleEdit(scope.row)"> {{ i18nMappingObj.edit }}</erd-button>
+            <erd-button type="text" @click="handleDelete(scope.row)"> {{ i18nMappingObj.delete }}</erd-button>
+        </template>
+    </fam-advanced-table> 
+
+    <create-timing-task ref="editRef" :siteList="siteList" :appList="appList" @saved="refreshTable"></create-timing-task>
+</div>
+ 

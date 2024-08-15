@@ -1,0 +1,20 @@
+.bpm-process-title-content .thumbnail-title-one {
+  display: flex;
+}
+.bpm-process-title-content .thumbnail-title-sub {
+  display: flex;
+  justify-content: center;
+}
+.bpm-process-title-content .thumbnail-title-sub .thumbnail-title-sub-sub {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bpm-process-title-content .thumbnail-title-sub .thumbnail-title-sub-sub .bpm-process-icon-content {
+  width: auto;
+  height: auto;
+  border-width: 0;
+}
+.bpm-process-title-content .thumbnail-title-sub .thumbnail-title-sub-sub .bpm-process-icon-content .el-popover__reference-wrapper {
+  border-color: inherit;
+}/*# sourceMappingURL=index.css.map */

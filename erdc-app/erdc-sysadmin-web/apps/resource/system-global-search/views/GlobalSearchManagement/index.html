@@ -1,0 +1,13 @@
+<div
+    id="global-search-management"
+    class="h-100p"
+>
+    <component
+        :is="componentName"
+        :class="componentName === 'ViewManager' ? 'ptrl-xl' : ''"
+        :row="row"
+        :showBack="componentName === 'ViewManager'"
+        @switch-component="switchComponent"
+        @back="callback"
+    ></component>
+</div>

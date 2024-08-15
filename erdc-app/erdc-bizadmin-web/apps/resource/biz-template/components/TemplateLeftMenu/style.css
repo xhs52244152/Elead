@@ -1,0 +1,9 @@
+#template-type-tree {
+    height: 100%;
+    
+}
+#template-left-menu .tree .el-menu-item {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+}

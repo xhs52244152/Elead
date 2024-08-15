@@ -1,0 +1,17 @@
+<div id="template-left-menu" style="padding: 16px 0;">
+    <div
+        class="tree"
+        :style="{height: treeHeight}"
+    >
+        <erd-menu
+            :default-active="selectMenu"
+            @select="handleNodeClick"
+        >
+            <erd-menu-item
+                v-for="item in menuData"
+                :index="item.typeName"
+                >{{item.displayName}}
+            </erd-menu-item>
+        </erd-menu>
+    </div>
+</div>

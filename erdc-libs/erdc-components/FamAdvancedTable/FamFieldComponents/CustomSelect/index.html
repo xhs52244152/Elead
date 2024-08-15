@@ -1,0 +1,151 @@
+<div
+    id="customSelect"
+    class="custom-select flex align-items-center"
+    style="width: 100%"
+>
+    <template v-if="treeSelect">
+        <erd-tree-select
+            style="width: 100%"
+            v-if="!hideTreeSelect"
+            v-model="innerValue"
+            v-bind="$attrs"
+            v-on="listeners"
+            :popper-class="myPopperClass"
+            :data="options"
+            :node-key="nodeKeys"
+            :placeholder="placeholderText"
+            :multiple="isMultiple"
+            :props="treeProp"
+            @blur.capture.native="handleBlur"
+        >
+            <template #prefix>
+                <slot name="prefix"></slot>
+            </template>
+        </erd-tree-select>
+    </template>
+    <template v-else>
+        <div
+            v-if="isMultiple"
+            style="width: 100%"
+        >
+            <!-- :disabled="!(innerValue && innerValue?.length > 1)" -->
+            <erd-tooltip
+                placement="top"
+                :disabled="true"
+            >
+                <div slot="content">
+                    <div v-for="(item, index) in selectedUsers">{{index+1}}、{{item._label}}</div>
+                </div>
+                <erd-ex-select
+                    ref="custom-select"
+                    v-model="innerValue"
+                    v-bind="$attrs"
+                    v-on="listeners"
+                    :placeholder="placeholderText"
+                    :multiple="isMultiple"
+                    class="userSelect w-100p"
+                    :filter-method="searchDone"
+                    :collapse-tags="isCollapseTags"
+                    :popper-class="myPopperClass"
+                    :class="innerValue?.length > 1 && isCollapseTags ? 'my-multiple-select': ''"
+                    @visible-change="onVisibleChange"
+                    @remove-tag="handleRemoveTag"
+                    @blur.capture.native="handleBlur"
+                >
+                    <erd-checkbox
+                        v-if="showCheckAll"
+                        v-model="checkAll"
+                        :indeterminate="isIndeterminate"
+                        class="fam-custom-check-all plr-12 w-100p"
+                        @change="handelCheckAll"
+                    >
+                        {{i18nMappingObj.checkAll}}
+                    </erd-checkbox>
+                    <erd-checkbox-group v-model="innerValue">
+                        <erd-show-tooltip
+                            ref="tooltip"
+                            v-for="(item, idx) in options"
+                            :key="item[valueKey] + '..' + idx"
+                            popper-class="fam-tooltip-max-width"
+                            :content="item[labelKey]"
+                            placement="top"
+                            :tabindex="-1"
+                            :open-delay="800"
+                            :flex="false"
+                            :disabled="disabledTooltip[idx]"
+                            :custom-mouse-over="handleMouseOver"
+                            :style="{width: selectOptionWidth}"
+                        >
+                            <erd-option
+                                :label="item[labelKey] || '--'"
+                                :value="item[valueKey]"
+                                class="fam-custom-select-option"
+                                :disabled="disabledArray.includes(item[valueKey])  || item.disabled "
+                            >
+                                <erd-checkbox
+                                    :label="item[valueKey]"
+                                    style="pointer-events: none"
+                                    :disabled="disabledArray.includes(item[valueKey])  || item.disabled"
+                                >
+                                    <slot
+                                        name="option-title-text"
+                                        :data="{label: item[labelKey] || '--', value: item[valueKey]}"
+                                    >
+                                        <span class="title_text">{{item[labelKey] || '--'}}</span>
+                                    </slot>
+                                </erd-checkbox>
+                            </erd-option>
+                        </erd-show-tooltip>
+                    </erd-checkbox-group>
+                    <template #prefix>
+                        <slot name="prefix"></slot>
+                    </template>
+                </erd-ex-select>
+            </erd-tooltip>
+        </div>
+        <erd-ex-select
+            v-else
+            ref="custom-select"
+            v-model="innerValue"
+            v-bind="$attrs"
+            v-on="listeners"
+            :popper-class="myPopperClass"
+            :placeholder="placeholderText"
+            class="w-100p"
+            @visible-change="onVisibleChange"
+            @remove-tag="handleRemoveTag"
+            @blur.capture.native="handleBlur"
+        >
+            <erd-show-tooltip
+                ref="tooltip"
+                v-for="(item, idx) in options"
+                popper-class="fam-tooltip-max-width"
+                :key="item[valueKey] + '..' + idx"
+                :content="item[labelKey] || '--'"
+                placement="top"
+                :tabindex="-1"
+                :open-delay="800"
+                :flex="false"
+                :disabled="disabledTooltip[idx]"
+                :custom-mouse-over="handleMouseOver"
+            >
+                <erd-option
+                    :style="{width: selectOptionWidth}"
+                    ref="options"
+                    :value="item[valueKey]"
+                    class="fam-custom-select-option"
+                    :label="item[labelKey] || '--'"
+                    :disabled="disabledArray.includes(item[valueKey])  || item.disabled "
+                >
+                    <slot
+                        name="option-title-text"
+                        :data="{label: item[labelKey] || '--', value: item[valueKey]}"
+                    >
+                        <span class="title_text">{{item[labelKey] || '--'}}</span>
+                    </slot>
+                </erd-option>
+            </erd-show-tooltip>
+            <template #prefix><slot name="prefix"></slot></template>
+        </erd-ex-select>
+    </template>
+</div>

@@ -1,0 +1,35 @@
+.instance-list {
+  height: 725px;
+}
+.instance-list .operation {
+  width: 100%;
+  justify-content: space-between;
+  padding: 4px 0 12px 0;
+}
+.instance-list .operation .time-label {
+  color: var(--colorTextNormal);
+  padding-right: 4px;
+}
+.instance-list .operation .searchDone-ml8 {
+  margin-left: 8px;
+}
+.instance-list .operation .searchDone-ml16 {
+  margin-left: 16px;
+}
+.instance-list .operation .searchDone {
+  align-items: center;
+}
+.instance-list .erd-dropdown-link {
+  cursor: pointer;
+  color: var(--colorPrimary);
+}
+.instance-list .more-button span {
+  display: flex;
+  align-items: center;
+}
+
+.instance-list-dialog.el-dialog.no-footer .el-dialog__body {
+  padding-bottom: 16px;
+}
+
+/*# sourceMappingURL=style.css.map */

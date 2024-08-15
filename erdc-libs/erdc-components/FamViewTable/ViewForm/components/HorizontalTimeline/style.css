@@ -1,0 +1,69 @@
+.horizontal-timeline .vue-drag-container {
+    max-width: calc(100% - 48px);
+}
+.horizontal-timeline .item {
+    cursor: pointer;
+}
+.horizontal-timeline .timeline-icon {
+    transform: translate(0, -4px);
+}
+.horizontal-timeline.icons-up .timeline-icon {
+    transform: translate(0, -8px);
+}
+.horizontal-timeline .start,
+.horizontal-timeline .end {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border: 4px solid #d9d9d9;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: default;
+}
+.horizontal-timeline .end {
+    background-color: #959aa9;
+}
+.horizontal-timeline .item .text {
+    max-width: 128px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px solid var(--buttonBorderColor);
+    color: var(--colorTextExplain);
+    background-color: var(--colorFullBg);
+    border-radius: var(--borderRadius);
+}
+.horizontal-timeline .item .divider {
+    width: 12px;
+    height: 2px;
+    background-color: #ccc;
+}
+.horizontal-timeline .item.sortable-chosen .divider {
+    visibility: hidden;
+}
+.horizontal-timeline .item .icon {
+    display: none;
+    font-size: 16px;
+}
+.horizontal-timeline .item .tag-close {
+    top: 0;
+    right: 12px;
+    color: #fff;
+    cursor: default;
+}
+.horizontal-timeline .item .drag-icon {
+    top: 50%;
+    left: 0;
+    color: #ccc;
+    transform: translate(0, -7px);
+}
+.horizontal-timeline .item:first-of-type .drag-icon {
+    left: 12px;
+}
+.horizontal-timeline .item:hover .icon {
+    display: block;
+}
+.horizontal-timeline .item:hover .text {
+    color: var(--buttonPrimaryColor);
+    border: 1px solid var(--buttonPrimaryBorderColor__hover);
+    background-color: var(--buttonPrimaryBgColor);
+}

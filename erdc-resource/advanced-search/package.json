@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-resource/advanced-search",
+  "version": "3.1.0",
+  "description": "FAM 高级搜索",
+  "erdcData": {
+    "widget": true
+  }
+}

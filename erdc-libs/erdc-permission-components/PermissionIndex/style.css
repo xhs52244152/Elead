@@ -1,0 +1,81 @@
+#fam_objectPermission {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.permission-table-option-section {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: var(--normalPadding);
+}
+.permission-table-option-section .custom-select .el-input__inner {
+    height: var(--inputHeight) !important;
+}
+
+.permission-table-option-section .custom-select .el-select--medium .el-tag--small {
+    height: var(--famTagSmall) !important;
+}
+
+#fam_objectPermission .erd-table-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+#fam_objectPermission .erd-table-container #ComponentWapper-erdTable {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+#fam_objectPermission > .erd-table-container .custom-table-columns-cell {
+    text-align: left !important;
+}
+
+.first-condition {
+    padding-right: 16px;
+}
+
+.options-select-condition-label {
+    font-size: 14px;
+    font-size: var(--fontSize);
+    padding-right: 4px;
+}
+
+.options-select-condition-label-require {
+    color: red;
+}
+
+.second-condition {
+    padding: 0px 0px 0px 16px;
+}
+
+.options-select-condition,
+.permission-table-option-left {
+    display: flex;
+    align-items: center;
+}
+.options-select-condition + .options-select-condition {
+    padding-left: 16px;
+}
+.permission-table-option-left {
+    flex: 1;
+}
+
+.permission-table-option-right {
+    text-align: right;
+}
+
+.options-select-condition-btn {
+    margin: 0px 16px 0px 8px;
+}
+
+#fam_objectPermission .erd-pulldown__menu {
+    min-width: 90px;
+    width: 102px;
+    overflow: hidden;
+}
+#fam_objectPermission .fam-form-item-width-label .el-select__tags {
+    right: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

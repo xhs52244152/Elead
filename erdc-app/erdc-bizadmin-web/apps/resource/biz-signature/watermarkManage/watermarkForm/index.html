@@ -1,0 +1,122 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    :append-to-body="true"
+    width="1200px"
+    @close="closeForm"
+>
+    <fam-advanced-form
+        v-if="visible"
+        ref="layoutForm"
+        class="watermark-form"
+        :oid="oid"
+        :object-oid="oid"
+        :model.sync="formData"
+        :form-id="viewType"
+        :class-name="className"
+        :widget-list.sync="widgetList"
+        @field:getWidgetList="handleGetWidgetList"
+        @field:input="handleFieldChange"
+        @base-form-data="loadWatermarkImage"
+        :schema-mapper="schemaMapper"
+    >
+        <template #content-slot="scope">
+            <erd-input
+                v-if="isText"
+                v-model="formData.content"
+            ></erd-input>
+            <fam-upload
+                v-if="isImage"
+                class="upload-demo"
+                accept="image/*"
+                :limit="1"
+                :on-success="onSuccess"
+                :on-remove="onRemove"
+                :on-preview="downloadImg"
+                :file-list="imageFileList"
+                :on-exceed="handleExceed"
+                :multiple="false"
+            >
+                <erd-button size="small">{{i18nMappingObj.signatureUpload}}</erd-button>
+                <div
+                    slot="tip"
+                    class="el-upload__tip"
+                >
+                    {{i18nMappingObj.signaturePictureOnly}}
+                </div>
+            </fam-upload>
+        </template>
+        <template #attribute-slot="scope">
+            <erd-input-number
+                class="grow-1"
+                v-model="formData.size"
+            ></erd-input-number>
+        </template>
+        <template #rotate-slot="scope">
+            <erd-input-number
+                v-model="formData.angle"
+                class="grow-1"
+            >
+            </erd-input-number>
+        </template>
+        <template #color-slot="scope">
+            <el-color-picker
+                v-model="formData.color"
+                popper-class="watermark-text-color"
+            >
+            </el-color-picker>
+        </template>
+        <template #opacity-slot="scope">
+            <erd-slider
+                class="grow-1"
+                v-model="formData.opacity"
+                show-input
+            >
+            </erd-slider>
+        </template>
+        <template #tile-slot="scope">
+            <erd-select
+                class="grow-1"
+                v-model="formData.paveStyle"
+            >
+                <erd-option
+                    v-for="item in paveStyles"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #preview-slot="scope">
+            <div
+                class="signature_watermark_preview overflow-hidden"
+                v-loading="watermarkForPreviewLoading"
+            >
+                <div class="signature_watermark_preview_tools">
+                    <erd-button-group>
+                        <erd-button
+                            icon="el-icon-refresh"
+                            @click="previewWatermark"
+                            >{{i18nMappingObj.signatureRefresh}}</erd-button
+                        >
+                    </erd-button-group>
+                </div>
+                <img
+                    class="watermark-for-preview"
+                    v-loading="watermarkForPreviewLoading"
+                    :src="watermarkForPreview"
+                />
+            </div>
+        </template>
+    </fam-advanced-form>
+
+    <template #footer>
+        <erd-button
+            :loading="loading"
+            type="primary"
+            @click="onSubmit"
+            >{{i18nMappingObj.confirm}}</erd-button
+        >
+        <erd-button @click="closeForm">{{i18nMappingObj.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,25 @@
+<div
+    ref="container"
+    class="fam-virtual-list-container"
+    :style="{ height: containerHeight + 'px' }"
+    @scroll="onScroll"
+>
+    <!-- 数据列表 -->
+    <div
+        class="virtual-list-box"
+        :style="{ top: listTop }"
+    >
+        <!-- 列表项 -->
+        <div
+            :class="['virtual-list-item', selectedItem.id === item.id ? 'item_checked' : '']"
+            v-for="item in showData"
+            :key="item.id"
+            :style="{ height: itemHeight + 'px' }"
+            @click="handlerCheckItem(item)"
+        >
+            <div class="text-overflow">{{ item.name}}</div>
+        </div>
+    </div>
+
+    <div :style="{height: barHeight}"></div>
+</div>

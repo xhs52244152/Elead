@@ -1,0 +1,50 @@
+<div class="flex flex-column h-100p p-12 bg-white">
+    <div class="align-self-center p-12">
+        <global-search-conditions
+            class="search-list-conditions"
+            @onGlobalSearch="onGlobalSearch"
+        ></global-search-conditions>
+    </div>
+    <erd-tabs
+        v-show="tableViews.length > 1"
+        v-model="viewOid"
+        style="height: 40px"
+    >
+        <erd-tab-pane
+            v-for="item in tableViews"
+            :key="item.oid"
+            :name="item.oid"
+            :label="item.displayName"
+        >
+        </erd-tab-pane>
+    </erd-tabs>
+    <div class="flex-1 mt-16">
+        <fam-view-table
+            ref="famViewTable"
+            is-global-search-list
+            :view-table-config="viewTableConfig"
+        >
+            <template #left:toolbar:first>
+                <div class="result-tip font-12 color-placeholder">{{$t('foundCount', { records: totolRecords })}}</div>
+            </template>
+            <template #right:toolbar:first>
+                <erd-button
+                    v-show="totolRecords > 0"
+                    type="primary"
+                    @click="handlerBatchExport"
+                >
+                    {{ i18n.export }}
+                </erd-button>
+            </template>
+        </fam-view-table>
+    </div>
+    <fam-export
+        v-if="exportVisible"
+        business-name="DefaultViewExport"
+        :visible.sync="exportVisible"
+        :add-default-view-export="true"
+        :request-config="exportRequestConfig"
+        :showExportTips="false"
+        @submit-success-callback="handlerDialogSuccess"
+    ></fam-export>
+</div>

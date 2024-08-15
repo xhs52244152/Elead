@@ -1,0 +1,252 @@
+<div
+    id="FamAdvancedTable"
+    class="fam-advanced-table-component"
+    :class="{'adaptive-height': isAdaptiveHeight}"
+>
+    <!-- 操作栏 -->
+    <fam-table-toolbar
+        ref="tableToolbar"
+        v-if="!hideTableToolbar"
+        :search-str.sync="searchStr"
+        :condition-dto-list-default="conditionDtoListComputed"
+        :toolbar-config="toolbarConfig"
+        :columns-header="columnsHeader"
+        :default-columns="defaultColumns"
+        :condition-columns-list="conditionColumnsList"
+        :table-select-data="selectTableData"
+        :main-model-type="mainModelType"
+        :basic-filter-data="basicFilterCondition"
+        :view-ref="viewRef"
+        :table-key="tableKey"
+        :table-views-info="tableViewsInfo"
+        :view-info="viewInfo"
+        :app-name="appName"
+        :is-layout-widget="isLayoutWidget"
+        @onsubmit="fnHeaderSubmit"
+        @refresh="fnRefreshTable"
+        @custom-refresh="customRefresh"
+        @searchTable="fnSearchTable"
+        @clearTagCondition="tagClearFilter"
+        @action-click="actionClick"
+        @loaded="loaded"
+        @height-change="onAdvancedHeightChange"
+        @basic-filter="fnBasicFilter"
+        @advanced-filter="fnAdvancedFilter"
+        @classify-search="fnClassifySearch"
+        @fn-control-icon="fnControlIcon"
+        @hook:mounted="setMountedStatus('Toolbar')"
+    >
+        <template
+            #left:table:toolbar:first
+            v-if="$scopedSlots['left:toolbar:first']"
+        >
+            <slot name="left:toolbar:first"></slot>
+        </template>
+        <template
+            #left:table:toolbar:end
+            v-if="$scopedSlots['left:toolbar:end']"
+        >
+            <slot name="left:toolbar:end"></slot>
+        </template>
+        <template
+            #right:table:toolbar:first
+            v-if="$scopedSlots['right:toolbar:first']"
+        >
+            <slot name="right:toolbar:first"></slot>
+        </template>
+        <template
+            #right:table:toolbar:end
+            v-if="$scopedSlots['right:toolbar:end']"
+        >
+            <slot name="right:toolbar:end"></slot>
+        </template>
+        <template
+            #table:toolbar:basicfilter:first
+            v-if="$scopedSlots['table:toolbar:basicfilter:first']"
+        >
+            <slot name="table:toolbar:basicfilter:first"></slot>
+        </template>
+    </fam-table-toolbar>
+    <!-- 表格内容 基础表格更多用法参考vxe官网，这里配置顺序要注意，默认在前面，自定义的在后面，如果有冲突，会取最后的-->
+    <div
+        class="viewtable-body-container"
+        :class="{'pb-xl': isAdaptiveHeight && enableScrollLoad}"
+    >
+        <slot
+            name="table"
+            :scope="instance"
+        >
+            <div class="fam-erd-table-container">
+                <fam-erd-table
+                    :key="forcedRendering"
+                    ref="erdTable"
+                    border
+                    v-loading="tableLoading"
+                    :tableKey="tableKey"
+                    :max-height="innerTableMaxHeight"
+                    :height="innerTableHeight"
+                    :tree-config="treeConfig"
+                    :column="columns"
+                    :columnComponentProps="columnComponentProps"
+                    :sort-config="{showIcon:false,multiple:false}"
+                    :filter-config="{iconNone: 'erd-iconfont erd-icon-filter', iconMatch: 'erd-iconfont erd-icon-filter on'}"
+                    :row-class-name="tableRowClassName"
+                    :data="tableData"
+                    :is-embed-table="isEmbedTable"
+                    :column-config="{ resizable: true }"
+                    :scroll-y="scrollY"
+                    v-bind="viewTableConfig.tableBaseConfig"
+                    v-on="tableBaseEvent"
+                    @resizable-change="resizableChange"
+                    @scroll="handleScroll"
+                    @sort-change="customSortMethod"
+                    @checkbox-all="selectAllEvent"
+                    @checkbox-change="selectChangeEvent"
+                    @clear-filter="clearFilter"
+                    @hook:mounted="setMountedStatus('Table')"
+                >
+                    <template
+                        v-for="slotItem in linkSlots"
+                        v-slot:[`column:default:${slotItem}`]="{data}"
+                    >
+                        <div :key="slotItem">
+                            <em
+                                v-if="viewTableConfigComputed?.enableDrag && slotItem === firstColField"
+                                class="erd-iconfont erd-icon-double-drag my-drag-icon"
+                            ></em>
+                            <erd-show-tooltip
+                                v-if="showLinkSlot(slotItem)"
+                                placement="top"
+                                class="max-w-full inline-block align-bottom"
+                                enterable
+                                :flex="false"
+                                :content="data?.row?.[slotItem]"
+                            >
+                                <span
+                                    class="title_text my-link-btn text-link"
+                                    :class="{ 'color-disabled cursor-default': data.row.accessToView === false }"
+                                    @click="linkClick(data)"
+                                >
+                                    {{ data?.row?.[slotItem] }}
+                                </span>
+                            </erd-show-tooltip>
+                            <span v-else>{{ data?.row?.[slotItem] }}</span>
+                        </div>
+                    </template>
+                    <!-- 如果首列不是超链接，并且开启了拖拽，增加拖拽图标，如果是外部自定义插槽，自己加图标 -->
+                    <template
+                        v-if="viewTableConfigComputed?.enableDrag && firstColField && fieldLinkName != firstColField && !slotsField.includes(firstFieldSlotName)"
+                        v-slot:[firstFieldSlotName]="{data}"
+                    >
+                        <erd-icon
+                            class="my-drag-icon"
+                            icon="double-drag"
+                        ></erd-icon>
+                        <span>{{ data?.row?.[firstColField]}}</span>
+                    </template>
+                    <!-- 处理人员显示卡片列，如果有外部插槽，取插槽优先 -->
+                    <template
+                        v-for="uFieldSlot in userSlotsFields"
+                        v-slot:[uFieldSlot.slotName]="{data}"
+                    >
+                        <FamUser :users="userValueMapping(uFieldSlot.filed, data.row)"></FamUser>
+                    </template>
+                    <template
+                        v-for="slotConfig in quillEditorSlots"
+                        v-slot:[slotConfig.slotName]="scope"
+                    >
+                        <erd-popover
+                            placement="top"
+                            trigger="hover"
+                            :disabled="!scope.data.row[scope.data.column.property]"
+                        >
+                            <template #reference>
+                                <erd-button
+                                    v-if="scope.data.row[scope.data.column.property]"
+                                    icon="erd-iconfont erd-icon-document"
+                                    type="text"
+                                    :class="{ 'color-normal cursor-default': !scope.data.row[scope.data.column.property] }"
+                                >
+                                </erd-button>
+                                <span v-else>——</span>
+                            </template>
+                            <div style="max-width: 60vw; max-height: 60vh; overflow: auto">
+                                <erd-quill-editor
+                                    v-model="scope.data.row[scope.data.column.property]"
+                                    readonly
+                                ></erd-quill-editor>
+                            </div>
+                        </erd-popover>
+                    </template>
+                    <!-- 自定义插槽（具体兼容场景类型可查看fam_demo的基础表格） -->
+                    <template
+                        v-for="slotName in slotsField"
+                        v-slot:[slotName]="{data}"
+                    >
+                        <slot
+                            :name="`${slotName}:content`"
+                            :scope="data"
+                        >
+                            <fam-action-pulldown
+                                v-if="slotName === 'column:default:operation' && actionPulldownConfig.name"
+                                :action-config="getActionConfig(data.row)"
+                                :action-data="data.row"
+                                :args="[toolbarConfig.vm, data.row]"
+                                placement="bottom-end"
+                                is-operation
+                                @click="onCommand"
+                            ></fam-action-pulldown>
+                            <div
+                                v-if="slotName === 'column:default:icon'"
+                                class="fam-icon-container"
+                            >
+                                <fam-icon
+                                    :value="getIconValue(data.row)"
+                                    :tooltipContent="getIconTooltip(data.row)"
+                                ></fam-icon>
+                            </div>
+                        </slot>
+                    </template>
+                    <!-- 插槽穿透 -->
+                    <template
+                        v-for="(slot, name) in $scopedSlots"
+                        v-slot:[name]="scope"
+                    >
+                        <slot
+                            :name="name"
+                            v-bind="scope"
+                        ></slot>
+                    </template>
+                </fam-erd-table>
+            </div>
+            <div
+                v-if="showLoadMore"
+                class="load-more-container bg-white text-center"
+            >
+                <span
+                    type="text"
+                    class="cursor-pointer text-sm"
+                    :class="lazy.loading ? 'color-disabled' : 'color-primary'"
+                    @click="handleLoadMoreClick"
+                >
+                    {{ defaultFooterText }}
+                </span>
+            </div>
+            <erd-pagination
+                v-if="showPagination && !enableScrollLoad"
+                :current-page.sync="pagination.pageIndex"
+                :page-size.sync="pagination.pageSize"
+                :total="pagination.total"
+                :hide-on-single-page="false"
+                @size-change="fnPageSizeChange"
+                :streamline="isStreamline"
+                @current-change="fnCurrentPageChange"
+            >
+            </erd-pagination>
+            <div
+                v-if="!showPagination && !enableScrollLoad"
+                class="pt-normal"
+            ></div>
+        </slot>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.fam-sidemenu__menu .el-submenu__title {
+  display: flex;
+  align-items: center;
+  height: var(--layoutSecondaryMenuHeiht);
+  padding: 8px 16px !important;
+}
+.fam-sidemenu__menu .el-submenu-children {
+  padding-left: 32px !important;
+}
+.fam-sidemenu__menu .el-submenu-children.is-active {
+  border-right-color: var(--colorPrimary);
+}
+.fam-sidemenu__menu .erd-iconfont {
+  display: inline-flex;
+  width: calc(var(--iconSize) + 2px);
+  height: calc(var(--iconSize) + 2px);
+  margin-right: var(--miniSpace);
+  color: var(--colorTextNormal);
+  font-size: calc(var(--iconSize) + 2px);
+  text-align: center;
+  align-items: center;
+}
+
+/*# sourceMappingURL=style.css.map */

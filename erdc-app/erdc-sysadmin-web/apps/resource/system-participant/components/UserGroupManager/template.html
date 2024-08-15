@@ -1,0 +1,149 @@
+<div class="fam-user-group-manager">
+    <ResizableContainer>
+        <template v-slot:left>
+            <FamUserGroupTree
+                ref="treeComponent"
+                :isShowCount="true"
+                :noCountLevel="[1]"
+                @nodeClick="onNodeClick"
+            >
+                <template v-slot:node-operator="scope">
+                    <div
+                        class="fam-organization-manager__node-operation"
+                        @click.stop
+                    >
+                        <erd-button
+                            v-if="importPerm && scope.node.level == 1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-import"
+                            size="mini"
+                            @click="onImportBtn(scope.data)"
+                        ></erd-button>
+                        <erd-button
+                            v-if="exportPerm && scope.node.level == 1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-export"
+                            size="mini"
+                            @click="onExportBtn(scope.data)"
+                        ></erd-button>
+                        <erd-button
+                            v-if="createPerm && scope.data.addSub && scope.node.level == 1"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-add-document fontSize18"
+                            size="mini"
+                            @click="onCreate(scope.data, scope.node)"
+                        ></erd-button>
+                        <erd-button
+                            v-if="editPerm && scope.data.edit"
+                            type="icon"
+                            icon="erd-iconfont erd-icon-edit3"
+                            size="mini"
+                            @click="onEdit(scope.data, scope.node)"
+                        ></erd-button>
+                        <!-- 普通用户、管理员不允许删除 -->
+                        <erd-button
+                            v-if="deletePerm && scope.data.delete && !['GENERALUSER', 'ADMIN'].includes((scope.data?.identifierNo || '').toUpperCase())"
+                            type="icon"
+                            icon="el-icon-delete"
+                            size="mini"
+                            @click="onDeleteConfirm(scope.data, scope.node)"
+                        ></erd-button>
+                    </div>
+                </template>
+            </FamUserGroupTree>
+        </template>
+        <template v-slot:right>
+            <div class="right-contaienr">
+                <el-tabs v-model="activeTab">
+                    <erd-tab-pane
+                        :label="i18nMappingObj.members"
+                        name="gourpMembers"
+                    >
+                        <group-member-table
+                            class="h-100p"
+                            ref="groupMemberTable"
+                            @refreshTree="fnRefreshTree"
+                            :current-oper-node="currentSelectNode"
+                        ></group-member-table>
+                    </erd-tab-pane>
+                    <erd-tab-pane
+                        :label="i18nMappingObj.infos"
+                        name="infos"
+                    >
+                        <UserGroupForm
+                            v-if="activeTab == 'infos'"
+                            ref="userGroupFormReadonly"
+                            :oid="form.oid"
+                            :app-name="currentSelectNode?.appName || currentSelectNode?.name"
+                            :readonly="activeTab == 'infos'"
+                        ></UserGroupForm>
+                    </erd-tab-pane>
+                </el-tabs>
+
+                <div
+                    class="right-operateBtns"
+                    v-if="activeTab == 'infos' && infoEditPerm"
+                >
+                    <erd-tooltip
+                        class="item"
+                        effect="dark"
+                        placement="top"
+                        :disabled="currentSelectNode.edit"
+                        :content="i18n.noCurrentTenant"
+                    >
+                        <erd-button
+                            type="primary"
+                            :disabled="!currentSelectNode.edit"
+                            @click="onEdit(currentSelectNode)"
+                            >{{i18nMappingObj.edit}}</erd-button
+                        >
+                    </erd-tooltip>
+                </div>
+            </div>
+        </template>
+    </ResizableContainer>
+
+    <!--新增、编辑-->
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="form.visible"
+        :title="form.editable ? i18nMappingObj.editGroup : i18nMappingObj.addGroup"
+    >
+        <UserGroupForm
+            v-if="form.visible"
+            ref="userGroupForm"
+            :oid="form.oid"
+            :app-name="currentOperNode?.identifierNo || currentOperNode?.appName"
+            :default-value="form.defaultValue"
+            :editable="form.editable"
+        ></UserGroupForm>
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="form.loading"
+                @click="onSubmit('userGroupForm')"
+                >{{ i18nMappingObj.ok }}</erd-button
+            >
+            <erd-button
+                :loading="form.loading"
+                @click="closeFormClear"
+                >{{ i18nMappingObj.cancel }}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="GroupImport"
+        :request-config="importRequestConfig"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="GroupExport"
+        :request-config="exportRequestConfig"
+    ></fam-export>
+</div>

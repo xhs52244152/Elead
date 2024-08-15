@@ -1,0 +1,42 @@
+<div
+    id="left-box-tabs"
+    v-fam-fs
+>
+    <erd-tabs
+        v-model="currentTab"
+        @tab-click="handlerTabChange"
+    >
+        <erd-tab-pane
+            v-for="tab in tabList"
+            :label="tab.label"
+            :name="tab.name"
+        >
+        </erd-tab-pane>
+    </erd-tabs>
+    <div class="tab-panel">
+        <div class="tab-panel-search">
+            <erd-input
+                v-model="searchValue"
+                suffix-icon="erd-iconfont erd-icon-search"
+                style="width: 100%"
+                clearable
+                placeholder="请输入"
+                @input="onKeywordChange"
+            >
+            </erd-input>
+        </div>
+        <erd-scrollbar :style="{height: treeHeight}">
+            <erd-ex-tree
+                ref="menuTree"
+                :data="menuTreeData"
+                :props="treeProps"
+                :highlight-current="true"
+                :default-expand-all="true"
+                :expand-on-click-node="false"
+                node-key="key"
+                :filter-node-method="filterSearch"
+                @node-click="handleNodeClick"
+            ></erd-ex-tree>
+        </erd-scrollbar>
+    </div>
+</div>

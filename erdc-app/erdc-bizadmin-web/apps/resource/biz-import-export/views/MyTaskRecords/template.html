@@ -1,0 +1,29 @@
+<div
+    id="fam_import_and_export"
+    class="h-100p flex flex-column"
+>
+    <FamPageTitle class="plr-normal bg-normal"></FamPageTitle>
+    <erd-tabs
+        v-model="activeTabName"
+        class="bg-normal"
+    >
+        <erd-tab-pane
+            v-for="tab in tabList"
+            :label="tab.label"
+            :name="tab.name"
+            :key="tab.name"
+            class="none"
+        ></erd-tab-pane>
+    </erd-tabs>
+
+    <div class="flex flex-column grow-1">
+        <component
+            :is="activeTabObj.component"
+            :key="activeTabObj.name"
+            :active-tab-name="activeTabName"
+            :is-show-application-search="false"
+            :show-page-title="false"
+        >
+        </component>
+    </div>
+</div>

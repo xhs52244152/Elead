@@ -1,0 +1,30 @@
+<erd-ex-dialog
+    width="800px"
+    :title="i18nMappingObj.notice"
+    :visible.sync="visible"
+    custom-class="notice-detail"
+>
+    <div class="detail-content">
+        <div>
+            <label>{{ i18nMappingObj.title  }}</label>
+            <div class="value">{{ detail.name }}</div>
+        </div>
+        <div>
+            <label> {{ i18nMappingObj.content  }} </label>
+            <div class="value">
+                <div v-html="detail.content"></div>
+            </div>
+        </div>
+        <div v-if="detail.fileList.length">
+            <label> {{ i18nMappingObj.attachment  }} </label>
+            <div class="value">
+                <span class="file-link" v-for="(file, index) in detail.fileList" :Key="index" @click="handleFilePreview(file)" >{{ file.displayName }}</span>
+            </div>
+        </div>    
+    </div>
+    
+    <template #footer>
+        <erd-button type="primary" @click="handleConfirm">{{ i18nMappingObj.confirm }}</erd-button>
+        <erd-button v-if="showNext" @click="handleNext">{{  i18nMappingObj.next  }}</erd-button>
+    </template>
+</erd-ex-dialog>

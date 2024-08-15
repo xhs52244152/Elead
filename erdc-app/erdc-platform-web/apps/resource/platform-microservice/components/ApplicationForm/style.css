@@ -1,0 +1,10 @@
+#applicationForm {
+    height: 100%;
+}
+
+#applicationForm .application-tenant-table {
+    margin-top: 16px;
+}
+/* .dialog-main-content {
+    padding-bottom: 10px;
+} */

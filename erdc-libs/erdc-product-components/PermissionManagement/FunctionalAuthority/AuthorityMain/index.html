@@ -1,0 +1,37 @@
+<div id="authority-main">
+    <div class="authority-main-title">配置功能权限</div>
+    <div class="authority-main-content" @mousedown="handleMouseDown">
+        <resizable-container :left="resizableContainerStyle">
+            <template slot="left">
+                <left-box-tabs
+                    :max-height="maxHeight"
+                    :select-node-key="activeTab ==='role' ? selectedRoleData.key : selectedOptionsNode.key"
+                    :menu-tree-data="menuTreeData"
+                    :active-tab="activeTab"
+                    @handler-tab-change="handlerTabChange"
+                    @handle-node-click="handleNodeClick"
+                ></left-box-tabs>
+            </template>
+            <template slot="right">
+                <right-setting-panel
+                    ref="rightSettingPanel"
+                    :role-setting-data="roleOriginData"
+                    :option-setting-data="optionsOriginData"
+                    :checked-options="checkedOptions"
+                    :checked-roles="checkedRoles"
+                    :active-tab="activeTab"
+                    :max-height="maxHeight"
+                    :type-name="typeName"
+                    :panel-title="activeTab ==='role' ? selectedRoleData.displayName : selectedOptionsNode.displayName"
+                    :select-node-key="activeTab ==='role' ? selectedRoleData.key : selectedOptionsNode.level"
+                    :un-mouse="unMouse"
+                    @handler-save="handlerSavePage"
+                    @hide-dialog="hideDialog"
+                    @handler-check-all="handler-check-all"
+                    @handler-reset-role-tab="handlerResetRoleTab"
+                    @handler-reset-options-tab="handlerResetOptionsTab"
+                ></right-setting-panel>
+            </template>
+        </resizable-container>
+    </div>
+</div>

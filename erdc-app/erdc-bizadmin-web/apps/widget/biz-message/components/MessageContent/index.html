@@ -1,0 +1,18 @@
+<erd-ex-dialog
+    :visible.sync="visible"
+    :title="i18nMappingObj.messageTitle"
+    custom-class="msg-detail"
+    width="800px"
+>
+    <div class="msg_content">
+        <div class="msg_title mb-8">{{ msgTitle }}</div>
+        <p
+            v-html="content"
+            class="msg_detail_content"
+        ></p>
+    </div>
+    <div class="msg-foot">
+        <div></div>
+        <div class="msg-foot-date"><span>{{userName}}</span><span>{{sub_name+notify_name}}</span><span class="ml-8">{{updateTime}}</span></div>
+    </div>
+</erd-ex-dialog>

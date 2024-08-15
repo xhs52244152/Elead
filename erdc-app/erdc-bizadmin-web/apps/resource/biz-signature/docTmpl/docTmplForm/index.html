@@ -1,0 +1,71 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    :append-to-body="true"
+    width="800px"
+    @opened="handleOpened"
+>
+    <fam-advanced-form
+        class="signature-tmpl-form"
+        v-if="visible"
+        ref="layoutForm"
+        :oid="oid"
+        :object-oid="oid"
+        :model.sync="formData"
+        :form-id="viewType"
+        :class-name="classNameMaster"
+        @base-form-data="loadWaterForm"
+    >
+        <template #identifier-no-slot="scope">
+            <template v-if='isEdit'>
+                <span>{{formData.identifierNo}}</span>
+            </template>
+            <template v-else>
+                <fam-code-generator v-model="formData.identifierNo"></fam-code-generator>
+            </template>
+        </template>
+        <template #file-type-slot="scope">
+            <template v-if="isEdit">
+                <span>{{formData.fileType}}</span>
+            </template>
+            <template v-else>
+                <erd-table-select
+                    ref="tableSelect"
+                    v-model="formData.fileType"
+                    :table-data="fileTypes"
+                    :columns="fileTypesColumns"
+                    style="width: 100%;"
+                    height="170px"
+                    :multiple="false"
+                    clearable
+                ></erd-table-select>
+            </template>
+
+        </template>
+        <template #watermark-slot="scope">
+            <erd-select class="w-100p" v-model="formData.watermark" filterable clearable remote :remote-method="queryWatermark"
+                        v-el-select-selectLazy="selectLazy">
+                <erd-option
+                    v-for="item in watermarkOptions"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.code">
+                </erd-option>
+                <erd-option  v-if="!isDefaultValueInOptions" :class="{none: !isDefaultValueInOptions}" :label="watermarkForm.name"
+                             :value="watermarkForm.code" :key="watermarkForm.code"></erd-option>
+            </erd-select>
+        </template>
+    </fam-advanced-form>
+
+
+    <template #footer>
+        <erd-button
+            :loading="loading"
+            type="primary"
+            @click="onSubmit"
+        >{{i18nMappingObj.confirm}}
+        </erd-button
+        >
+        <erd-button :loading="loading" @click="visible = false">{{i18nMappingObj.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

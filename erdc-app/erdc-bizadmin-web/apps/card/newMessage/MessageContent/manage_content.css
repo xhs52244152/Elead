@@ -1,0 +1,24 @@
+.msg_content {
+  height: 100%;
+  overflow: auto;
+}
+.msg_content .msg_title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+.msg_content .sub_title {
+  margin: 0px 0 -18px;
+}
+
+#msg_content_ctt span {
+  margin: 5px;
+}
+
+span[type=success] {
+  color: green;
+}
+
+span[type=warning] {
+  color: orange;
+}/*# sourceMappingURL=manage_content.css.map */

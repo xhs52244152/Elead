@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-global-search",
+  "version": "3.1.0",
+  "description": "全局搜索配置",
+  "erdcData": {},
+  "appId": "plat"
+}

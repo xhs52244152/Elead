@@ -1,0 +1,136 @@
+<div id="TypeAttrGroupConfig">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+        close-on-press-escape
+        width="1200px"
+    >
+        <FamDynamicForm
+            ref="editForm"
+            :form="formData"
+            :data="formConfig"
+            v-cloak
+            :readonly="openType == 'detail'"
+            @form-change="formChange"
+        >
+        </FamDynamicForm>
+        <div
+            v-if="openType == 'detail'"
+            class="mt-lg"
+        >
+            <erd-button
+                type="primary"
+                v-if="!rowData.isExtends"
+                icon="el-icon-plus"
+                style="margin-bottom: 10px"
+                @click="addAttr"
+                >{{i18nMappingObj.add}}</erd-button
+            >
+            <erd-table
+                border
+                max-height="400px"
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :data="listData"
+                :column="columns"
+                :row-class-name="tableRowClassName"
+                :tree-config="{ children: 'children' }"
+                show-overflow
+                ref="erdTableAttr"
+            >
+                <template #column:default:oper="{data}">
+                    <!-- <erd-button type="text" @click="onEdit(data)" v-if="data.row.editFlag == 0">{{ i18nMappingObj.edit }}</erd-button> -->
+                    <erd-button
+                        type="text"
+                        @click="onDelete(data)"
+                        v-if="data.row.editFlag == 0 && !rowData.isExtends"
+                        >{{ i18nMappingObj.remove }}</erd-button
+                    >
+                    <erd-button
+                        type="text"
+                        @click="onSave(data)"
+                        v-if="data.row.editFlag == 1"
+                        >{{ i18nMappingObj.save }}</erd-button
+                    >
+                    <erd-button
+                        type="text"
+                        @click="onCancel(data)"
+                        v-if="data.row.editFlag == 1"
+                        >{{ i18nMappingObj.cancel }}</erd-button
+                    >
+                </template>
+                <template
+                    #column:default:attrDisplayName="{data}"
+                    :data-linkOid="data.row.linkOid"
+                >
+                    <i
+                        style="cursor: move"
+                        class="erd-iconfont erd-icon-double-drag"
+                    ></i>
+                    <!-- <erd-input v-model='data.row.attrDisplayName'></erd-input> -->
+                    <span v-if="data.row.editFlag == 0">{{data.row.attrDisplayName}}</span>
+                    <template v-if="data.row.editFlag == 1">
+                        <custom-select
+                            v-model="data.row.attrDisplayName"
+                            :row="row"
+                            @callback="(value)=>(customCallback(value,data))"
+                        >
+                        </custom-select>
+                    </template>
+                </template>
+                <template #column:default:attrName="{data}">
+                    <span>{{data.row.attrName}}</span>
+                </template>
+                <template #column:default:typeDisplayName="{data}">
+                    <span>{{data.row.typeDisplayName}}</span>
+                </template>
+                <template #column:default:attrCategory="{data}">
+                    <span>{{data.row.categoryName}}</span>
+                </template>
+            </erd-table>
+        </div>
+        <span
+            v-if="openType !== 'detail'"
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submitForm()"
+                :loading="formLoading"
+                :disabled="disabled"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancelForm">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        v-if="attrVisible"
+        :title="attrTitle"
+        :visible.sync="attrVisible"
+        close-on-press-escape
+        width="1200px"
+    >
+        <erd-ex-transfer
+            v-if="attrVisible"
+            :allColumnsList="attrList"
+            :defaultSelected="attrData"
+            :valueKey="showLabelKey"
+            ref="column-select"
+        >
+        </erd-ex-transfer>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                :loading="attrFormLoading"
+                @click="submitAttrForm()"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="attrVisible = false">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

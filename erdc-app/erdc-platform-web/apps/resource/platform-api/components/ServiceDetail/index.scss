@@ -1,0 +1,35 @@
+.service-detail {
+    .detail-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        .title {
+            font-size: var(--fontSizeLarge);
+            color: var(--colorTextNormal);
+            line-height: 28px;
+            font-weight: bold;
+        }
+    }
+    .detail-content {
+        display: grid;
+        grid-row-gap: 12px;
+        .detail-item {
+            font-size: 14px;
+            font-size: var(--fontSize);
+            line-height: 22px;
+            display: flex;
+            label {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                color: rgba(#000000, 0.45);
+                margin-right: 8px;
+                flex: 0 0 auto;
+            }
+            span {
+                color: rgba( #000000, 0.85);
+            }
+        }    
+    }
+}

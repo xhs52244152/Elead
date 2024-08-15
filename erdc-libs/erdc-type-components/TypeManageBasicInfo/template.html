@@ -1,0 +1,136 @@
+<div id="fam-type-basic-info">
+    <div class="base-info-top">
+        <!-- 基本信息 -->
+        <erd-contraction-panel
+            :unfold.sync="basicUnfold"
+            :title="i18nMappingObj.basicInformation"
+        >
+            <template v-slot:header-right>
+                <erd-button
+                    plain
+                    v-if="hasModify"
+                    @click="onEdit()"
+                >
+                    {{i18nMappingObj.edit}}
+                </erd-button>
+            </template>
+            <template v-slot:content>
+                <FamDynamicForm
+                    style="margin-bottom: 24px"
+                    ref="dynamicForm"
+                    :form="formData"
+                    :data="formConfig"
+                    readonly
+                >
+                    <template v-slot:iconReadonly="scope">
+                        <FamIconSelect
+                            v-model="scope.data[scope.formConfig.field]"
+                            readonly
+                        ></FamIconSelect>
+                    </template>
+                </FamDynamicForm>
+            </template>
+        </erd-contraction-panel>
+        <!-- 常数规则 -->
+        <erd-contraction-panel
+            v-if="!showIconRulesModule"
+            :unfold.sync="relationUnfold"
+            :title="i18nMappingObj.iconRules"
+        >
+            <template v-slot:header-right>
+                <erd-button
+                    plain
+                    @click="onAddIcon"
+                >
+                    {{i18nMappingObj.add}}
+                </erd-button>
+            </template>
+            <template v-slot:content>
+                <div>
+                    <erd-table
+                        ref="erdTable"
+                        border
+                        :column="columns"
+                        :data="listData"
+                        :scroll-y="{enabled: false}"
+                        :is-embed-table="true"
+                        show-overflow
+                    >
+                        <template #column:default:oper="{data}">
+                            <erd-button
+                                v-if="!data.row.isExtends"
+                                type="text"
+                                @click="onEditRule(data)"
+                            >
+                                {{ i18nMappingObj.edit }}
+                            </erd-button>
+                            <erd-button
+                                v-if="!data.row.isExtends"
+                                type="text"
+                                @click="onDeleteRule(data)"
+                            >
+                                {{ i18nMappingObj.remove }}
+                            </erd-button>
+                            <erd-dropdown
+                                v-if="!data.row.isExtends"
+                                trigger="click"
+                                style="margin-left: 8px"
+                            >
+                                <erd-button
+                                    type="text"
+                                    class="more-button"
+                                >
+                                    {{i18nMappingObj.more}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                </erd-button>
+                                <erd-dropdown-menu slot="dropdown">
+                                    <erd-dropdown-item @click.native="onMoveUp(data)">
+                                        {{i18nMappingObj.moveUp}}
+                                    </erd-dropdown-item>
+                                    <erd-dropdown-item @click.native="onMoveDown(data)">
+                                        {{i18nMappingObj.moveDown}}
+                                    </erd-dropdown-item>
+                                </erd-dropdown-menu>
+                            </erd-dropdown>
+                        </template>
+                        <template
+                            #column:default:icon="{data}"
+                            align="center"
+                        >
+                            <fam-icon
+                                :value="data.row.value"
+                                style="font-size: 18px"
+                            >
+                            </fam-icon>
+                        </template>
+                        <template #column:default:name="{data}">
+                            <template>
+                                <span v-html="ruleConditionName"></span>
+                            </template>
+                        </template>
+                    </erd-table>
+                </div>
+            </template>
+        </erd-contraction-panel>
+    </div>
+    <!-- 编辑 -->
+    <type-manage-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="attrName"
+        :oid="oid"
+        :openType="openType"
+        @onsubmit="onSubmit"
+    >
+    </type-manage-config>
+    <!-- 常数规则 -->
+    <type-set-icon
+        v-if="!showIconRulesModule && dialogIconVisible"
+        :oid="oid"
+        :default-icon="formData.icon"
+        :rowData="rowData"
+        :openType="openType"
+        :visible.sync="dialogIconVisible"
+        @onsubmit="updateConstants"
+    >
+    </type-set-icon>
+</div>

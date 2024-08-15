@@ -1,0 +1,151 @@
+.system-dashboard_com{
+
+    background-color: var(--colorFullBg);
+    display: flex;
+    overflow: hidden;
+    .erd-dashboard-toggle-leave, .erd-dashboard-toggle-enter {
+        opacity: 0;
+        width: 0!important;
+    }
+    .vue-grid-item.vue-grid-placeholder{
+        background: #D9D9D9 !important;
+    }
+    .el-dashboard-no-data{
+        color: #d9d7d3;
+        text-align: center;
+        height: 100%;
+        background: #fff;
+        .el-dashboard-no-data-icon{
+            font-size: 130px;
+        }
+    }
+    .system-dashboard_com_content{
+        height: 100%;
+        // background-color: #fff;
+        flex-grow: 1;
+        border-radius: 8px;
+        .el-scrollbar__view {
+            background: transparent !important;
+        }
+        .x_panel > .erd-pulldown{
+            position: absolute;
+            right: 0;
+            top: 11px;
+            .el-button {
+                border: none;
+                .el-icon-arrow-down{
+                    display: none;
+                }
+            }
+        }
+    }
+    .system-dashboard_com_add_card{
+        border-radius: 8px;
+        background-color: #fff;
+        height: 100%;
+        width: 320px;
+        transition: all .3s ease;
+        margin-left: 12px;
+        .card-title {
+            >h4{
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 0;
+            }
+        }
+        .system-dashboard_com_choose_app_item{
+            margin-top: 16px;
+            height: 110px;
+            //display: flex;
+            align-items: center;
+            box-sizing: content-box;
+            .system-dashboard_com_choose_app_item_wrapper{
+                margin-top: 1px;
+                border: 1px solid #d1cccc;
+                border-radius: 4px;
+                height: 100%;
+                padding: 16px;
+                //display: flex;
+                //flex-grow: 1;
+                cursor: move;
+            }
+            .system-dashboard_com_choose_app_item_desc {
+                h4 {
+                    font-size: 14px;
+                    font-size: var(--fontSize);
+                    color: #141C28;
+                    width: 70%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+
+                }
+                p {
+                    color: #89919F;
+                    font-size: 12px;
+                    word-break: break-all;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                }
+            }
+
+            &:hover .system-dashboard_com_choose_app_item_wrapper{
+                margin-top: -1px;
+                transition: margin-top .3s;
+                border-color: #337ab7;
+            }
+        }
+    }
+    .system-dashboard_com_choose_app{
+        display: flex;
+        align-items: center;
+        >span{
+            display: inline-block;
+            width: 30px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+    .col-item{
+        // border: 1px solid var(--colorBorder);
+        border-radius: 8px;
+        background-color: #fff;
+        .x_title {
+            padding-left: 16px;
+            height: 54px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 54px;
+            //display: flex;
+            //justify-content: space-between;
+            //align-items: center;
+            // border-bottom: 1px solid var(--colorBorder);
+        }
+        //.x_content {
+        //    height: calc(100% - 40px);
+        //}
+    }
+
+    .right-btn {
+        position: absolute;
+        top: 11px;
+        right: 16px;
+    }
+
+    .error-card {
+        height: 100%;
+        &-title {
+            padding-left: 16px;
+            height: 54px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 54px;
+        }
+        &-content {
+            height: calc(100% - 54px);
+        }
+    }
+}

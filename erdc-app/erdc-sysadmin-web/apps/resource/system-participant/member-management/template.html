@@ -1,0 +1,36 @@
+<div
+    id="fam-member-management"
+    class="fam-container h_100p"
+>
+    <div class="placeholder h_100p">
+        <div class="fam-bg-content h_100p flex flex-column">
+            <div class="page-header position-relative">
+                <erd-tabs
+                    ref="tabs"
+                    v-model="activeTab"
+                >
+                    <erd-tab-pane
+                        ref="tabPanel"
+                        :label="i18n.organization"
+                        name="organization"
+                    ></erd-tab-pane>
+                    <erd-tab-pane
+                        ref="tabPanel"
+                        :label="i18n.role"
+                        name="role"
+                    ></erd-tab-pane>
+                    <erd-tab-pane
+                        ref="tabPanel"
+                        :label="i18n.userGroup"
+                        name="userGroup"
+                    ></erd-tab-pane>
+                </erd-tabs>
+            </div>
+            <div class="page-content grow-1">
+                <organization-manager v-if="activeTab === 'organization'"></organization-manager>
+                <Role v-if="activeTab === 'role'"></Role>
+                <user-group-manager v-if="activeTab === 'userGroup'"></user-group-manager>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div
+    id="typeManageTree"
+    class="flex-1"
+    style="min-height: 0"
+>
+    <fam-tree
+        ref="FamTree"
+        node-key="key"
+        class="type-manage-tree tree-list h-100p"
+        :title="i18n.modelConfig"
+        :props="defaultProps"
+        :data="tree"
+        :expand-on-click-node="false"
+        :highlight-current="true"
+        :filter-node-method="filterSearch"
+        :default-expanded-keys="expandedList"
+        @node-click="onNodeClick"
+        @node-drop="dropSuccess"
+        @node-expand="nodeExpand"
+        @node-collapse="nodeCollapse"
+    >
+        <template #search-operation>
+            <erd-tooltip
+                :content="i18n.import"
+                placement="top"
+            >
+                <erd-button
+                    type="fill-icon"
+                    icon="erd-iconfont erd-icon-import"
+                    @click="onImport"
+                ></erd-button>
+            </erd-tooltip>
+            <erd-tooltip
+                :content="i18n.export"
+                placement="top"
+            >
+                <erd-button
+                    type="fill-icon"
+                    icon="erd-iconfont erd-icon-export"
+                    @click="onExport"
+                ></erd-button>
+            </erd-tooltip>
+        </template>
+        <template #node-operation="scope">
+            <div>
+                <erd-button
+                    type="icon"
+                    icon="erd-iconfont erd-icon-export"
+                    size="mini"
+                    @click.stop="onExportFn(scope.data, scope.node)"
+                ></erd-button>
+                <template v-if="scope.node.level !== 1">
+                    <erd-button
+                        v-if="scope.data.isSubType"
+                        type="icon"
+                        icon="erd-iconfont erd-icon-add-document"
+                        size="mini"
+                        @click.stop="onCreate(scope.data, scope.node)"
+                    ></erd-button>
+                    <erd-button
+                        v-if="scope.data.hasModify"
+                        type="icon"
+                        icon="erd-iconfont erd-icon-edit3"
+                        size="mini"
+                        @click="onEdit(scope.data, scope.node)"
+                    ></erd-button>
+                    <erd-button
+                        v-if="scope.data.hasDelete"
+                        type="icon"
+                        icon="erd-iconfont erd-icon-delete2"
+                        size="mini"
+                        @click.stop="onDelete(scope.data, scope.node)"
+                    ></erd-button>
+                </template>
+            </div>
+        </template>
+    </fam-tree>
+    <type-manage-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="titleName"
+        :oid="typeOid"
+        :openType="openType"
+        @onsubmit="onSubmit"
+    ></type-manage-config>
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="TypeDefBizImport"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="TypeDefinitionExport"
+        :request-config="requestConfig"
+    ></fam-export>
+</div>

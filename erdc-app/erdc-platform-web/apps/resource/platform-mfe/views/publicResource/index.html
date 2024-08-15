@@ -1,0 +1,55 @@
+<div class="w-100p h-100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <fam-advanced-table
+        ref="publicTable"
+        class="grow-1 ptrl-xl"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+    >
+        <template #column:default:displayName:content="{ scope }">
+            {{ scope.row.displayName || scope.row.code }}
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-link
+                :underline="false"
+                type="primary"
+                @click="download(scope.row)"
+                >{{ i18nMappingObj.download }}</erd-link
+            >
+            <erd-divider direction="vertical"></erd-divider>
+            <erd-dropdown
+                @command="handleMoreAction($event, scope.row)"
+                trigger="click"
+            >
+                <span class="el-dropdown-link">
+                    <erd-link
+                        type="primary"
+                        :underline="false"
+                        >{{ i18nMappingObj.more }}
+                        <i class="el-icon-arrow-down el-icon--right"></i>
+                    </erd-link>
+                </span>
+                <erd-dropdown-menu slot="dropdown">
+                    <erd-dropdown-item command="versionManage">{{ i18nMappingObj.versionManage }} </erd-dropdown-item>
+                </erd-dropdown-menu>
+            </erd-dropdown>
+        </template>
+    </fam-advanced-table>
+
+    <!-- 上传弹框 -->
+    <uploadForm
+        ref="uploadModal"
+        @done="refreshTable"
+    ></uploadForm>
+
+    <!-- 版本管理弹框 -->
+    <versionManage
+        ref="versionModal"
+        :id="rowId"
+        :title="versionTitle"
+        @done="saveVersion"
+    ></versionManage>
+</div>

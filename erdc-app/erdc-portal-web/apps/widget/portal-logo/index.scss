@@ -1,0 +1,11 @@
+.logo {
+    height: var(--layoutHeaderHeight);
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    padding-right: 8px;
+    display: flex;
+    align-items: center;
+
+    &-img {
+        height: var(--layoutHeaderImageHeight);
+    }
+}

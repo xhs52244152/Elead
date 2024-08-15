@@ -1,0 +1,27 @@
+.fam-scenario-details-content {
+    .fam-scenario-details-content-panel {
+        display: flex;
+        flex-direction: column;
+        .parity-regulator-association {
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            .parity-regulator-association__header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                .fam-usage-scenario-tree__search {
+                    width: 320px;
+                }
+            }
+            .link{
+                color: var(--colorPrimary);
+                cursor: pointer;
+                margin-right: 10px;
+                &:last-child{
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

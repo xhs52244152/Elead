@@ -1,0 +1,106 @@
+<div class="system-notify_dnd_list p-normal">
+    <div class="head">
+        <FamPageTitle
+            :title="row.title"
+            show-back-button
+            @back="returnTop"
+        ></FamPageTitle>
+        <div class="operation flex">
+            <div></div>
+            <div>
+                <erd-button
+                    type="primary"
+                    icon="el-icon-plus"
+                    @click="onCreate"
+                >{{i18nMappingObj.create}}</erd-button
+                >
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <fam-erd-table
+            ref="erdTable"
+            :column-config="{resizable: true}"
+            border
+            v-loading="loading"
+            :data="listData"
+            :column="columns"
+            :height="tableHeight"
+            show-overflow
+        >
+            <template #column:default:enable="{data}">
+                {{data.row.enabled ? i18nMappingObj.enable : i18nMappingObj.disable}}
+            </template>
+            <template #column:default:DNDTime="{data}">
+                {{`${data.row.silenceMin} ~ ${data.row.silenceMax}` }}
+            </template>
+            <template #column:default:operation="{data}">
+                <erd-button
+                    type="text"
+                    @click="onUpdate(data.row)">
+                    {{i18nMappingObj.edit}}
+                </erd-button>
+                <erd-button
+                    type="text"
+                    v-if="data.row.enabled"
+                    @click="changeStatus(data.row, false)"
+                >
+                    {{i18nMappingObj.disable}}
+                </erd-button>
+                <erd-button
+                    type="text"
+                    v-else
+                    @click="changeStatus(data.row, true)"
+                >
+                    {{i18nMappingObj.enable}}
+                </erd-button>
+                <erd-button
+                    type="text"
+                    @click="deleteDND(data.row)"
+                >
+                    {{ i18nMappingObj.delete }}
+                </erd-button>
+            </template>
+        </fam-erd-table>
+    </div>
+    <erd-ex-dialog
+        width="600px"
+        :title="dialogTitle"
+        @close="close"
+        :visible.sync="visibleDialog"
+        size="large"
+    >
+        <FamDynamicForm
+            ref="dynamicForm"
+            label-width="20%"
+            :form="formData"
+            :data="formConfig"
+        >
+            <template #sendType>
+                <erd-select
+                    class="system-notify_dnd_sendType"
+                    v-model="formData.code"
+                    :disabled="!!currentRow"
+                >
+                    <erd-option
+                        v-for="item in sendType"
+                        :key="item.value"
+                        :label="item.description"
+                        :value="item.value"
+                    >
+                    </erd-option>
+                </erd-select>
+            </template>
+        </FamDynamicForm>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="save"
+                >{{i18nMappingObj.save}}</erd-button
+            ><erd-button @click="cancel">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

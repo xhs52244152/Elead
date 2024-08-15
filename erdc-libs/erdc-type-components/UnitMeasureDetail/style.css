@@ -1,0 +1,11 @@
+#UnitMeasureDetail .measure-header {
+  justify-content: space-between;
+  align-items: center;
+}
+#UnitMeasureDetail .measure-header .type-left {
+  color: var(--colorTextNormal);
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+}
+
+/*# sourceMappingURL=style.css.map */

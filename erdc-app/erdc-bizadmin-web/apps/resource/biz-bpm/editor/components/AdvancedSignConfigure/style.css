@@ -1,0 +1,16 @@
+.sign-configure .text-placeholder {
+  color: #c0c4cc;
+}
+.sign-configure .panel-title-icon {
+  font-size: var(--fontSize);
+  color: var(--colorPrimary);
+}
+
+.sign-configure-popover {
+  padding: 0;
+}
+.sign-configure-popover .textarea-placeholder .el-textarea__inner::placeholder {
+  color: #c0c4cc;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,55 @@
+#custom-from-update {
+
+    .el-input-number__decrease,
+    .el-input-number__increase {
+        line-height: 29px;
+        background: #fff;
+    }
+
+    .el-input-number__increase:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled) {
+        border-color: var(--inputBorderColor__focus);
+    }
+
+    .el-input-number--medium {
+        width: 120px !important;
+    }
+
+    .el-select {
+        width: 100%;
+    }
+
+    // .i18nRoleName {
+    //     i {
+    //         border-right: 0;
+    //     }
+    // }
+}
+
+.topItem {
+    align-items: center;
+
+    .add-user-update {
+        margin-left: 8px;
+        width: 80px;
+    }
+
+    .fam-participant-select .select-icon {
+        line-height: 16px;
+    }
+}
+
+.el-dialog__body {
+    .menu-name {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .menu-name_title {
+            margin-right: 8px;
+            color: #000000;
+            font-size: var(--fontSizeLarge);
+            line-height: 28px;
+            font-weight: bold;
+        }
+    }
+}

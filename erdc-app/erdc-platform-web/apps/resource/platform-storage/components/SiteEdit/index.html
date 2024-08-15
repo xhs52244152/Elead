@@ -1,0 +1,33 @@
+<erd-ex-dialog
+    custom-class="doc-site-edit"
+    :title="title"
+    :destroy-on-close="true"
+    :visible.sync="visible"
+    width="600px"
+    @close="onClose"
+>
+    <FamDynamicForm
+        ref="form"
+        :form.sync="form"
+        :data="formConfig"
+        labelPosition="right"
+        label-width="100px"
+    >
+        <template #siteCheck>
+            <erd-button @click="getCode">
+                {{ i18nMappingObj.siteDetection }}
+            </erd-button>
+        </template>
+    </FamDynamicForm>
+
+
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="confirm"
+        >
+            {{ i18nMappingObj.confirm }}
+        </erd-button>
+        <erd-button @click="cancel"> {{ i18nMappingObj.cancel }} </erd-button>
+    </template>
+</erd-ex-dialog>

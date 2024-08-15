@@ -1,0 +1,57 @@
+.tree-management {
+  padding-bottom: var(--largePadding);
+}
+.tree-management .tree-header {
+  padding: var(--largePadding) var(--bigPadding) var(--normalPadding) var(--bigPadding);
+}
+.tree-management .tree-header .tree-title {
+  color: var(--colorTextNormal);
+  line-height: 28px;
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  margin-bottom: var(--largeSpace);
+}
+.tree-management .tree-header .tree-operation {
+  margin-top: var(--bigSpace);
+}
+.tree-management .fam_tree-icon-search {
+  line-height: var(--inputHeight);
+}
+.tree-management .el-tree-node__content {
+  display: flex;
+  width: 100%;
+}
+.tree-management .el-tree-node__content .tree-content {
+  display: flex;
+  width: calc(100% - 25px);
+  min-width: 0;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+.tree-management .el-tree-node__content .tree-content .tree-operation {
+  display: none;
+}
+.tree-management .el-tree-node__content .tree-content .tree-operation .tree-drag {
+  margin-right: 6px;
+  background-color: #ebf1ff;
+}
+.tree-management .el-tree-node__content .tree-content .tree-operation .tree-drag i {
+  font-size: 18px !important;
+}
+.tree-management .el-tree-node__content .tree-content .tree-text {
+  flex: 1;
+  width: calc(100% - 35px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tree-management .el-tree-node__content .tree-content .tree-text .erd-iconfont {
+  font-size: var(--famTreeIconFontSize);
+}
+.tree-management .el-tree-node__content .tree-content:hover .tree-operation {
+  display: inline-flex;
+}
+
+/*# sourceMappingURL=style.css.map */

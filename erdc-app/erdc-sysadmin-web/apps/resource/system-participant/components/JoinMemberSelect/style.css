@@ -1,0 +1,48 @@
+.join-member-select {
+  display: flex;
+}
+.join-member-select .cursor-pointer {
+  cursor: pointer;
+}
+.join-member-select .left-main-container {
+  width: 800px;
+  padding: 12px 16px;
+}
+.join-member-select .right-main-container {
+  width: 40%;
+  padding: 12px 16px;
+  border-left: 1px solid var(--colorBorder);
+  border-bottom: 1px solid var(--colorBorder);
+}
+.join-member-select .right-main-container .sub-title {
+  opacity: 0.7;
+  font-size: 16px;
+  color: #000000;
+  font-weight: bold;
+}
+.join-member-select .right-main-container .user-list-body {
+  margin-top: 12px;
+}
+.join-member-select .right-main-container .user-list-body .user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.join-member-select .right-main-container .user-list-body .user-item .left-user-body {
+  display: flex;
+  align-items: center;
+}
+.join-member-select .right-main-container .user-list-body .user-item .left-user-body .user-info {
+  padding-left: 8px;
+  opacity: 0.7;
+  color: #000000;
+  font-weight: bold;
+}
+.join-member-select .right-main-container .user-list-body .user-item:hover {
+  background-color: #F4F3FD;
+}
+.join-member-select .right-main-container .user-list-body .user-close-icon {
+  font-size: 14px;
+font-size: var(--fontSize);
+  margin-left: 8px;
+}/*# sourceMappingURL=style.css.map */

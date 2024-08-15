@@ -1,0 +1,6 @@
+{
+  "name": "@erdc-resource/platform-site-setting",
+  "version": "3.1.0",
+  "description": "多站点管理",
+  "appId": "plat"
+}

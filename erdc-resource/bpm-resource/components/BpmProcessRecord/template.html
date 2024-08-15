@@ -1,0 +1,40 @@
+<div class="bpm-process-record">
+    <FamErdTable
+        :column="column"
+        :data="recordData"
+        auto-height
+        :row-config="{ height: 36, keyField: 'taskId' }"
+        :is-embed-table="true"
+    >
+        <template #column:default:name="{data}">{{data.row.taskName || '--'}}</template>
+        <template #column:default:participant="{data}">{{data.row.memberName || '--'}}</template>
+        <template #column:default:user="{data}">
+            <div class="flex">
+                <FamUser :users="data.row.userInfo.approveUser"></FamUser>
+                <template v-if="data.row.userInfo.transformed && data.row.userInfo.transformed.length">
+                    <span class="ml-4 mr-4">--></span>
+                    <FamUser :users="data.row.userInfo.transformed"></FamUser
+                ></template>
+            </div>
+        </template>
+        <template #column:default:result="{data}">
+            <span
+                v-if="+data.row.approvalCode < 0"
+                class="approval-code-flex"
+            >
+                <img :src="REJECTED_IMG" />
+                <span>{{data.row.approvalResult || '--'}}</span>
+            </span>
+            <span
+                v-else
+                class="approval-code-flex"
+            >
+                <img :src="APPROVED_IMG" />
+                <span>{{data.row.approvalResult || i18n.submit}}</span>
+            </span>
+        </template>
+        <template #column:default:elapsed="{data}">{{data.row.elapsedTime.elapsed || '--'}}</template>
+        <template #column:default:time="{data}">{{data.row.time || '--'}}</template>
+        <template #column:default:opinions="{data}">{{data.row.fullMessage || '--'}}</template>
+    </FamErdTable>
+</div>

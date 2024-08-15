@@ -1,0 +1,36 @@
+<div
+    id="PermissionLayout"
+    class="flex flex-column grow-1"
+    :class="{'left-is-collapsed': collapsed}"
+>
+    <div class="flex flex-column grow-1">
+        <resizable-container :left="resizableContainerStyle">
+            <template v-slot:left>
+                <div
+                    ref="tree"
+                    class="flex flex-column grow-1"
+                    style="flex-shrink: 0; height: 0"
+                >
+                    <fam-side-menu
+                        class="grow-1"
+                        :resources="menus"
+                        :maxHeight="maxHeight"
+                        :collapsed.sync="collapsed"
+                        :current-root="currentRoot"
+                        :default-active="currentMenu && currentMenu.id"
+                        :config="menuConfig"
+                        @routeTo="routeTo"
+                        @toggle-collapsed="updateCollapsed"
+                    ></fam-side-menu>
+                </div>
+            </template>
+            <template v-slot:right>
+                <slot
+                    name="resizableContainer:rightBox"
+                    :current-menu="currentMenu"
+                    :product-info="productInfo"
+                ></slot>
+            </template>
+        </resizable-container>
+    </div>
+</div>

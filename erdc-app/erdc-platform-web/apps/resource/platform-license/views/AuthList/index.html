@@ -1,0 +1,121 @@
+<div class="license-auth h-100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <div class="grow-1 p-xl">
+        <div class="table-header flex justify-between mb-normal">
+            <div class="flex align-items-center">
+                <FamParticipantSelect
+                    width="400px"
+                    multiple
+                    v-model="searchParticipantVal"
+                    :isgetdisable="true"
+                    :showType="showParticipantType"
+                    :collapse-tags="true"
+                    @change="changeSearchMember"
+                    :query-params="queryParams"
+                ></FamParticipantSelect>
+                <div class="ml-8 color-placeholder text-normal">{{ i18nMappingObj.licenseTip }}：{{ licenseNum }}</div>
+            </div>
+            <div>
+                <erd-button
+                    type="primary"
+                    @click="addUser"
+                >
+                    {{i18nMappingObj.addBtn }}
+                </erd-button>
+                <erd-button @click="handleBatchDelete">{{i18nMappingObj.removeBtn }}</erd-button>
+                <erd-pulldown right>
+                    {{ i18nMappingObj.moreBtn }}
+                    <template #pulldown>
+                        <erd-pulldown-menu>
+                            <erd-pulldown-menu-item @click="importData()"
+                                >{{ i18nMappingObj.import }}</erd-pulldown-menu-item
+                            >
+                            <erd-pulldown-menu-item @click="exportData()"
+                                >{{ i18nMappingObj.export }}</erd-pulldown-menu-item
+                            >
+                        </erd-pulldown-menu>
+                    </template>
+                </erd-pulldown>
+                <erd-tooltip
+                    placement="top"
+                    :content="i18nMappingObj.refresh"
+                >
+                    <erd-button
+                        type="fill-icon"
+                        icon="el-icon-refresh"
+                        @click="refreshTable"
+                    ></erd-button>
+                </erd-tooltip>
+            </div>
+        </div>
+        <erd-table
+            class="grow-1 mb-normal"
+            ref="erdTable"
+            :column="columns"
+            :data="tableData"
+            :height="tableHeight"
+            :show-overflow="true"
+        >
+            <template #column:default:index="{data}"> {{ data.rowIndex + 1 }} </template>
+            <template #column:default:status="{data}"> {{ statusList[data.row.status] }} </template>
+            <template #column:default:participantType="{data}">
+                <span>{{ i18nMappingObj[data.row.principalTarget] ?? '' }}</span>
+            </template>
+        </erd-table>
+        <!-- 小于等于一页不展示 -->
+        <erd-pagination
+            :current-page.sync="page.pageIndex"
+            :page-size.sync="page.pageSize"
+            :hide-on-single-page="false"
+            :total="page.total"
+            @size-change="handleSizeChange"
+            @current-change="handelCurrentChange"
+        ></erd-pagination>
+    </div>
+
+    <erd-ex-dialog
+        ref="dialog"
+        :visible.sync="visible"
+        :title="i18nMappingObj.addBtn"
+        :destroy-on-close="true"
+        @close="onClose"
+        @drag-end="dragEnd"
+    >
+        <AddParticipantSelect
+            :visible="true"
+            multiple
+            ref="groupParticipantSelect"
+            :selectedParticipant="selectedParticipant"
+            :show-type="showParticipantType"
+            auto-height
+            @change="changeMember"
+        ></AddParticipantSelect>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="onConfirm"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="onClose">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="UserLicenseImport"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+    <!--  导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        businessName="UserLicenseExport"
+        :requestConfig="requestConfig"
+    ></fam-export>
+</div>

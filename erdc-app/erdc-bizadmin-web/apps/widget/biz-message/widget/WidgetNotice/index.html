@@ -1,0 +1,39 @@
+<div class="notice-abstract">
+    <div class="abstract-content">
+        <el-scrollbar
+            style="height: 100%"
+            v-if="noticeList.length"
+        >
+            <ul class="has-content">
+                <li
+                    class="list-item"
+                    @click="handleDetail(row)"
+                    v-for="(row, index) in noticeList"
+                >
+                    <div class="mb-8 font-bold text-ellipsis">{{row.name}}</div>
+                    <div
+                        class="mb-8 text-ellipsis list-item-desc"
+                        v-html="row.content"
+                    ></div>
+                    <div class="mb-8 text-12 list-item-date">{{ row.createTime }}</div>
+                </li>
+            </ul>
+        </el-scrollbar>
+        <div
+            class="no-content"
+            v-else
+        >
+            <fam-empty></fam-empty>
+        </div>
+    </div>
+    <div class="abstract-footer flex justify-between align-items-center cursor-pointer">
+        <div @click="handleAllReadConfirm">全部已读</div>
+        <div @click="goToNoticeList">查看更多</div>
+    </div>
+    <notice-detail
+        ref="noticeRef"
+        :showNext="showNext"
+        @next="handleNext"
+        @readed="handleRead"
+    ></notice-detail>
+</div>

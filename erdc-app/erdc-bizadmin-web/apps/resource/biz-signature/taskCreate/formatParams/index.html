@@ -1,0 +1,103 @@
+<erd-ex-dialog
+    :title="i18nMappingObj.paramsConfig"
+    :visible.sync="visible"
+    width="800px"
+    custom-class="params-dialog"
+    @close="cancel"
+>
+    <FamDynamicForm
+        :form="formData"
+        :data="formConfigs"
+        ref="paramsForm"
+        labelWidth="80px"
+    >
+        <template #type>
+            <erd-select
+                v-model="formData.type"
+                @change="changeType"
+                class="w-100p"
+            >
+                <erd-option
+                    v-for="opt in typeOpt"
+                    :key="opt.value"
+                    :label="opt.label"
+                    :value="opt.value"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #pageSize>
+            <label class="page-label">{{ i18nMappingObj.width }}</label>
+            <erd-input-number
+                v-model="formData.pageSize.width"
+                :placeholder="i18nMappingObj.pagePlac"
+                controls-position="right"
+                :min="0"
+                :precision="1"
+                :disabled="formData.type !== 'custom'"
+                class="w-50p"
+            >
+            </erd-input-number>
+            <span class="mlr-8">×</span>
+            <label class="page-label">{{ i18nMappingObj.height }}</label>
+            <erd-input-number
+                v-model="formData.pageSize.height"
+                :placeholder="i18nMappingObj.pagePlac"
+                controls-position="right"
+                :min="0"
+                :precision="1"
+                :disabled="formData.type !== 'custom'"
+                class="w-50p"
+            >
+            </erd-input-number>
+        </template>
+        <template #margins>
+            <label class="page-label">{{ i18nMappingObj.top }}</label>
+            <erd-input-number
+                v-model="formData.margins.top"
+                :placeholder="i18nMappingObj.pagePlac"
+                controls-position="right"
+                :min="0"
+                :precision="1"
+            >
+            </erd-input-number>
+            <span class="mlr-8">×</span>
+            <label class="page-label">{{ i18nMappingObj.bottom }}</label>
+            <erd-input-number
+                v-model="formData.margins.bottom"
+                :placeholder="i18nMappingObj.pagePlac"
+                controls-position="right"
+                :min="0"
+                :precision="1"
+            >
+            </erd-input-number>
+            <span class="mlr-8">×</span>
+            <label class="page-label">{{ i18nMappingObj.left }}</label>
+            <erd-input-number
+                v-model="formData.margins.left"
+                :placeholder="i18nMappingObj.pagePlac"
+                controls-position="right"
+                :min="0"
+                :precision="1"
+            >
+            </erd-input-number>
+            <span class="mlr-8">×</span>
+            <label class="page-label">{{ i18nMappingObj.right }}</label>
+            <erd-input-number
+                v-model="formData.margins.right"
+                :placeholder="i18nMappingObj.pagePlac"
+                controls-position="right"
+                :min="0"
+                :precision="1"
+            >
+            </erd-input-number>
+        </template>
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            type="primary"
+            @click="submit"
+            >{{ i18nMappingObj.confirm }}</erd-button
+        >
+        <erd-button @click="cancel">{{ i18nMappingObj.cancel }}</erd-button>
+    </template>
+</erd-ex-dialog>

@@ -1,0 +1,152 @@
+<div id="TypeAttrConfig">
+    <erd-ex-dialog
+        v-if="innerVisible"
+        :visible.sync="innerVisible"
+        :title="title"
+        width="1200px"
+    >
+        <div class="TypeAttrConfig">
+            <div v-if="showInfo">
+                <FamDynamicForm
+                    ref="editForm"
+                    v-cloak
+                    :form="formData"
+                    :data="showFormConfig"
+                    :readonly="openType === 'detail'"
+                    @form-change="formChange"
+                >
+                    <template v-slot:selectTreeComponent="scope">
+                        <fam-dict-item-select
+                            style="width: 100%"
+                            v-model="scope.data[scope.formConfig.field]"
+                        ></fam-dict-item-select>
+                    </template>
+
+                    <template v-slot:attrCategoryComponent="scope">
+                        <erd-radio-group
+                            v-model="scope.data[scope.formConfig.field]"
+                            v-for="item in categoryOptions"
+                            :key="item.name"
+                            @change="typeChange"
+                        >
+                            <erd-radio
+                                style="margin: 0 8px"
+                                :label="item.name"
+                            >
+                                {{item.value}}
+                            </erd-radio>
+                        </erd-radio-group>
+                    </template>
+
+                    <template v-slot:tableFieldsComponent="scope">
+                        <p
+                            style="
+                                display: flex;
+                                display: -webkit-flex;
+                                display: -moz-flex;
+                                display: -ms-flexbox;
+                                flex-wrap: wrap;
+                                margin: 0;
+                            "
+                            disabled
+                        >
+                            <erd-tag
+                                v-for="(item, index) in useField"
+                                :key="index"
+                                style="margin-left: 8px"
+                                v-cloak
+                            >
+                                {{item}}
+                            </erd-tag>
+                        </p>
+                    </template>
+                    <template v-slot:attrNameComponent="scope">
+                        <erd-input
+                            style="width: 100%"
+                            v-model="scope.data[scope.formConfig.field]"
+                            :disabled="isRelationType || globalObj.isExtendGlobal"
+                            :placeholder="i18nMappingObj.pleaseEnter"
+                            maxlength="100"
+                        >
+                            <template #append>
+                                <erd-button
+                                    class="font-12 align-items-center"
+                                    style="display: flex"
+                                    :disabled="isSelectGlobal"
+                                    :title="globalTitle"
+                                    @click="selectGlobal"
+                                >
+                                    <span> {{ i18nMappingObj.selectGlobal }} </span>
+                                </erd-button>
+                            </template>
+                        </erd-input>
+                    </template>
+
+                    <template v-slot:radioComponent="scope">
+                        <erd-radio-group
+                            style="width: 100%"
+                            v-model="scope.data[scope.formConfig.field]"
+                            :disabled="scope.data[scope.formConfig.field + '_checked'] || scope.formConfig.disabled"
+                        >
+                            <erd-radio :label="true">{{i18nMappingObj.yes}}</erd-radio>
+                            <erd-radio :label="false">{{i18nMappingObj.no}}</erd-radio>
+                        </erd-radio-group>
+                    </template>
+                </FamDynamicForm>
+            </div>
+        </div>
+        <erd-contraction-panel
+            v-if="properties?.length"
+            class="mt-24"
+            :unfold.sync="componentConfigUnfold"
+            :title="i18nMappingObj.componentConfigs"
+        >
+            <template
+                v-if="showExtendsCheckbox"
+                #header-left
+            >
+                <erd-tooltip
+                    :content="i18n.inherit"
+                    popper-class="el-tooltip__arrow-hide"
+                >
+                    <erd-checkbox
+                        v-model="formData.componentJson_checked"
+                        class="ml-8"
+                        @change="(val) => checkChange(val, 'componentJson')"
+                    ></erd-checkbox>
+                </erd-tooltip>
+            </template>
+            <template #content>
+                <FamComponentConfigurationForm
+                    v-if="showCompConfigForm"
+                    ref="componentConfigForm"
+                    :data.sync="formData"
+                    :form.sync="componentJson"
+                    :form-disabled="formData.componentJson_checked"
+                    :properties="properties"
+                    :readonly="openType === 'detail'"
+                ></FamComponentConfigurationForm>
+            </template>
+        </erd-contraction-panel>
+        <span
+            slot="footer"
+            class="dialog-footer"
+            v-if="openType !== 'detail'"
+        >
+            <erd-button
+                type="primary"
+                @click="submitEditForm()"
+                :loading="loading"
+                :disabled="disabled"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+    <type-attr-global-config
+        v-if="dialogVisible"
+        :visible.sync="dialogVisible"
+        :title="i18nMappingObj.selectGlobal"
+        @onsubmit="onSubmit"
+    ></type-attr-global-config>
+</div>

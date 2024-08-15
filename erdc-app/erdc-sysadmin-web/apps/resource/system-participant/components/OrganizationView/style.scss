@@ -1,0 +1,29 @@
+$mp12: 12px;
+.organization-view{
+    padding: $mp12;
+    
+    .orgForm {
+        padding: 4px 4px 16px 4px;
+    }
+
+    .right-operate-btns{
+        position: absolute;
+        padding-top: $mp12;
+        padding-right: $mp12;
+        right: 0;
+        top:  0;
+    }
+    .role-table-container{
+        .list-title{
+            opacity: 0.85;
+            font-size: 15px;
+            color: #000000;
+            font-weight: bold;
+            margin-bottom: $mp12;
+            
+        }
+        .panelTitle {
+            margin-bottom: 8px;
+        }
+    }
+}

@@ -1,0 +1,109 @@
+<div
+    id="GlobalAttributesTree"
+    :lan="lan"
+    class="global-attr-tree flex-1 flex flex-column"
+>
+    <div
+        class="tree-header"
+        ref="header"
+    >
+        <div class="tree-title">{{i18nMappingObj.globalAttr}}</div>
+        <div class="search">
+            <erd-input
+                v-model="searchValue"
+                :placeholder="i18nMappingObj.searchKeyword"
+                suffix-icon="erd-iconfont erd-icon-search"
+                clearable
+                style="width: 100%"
+            >
+            </erd-input>
+        </div>
+    </div>
+    <erd-scrollbar
+        class="flex-1"
+        style="min-height: 0"
+        wrap-style="overflow: hidden auto;"
+    >
+        <ul class="typelist">
+            <erd-ex-tree
+                ref="globalTree"
+                class="tree-list"
+                :data="treeData"
+                :props="defaultProps"
+                node-key="oid"
+                :default-expanded-keys="defaultExpandedKeys"
+                :default-checked-keys="defaultCheckedKeys"
+                :expand-on-click-node="false"
+                :auto-expand-parent="true"
+                @node-click="onCheck"
+                :filter-node-method="filterSearch"
+                :highlight-current="true"
+            >
+                <template v-slot="scope">
+                    <div
+                        class="tree-content"
+                        :class="{'outdent': editingNodeId === scope.data.id}"
+                    >
+                        <erd-input
+                            ref="inputEditNode"
+                            style="width: 100%"
+                            v-if="editingNodeId === scope.data.id"
+                            v-model="newCategory.displayName"
+                            maxlength="64"
+                            @blur="append(scope.node, scope.data)"
+                            @keyup.enter.native="inputBlur"
+                        >
+                        </erd-input>
+                        <span
+                            v-else
+                            class="tree-text"
+                            :title="scope.node.label"
+                        >
+                            <span>{{scope.node.label}}</span>
+                        </span>
+                        <div
+                            class="tree-operation"
+                            v-show="!typeAttrGlobal"
+                            @click.stop
+                        >
+                            <span v-if="scope.node.level == 1">
+                                <erd-button
+                                    type="icon"
+                                    size="mini"
+                                    class="drag"
+                                    icon="erd-iconfont erd-icon-add-document fontSize18"
+                                    @click.stop="createCategory(scope.node, scope.data)"
+                                >
+                                </erd-button>
+                            </span>
+                            <span v-if="editingNodeId !== scope.data.id && scope.node.level !== 1">
+                                <span class="edit-hover">
+                                    <erd-button
+                                        type="icon"
+                                        size="mini"
+                                        class="drag"
+                                        icon="erd-iconfont erd-icon-add-document fontSize18"
+                                        @click.stop="createCategory(scope.node, scope.data)"
+                                    >
+                                    </erd-button>
+                                    <el-button
+                                        type="text"
+                                        size="mini"
+                                        icon="erd-iconfont erd-icon-edit3"
+                                        @click.stop="onEdit(scope.data)"
+                                    ></el-button>
+                                    <el-button
+                                        type="text"
+                                        size="mini"
+                                        icon="erd-iconfont erd-icon-delete2"
+                                        @click.stop="onRemove(scope.node, scope.data)"
+                                    ></el-button>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </template>
+            </erd-ex-tree>
+        </ul>
+    </erd-scrollbar>
+</div>

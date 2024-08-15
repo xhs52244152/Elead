@@ -1,0 +1,35 @@
+.biz-process-look-history .fam-view-table-header-component{
+    display: none;
+}
+
+.circular-running {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00A854;
+    border-radius: 10px;
+}
+
+.circular-completed {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #567FFD;
+    border-radius: 10px;
+}
+
+.circular-pending {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #FFBF00;
+    border-radius: 10px;
+}
+
+.circular-exception {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #f04134;
+    border-radius: 10px;
+}

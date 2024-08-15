@@ -1,0 +1,42 @@
+#FamViewTable .fam-base-info-title {
+  padding: 0 var(--largePadding);
+  background-color: var(--colorFullBg);
+}
+#FamViewTable .fam-base-info-title .fam-base-info-title__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: var(--fontSizeLarge);
+  letter-spacing: 0;
+  color: var(--colorTextNormal);
+}
+#FamViewTable.adaptive-height {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#FamViewTable.adaptive-height .fam-view-navbar-component {
+  min-height: var(--tabsItemHeaderTabHeight);
+}
+#FamViewTable.adaptive-height .advanced-table-container {
+  flex-grow: 1;
+}
+#FamViewTable .fam-advanced-filter-btn,
+#FamViewTable .fam-classify-search-btn {
+  padding: var(--miniPadding) var(--bigPadding);
+  line-height: 24px;
+}
+#FamViewTable .fam-advanced-filter-active,
+#FamViewTable .fam-classify-search-btn-active {
+  border-color: var(--tagDefaultLightBorderColor);
+  background-color: #D2E2FC;
+  color: var(--tagDefaultLightColor);
+}
+#FamViewTable .advanced-table-container {
+  padding: var(--famAdvancedTableContainerPadding);
+}
+
+.el-dialog:has(.fam-view-table-component) .fam-view-table-component {
+  padding-bottom: 0 !important;
+}/*# sourceMappingURL=style.css.map */

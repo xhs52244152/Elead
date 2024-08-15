@@ -1,0 +1,135 @@
+<div
+    id="form-configure"
+    class="form-configure"
+>
+    <erd-contraction-panel
+        :title="i18n.layoutConfigure"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <erd-form
+                :model="formData"
+                label-position="right"
+                label-width="140px"
+            >
+                <erd-form-item :label="i18n.formLayout">
+                    <div class="form-configure__layout-select flex w-100p">
+                        <erd-tree-select
+                            :value="formData.type"
+                            class="form-configure__layout-type"
+                            style="width: 120px"
+                            node-key="oid"
+                            :props="{
+                                children: 'children',
+                                label: 'displayName',
+                                value: 'oid'
+                            }"
+                            :data="layoutTypeTree"
+                            :disabled="readonly"
+                            default-expand-all
+                            @input="handleLayoutTypeInput"
+                        >
+                        </erd-tree-select>
+                        <erd-ex-select
+                            v-if="formData.type === 1"
+                            v-model="formData.layoutRef"
+                            class="form-configure__layout-ref grow-1"
+                            :remote-method="remoteMethod"
+                            :loading="mfeLoading"
+                            :placeholder="i18n.pleaseSelectLayoutRef"
+                            :disabled="readonly"
+                            clearable
+                            filterable
+                            remote
+                            @change="saveLayoutConfigure('layoutRef')"
+                        >
+                            <erd-option
+                                v-for="layout in formLayoutList"
+                                :key="layout.id"
+                                :label="getLayoutPackageLabel(layout)"
+                                :value="layout.code"
+                            ></erd-option>
+                        </erd-ex-select>
+                        <erd-ex-select
+                            v-else-if="formData.type !== 1"
+                            v-model="formData.layoutRef"
+                            class="form-configure__layout-ref grow-1"
+                            :disabled="readonly"
+                            clearable
+                            filterable
+                            :no-data-text="i18n.noFormLayout"
+                            @change="saveLayoutConfigure('layoutRef')"
+                        >
+                            <erd-option
+                                v-for="layout in formLayoutList"
+                                :key="layout.oid"
+                                :label="layout.displayName"
+                                :value="layout.oid"
+                            ></erd-option>
+                        </erd-ex-select>
+                    </div>
+                </erd-form-item>
+
+                <erd-form-item
+                    v-if="isProcess"
+                    :label="i18n.startInterface"
+                >
+                    <erd-ex-select
+                        v-model="formData.startInterfaceMasterRefs"
+                        class="w-100p"
+                        clearable
+                        :disabled="readonly"
+                        @visible-change="getInterfaceList"
+                        @change="saveLayoutConfigure('startInterfaceMasterRefs')"
+                    >
+                        <erd-option
+                            v-for="item in interfaceList"
+                            :key="item.id"
+                            :label="item.formatAttrRawList.name"
+                            :value="item.masterRef"
+                        ></erd-option>
+                    </erd-ex-select>
+                </erd-form-item>
+
+                <erd-form-item
+                    v-if="!isProcess"
+                    :label="i18n.saveInterface"
+                >
+                    <erd-ex-select
+                        v-model="formData.saveInterfaceMasterRefs"
+                        class="w-100p"
+                        clearable
+                        :disabled="readonly"
+                        @visible-change="getInterfaceList"
+                        @change="saveLayoutConfigure('saveInterfaceMasterRefs')"
+                    >
+                        <erd-option
+                            v-for="item in interfaceList"
+                            :key="item.id"
+                            :label="item.formatAttrRawList.name"
+                            :value="item.masterRef"
+                        ></erd-option>
+                    </erd-ex-select>
+                </erd-form-item>
+
+                <erd-form-item :label="i18n.handleInterface">
+                    <erd-ex-select
+                        v-model="formData.handleInterfaceMasterRefs"
+                        class="w-100p"
+                        clearable
+                        :disabled="readonly"
+                        @visible-change="getInterfaceList"
+                        @change="saveLayoutConfigure('handleInterfaceMasterRefs')"
+                    >
+                        <erd-option
+                            v-for="item in interfaceList"
+                            :key="item.id"
+                            :label="item.formatAttrRawList.name"
+                            :value="item.masterRef"
+                        ></erd-option>
+                    </erd-ex-select>
+                </erd-form-item>
+            </erd-form>
+        </template>
+    </erd-contraction-panel>
+</div>

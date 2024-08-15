@@ -1,0 +1,39 @@
+<div
+    id="SignatureManage"
+    class="h_100p"
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        @action-click="actionClick"
+    >
+        <template
+            slot="column:default:operation:content"
+            slot-scope="{scope}"
+        >
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="{
+                    name: CONST.operationKey.signature.row,
+                    objectOid: scope.row.oid,
+                    className: CONST.className.signature,
+                }"
+                :action-data="scope.row"
+                @click="onCommand"
+                :default-btn-config="defaultBtnConfig"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+
+    <SignatureForm
+        ref="signatureForm"
+        @done="refreshTable"
+    ></SignatureForm>
+    <!-- 导入 -->
+    <import-dialog
+        ref="importModal"
+        :action="'/file/signature/v1/picture/upload'"
+        @submitSucess="importSucess"
+    ></import-dialog>
+</div>

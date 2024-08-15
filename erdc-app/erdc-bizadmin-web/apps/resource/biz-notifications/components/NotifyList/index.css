@@ -1,0 +1,33 @@
+.system-notify_list .operation {
+  justify-content: space-between;
+}
+.system-notify_list .main {
+  margin-top: 16px;
+}
+.system-notify_list .system-notify_status {
+  cursor: pointer;
+}
+
+.system-notify_import_mode {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+.system-notify_import_mode span {
+  flex-basis: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: right;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.system-notify_import_mode .system-notify_import_mode_select {
+  flex-grow: 1;
+}
+
+.system-notify_form_param {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  width: 100%;
+  min-height: 300px;
+}/*# sourceMappingURL=index.css.map */

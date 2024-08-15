@@ -1,0 +1,36 @@
+<div
+    id="bpm-portal-involved"
+    class="bpm-portal-involved h_100p"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        class="bg-white"
+        :view-table-config="viewTableConfig"
+        @handler-data="handlerData"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="actionClick"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        @close="bpmFlowchart.processDefinitionId = ''"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+            :processInstanceId="bpmFlowchart.processInstanceId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+</div>

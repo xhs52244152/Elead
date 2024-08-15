@@ -1,0 +1,592 @@
+<div class="compare-doc bg-white mtb-12 mlr-12 ptb-16 plr-16">
+    <div>
+        <span
+            class="back-btn"
+            @click="goBack"
+        >
+            <em class="el-icon-back"></em>
+            返回
+        </span>
+        <erd-button
+            class="ml-32"
+            type="primary"
+            @click="downHtml"
+            >下载HTML</erd-button
+        >
+    </div>
+
+    <div
+        style="margin: 12px 0"
+        class="compare-doc-title"
+    >
+        <span>基线版本:</span><span>{{ nameList.baseName }}</span><span style="margin-left: 12px">当前版本:</span
+        ><span>{{ nameList.newName }}</span>
+    </div>
+
+    <erd-scrollbar class="compare-doc-body pr-16">
+        <div>
+            <div class="doc-title">新增接口</div>
+            <div class="add-table pad-24">
+                <erd-table
+                    :border="true"
+                    :data="addTableData"
+                    :column="addColumn"
+                    show-overflow
+                    ref="addTable"
+                ></erd-table>
+            </div>
+        </div>
+        <div>
+            <div class="doc-title">删除接口</div>
+            <div class="del-table pad-24">
+                <erd-table
+                    :border="true"
+                    :data="delTableData"
+                    :column="addColumn"
+                    show-overflow
+                    ref="delTable"
+                ></erd-table>
+            </div>
+        </div>
+        <div>
+            <div class="doc-title">变更接口</div>
+            <div class="change-table">
+                <div
+                    class=""
+                    v-if="!isShowChange"
+                >
+                    <div class="no-data">没有数据</div>
+                </div>
+                <div v-else>
+                    <div
+                        v-if="compareTable"
+                        v-for="(changeItem,index) in changeArr.info"
+                        class="change rest-change-table"
+                        style="margin: 10px 0"
+                    >
+                        <div>
+                            <div class="change-table-old">
+                                <div class="change-url">
+                                    <span style="margin-left: 8px"
+                                        >请求方式: <span></span>{{ changeItem.methodType }}</span
+                                    >
+                                    <span style="margin-left: 8px">url: <span></span>{{ changeItem.showUrl }}</span>
+                                </div>
+                                <div>
+                                    <div style="margin-left: 24px">
+                                        <label class="label-font">名称:</label>
+                                        <span>{{changeArr.detail[index][0].old}}</span>
+                                    </div>
+                                    <div
+                                        style="margin-left: 24px"
+                                        v-if="changeArr.detail[index][3].old!==''"
+                                    >
+                                        <label class="label-font">接口描述:</label>
+                                        <span>{{changeArr.detail[index][3].old}}</span>
+                                    </div>
+                                    <div style="margin-left: 24px">
+                                        <label class="label-font">是否弃用:</label>
+                                        <span>{{changeArr.detail[index][4].old}}</span>
+                                    </div>
+                                    <div v-if="!_.isEmpty(changeArr.detail[index][1].old)">
+                                        <label
+                                            style="margin-left: 24px"
+                                            class="label-font"
+                                            >请求参数</label
+                                        >
+                                        <div
+                                            class="el-table rest-table-box el-table--fit el-table--striped el-table--border el-table--enable-row-hover el-table--enable-row-transition el-table--small"
+                                        >
+                                            <div class="el-table__header-wrapper">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__header"
+                                                >
+                                                    <thead class="has-gutter">
+                                                        <tr>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_name"
+                                                                    class="cell"
+                                                                >
+                                                                    参数名称
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_illustrate"
+                                                                    class="cell"
+                                                                >
+                                                                    参数说明
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_in"
+                                                                    class="cell"
+                                                                >
+                                                                    参数类型
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_is_necessary"
+                                                                    class="cell"
+                                                                >
+                                                                    是否必须
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_data_type"
+                                                                    class="cell"
+                                                                >
+                                                                    数据类型
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="el-table__body-wrapper is-scrolling-none">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__body"
+                                                >
+                                                    <tbody>
+                                                        <tr
+                                                            v-for="(val,index) in changeArr.detail[index][1].old"
+                                                            class="el-table__row"
+                                                        >
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.name}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.description}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.in}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.require}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.type}}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-if="!_.isEmpty(changeArr.detail[index][2].old)">
+                                        <label
+                                            style="margin-left: 24px"
+                                            class="label-font"
+                                            >响应参数</label
+                                        >
+                                        <div
+                                            class="el-table rest-table-box el-table--fit el-table--striped el-table--border el-table--enable-row-hover el-table--enable-row-transition el-table--small"
+                                        >
+                                            <div class="el-table__header-wrapper">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__header"
+                                                >
+                                                    <thead calss="has-gutter">
+                                                        <tr>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="33.3%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_name"
+                                                                    class="cell"
+                                                                >
+                                                                    参数名称
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="33.3%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_illustrate"
+                                                                    class="cell"
+                                                                >
+                                                                    参数说明
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="33.3%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_data_type"
+                                                                    class="cell"
+                                                                >
+                                                                    参数类型
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="el-table__body-wrapper is-scrolling-none">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__body"
+                                                >
+                                                    <tbody>
+                                                        <tr
+                                                            v-for="(val,index) in changeArr.detail[index][2].old"
+                                                            class="el-table__row"
+                                                        >
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="33.3%"
+                                                            >
+                                                                <div class="cell">{{val.name}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="33.3%"
+                                                            >
+                                                                <div class="cell">{{val.description}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="33.3%"
+                                                            >
+                                                                <div class="cell">{{val.type}}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="change-table-new">
+                                <div class="change-url">
+                                    <span style="margin-left: 8px"
+                                        >请求方式: <span></span>{{ changeItem.methodType }}</span
+                                    >
+                                    <span style="margin-left: 8px">url: <span></span>{{ changeItem.showUrl }}</span>
+                                </div>
+                                <div>
+                                    <div style="margin-left: 24px">
+                                        <label class="label-font">名称:</label>
+                                        <span>{{changeArr.detail[index][0].new}}</span>
+                                    </div>
+                                    <div
+                                        style="margin-left: 24px"
+                                        v-if="changeArr.detail[index][3].new!==''"
+                                    >
+                                        <label class="label-font">接口描述:</label>
+                                        <span>{{changeArr.detail[index][3].new}}</span>
+                                    </div>
+                                    <div style="margin-left: 24px">
+                                        <label class="label-font">是否弃用:</label>
+                                        <span>{{changeArr.detail[index][4].new}}</span>
+                                    </div>
+                                    <div v-if="!_.isEmpty(changeArr.detail[index][1].new)">
+                                        <label
+                                            style="margin-left: 24px"
+                                            class="label-font"
+                                            >请求参数</label
+                                        >
+                                        <div
+                                            class="el-table rest-table-box el-table--fit el-table--striped el-table--border el-table--enable-row-hover el-table--enable-row-transition el-table--small"
+                                        >
+                                            <div class="el-table__header-wrapper">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__header"
+                                                >
+                                                    <thead class="has-gutter">
+                                                        <tr>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_name"
+                                                                    class="cell"
+                                                                >
+                                                                    参数名称
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_illustrate"
+                                                                    class="cell"
+                                                                >
+                                                                    参数说明
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_in"
+                                                                    class="cell"
+                                                                >
+                                                                    参数类型
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_is_necessary"
+                                                                    class="cell"
+                                                                >
+                                                                    是否必须
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="20%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_data_type"
+                                                                    class="cell"
+                                                                >
+                                                                    数据类型
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="el-table__body-wrapper is-scrolling-none">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__body"
+                                                >
+                                                    <tbody>
+                                                        <tr
+                                                            v-for="(val,index) in changeArr.detail[index][1].new"
+                                                            class="el-table__row"
+                                                        >
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.name}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.description}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.in}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.require}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="20%"
+                                                            >
+                                                                <div class="cell">{{val.type}}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-if="!_.isEmpty(changeArr.detail[index][2].new)">
+                                        <label
+                                            style="margin-left: 24px"
+                                            class="label-font"
+                                            >响应参数</label
+                                        >
+                                        <div
+                                            class="el-table rest-table-box el-table--fit el-table--striped el-table--border el-table--enable-row-hover el-table--enable-row-transition el-table--small"
+                                        >
+                                            <div class="el-table__header-wrapper">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__header"
+                                                >
+                                                    <thead calss="has-gutter">
+                                                        <tr>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="33.3%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_name"
+                                                                    class="cell"
+                                                                >
+                                                                    参数名称
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="33.3%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_parameters_illustrate"
+                                                                    class="cell"
+                                                                >
+                                                                    参数说明
+                                                                </div>
+                                                            </th>
+                                                            <th
+                                                                class="is-leaf el-table__cell"
+                                                                width="33.3%"
+                                                            >
+                                                                <div
+                                                                    data-lang="interface_doc_data_type"
+                                                                    class="cell"
+                                                                >
+                                                                    参数类型
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="el-table__body-wrapper is-scrolling-none">
+                                                <table
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    border="0"
+                                                    class="el-table__body"
+                                                >
+                                                    <tbody>
+                                                        <tr
+                                                            v-for="(val,index) in changeArr.detail[index][2].new"
+                                                            class="el-table__row"
+                                                        >
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="33.3%"
+                                                            >
+                                                                <div class="cell">{{val.name}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="33.3%"
+                                                            >
+                                                                <div class="cell">{{val.description}}</div>
+                                                            </td>
+                                                            <td
+                                                                class="el-table__cell"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                width="33.3%"
+                                                            >
+                                                                <div class="cell">{{val.type}}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        v-html="diffHtml"
+                        class="rest-change-table mlb-12"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </erd-scrollbar>
+</div>

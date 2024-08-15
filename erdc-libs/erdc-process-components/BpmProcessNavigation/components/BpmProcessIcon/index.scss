@@ -1,0 +1,45 @@
+.bpm-process-icon-content {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 2px solid;
+    border-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .child-node-class {
+        border-radius: 50%;
+        border-width: 2px;
+        border-style: solid;
+        border-color: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &>i {
+            font-size: 12px;
+            width: 12px !important;
+            height: 12px !important;
+        }
+    }
+
+    .child-node-class-default {
+        margin-bottom: 4px;
+    }
+
+    .child-node-class-vertical {
+        margin-right: 8px;
+    }
+
+    .workflow-thumbnail-icon-default {
+        display: block;
+        background-color: #BEBEBE;
+        border-radius: 50%;
+        top: 0 !important;
+        transform: none !important;
+    }
+    .process-icon-step {
+        height: var(--navMenuItemHeight);
+    }
+}

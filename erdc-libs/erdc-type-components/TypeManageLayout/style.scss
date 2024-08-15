@@ -1,0 +1,15 @@
+#fam-type-layout {
+  .type-search {
+    display: flex;
+    justify-content: space-between;
+    .fam-type-tree__search {
+      width: 220px;
+      margin-top: 0;
+      vertical-align: middle;
+    }
+  }
+  .layout-table {
+    margin: 16px 0px;
+    margin-bottom: 0px;
+  }
+}

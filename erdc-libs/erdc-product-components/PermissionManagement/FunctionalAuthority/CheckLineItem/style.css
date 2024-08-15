@@ -1,0 +1,31 @@
+.check-line-item {
+  border-bottom: 1px solid rgb(233, 233, 233);
+  font-size: 14px;
+  font-size: var(--fontSize);
+  font-weight: 400;
+}
+.check-line-item .check-line-all {
+  width: 140px;
+  padding: 8px;
+  border-right: 1px solid rgb(233, 233, 233);
+  align-items: center;
+}
+.check-line-item .check-line-split {
+  padding: 8px 12px;
+  flex: 1;
+}
+.check-line-item .check-line-split label {
+  width: 158px;
+  height: 28px;
+}
+.check-line-item .check-line-split .el-checkbox__label {
+  height: 20px;
+}
+.check-line-item .flex {
+  display: flex;
+}
+.check-line-item.hasChecked {
+  background: #f8f8f8;
+}
+
+/*# sourceMappingURL=style.css.map */

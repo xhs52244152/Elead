@@ -1,0 +1,35 @@
+<div
+    id="process-definition-form"
+    class="process-definition-form"
+>
+    <erd-contraction-panel
+        :title="i18nMappingObj.basicInfo"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <FamAdvancedForm
+                ref="form"
+                :model.sync="formData"
+                :formId="formId"
+                className="processDefinition"
+                label-width="120px"
+                :query-layout-params="{objectOid: templateOid}"
+                :schemaMapper="schemaMapper"
+                :validators="validators"
+                @field:change="onFieldChange"
+            >
+                <template #type-select-value="scope">
+                    <TypeSelect
+                        v-model="typeSelectValue"
+                        class="w-100p grow-1"
+                        app-value-key="identifierNo"
+                        :show-application-select="false"
+                        :collapse-tags="false"
+                        :disabled="readonly"
+                        default-expand-all
+                    ></TypeSelect>
+                </template>
+            </FamAdvancedForm>
+        </template>
+    </erd-contraction-panel>
+</div>

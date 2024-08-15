@@ -1,0 +1,258 @@
+<div
+    id="message-configure"
+    class="message-configure"
+>
+    <erd-contraction-panel
+        :title="i18n.messageConfigure"
+        :unfold.sync="expanded"
+    >
+        <template #header-right>
+            <erd-button
+                v-if="!readonly && expanded"
+                size="small"
+                @click="addRow"
+            >{{i18n.add}}</erd-button>
+        </template>
+
+        <template #content>
+            <FamErdTable
+                :data="tableData"
+                :column="columns"
+                :column-config="{ resizable: true }"
+                :is-embed-table="true"
+                auto-resize
+                border
+            >
+                <template #column:default:notifyType="scope">
+                    <span>{{echoNotifyTypeName(scope.data.row)}}</span>
+                </template>
+                <template #column:default:sendType="scope">
+                    <span>{{echoSendTypeName(scope.data.row)}}</span>
+                </template>
+                <template #column:default:notifyTemplate="scope">
+                    <span>{{echoNotifyName(scope.data.row)}}</span>
+                </template>
+                <template #column:default:notifyPersonnel="scope">
+                    <span>{{echoNotifyPersonnelName(scope.data.row)}}</span>
+                </template>
+                <template #column:default:operation="scope">
+                    <erd-button
+                        type="text"
+                        @click="editRow(scope.data.row, scope.data.rowIndex)"
+                    >{{i18n.edit}}</erd-button>
+                    <erd-button
+                        type="text"
+                        @click="deleteRow(scope.data.row, scope.data.rowIndex)"
+                    >{{i18n.delete}}</erd-button>
+                </template>
+            </FamErdTable>
+
+            <erd-ex-dialog
+                destroy-on-close
+                custom-class="message-configure-dialog"
+                :title="i18n.messageConfigure"
+                :visible.sync="dialogVisible"
+                :modal-append-to-body="false"
+            >
+                <erd-form
+                    :model="formData"
+                    label-position="right"
+                    label-width="140px"
+                >
+                    <erd-form-item :label="i18n.notifyType">
+                        <erd-select
+                            v-model="formData.notifyType"
+                            clearable
+                            filterable
+                            :disabled="readonly"
+                        >
+                            <erd-option
+                                v-for="item in notifyTypeList"
+                                :key="item.code"
+                                :label="item.displayName"
+                                :value="item.code"
+                            ></erd-option>
+                        </erd-select>
+                    </erd-form-item>
+
+                    <erd-form-item v-if="isNotifyTemplate" :label="i18n.expectedCycle">
+                        <erd-select
+                            v-model="formData.fixTime"
+                            allow-create
+                            filterable
+                            class="select-width"
+                            :disabled="readonly"
+                        >
+                            <erd-option
+                                v-for="item in fixTimeList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            ></erd-option>
+                        </erd-select>
+                        <div class="el-input-group__append">{{i18n.day}}</div>
+                        <span class="ml-8 font-12 black-45">{{i18n.expectedCycleTips}}</span>
+                    </erd-form-item>
+
+                    <erd-form-item v-if="isNotifyTemplate" :label="i18n.sendTime">
+                        <erd-input
+                            v-model="formData.beforeTime"
+                            type="number"
+                            class="input-width"
+                            :disabled="readonly"
+                        >
+                            <template slot="append">{{i18n.day}}</template>
+                        </erd-input>
+                        <erd-input
+                            v-model="formData.beforeSendTime"
+                            type="number"
+                            class="input-width"
+                            :disabled="readonly"
+                        >
+                            <template slot="append">{{i18n.hour}}</template>
+                        </erd-input>
+                        <span class="ml-4 mr-4 black-85">{{i18n.before}}</span>
+                        <erd-select
+                            v-model="formData.msgNotifyRef"
+                            v-select-more="selectMore"
+                            clearable
+                            filterable
+                            remote
+                            :remote-method="msgNotifySelectSearch"
+                            :disabled="readonly"
+                            @visible-change="msgNotifySelectVisible"
+                        >
+                            <erd-option
+                                v-for="item in msgNotifyRefList"
+                                :key="item.code"
+                                :label="item.title"
+                                :value="item.code"
+                            ></erd-option>
+                        </erd-select>
+                    </erd-form-item>
+
+                    <erd-form-item v-if="isNotifyTemplate" :label="i18n.sendTime">
+                        <erd-input
+                            v-model="formData.afterTime"
+                            type="number"
+                            class="input-width"
+                            :disabled="readonly"
+                        >
+                            <template slot="append">{{i18n.day}}</template>
+                        </erd-input>
+                        <erd-input
+                            v-model="formData.afterSendTime"
+                            type="number"
+                            class="input-width"
+                            :disabled="readonly"
+                        >
+                            <template slot="append">{{i18n.hour}}</template>
+                        </erd-input>
+                        <span class="ml-4 mr-4 black-85">{{i18n.after}}</span>
+                        <erd-select
+                            v-model="formData.msgNotifyAfterRef"
+                            v-select-more="selectMore"
+                            clearable
+                            filterable
+                            remote
+                            :remote-method="msgNotifySelectSearch"
+                            :disabled="readonly"
+                            @visible-change="msgNotifySelectVisible"
+                        >
+                            <erd-option
+                                v-for="item in msgNotifyAfterRefList"
+                                :key="item.code"
+                                :label="item.title"
+                                :value="item.code"
+                            ></erd-option>
+                        </erd-select>
+                    </erd-form-item>
+
+                    <erd-form-item v-if="!isNotifyTemplate" :label="i18n.notifyTemplate">
+                        <erd-select
+                            v-model="formData.msgNotifyRef"
+                            v-select-more="selectMore"
+                            clearable
+                            filterable
+                            remote
+                            :remote-method="msgNotifySelectSearch"
+                            :disabled="readonly"
+                            @visible-change="msgNotifySelectVisible"
+                        >
+                            <erd-option
+                                v-for="item in msgNotifyRefList"
+                                :key="item.code"
+                                :label="item.title"
+                                :value="item.code"
+                            ></erd-option>
+                        </erd-select>
+                    </erd-form-item>
+
+                    <erd-form-item :label="i18n.sendMethod">
+                        <custom-select
+                            v-model="formData.sendType"
+                            v-bind="sendTypeSelectProps"
+                            :style="{ 'width': '192px' }"
+                        ></custom-select>
+                    </erd-form-item>
+
+                    <erd-form-item :label="i18n.notifyPersonnel">
+                        <erd-checkbox-group
+                            v-model="formData.memberConfig"
+                            :disabled="readonly"
+                        >
+                            <erd-checkbox
+                                v-for="item in memberConfigList"
+                                :key="item.label"
+                                :label="item.label"
+                            >{{item.displayName}}</erd-checkbox>
+                        </erd-checkbox-group>
+                    </erd-form-item>
+
+                    <erd-form-item>
+                        <erd-checkbox
+                            v-model="otherMemberConfigList.receiverUserOid"
+                        >{{i18n.notifySelectedUsers}}</erd-checkbox>
+                        <fam-participant-select
+                            v-show="otherMemberConfigList.receiverUserOid"
+                            v-model="formData.receiverUserOid"
+                            isFetchValue
+                            multiple
+                            :default-value="formData.receiverUserInfo"
+                            :placeholder="i18n.notifySelectedUsers"
+                            :showType="['USER']"
+                            :query-mode="['FUZZYSEARCH', 'ORG', 'GROUP']"
+                            :isgetdisable="true"
+                            :collapse-tags="true"
+                            :query-scope="'fullTenant'"
+                            @change="changeUser"
+                        ></fam-participant-select>
+                    </erd-form-item>
+
+                    <erd-form-item>
+                        <erd-checkbox
+                            v-model="otherMemberConfigList.receiverRoleOid"
+                        >{{i18n.notifySelectedRoles}}</erd-checkbox>
+                        <fam-participant-select
+                            v-show="otherMemberConfigList.receiverRoleOid"
+                            v-model="formData.receiverRoleOid"
+                            isFetchValue
+                            multiple
+                            :default-value="formData.receiverRoleInfo"
+                            :placeholder="i18n.notifySelectedRoles"
+                            :showType="['ROLE']"
+                            :isgetdisable="true"
+                            :collapse-tags="true"
+                            @change="changeRole"
+                        ></fam-participant-select>
+                    </erd-form-item>
+                </erd-form>
+
+                <span slot="footer" class="dialog-footer">
+                    <erd-button type="primary" @click="submit">{{i18n.confirm}}</erd-button>
+                    <erd-button @click="dialogVisible = false">{{i18n.cancel}}</erd-button>
+                </span>
+            </erd-ex-dialog>
+        </template>
+    </erd-contraction-panel>
+</div>

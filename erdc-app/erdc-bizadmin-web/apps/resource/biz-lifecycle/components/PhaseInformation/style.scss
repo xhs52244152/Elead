@@ -1,0 +1,52 @@
+#PhaseInformation {
+    .state {
+        color: #000;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+    }
+
+    .title {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .cell-center {
+        text-align: center !important;
+    }
+    .header-center {
+        .vxe-cell {
+            justify-content: center;
+        }
+    }
+
+    .addUser {
+        padding-bottom: 12px;
+    }
+
+    .process-content {
+        flex-wrap: wrap;
+        align-items: center;
+        font-size: 14px;
+        font-size: var(--fontSize);
+        color: var(--colorTextNormal);
+
+        .process-title {
+            width: 90px;
+            text-align: right;
+            color: rgba(0, 0, 0, 0.45);
+        }
+
+        .process-name {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            flex: 1;
+            padding-left: 8px;
+
+            .align-center {
+                align-items: center;
+            }
+        }
+    }
+}

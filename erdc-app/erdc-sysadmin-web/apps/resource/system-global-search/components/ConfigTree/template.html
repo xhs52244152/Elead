@@ -1,0 +1,89 @@
+<div class="tree-container h-100p flex flex-column">
+    <div class="tree-title flex align-items-center justify-between font-14 mb-12 text-left">
+        <div class="flex align-items-center">
+            <span class="font-bold">{{ title }}</span>
+            <span class="ml-8 mr-8 color-disabled">({{checkedNodes.length}})</span>
+            <erd-tooltip
+                v-if="treeConfig.tips"
+                placement="right"
+            >
+                <span slot="content"> {{ treeConfig.tips }} </span>
+                <i class="erd-iconfont erd-icon-help font-16 color-primary"></i>
+            </erd-tooltip>
+        </div>
+        <span
+            v-if="treeConfig.showDrag"
+            class="color-placeholder font-12"
+            style="align-self: flex-end"
+        >
+            {{i18n.dragToAdjustOrder}}
+        </span>
+    </div>
+    <div class="tree-main flex-1 flex flex-column p-12 bordered">
+        <div class="main-search mb-12">
+            <erd-input
+                v-model="searchLeftKey"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18n.pleaseEnterTips"
+                clearable
+                size="large"
+            >
+                <template
+                    v-if="$scopedSlots.applicationSelect"
+                    slot="prepend"
+                >
+                    <slot name="applicationSelect"></slot>
+                </template>
+            </erd-input>
+        </div>
+        <div class="main-content flex-1 overflow-hidden">
+            <erd-scrollbar
+                :class="treeType"
+                class="h-100p"
+            >
+                <erd-ex-tree
+                    ref="tree"
+                    :key="treeType"
+                    :data="treeList"
+                    node-key="oid"
+                    :props="treeProps"
+                    :highlight-current="true"
+                    :expand-on-click-node="false"
+                    :default-expand-all="true"
+                    :show-checkbox="treeConfig.showCheckbox"
+                    :allow-drop="allowDrop"
+                    :filter-node-method="filterNode"
+                    icon-class="el-icon-arrow-right"
+                    draggable
+                    @check="onNodeCheck"
+                    @node-drop="onNodeDrop"
+                    @node-click="onNodeClick"
+                >
+                    <template slot-scope="{ node, data }">
+                        <div
+                            class="tree-node-container flex-1 flex align-items-center justify-between font-14 pr-8"
+                            :class="{'color-primary': isCheckedModel && currentModel.oid === data.oid}"
+                        >
+                            <div class="flex align-items-baseline">
+                                <i
+                                    v-if="treeConfig.showDrag"
+                                    class="invisible erd-iconfont erd-icon-double-drag color-placeholder"
+                                ></i>
+                                <span>{{ node.label }}</span>
+                            </div>
+                            <div>
+                                <i
+                                    v-if="treeConfig.showDelete"
+                                    :data-val="data"
+                                    class="el-icon-close font-normal color-primary"
+                                    @click="onNodeDelete(node, data)"
+                                >
+                                </i>
+                            </div>
+                        </div>
+                    </template>
+                </erd-ex-tree>
+            </erd-scrollbar>
+        </div>
+    </div>
+</div>

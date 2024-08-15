@@ -1,0 +1,512 @@
+#ComponentWapper-erdTable {
+    .pointer {
+        cursor: pointer;
+    }
+
+    // 编辑表格内输入框高度
+    .el-input,
+    .el-input__inner {
+        height: var(--inputHeight) !important;
+        line-height: var(--inputHeight) !important;
+    }
+
+    .el-input__icon {
+        line-height: var(--inputHeight);
+    }
+
+    .vxe-table--body-wrapper,
+    .vxe-table--footer-wrapper {
+        /*滚动条样式*/
+        &::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+            background: rgba(144, 147, 153, 0.3);
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(144, 147, 153, 0.5);
+        }
+
+        // &::-webkit-scrollbar-track {
+        //     -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, .3);
+        //     border-radius: 0;
+        //     background: rgba(144, 147, 153, .3);
+        // }
+    }
+
+    .not-max-height {
+        .vxe-table--body-wrapper {
+            max-height: none !important;
+        }
+    }
+
+    // 禁用的tr -- 应用于拖拽等展示
+    .vxe-table--body-wrapper .disabled-drag td {
+        background: #ccc;
+        cursor: no-drop;
+    }
+
+    // 边线消失问题
+    .vxe-table--render-default.border--full .vxe-table--border-line {
+        z-index: 100;
+        border-right: 1px solid #e8eaec;
+    }
+
+    // 表格编辑状态, 字数统计对齐问题
+    .vxe-table--render-default .vxe-cell .el-input__count-inner {
+        white-space: nowrap;
+    }
+
+    // 复选框大小样式冲突问题
+    .vxe-table--render-default .vxe-cell--checkbox .vxe-checkbox--icon {
+        font-size: 14px;
+        font-size: var(--fontSize);
+        background: #fff;
+    }
+
+    .vxe-body--row.fam-erd-table__row--deleted {
+        .vxe-body--column {
+            color: var(--colorDisabled);
+        }
+        .vxe-body--column,
+        a,
+        button:not(:last-of-type) {
+            text-decoration: line-through;
+            text-decoration-color: currentColor;
+        }
+    }
+
+    /*
+   * 自定义校验样式
+   */
+    tbody tr {
+        &.is-current-row,
+        &.is-checked {
+            background-color: var(--colorPrimaryLightest);
+        }
+        &.is-parent {
+            .vxe-cell {
+                font-weight: 700;
+            }
+            .vxe-tree-cell {
+                & > span,
+                .el-button--text {
+                    font-weight: 700;
+                }
+            }
+            .erd-iconfont {
+                font-weight: normal;
+            }
+        }
+        &.row--level-0.is-leaf {
+            .vxe-tree-cell:first-of-type {
+                padding: 0 !important;
+            }
+        }
+        td {
+            position: relative;
+            height: var(--famTableRowHeight);
+
+            .vxe-cell--tree-node {
+                .erd-icon-arrow-down {
+                    color: var(--colorPrimary);
+                }
+            }
+            &.erd_table-editCell {
+                .vxe-cell--tree-node {
+                    padding-left: 0 !important;
+
+                    .vxe-tree-cell {
+                        padding-left: 0;
+                    }
+
+                    .vxe-tree--btn-wrapper {
+                        display: none;
+                    }
+                }
+            }
+
+            .erd_table-tooltip {
+                position: absolute;
+                top: 0px;
+                right: 4px;
+            }
+        }
+
+        .erd_table-editIcon::after {
+            content: '';
+            border-top: 4px solid #00a854;
+            border-bottom: 4px solid transparent;
+            border-right: 4px solid #00a854;
+            border-left: 4px solid transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .erd_table-valid-error {
+            &.erd_table-editIcon {
+                &::after {
+                    border-top: 4px solid #f04134;
+                    border-right: 4px solid #f04134;
+                }
+            }
+
+            .el-input__inner {
+                border-color: #f04134 !important;
+                border: 1px solid #f04134;
+            }
+
+            .vxe-input--inner {
+                border-color: #f04134 !important;
+                border: 1px solid #f04134;
+            }
+
+            .intermation {
+                border-color: #f04134 !important;
+                // color: #f04134 !important;
+            }
+        }
+        .custom-select {
+            overflow: hidden;
+            .el-input,
+            .el-input__inner {
+                height: var(--famWidthLabelHeight) !important;
+                line-height: var(--famWidthLabelHeight) !important;
+            }
+        }
+    }
+    .fam-participant-select .component-show-body .wapperInput {
+        height: var(--tableItemHeight);
+        border: none !important;
+        .el-tag--mini {
+            height: var(--tableItemItemHeight);
+        }
+    }
+
+    .vxe-table--render-default {
+        &.size--mini {
+            font-size: 14px;
+            font-size: var(--fontSize);
+        }
+        .vxe-body--row {
+            &.row--new {
+                > .vxe-body--column:before {
+                    border-width: 0;
+                }
+            }
+            &:not(.row--new) {
+                .empty-col::before {
+                    content: '--';
+                    color: var(--colorDisabled);
+                    position: absolute;
+                    left: 8px;
+                }
+            }
+        }
+        .vxe-cell {
+            padding: 0 8px;
+        }
+        .vxe-body--column {
+            color: rgba(#000000, 0.85);
+        }
+        .vxe-body--column.col--valid-error .vxe-cell--valid .vxe-cell--valid-msg {
+            display: none;
+        }
+    }
+
+    .vxe-input--inner {
+        appearance: none;
+        background-color: #fff;
+        border-radius: 0px;
+        border: 1px solid #dcdfe6;
+        box-sizing: border-box;
+        color: #606266;
+        display: inline-block;
+        font-size: inherit;
+        height: var(--inputHeight);
+        line-height: var(--inputHeight);
+        outline: 0;
+        padding: 0 15px;
+        transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        width: 100%;
+    }
+
+    .vxe-input {
+        height: auto;
+    }
+    .erd_table-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--colorTextPlaceholder);
+        font-weight: 400;
+        img {
+            display: block;
+            width: 120px;
+            height: 100px;
+            margin-bottom: 4px;
+        }
+        span {
+            height: 36px;
+            line-height: 36px;
+        }
+    }
+    .vxe-header--column .vxe-resizable.is--line:before {
+        background-color: #bebebe;
+    }
+
+    &.embed-transfer-table {
+        height: 100%;
+        .vxe-table--render-default {
+            .vxe-body--column {
+                .el-icon-close {
+                    color: var(--colorPrimary);
+                }
+            }
+            .vxe-cell--title {
+                font-size: 12px;
+            }
+        }
+    }
+
+    &.no-border-table {
+        .vxe-table--render-default {
+            .vxe-table--header-wrapper {
+                background: white;
+            }
+
+            .vxe-header--column {
+                background: white;
+            }
+
+            .vxe-body--column {
+                background: white;
+            }
+
+            .vxe-table--border-line {
+                border: none;
+            }
+
+            .vxe-cell--title {
+                color: var(--colorTextExplain);
+                font-weight: normal;
+                font-family: var(--fontFamily);
+            }
+        }
+
+        .is--empty {
+            border-right: none;
+        }
+    }
+
+    &.embed-table {
+        margin: 0 16px 12px;
+        .vxe-table--render-default {
+            .vxe-header--column {
+                background: #fbfbfb;
+            }
+
+            .vxe-body--column {
+                background: #fbfbfb;
+            }
+
+            .vxe-table--body-wrapper {
+                background: #fbfbfb;
+            }
+        }
+        .is--empty {
+            margin-bottom: -12px;
+        }
+    }
+
+    .vxe-body--expanded-column.col--ellipsis > .vxe-body--expanded-cell {
+        background: #fbfbfb;
+    }
+
+    .col--expand > .vxe-cell {
+        display: flex;
+        align-items: center;
+
+        .vxe-table--expand-label {
+            flex-grow: 1;
+        }
+    }
+}
+.foldTable {
+    .vxe-table--render-default .vxe-cell--title {
+        color: var(--colorTextExplain) !important;
+    }
+}
+
+.erd_table-showTooltip {
+    display: block;
+
+    &.is-dark {
+        background-color: #ff7875 !important;
+    }
+
+    .popper__arrow {
+        border-bottom-color: transparent !important;
+        border-top-color: #ff7875 !important;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+
+        &::after {
+            border-bottom-color: transparent !important;
+            border-top-color: #ff7875 !important;
+            border-left-color: transparent !important;
+            border-right-color: transparent !important;
+        }
+    }
+}
+
+// 重新设置tooltip的层级 解决被遮盖的问题
+.vxe-table--tooltip-wrapper {
+    z-index: 9999 !important;
+}
+
+// 筛选器
+.filters-popClass-custom {
+    // position: fixed !important;
+    ul {
+        margin: 0;
+    }
+
+    max-width: 224px !important;
+    min-height: 197px;
+    background: #ffffff;
+    border-radius: 4px;
+    position: relative;
+    padding: 12px;
+    // 小箭头隐藏
+    overflow: hidden;
+
+    .filterBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 12px 0;
+    }
+
+    // 输入框筛选
+    .filterInputBox {
+        margin-top: 20px;
+
+        .el-icon-search {
+            color: var(--tableSortButtonColor);
+        }
+    }
+
+    // 复选框筛选
+    .filterCheckbox {
+        .el-checkbox-group {
+            max-height: 90px;
+            overflow-y: auto;
+        }
+
+        input[type='checkbox'] {
+            width: 0;
+        }
+
+        .el-checkbox {
+            display: block;
+
+            .el-checkbox__input {
+                line-height: 0;
+                vertical-align: top;
+                margin-top: -1px;
+            }
+        }
+    }
+
+    // 单选筛选器
+    .filterSelect {
+        ul {
+            max-height: 120px;
+            overflow-y: auto;
+
+            li {
+                line-height: 32px;
+                transition: all 0.2s ease 0s;
+                padding-left: 2px;
+                cursor: pointer;
+
+                &:hover,
+                &.active {
+                    background: #ebf1ff;
+                    color: #000;
+                }
+            }
+        }
+    }
+
+    // 选择器+输入框
+    .filterMergeSelect {
+        .el-input {
+            margin-top: 12px;
+        }
+    }
+
+    .dynamicFilter {
+        .mr12 {
+            margin-top: 12px;
+        }
+    }
+
+    // 占位
+    .paddingClearItem {
+        width: 100%;
+        height: 55px;
+    }
+
+    // 底部统一清除按钮
+    .clearItem {
+        position: absolute;
+        bottom: 0;
+        left: 12px;
+        right: 12px;
+        margin: 0 auto;
+        height: 68px;
+        // border-top: 1px solid #D9D9D9;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        &::before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 224px;
+            height: 1px;
+            background: #d9d9d9;
+            left: -12px;
+            right: 0;
+        }
+
+        .clearItem-ul {
+            display: flex;
+            flex-direction: column;
+
+            & > span {
+                color: var(--colorPrimary);
+                font-size: 12px;
+                margin-bottom: 8px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                cursor: pointer;
+
+                &:last-child {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

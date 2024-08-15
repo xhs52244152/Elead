@@ -1,0 +1,21 @@
+<div id="VariableTran">
+    <div class="variable-help">
+        <div>{{i18n.scene}}</div>
+        <div class="tip">{{i18n.sceneTips}}</div>
+        <div class="help-top">{{i18n.simpleMapping}}</div>
+        <erd-input
+            v-model="mapValue"
+            type="textarea"
+            rows="2"
+            disabled="true"
+        ></erd-input>
+
+        <div class="help-top">{{i18n.scripting}}</div>
+        <erd-input
+            v-model="javascriptValue"
+            type="textarea"
+            rows="6"
+            disabled="true"
+        ></erd-input>
+    </div>
+</div>

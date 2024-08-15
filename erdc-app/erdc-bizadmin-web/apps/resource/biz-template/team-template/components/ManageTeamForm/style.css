@@ -1,0 +1,233 @@
+#ManageTeamForm {
+  position: relative;
+  height: 100%;
+}
+#ManageTeamForm .ManageTeamForm-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
+  height: 60px;
+  padding: 16px;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title {
+  font-size: var(--fontSizeLarge);
+  vertical-align: middle;
+  text-align: center;
+  display: flex;
+  font-weight: 700;
+  color: var(--colorTextNormal);
+  min-width: 0;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title .header-title {
+  font-size: 24px;
+  margin-right: 8px;
+  line-height: 1em;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title .callback {
+  padding-right: 30px;
+  position: relative;
+  height: 22px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: var(--colorTextExplain);
+  line-height: 22px;
+  font-weight: 400;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title .callback i {
+  font-size: 16px;
+  line-height: 16px;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title .callback::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 15px;
+  height: 14px;
+  width: 2px;
+  background-color: #EBEBEB;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title .callback:hover {
+  color: #567FFD;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .title .title-content {
+  width: 100%;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ManageTeamForm .ManageTeamForm-container .ManageTeamForm-header .operation {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  flex-shrink: 0;
+}
+#ManageTeamForm .ManageTeamForm-container .phase {
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .add-phase {
+  margin-right: 12px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage div + div {
+  margin-left: 12px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .state-line {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: rgb(217, 217, 217);
+  height: 2px;
+  margin: auto;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .left {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgb(217, 217, 217);
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .left .connector {
+  position: absolute;
+  right: -15px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgb(217, 217, 217);
+  width: 10px;
+  height: 2px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .right {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgb(217, 217, 217);
+  background-color: #959AA9;
+  border-radius: 50%;
+  position: relative;
+  margin-left: 0;
+  flex-shrink: 0;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .content {
+  width: 100%;
+  padding-right: 12px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .content .content-btn {
+  position: relative;
+  white-space: nowrap;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .detailsStage .content .content-btn .connector {
+  position: absolute;
+  right: -10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgb(217, 217, 217);
+  width: 10px;
+  height: 2px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .tag {
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  padding: 0 12px;
+  height: 32px;
+  color: #fff;
+  border-radius: 2px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .tag .tag-close {
+  display: none;
+  position: absolute;
+  top: -4px;
+  right: -1px;
+  font-size: 16px;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .tag .drag-icon {
+  position: absolute;
+  top: 5px;
+  left: -2px;
+  font-size: 16px;
+  display: none;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .tag:hover {
+  background-color: #7395FF;
+  border-color: #7395FF;
+  cursor: pointer;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .tag:hover .tag-close {
+  display: block;
+  cursor: pointer;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .tag:hover .drag-icon {
+  display: block;
+  cursor: move;
+}
+#ManageTeamForm .ManageTeamForm-container .phase .active-tag {
+  border: 1px solid #567FFD;
+  background-color: #567FFD;
+}
+#ManageTeamForm .ManageTeamForm-container .main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#ManageTeamForm .ManageTeamForm-container .main .el-tabs {
+  height: 40px;
+}
+#ManageTeamForm .ManageTeamForm-container .main .el-tabs .el-tabs__content .el-tab-pane {
+  padding: 0;
+}
+#ManageTeamForm .ManageTeamForm-container .main .el-scrollbar {
+  flex-grow: 1;
+}
+#ManageTeamForm .ManageTeamForm-container .main .el-scrollbar .el-scrollbar__wrap {
+  height: 100%;
+}
+#ManageTeamForm .ManageTeamForm-container .main .el-scrollbar .el-scrollbar__wrap > .el-scrollbar__view {
+  height: 100%;
+}
+#ManageTeamForm .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 16px 0;
+  width: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0px -2px 16px 0px rgba(0, 0, 0, 0.15);
+}
+
+/*# sourceMappingURL=style.css.map */

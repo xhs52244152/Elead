@@ -1,0 +1,8 @@
+{
+  "name": "@erdc-layout/ultra",
+  "version": "3.1.0",
+  "description": "侧边布局",
+  "erdcData": {},
+  "dependencies": {
+  }
+}

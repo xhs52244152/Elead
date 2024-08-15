@@ -1,0 +1,48 @@
+<div class="doc-type-file-type flex flex-column h-100p ptrl-xl">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        class="grow-1"
+        is-adaptive-height
+    >
+        <template #left:toolbar:first>
+            <FamPageTitle
+                :title="i18nMappingObj.fileClassification"
+                show-back-button
+                @back="goBack"
+            >
+            </FamPageTitle>
+        </template>
+
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="handleEdit(scope.row)"
+            >
+                {{ i18nMappingObj.edit }}
+            </erd-button>
+            <erd-button
+                icon="fa fa-long-arrow-up"
+                type="text"
+                v-if="scope.row.sortNo > 1"
+                @click="handleSort(scope.row, 0)"
+            >
+                {{ i18nMappingObj.moveUp }}
+            </erd-button>
+            <erd-button
+                icon="fa fa-long-arrow-down"
+                type="text"
+                v-if="scope.row.sortNo !== total"
+                @click="handleSort(scope.row, 1)"
+            >
+                {{ i18nMappingObj.moveDown }}
+            </erd-button>
+        </template>
+    </fam-advanced-table>
+
+    <file-type-edit
+        ref="editRef"
+        :fileType="fileType"
+        @saveSuccess="handleSaveSuccess"
+    ></file-type-edit>
+</div>

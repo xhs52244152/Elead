@@ -1,0 +1,66 @@
+<div id="SelectContainer">
+    <div class="flex align-items-center container_bottom w-100p">
+        <div class="category h-100p">{{ i18n.category }}</div>
+        <erd-tabs v-model="innerDefaultMode" class="overflow-hidden">
+            <erd-tab-pane
+                v-for="mode in innerQueryModel"
+                :key="mode.name"
+                :name="mode.name"
+                :label="mode.titleDisplayName"
+            >
+            </erd-tab-pane>
+            <erd-tab-pane
+                name="SELECTED"
+                :label="i18n.selected"
+            >
+            </erd-tab-pane>
+        </erd-tabs>
+    </div>
+    <template>
+        <component
+            v-if="innerMode.name === innerDefaultMode"
+            class="h-320"
+            :ref="innerMode.name"
+            v-model="innerValue"
+            v-bind="{...innerMode, ...$attrs}"
+            :is="innerMode.component"
+            :default-value="defaultValue"
+            :type="type"
+            :query-params="queryParams"
+            :class-name="className || innerMode.className"
+            :default-mode="innerDefaultMode"
+            :query-scope="queryScope"
+            :placeholder="innerMode.placeholder"
+            :title="innerMode.title"
+            :select-title="innerMode.selectTitle"
+            :app-name="appName"
+            :select-data.sync="innerSelectData"
+            :three-member-env="threeMemberEnv"
+            :filter-security-label="filterSecurityLabel"
+            :security-label="securityLabel"
+            @tree-data="getTreeData"
+            @change="onChange"
+            @tree-select-data="treeSelectData"
+            @hook:mounted="handleTabComponentMounted"
+        ></component>
+    </template>
+    <template>
+        <CompleteSelect
+            v-if="innerDefaultMode === 'SELECTED'"
+            class="h-320"
+            v-model="innerValue"
+            ref="SELECTED"
+            v-bind="$attrs"
+            :type="type"
+            :default-value="defaultValue"
+            :query-scope="queryScope"
+            :default-mode="innerDefaultMode"
+            :select-data.sync="innerSelectData"
+            :app-name="appName"
+            :tree-data="treeData"
+            :tree-select-data="leftTreeSelectData"
+            @change="onChange"
+            @hook:mounted="handleTabComponentMounted"
+        ></CompleteSelect>
+    </template>
+</div>

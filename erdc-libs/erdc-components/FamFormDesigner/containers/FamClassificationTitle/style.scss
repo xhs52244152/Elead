@@ -1,0 +1,30 @@
+#FamClassificationTitle {
+    .title {
+        cursor: pointer;
+    }
+
+    .faleIn {
+        display: block;
+        transition: display 0.5s 0.5s;
+    }
+
+    .panelTitle {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 500;
+        opacity: 0.85;
+        color: #000000;
+        justify-content: space-between;
+    }
+
+    .classification {
+        width: 100%;
+        min-height: 100px;
+        border: 1px solid #eee;
+    }
+}
+.classification-content {
+    margin-top: 8px;
+}

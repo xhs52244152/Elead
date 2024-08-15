@@ -1,0 +1,130 @@
+<div
+    class="fam-switch-app-body"
+>
+    <div class="fam-switch-app_body_search p-lg">
+        <erd-input
+            v-model.trim="searchKey"
+            :placeholder="i18n.searchTips"
+            autofocs
+            clearable
+            @change="isDragging = false"
+            suffix-icon="erd-iconfont erd-icon-search"
+        ></erd-input>
+    </div>
+    <erd-scrollbar :wrap-style="{maxHeight: maxHeight}">
+        <template v-if="myAppList && myAppList.value.length">
+            <i
+                v-if="!isDragging && !searchKey"
+                @click="isDragging = true"
+                class="fam-switch-app-body-sort-edit-icon el-icon-edit-outline"
+            ></i>
+            <i
+                v-else-if="!searchKey"
+                @click="batchSaveCollectAppSort()"
+                class="fam-switch-app-body-sort-edit-icon el-icon-check"
+            ></i>
+        </template>
+
+        <template v-if="isEmpty">
+            <fam-empty></fam-empty>
+        </template>
+        <template v-else>
+            <div>
+                <template v-for="(ele, index) in filterGroupApps">
+                    <div class="fam-switch-app_tag mlr-2xl">
+                        <h4>{{ele.key}}</h4>
+
+                        <template v-if="ele.key === i18n.myApp">
+                            <draggable
+                                v-model="ele.value"
+                                chosenClass="chosen"
+                                :disabled="!isDragging && !searchKey"
+                                handle=".mover"
+                                animation="300"
+                            >
+                                <transition-group
+                                    tag="div"
+                                    class="fam-switch-app_tag_content flex flex-wrap justify-start"
+                                >
+                                    <div
+                                        v-for="item in ele.value"
+                                        :key="item.name"
+                                        class="fam-switch-app_popover_item truncate mover"
+                                        :class="{'isDragging' : isDragging, 'popover-item': ele.value.length > 6}"
+                                        @click="switchApp(item)"
+                                    >
+                                        <div
+                                            class="flex justify-center"
+                                            v-if="item.icon"
+                                        >
+                                            <erd-icon
+                                                v-if="item.icon.indexOf('erd-iconfont') !== -1"
+                                                :icon="item.icon"
+                                            ></erd-icon>
+                                            <img
+                                                v-else
+                                                @error="onImgLoadError(item)"
+                                                :src="item.icon"
+                                                class="text-xl"
+                                            />
+                                        </div>
+                                        <div class="flex justify-center mt-8">
+                                            <div class="truncate">{{item.name}}</div>
+                                        </div>
+                                        <i
+                                            v-if="isDragging && !searchKey"
+                                            @click.stop="removeCollectApp(item.oid)"
+                                            class="el-icon-close cursor-pointer"
+                                        ></i>
+                                        <erd-icon
+                                            v-if="isDragging && !searchKey"
+                                            icon="double-drag"
+                                        ></erd-icon>
+                                    </div>
+                                </transition-group>
+                            </draggable>
+                        </template>
+                        <template v-else>
+                            <div class="fam-switch-app_tag_content flex flex-wrap justify-between">
+                                <template v-for="item in ele.value">
+                                    <div
+                                        v-if="item"
+                                        :key="item.name"
+                                        class="fam-switch-app_popover_item_rectangle truncate align-items-center"
+                                        :class="{'isDragging' : isDragging}"
+                                    >
+                                        <template v-if="item.icon">
+                                            <erd-icon
+                                                v-if="item.icon.indexOf('erd-iconfont') !== -1"
+                                                :icon="item.icon"
+                                            ></erd-icon>
+                                            <img
+                                                v-else
+                                                @error="onImgLoadError(item)"
+                                                :src="item.icon"
+                                                class="text-xl"
+                                            />
+                                        </template>
+                                        <span class="truncate ml-8" @click="switchApp(item)">{{item.name || '--'}}</span>
+                                        <template v-if="!item.href">
+                                            <i
+                                                v-if="collectedAppsMap[item.code]"
+                                                @click.stop="cancelCollectApp(item.code)"
+                                                class="el-icon-star-on text-18 star-on"
+                                            ></i>
+                                            <i
+                                                v-else
+                                                @click.stop="addCollectApp(item.code)"
+                                                class="el-icon-star-off star-off"
+                                            ></i>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </erd-scrollbar>
+</div>

@@ -1,0 +1,64 @@
+<div
+    id="bpm-proxy-content"
+    class="bpm-proxy-content bg-normal h-100p flex flex-column"
+    v-cloak
+>
+    <fam-view-table
+        ref="famViewTable"
+        class="bg-white"
+        :view-table-config="viewTableConfig"
+        is-adpative-height
+        @action-click="actionClick"
+        @handler-data="handlerData"
+    >
+        <template v-slot:[proxyTypeSlotName]="{ scope }">
+            <span>1231</span>
+        </template>
+        <template v-slot:[statusSlotName]="{ scope }">
+            <span>1231</span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <FamActionPulldown
+                :ref="'FamActionPulldown' + '_' + scope.rowIndex"
+                :is-operation="true"
+                :action-config="actionConfig(scope.row)"
+                :action-data="scope.row"
+                @click="actionClick"
+            ></FamActionPulldown>
+        </template>
+    </fam-view-table>
+
+    <erd-ex-dialog
+        :title="dialogTitle"
+        :visible.sync="dialogVisible"
+        size="large"
+        @close="closeDialog"
+    >
+        <agent-process-form
+            ref="agentProcessForm"
+            v-if="dialogVisible"
+            :type="type"
+            :oid="oid"
+            :form-data.sync="formData"
+            :default-select="defaultSelect"
+            :default-user-value="defaultUserValue"
+        ></agent-process-form>
+
+        <span
+            v-if="type !== 'detail'"
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button type="primary" @click="submit">{{i18n.confirm}}</erd-button>
+            <erd-button @click="closeDialog">{{i18n.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        v-if="relationProcessVisible"
+        :title="relationProcessTitle"
+        :visible.sync="relationProcessVisible"
+    >
+        <relation-process :oid="oid"></relation-process>
+    </erd-ex-dialog>
+</div>

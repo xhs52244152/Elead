@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-viewtable",
+  "version": "3.1.0-rc5.1",
+  "description": "视图表格",
+  "erdcData": {},
+  "appId": "plat"
+}

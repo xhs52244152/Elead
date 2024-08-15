@@ -1,0 +1,38 @@
+.message-popover {
+    width: 400px;
+    padding: 0 !important;
+    margin-top: 0 !important;
+
+    .el-tabs__content .el-tab-pane {
+        padding: 0 !important;
+    }
+}
+.message-trigger {
+    position: relative;
+    cursor: pointer;
+    line-height: 22px;
+    text-align: center;
+    .erd-iconfont {
+        font-size: 22px;
+    }
+
+    .message-trigger_tip {
+        cursor: pointer;
+        padding: 0 2px;
+        font-size: 9px;
+        color: #fff;
+        display: block;
+        position: absolute;
+        top: 1px;
+        right: -4px;
+        background-color: #ff5b57;
+        border-radius: 50%;
+                
+        width: 9px;
+        height: 9px;
+        line-height: 16px;
+        text-align: center;
+    }
+
+
+}

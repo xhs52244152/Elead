@@ -1,0 +1,146 @@
+<div class="system-dashboard_layout w-100p h-100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-xl"
+    ></FamPageTitle>
+    <div class="mt-xl grow-1 plr-xl">
+        <fam-advanced-table
+            ref="table"
+            :is-adaptive-height="true"
+            :app-name="appName"
+            :view-table-config="viewTableConfig"
+            @handler-data="handlerData"
+        >
+            <template #column:default:operation:content="{ scope }">
+                <erd-dropdown
+                    trigger="click"
+                    @command="handleCommand($event, scope.row)"
+                >
+                    <span class="erd-dropdown-link">
+                        <erd-link
+                            type="primary"
+                            :underline="false"
+                            >{{ i18nMappingObj.operation }}
+                            <em class="el-icon-arrow-down el-icon--right"></em>
+                        </erd-link>
+                    </span>
+                    <erd-dropdown-menu slot="dropdown">
+                        <erd-dropdown-item command="edit">{{ i18nMappingObj.edit }}</erd-dropdown-item>
+                        <erd-dropdown-item command="relateUser">{{ i18nMappingObj.relateUser }}</erd-dropdown-item>
+                        <erd-dropdown-item command="layout">{{ i18nMappingObj.layout }}</erd-dropdown-item>
+                        <erd-dropdown-item command="deletelayout">{{ i18nMappingObj.deletelayout }}</erd-dropdown-item>
+                    </erd-dropdown-menu>
+                </erd-dropdown>
+            </template>
+            <template #column:default:appName:content="{ scope }"> {{ scope.row.appName }} </template>
+            <template #column:default:state:content="{ scope }"> {{scope.row.state}} </template>
+        </fam-advanced-table>
+    </div>
+
+    <erd-ex-dialog
+        :title="currentRow && currentRow.oid?i18nMappingObj.updatelayout:i18nMappingObj.createlayout"
+        :visible.sync="visible"
+        width="1200px"
+        @close="close"
+    >
+        <layout-form
+            ref="layoutForm"
+            layout-type="GLOBAL"
+            :oid="currentRow.oid"
+        ></layout-form>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submit"
+            >
+                {{ i18nMappingObj.confirm }} </erd-button
+            ><erd-button @click="close">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        :title="i18nMappingObj.relateUser"
+        :visible.sync="visibleForRelateUser"
+        width="1200px"
+        @close="handleCloseRelateUser"
+    >
+        <div class="participant-panel">
+            <!--人员-->
+            <div class="topItem flex">
+                <fam-participant-select
+                    v-if="visibleForRelateUser"
+                    ref="famParticipantSelect"
+                    multiple
+                    collapseTags
+                    clearable
+                    v-model="participantVal"
+                    :default-value="participantSelectValue.value"
+                    :query-params="{ data: {isGetVirtualRole: true, isGetVirtualGroup: true } }"
+                    :show-type="['USER', 'GROUP', 'ORG']"
+                    width="416px"
+                    isSaveSelected
+                    @input="handleParticipantInput"
+                    @change="handleParticipantChange"
+                ></fam-participant-select>
+            </div>
+
+            <!--管理组表格-->
+            <erd-table
+                border
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :max-height="300"
+                :loading="loadingForRelateUser"
+                :data="relationUserData"
+                :column="relationUserDataColumn"
+                show-overflow
+                style="margin-top: 12px"
+                ref="erdTable"
+            >
+                <template #column:default:participantType="{data}">
+                    <span>{{ i18nMappingObj[data.row.participantType] ?? '' }}</span>
+                </template>
+                <!--操作-->
+                <template #column:default:operation="{data}">
+                    <el-button
+                        type="text"
+                        @click="removeRelation(data)"
+                        >{{ i18nMappingObj.remove }}
+                    </el-button>
+                </template>
+            </erd-table>
+            <!--小于等于一页不展示-->
+            <erd-pagination
+                style="margin-top: 15px"
+                :current-page.sync="relationTablePagination.pageIndex"
+                :page-size.sync="relationTablePagination.pageSize"
+                :total="relationTablePagination.total"
+                :hide-on-single-page="false"
+                @current-change="loadRelateUserData"
+                @size-change="loadRelateUserData"
+            >
+            </erd-pagination>
+        </div>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveMember"
+                :loading="loading"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button
+                @click="cancel"
+                :loading="loading"
+                >{{ i18nMappingObj.cancel }}</erd-button
+            >
+        </template>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,60 @@
+.import-export-template-history {
+    .left-header-contaienr {
+        flex: 1;
+        overflow: hidden;
+    }
+    .custom-left-slot {
+        width: 100%;
+    }
+}
+
+.toolbar-search-component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .el-select {
+        width: 150px;
+    }
+}
+.template-list-box {
+    .return-icon {
+        font-size: var(--fontSizeLarge);
+    }
+    .template-list-return {
+        font-size: 14px;
+        font-size: var(--fontSize);
+        display: flex;
+        padding: 10px 0;
+        .template-list-return__left {
+            display: flex;
+            cursor: pointer;
+            margin-right: 8px;
+            // border-right: 1px solid #999999;
+            padding-right: 8px;
+        }
+        .template-list-return__left:hover {
+            color: var(--buttonTextColor);
+        }
+        .template-list-return__right {
+            line-height: 20px;
+        }
+    }
+    .head-form-container {
+        margin-bottom: 12px;
+        .un-exceed {
+            overflow: hidden; /* 隐藏溢出内容 */
+            text-overflow: ellipsis; /* 使用省略号表示被截断的文本 */
+            white-space: nowrap; /* 强制文本在一行内显示，避免换行 */
+        }
+    }
+}
+#fam_import_and_export_template {
+    .adaptive-height {
+        .viewtable-body-container {
+            > .el-pagination {
+                margin-bottom: 0;
+            }
+        }
+
+    }
+}

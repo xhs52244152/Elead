@@ -1,0 +1,27 @@
+<erd-ex-dialog :visible.sync="visible"  :append-to-body="true" :title="i18nMappingObj.reviseConfirm" custom-class="baseline-operate-dialog">
+
+    <div class="baseline-revise">
+        <div class="el-message-box__container">
+            <div class="el-message-box__status el-icon-warning"></div>
+            <div class="el-message-box__message"><p>{{i18nMappingObj.reviseConfirmDesc}}</p></div>
+        </div>
+        <div class="baseline-tips">
+            <div class="text-12 mt-12">{{i18nMappingObj.reviseConfirmTitle}}</div>
+            <erd-table
+                class="mt-12"
+                border
+                :row-config="{isCurrent: true, isHover: true}"
+                :column-config="{resizable: true}"
+                align="left"
+                :data="rows"
+                :column="column"
+                show-overflow
+                ref="erdTable"
+            ></erd-table>
+        </div>
+    </div>
+    <template slot="footer">
+        <erd-button type="primary" @click="handleRevise">{{i18nMappingObj.confirm}}</erd-button>
+        <erd-button @click="visible = false">{{i18nMappingObj.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

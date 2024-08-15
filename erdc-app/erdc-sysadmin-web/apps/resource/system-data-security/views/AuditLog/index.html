@@ -1,0 +1,32 @@
+<div
+    id="audit-log"
+    class="flex flex-column h-100p"
+>
+    <FamPageTitle
+        ref="famPageTitle"
+        class="pb-xl bg-normal plr-xl"
+        @hook:mounted="diffHeightFn"
+    ></FamPageTitle>
+    <div class="grow-1 plr-xl pt-xl">
+        <FamAdvancedTable
+            ref="famAdvancedTable"
+            isAdaptiveHeight
+            enableScrollLoad
+            async-query-key="scrollId"
+            :view-table-config="viewTableConfig"
+        >
+            <template #left:toolbar:first>
+                <FamBasicFilter
+                    :maxNumber="4"
+                    :conditionColumnsList="columnsList"
+                    :columnsList="columnsList"
+                    :show-data="[{value1: 'none', attrName: 'lt'}]"
+                    @condition-change="conditionChange"
+                ></FamBasicFilter>
+            </template>
+            <template #right:toolbar:first>
+                <erd-button @click="onExport">{{i18n.export}}</erd-button>
+            </template>
+        </FamAdvancedTable>
+    </div>
+</div>

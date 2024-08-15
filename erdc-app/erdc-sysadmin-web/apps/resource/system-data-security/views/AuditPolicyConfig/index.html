@@ -1,0 +1,59 @@
+<div class="audit-policy-config flex flex-column w-100p h-100p">
+    <div class="grow-1">
+        <fam-view-table
+            ref="famViewTable"
+            :view-table-config="viewTableConfig"
+            @action-click="actionClick"
+        >
+            <template #column:default:operation:content="{ scope }">
+                <fam-action-pulldown
+                    is-operation
+                    :action-config="getActionConfig(scope.row)"
+                    :action-data="scope.row"
+                    @click="actionClick"
+                ></fam-action-pulldown>
+            </template>
+        </fam-view-table>
+    </div>
+
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        businessName="EtOperationConfigImport"
+        :request-config="commonRequestConfig"
+        @submit-success-callback="importSuccess"
+    ></FamImport>
+
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        :request-config="commonRequestConfig"
+        businessName="EtOperationConfigExport"
+    ></fam-export>
+
+    <!-- 创建编辑 -->
+    <erd-ex-dialog
+        :title="auditPolicyDialog.title"
+        :visible.sync="auditPolicyDialog.visible"
+        width="1200px"
+        @close="auditPolicyDialog.visible = false"
+    >
+        <audit-policyItem-config
+            v-if="auditPolicyDialog.visible"
+            ref="auditPolicyItemConfig"
+            :curRowData="curRowData"
+        ></audit-policyItem-config>
+        <template #footer>
+            <erd-button
+                type="primary"
+                v-loading="loading"
+                @click="submit"
+            >
+                {{ i18n.confirm }}
+            </erd-button>
+            <erd-button @click="handleCancel">{{ i18n.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

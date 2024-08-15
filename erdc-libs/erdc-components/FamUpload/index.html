@@ -1,0 +1,113 @@
+<div
+    class="fam-upload"
+    :class="{ 'fam-upload--readonly': readonly, 'fam-upload--security': contentSecurityEdit }"
+>
+    <template v-if="contentSecurityEdit">
+        <erd-popover :reference="_reference" v-model="securityPopoverVisible" placement="top"
+                     popper-class="upload-security-popover">
+            <ul class="upload-security--list">
+                <li v-for="item in securityLabels" :key="item.value" @click="triggerUploadClick(item.value)">{{item.label}}</li>
+            </ul>
+            <erd-button
+                slot="reference"
+                class="upload-btn"
+                v-bind="{...btnConfig}"
+                v-if="!readonly"
+            >
+                {{i18n.clickUpload}}
+            </erd-button>
+        </erd-popover>
+    </template>
+    <erd-upload
+        ref="upload"
+        :class="{'upload--readonly': readonly, 'upload--security': contentSecurityEdit}"
+        v-bind="{...$attrs}"
+        v-on="{...$listeners}"
+        :file-list.sync="uploadFileList"
+        :headers="headers"
+        :data="data"
+        :auto-upload="autoUpload"
+        :action="innerAction"
+        :http-request="innerHttpRequest"
+        :limit="limit"
+        :on-exceed="onExceed"
+        :on-remove="onRemove"
+        :on-process="onProcess"
+        :on-change="onChange"
+        :on-success="onSuccess"
+        :disabled="btnConfig.disabled"
+        :show-file-list="false"
+    >
+        <slot name="default">
+            <template v-if="!contentSecurityEdit">
+                <erd-button
+                    v-bind="{...btnConfig}"
+                    class="upload-btn"
+                    v-if="!readonly"
+                >
+                    {{i18n.clickUpload}}
+                </erd-button>
+            </template>
+        </slot>
+        <div
+            v-if="tips"
+            slot="tip"
+            :class="[tipsClass, 'el-upload__tip']"
+            @click="handlerClickTips"
+        >
+            {{tips}}
+        </div>
+    </erd-upload>
+    <div
+        v-if="showFileList && uploadFileList && uploadFileList.length > 0"
+        class="fam-upload__file-list flex flex-wrap"
+        :class="{
+            'fam-upload__file-list--flex justify-between align-items-center': flexFileList,
+            'ptb-normal': !readonly || uploadFileList.length > 1
+        }"
+    >
+        <div
+            v-for="(file, index) in uploadFileList"
+            :key="file.id"
+            :class="{ 'mb-xl': index < uploadFileList.length - 1 }"
+            @click="handlePreview(index)"
+        >
+            <template v-if="file">
+                <div class="fam-upload__file-item flex align-items-center overflow-hidden cursor-pointer w-100p">
+                    <span class="text-lg mr-4"><erd-icon :icon="file.icon || 'document'"></erd-icon></span>
+                    <span class="flex-1 overflow-hidden mr-8">
+                        <span v-if="file.status==='uploading'">{{file.name}}</span>
+                        <fam-show-tooltip
+                            v-else
+                            :content="file.name"
+                            placement="top"
+                        ></fam-show-tooltip>
+                    </span>
+                    <erd-button
+                        v-if="(file.status === 'uploading' || file.status === 'pause') && (chunkUpload === true || (chunkUpload === 'auto' && file.size >= bigFileSize))"
+                        class="w-24"
+                        type="text"
+                        :icon="file.status !== 'pause' ? 'el-icon-video-pause' : 'el-icon-video-play'"
+                        @click.stop="handleFilePause(file)"
+                    ></erd-button>
+                    <erd-button
+                        v-if="!readonly && !btnConfig.disabled"
+                        class="w-24"
+                        type="text"
+                        icon="erd-iconfont erd-icon-delete"
+                        @click.stop="handleRemove(index)"
+                    ></erd-button>
+                </div>
+                <transition name="el-zoom-in-top">
+                    <erd-progress
+                        v-show="autoUpload && file.status && file.status !== 'success'"
+                        :percentage="file.percentage"
+                        :status="file.status === 'fail' ? 'exception' : 'success'"
+                        :stroke-width="2"
+                        class="w-100p"
+                    ></erd-progress>
+                </transition>
+            </template>
+        </div>
+    </div>
+</div>

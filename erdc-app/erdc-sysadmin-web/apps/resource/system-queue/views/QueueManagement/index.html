@@ -1,0 +1,20 @@
+<div
+    id="system-queue"
+    class="flex flex-column grow-1"
+    style="min-height: 0;"
+>
+    <resizable-container>
+        <template slot="left">
+            <div class="system-queue_container relative h-100p">
+                <queue-tree @onsubmit="onSubmit"></queue-tree>
+            </div>
+        </template>
+        <template slot="right">
+            <queue-list
+                :title="title"
+                :oid="oid"
+                :data="data"
+            ></queue-list>
+        </template>
+    </resizable-container>
+</div>

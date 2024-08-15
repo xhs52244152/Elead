@@ -1,0 +1,19 @@
+{
+  "name": "@erdc-app/erdc-reports-web",
+  "version": "3.1.0",
+  "description": "报表管理",
+  "i18n": {
+    "zh_cn": "报表管理",
+    "en_us": "Report Management"
+  },
+  "erdcData": {},
+  "appId": "plat",
+  "scripts": {
+    "start": "npx erdc-cli start",
+    "clean": "npx erdc-cli clean",
+    "build": "npx erdc-cli build"
+  },
+  "devDependencies": {
+    "erdc-cli": "workspace:*"
+  }
+}

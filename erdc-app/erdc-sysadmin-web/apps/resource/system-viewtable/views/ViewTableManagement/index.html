@@ -1,0 +1,16 @@
+<div
+    id="fam-viewtable"
+    class="fam-viewtable-container"
+>
+    <keep-alive include="systemViewTable">
+        <component
+            :ref="componentName"
+            :is="componentName"
+            :showBack="showCallback"
+            :row="row"
+            data-type
+            @back="callback"
+            @switch-component="switchComponent"
+        ></component>
+    </keep-alive>
+</div>

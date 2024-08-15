@@ -1,0 +1,64 @@
+<div class="w-100p h-100p flex flex-column">
+    <FamPageTitle
+        v-if="showTitle"
+        class="plr-xl bg-normal pb-lg"
+    ></FamPageTitle>
+    <fam-advanced-table
+        class="grow-1 p-xl"
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+    >
+        <template #column:default:owner:content="{scope}">
+            <span v-cloak>{{ scope.row?.users.map(user => user.displayName).join(',') }} </span>
+        </template>
+        <template #column:default:collect:content="{scope}">
+            <erd-button
+                type="text"
+                @click="handleCollect(scope.row)"
+            >
+                {{i18nMappingObj.collect}}
+            </erd-button>
+        </template>
+        <template #column:default:rest:content="{scope}">
+            <erd-button
+                type="text"
+                @click="getApiDetail(scope.row, 'rest')"
+            >
+                {{i18nMappingObj.restApi}}
+            </erd-button>
+        </template>
+        <template #column:default:dubbo:content="{scope}">
+            <erd-button
+                type="text"
+                @click="getApiDetail(scope.row, 'dubbo')"
+            >
+                {{i18nMappingObj.dubboApi}}
+            </erd-button>
+        </template>
+        <template #column:default:operation:content="{scope}">
+            <erd-button
+                type="text"
+                @click="handleEdit(scope.row)"
+            >
+                {{i18nMappingObj.edit}}
+            </erd-button>
+        </template>
+    </fam-advanced-table>
+    <service-detail
+        ref="serviceDetailRef"
+        :service="service"
+        @toEdit="toEdit"
+    ></service-detail>
+    <service-edit
+        ref="serviceEditRef"
+        :service="service"
+        @editSuccess="refreshTable"
+        @close="handleEditClose"
+    ></service-edit>
+    <interface-import
+        ref="importRef"
+        :serviceList="serviceList"
+        @saveSuccess="refreshTable"
+    ></interface-import>
+</div>

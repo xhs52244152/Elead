@@ -1,0 +1,60 @@
+<div
+    v-loading="isLoading"
+    :class="{'last-line-bottom' : isRelationLink}"
+    style="min-height: 364px"
+>
+    <FamDynamicForm
+        v-show="!isLoading"
+        ref="dynamicForm"
+        :form.sync="form"
+        :data="formLayout"
+        v-on="$listeners"
+    >
+        <template #statusComponent="scope">
+            <erd-radio-group
+                v-model="scope.data[scope.formConfig.field]"
+                :disabled="scope.formConfig.disabled"
+            >
+                <erd-radio :label="true">{{ i18n.yes }}</erd-radio>
+                <erd-radio :label="false">{{ i18n.no }}</erd-radio>
+            </erd-radio-group>
+        </template>
+        <template #statusReadonly="scope"> {{ scope.data[formConfig.field] == true ? i18n.yes : i18n.no }} </template>
+        <template #filters="scope">
+            <filters-config
+                ref="filtersConfig"
+                :typeReference="form.mainModelType"
+                :allFilters="allFilters"
+                :selectedFiltersCopy="selectedFiltersCopy"
+                :selectedFilterIds.sync="selectedFilterIds"
+            ></filters-config>
+        </template>
+        <template #configItemsTooltip="scope">
+            <template v-if="scope.formConfig.tooltip === 'configItemsTooltip'">
+                <erd-tooltip
+                    placement="top-start"
+                    effect="light"
+                    :openDelay="800"
+                >
+                    <template #content>
+                        <img
+                            :src="imgSrc"
+                            width="1000px"
+                        />
+                    </template>
+                    <erd-button
+                        type="text"
+                        icon="erd-iconfont erd-icon-help"
+                    ></erd-button>
+                </erd-tooltip>
+            </template>
+        </template>
+        <template #view-config-item="scope">
+            <FamCheckbox
+                v-model="scope.data[scope.formConfig.field]"
+                :options="viewConfigArr"
+                @input="onConfigItemsChange"
+            ></FamCheckbox>
+        </template>
+    </FamDynamicForm>
+</div>

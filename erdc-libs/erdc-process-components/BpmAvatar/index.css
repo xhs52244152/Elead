@@ -1,0 +1,32 @@
+.bpm-user-extend {
+  display: flex;
+  align-items: center;
+}
+.bpm-user-extend .bpm-user-popover-extend .icon-more-style {
+  position: relative;
+  top: 6px;
+}
+
+.bpm-user-popper-extend .flex-format {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.bpm-user-popper-extend .flex-format > * + * {
+  margin-left: 4px;
+}
+.bpm-user-popper-extend .icon-circle-border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+}
+.bpm-user-popper-extend .primary-color {
+  color: var(--primary-color);
+}
+.bpm-user-popper-extend > * + * {
+  margin-top: 4px;
+}
+
+/*# sourceMappingURL=index.css.map */

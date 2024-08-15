@@ -1,0 +1,24 @@
+<div class="config-container p-12 bordered-table">
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form.sync="form"
+        :data="formLayout"
+    >
+        <template #config="scope">
+            <div class="container w-100p flex">
+                <configLeft
+                    ref="configLeft"
+                    class="left h-100p pr-8"
+                ></configLeft>
+                <configCenter
+                    ref="configCenter"
+                    class="center h-100p pr-8"
+                ></configCenter>
+                <configRight
+                    ref="configRight"
+                    class="right h-100p"
+                ></configRight>
+            </div>
+        </template>
+    </FamDynamicForm>
+</div>

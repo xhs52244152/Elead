@@ -1,0 +1,156 @@
+<erd-ex-dialog
+    :title="title"
+    :visible.sync="visible"
+    :append-to-body="true"
+    @opened="handleOpened"
+    @close="closeForm"
+    width="1200px"
+>
+    <!--    <template #title>-->
+    <!--        <span class="erd-ex-dialog__title">{{ title }}</span>-->
+    <!--        <erd-button-group>-->
+    <!--            <erd-button @click="exportPlaceholder">导出</erd-button>-->
+    <!--            <erd-button @click="importPlaceholder">导入</erd-button>-->
+    <!--        </erd-button-group>-->
+    <!--        <erd-button-group v-if="isSupportClipboard">-->
+    <!--            <erd-button data-clipboard-target="#foo" @click="copyPlaceholder">复制</erd-button>-->
+    <!--            <erd-button @click="pastePlaceholder">粘贴</erd-button>-->
+    <!--        </erd-button-group>-->
+    <!--        <fam-upload-->
+    <!--            ref="importUpload"-->
+    <!--            accept=".json"-->
+    <!--            class="none"-->
+    <!--            :auto-upload="false"-->
+    <!--            :show-file-list="false"-->
+    <!--            :on-change="onImportFileChange"-->
+    <!--            :multiple="false"-->
+    <!--        >-->
+    <!--        </fam-upload>-->
+    <!--    </template>-->
+    <FamDynamicForm
+        v-if="visible"
+        ref="layoutForm"
+        :form.sync="formData"
+        :data="formConfigs"
+        class="signature-tmpl-design-form"
+        v-loading="uploadLoading"
+        :readonly="isViewMode"
+        :element-loading-text="i18nMappingObj.uploading"
+    >
+        <template #tmpl-design="scope">
+            <erd-tooltip
+                :disabled="signatureCopyable"
+                :content="i18n.fileNotExist"
+                :open-delay="800"
+                placement="top"
+            >
+                <erd-button
+                    :disabled="!signatureCopyable"
+                    @click="copyPlaceholder"
+                >
+                    {{i18n.copy}}
+                </erd-button>
+            </erd-tooltip>
+        </template>
+        <template #watermark-slot="scope">
+            <erd-select
+                :disabled="isViewMode"
+                v-model="formData.watermark"
+                filterable
+                clearable
+                remote
+                :remote-method="queryWatermark"
+                v-el-select-selectLazy="selectLazy"
+            >
+                <erd-option
+                    v-for="item in watermarkOptions"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.code"
+                >
+                </erd-option>
+                <erd-option
+                    v-if="!isDefaultValueInOptions"
+                    :class="{none: !isDefaultValueInOptions}"
+                    :label="watermarkForm.name"
+                    :value="watermarkForm.code"
+                    :key="watermarkForm.code"
+                ></erd-option>
+            </erd-select>
+        </template>
+        <template #background-color-slot="scope">
+            <erd-color-picker
+                v-model="formData.color"
+                :disabled="isViewMode"
+                popper-class="watermark-text-color"
+                @change="handleColorChange"
+            >
+            </erd-color-picker>
+        </template>
+        <template #file-slot="scope">
+            <fam-upload
+                :disabled="isViewMode"
+                ref="fileUpload"
+                action="/doc/signature/v1/tmpl/file/upload"
+                :auto-upload="false"
+                :file-list="fileList"
+                :data="{ className: 'erd.cloud.signature.entity.SignatureTmpl'}"
+                :accept="fileTypeData.fileType"
+                :on-change="resetFile"
+                :on-success="fileUploadSuccess"
+                :on-preview="handleDownload"
+                :on-remove="deleteDesignData"
+                :before-upload="showUploadLoading"
+                :multiple="false"
+                :readonly="isViewMode"
+            >
+                <erd-button
+                    :disabled="isViewMode"
+                    size="small"
+                >{{i18nMappingObj.signatureUpload}}
+                </erd-button
+                >
+            </fam-upload>
+        </template>
+        <template #design-slot="scope">
+            <PdfDesign
+                v-if="isPdf && pages && pages.length"
+                ref="pdfDesign"
+                :disabled="isViewMode"
+                :pages="pages"
+                :placeholders="points"
+                :form-data="formData"
+            ></PdfDesign>
+            <WordDesign
+                v-if="isWord"
+                :disabled="isViewMode"
+                ref="wordDesign"
+                :points="points"
+            ></WordDesign>
+            <ExcelDesign
+                v-if="isExcel"
+                :disabled="isViewMode"
+                ref="excelDesign"
+                :points="points"
+            ></ExcelDesign>
+            <span v-else></span>
+        </template>
+    </FamDynamicForm>
+    <template #footer>
+        <erd-button
+            v-if="!isViewMode"
+            :loading="loading"
+            type="primary"
+            @click="onSubmit(false)"
+        >{{i18nMappingObj.save}}
+        </erd-button>
+        <erd-button
+            v-if="!isViewMode"
+            :loading="loading"
+            @click="onSubmit(true)"
+        >{{i18nMappingObj.saveAsDraft}}
+        </erd-button
+        >
+        <erd-button @click="visible = false">{{i18nMappingObj.cancel}}</erd-button>
+    </template>
+</erd-ex-dialog>

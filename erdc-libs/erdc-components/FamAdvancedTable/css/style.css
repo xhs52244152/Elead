@@ -1,0 +1,46 @@
+.fam-view-table-header-component {
+    background-color: #ffffff;
+}
+.fam-view-table-header-component .viewtable-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.fam-view-table-header-component .viewtable-header-container .left-header-contaienr, .fam-view-table-header-component .viewtable-header-container .right-header-contaienr {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 16px; */
+}
+.fam-view-table-header-component .viewtable-header-container .left-header-contaienr .custom-left-slot, .fam-view-table-header-component .viewtable-header-container .left-header-contaienr .custom-right-slot, .fam-view-table-header-component .viewtable-header-container .left-header-contaienr .custom-right-slot-end, .fam-view-table-header-component .viewtable-header-container .right-header-contaienr .custom-left-slot, .fam-view-table-header-component .viewtable-header-container .right-header-contaienr .custom-right-slot, .fam-view-table-header-component .viewtable-header-container .right-header-contaienr .custom-right-slot-end {
+    margin-right: var(--buttonApposeSpace);
+}
+.fam-view-table-header-component .viewtable-header-container .left-header-contaienr .custom-right-slot-end, .fam-view-table-header-component .viewtable-header-container .right-header-contaienr .custom-right-slot-end {
+    margin-left: var(--buttonApposeSpace);
+}
+.fam-view-table-header-component .viewtable-header-container .left-header-contaienr .more-search-btn, .fam-view-table-header-component .viewtable-header-container .right-header-contaienr .more-search-btn {
+    margin-left: var(--buttonApposeSpace);
+}
+.fam-view-table-header-component .viewtable-header-container .right-header-contaienr {
+    margin-left: auto;
+}
+.fam-view-table-header-component .viewtable-header-container .right-header-contaienr .erd-pulldown .erd-pulldown__menu {
+    min-width: 100%;
+}
+.fam-view-table-header-component .viewtable-header-container .right-header-contaienr .erd-pulldown .erd-pulldown__menu .erd-pulldown-menu-item__item {
+    min-width: 100%;
+}
+.fam-view-table-header-component .viewtable-header-container .search-suffix-icon {
+    line-height: 32px;
+    cursor: pointer;
+}
+.fam-view-table-header-component .viewtable-header-container .search-suffix-icon::after {
+    position: absolute;
+}
+.fam-view-table-header-component .viewtable-conditions-tags .tag-item {
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+.fam-view-table-header-component .mb8 {
+    margin-bottom: 8px;
+}/*# sourceMappingURL=style.css.map */

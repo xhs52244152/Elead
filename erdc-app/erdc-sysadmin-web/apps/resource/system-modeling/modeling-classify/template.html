@@ -1,0 +1,95 @@
+<div
+    id="biz-classify"
+    class="h-100p"
+>
+    <div class="fam-classify-management h-100p position-relative">
+        <resizable-container v-show="!isSetting">
+            <template slot="left">
+                <classify-tree-list
+                    ref="classifyTreeList"
+                    @node-click="nodeClick"
+                    @click="onClick"
+                ></classify-tree-list>
+            </template>
+            <template slot="right">
+                <type-manage-detail
+                    use-form="classify"
+                    :tab-list="tabList"
+                    :active-tab="activeTab"
+                    ref="typeManageDetail"
+                >
+                    <div
+                        slot="custom"
+                        slot-scope="{data}"
+                        class="h-100p"
+                    >
+                        <template v-if="data.activeTab.name === data.item.name">
+                            <component
+                                v-bind="value.props"
+                                v-for="(value, i) in data.item.components"
+                                key="i"
+                                use-form="classify"
+                                :ref="value.refName"
+                                :is="value.detail"
+                                :module-title="moduleTitle"
+                                :oid="typeOid"
+                                :has-modify="hasModify"
+                                :form-data="formDataDetail"
+                                :parent-form-data="parentFormData"
+                                :type-data="TypeData"
+                                :type="type"
+                                :flex-attrs="flexAttrs"
+                                :is-application="isApplication"
+                                :is-share="isShare"
+                                @submit="onSubmit"
+                                @onclick="onClick"
+                            ></component
+                        ></template>
+                    </div>
+                </type-manage-detail>
+            </template>
+        </resizable-container>
+
+        <attr-permission-setting
+            v-if="isSetting"
+            :key="typeOid"
+            :type-oid="typeOid"
+            :container-oid="containerOid"
+            :type-name="typeName"
+            :show-return-back="true"
+            @change-show-setting="handlerChangeShow"
+        >
+        </attr-permission-setting>
+
+        <erd-ex-dialog
+            v-if="visible"
+            size="large"
+            :title="title"
+            :visible="visible"
+            @close="closeForm"
+        >
+            <classify-define-info-form
+                ref="classifyDefineInfoForm"
+                :oid="oid"
+                :form-data="formData"
+                :parent-form-data="parentFormData"
+                :parent-id="parentId"
+                :type-data="TypeData"
+                :app-name="appName"
+                :is-application="false"
+                :type="type"
+                :validate-on-rule-change="false"
+            >
+            </classify-define-info-form>
+            <template #footer>
+                <erd-button
+                    type="primary"
+                    :loading="formLoading"
+                    @click="onSubmit"
+                    >{{ i18n.confirm }}</erd-button
+                >
+                <erd-button @click="closeForm">{{ i18n.cancel }}</erd-button>
+            </template>
+        </erd-ex-dialog>
+    </div>
+</div>

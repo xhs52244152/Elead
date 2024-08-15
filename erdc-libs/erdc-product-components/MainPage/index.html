@@ -1,0 +1,160 @@
+<div id="mainPage">
+    <div class="container_base_info">
+        <div
+            class="top_info"
+            :title="title"
+            v-cloak
+        >
+            <i
+                class="erd-iconfont erd-icon-setting"
+                style="font-size: 24px; color: yellow; vertical-align: sub"
+            ></i>
+            <span>{{productInfo?.caption}}</span>
+        </div>
+        <span
+            class="label to_new"
+            v-if="changeNew"
+            @click="changeToNew()"
+            >{{i18nMappingObj.new}}</span
+        >
+        <span
+            v-cloak
+            style="color: #ff6633; margin-left: 14px"
+            v-if="!isMeCheckOut"
+            v-cloak
+            >{{version + ', ' + editor}}</span
+        >
+        <div class="title_button">
+            <erd-button
+                type="primary"
+                @click="onEdit()"
+                >{{i18nMappingObj.edit}}</erd-button
+            >
+            <erd-pulldown-button
+                fixed
+                :list="list"
+                :empty-tips="i18nMappingObj.action"
+            >
+                {{i18nMappingObj.action}}
+            </erd-pulldown-button>
+        </div>
+    </div>
+    <!-- <div class="personal_info">
+        <div class="personalInfo">
+            <div class="avatar">
+                <img src="erd-apps/fam-web/apps/resource/fam_layout/components/TopHeader/avatar.png" />
+            </div>
+            <div class="details">
+                <p class="name" :title="user.displayName">{{ user.displayName }}</p>
+                <p class="branch" :title="user.orgName">{{ user.orgName }}</p>
+            </div>
+        </div>
+        <div class="personalInfo">
+            <div class="avatar">
+                <img src="erd-apps/fam-web/apps/resource/fam_layout/components/TopHeader/avatar.png" />
+            </div>
+            <div class="details">
+                <p class="name" :title="user.time">{{ user.time }}</p>
+                <p class="branch" :title="user.updateTime">{{ user.updateTime }}</p>
+            </div>
+        </div>
+        <div class="personalInfo">
+            <div class="avatar">
+                <img src="erd-apps/fam-web/apps/resource/fam_layout/components/TopHeader/avatar.png" />
+            </div>
+            <div class="details">
+                <p class="name" :title="user.orgId">{{ user.orgId }}</p>
+                <p class="branch" :title="user.team">{{ user.team }}</p>
+            </div>
+        </div>
+    </div> -->
+    <div class="main_info_container">
+        <el-tabs
+            ref="allTabs"
+            v-model="activeName"
+            type="card"
+            @tab-click="handleClick"
+            @tab-remove="removeTab"
+        >
+            <el-tab-pane
+                :key="item.name"
+                v-for="(item, index) in editableTabs"
+                :closable="item.closable"
+                lazy
+                :label="item.title"
+                :name="item.name"
+            >
+                {{item.content}}
+            </el-tab-pane>
+        </el-tabs>
+        <div
+            class="add_tabs"
+            v-if="editTabs"
+        >
+            <div
+                :title="i18nMappingObj.add"
+                @click="addTab(activeName)"
+            >
+                <i class="erd-iconfont erd-icon-create"></i>
+            </div>
+        </div>
+        <div class="tabs_button">
+            <!-- Tabs编辑 -->
+            <erd-button
+                v-if="editTabs"
+                @click="saveTabs"
+                >{{i18nMappingObj.save}}</erd-button
+            >
+            <erd-button
+                v-else
+                class="editButoon"
+                :title="i18nMappingObj.edit"
+                @click="openEdit()"
+            >
+                <i class="erd-iconfont erd-icon-edit3"></i>
+            </erd-button>
+        </div>
+    </div>
+
+    <template v-for="item in tabList">
+        <component
+            v-if="activeName === item.name"
+            :ref="item.name"
+            v-bind="item.props"
+            :product-oid="productOid"
+            :is="activeName"
+        ></component>
+    </template>
+    <erd-ex-dialog
+        :title="tabTitle"
+        :visible.sync="innerVisible"
+        width="1200px"
+    >
+        <div>
+            <span>{{i18nMappingObj.module}}:</span>
+            <erd-select
+                v-model="tabSelected"
+                clearable
+                @change="selectTab()"
+            >
+                <erd-option
+                    v-for="item in selectList"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                ></erd-option>
+            </erd-select>
+        </div>
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="saveSubmit"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="toggleShow">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

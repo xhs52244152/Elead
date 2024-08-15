@@ -1,0 +1,75 @@
+<div class="process-editable-table">
+    <slot name="header"></slot>
+    <FamErdTable
+        ref="table"
+        :data="tableData"
+        :column="column"
+        :row-config="{ isCurrent: true, isHover: true, useKey: true, keyField: keyField }"
+        :edit-config="innerEditConfig"
+        :column-config="{ resizable: true }"
+        :edit-rules="rules"
+        :is-embed-table="true"
+        auto-resize
+        showOverflow
+        border
+        @edit-actived="onEditActive"
+        @edit-closed="onEditClosed"
+    >
+        <template #erd-input="scope">
+            <erd-input
+                v-model="scope.data.row[scope.data.column.property]"
+                clearable
+                autofocus
+                placeholder="请输入"
+                v-bind="scope.data.column.editRender.props"
+                @blur="validateField(scope.data.row, scope.data.column)"
+            ></erd-input>
+        </template>
+        <template #erd-input-number="scope">
+            <erd-input-number
+                v-model="scope.data.row[scope.data.column.property]"
+                autofocus
+                placeholder="请输入"
+                v-bind="scope.data.column.editRender.props"
+                @blur="validateField(scope.data.row, scope.data.column)"
+            ></erd-input-number>
+        </template>
+
+        <template #custom-select-static-text="scope">
+            <FamCustomSelectStaticText
+                v-model="scope.data.row[scope.data.column.property]"
+                v-bind="scope.data.column.editRender.props"
+                @blur="validateField(scope.data.row, scope.data.column)"
+            ></FamCustomSelectStaticText>
+        </template>
+
+        <template #custom-select="scope">
+            <span v-if="!canEdit(scope.data.row, scope.data.column)">-</span>
+            <custom-select
+                v-else
+                v-model="scope.data.row[scope.data.column.property]"
+                v-bind="scope.data.column.editRender.props"
+                @blur="validateField(scope.data.row, scope.data.column)"
+            ></custom-select>
+        </template>
+
+        <template #oper-remove="scope">
+            <erd-button
+                type="text"
+                @click="removeRow(scope.data.row, scope.data.rowIndex)"
+            >
+                {{ i18nMappingObj.remove }}
+            </erd-button>
+        </template>
+
+        <template
+            v-for="(slot, slotName) in $scopedSlots"
+            #[slotName]="scopeProps"
+        >
+            <slot
+                :name="slotName"
+                v-bind="scopeProps"
+            ></slot>
+        </template>
+    </FamErdTable>
+</div>

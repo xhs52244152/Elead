@@ -1,0 +1,20 @@
+.associated-process-dialog {
+    .el-dialog__body {
+        padding: 0;
+    }
+}
+.associated-process {
+    .associated-process-header {
+        font-size: 16px;
+        color: var(--colorTextNormal);
+        padding: 8px 0;
+        font-weight: 700;
+    }
+
+    .process-right {
+        .operation {
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+    }
+}

@@ -1,0 +1,311 @@
+<div id="DictList">
+    <div class="DictList-title">{{i18nMappingObj.itemName}}：{{title}}</div>
+    <div class="content">
+        <div class="operation">
+            <erd-button
+                type="primary"
+                @click="onCreateFirstLevel"
+                >{{i18nMappingObj.createFirstLevel}}</erd-button
+            >
+            <erd-button @click="onMobileNode">{{i18nMappingObj.moveOtherNodes}}</erd-button>
+        </div>
+        <div class="position-relative grow-1">
+            <erd-table
+                border
+                ref="erdTable"
+                :row-config="{isCurrent: true, isHover: true, useKey: true, keyField: 'id' }"
+                :column-config="{resizable: true}"
+                height="100%"
+                align="left"
+                :data="tableData"
+                :column="column"
+                auto-resize
+                show-overflow
+                :tooltip-config="{contentMethod: contentMethod}"
+                :row-class-name="tableRowClassName"
+                :cell-class-name="tableCellClassName"
+                :tree-config="{ transform: false, rowField: 'id', parentField: 'parentId', children: 'children',iconClose: 'erd-iconfont erd-icon-arrow-right', iconOpen: 'erd-iconfont erd-icon-arrow-down', indent: '15' }"
+                :edit-config="{trigger: 'click', mode: 'cell'}"
+                :edit-rules="validRules"
+                :checkbox-config="{showHeader: false, checkStrictly: true, checkField: 'checked', indeterminate: 'indeterminate'}"
+                class="position-absolute w-100p h-100p"
+                @cell-click="setFilterClass"
+                @checkbox-change="selectChangeEvent"
+                @checkbox-all="checkboxAll"
+            >
+                <template #column:default:displayName="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row[data.column.property]}}</span>
+                    <!-- <span v-else-if="data.row[data.column.property]">{{data.row[data.column.property]}}</span> -->
+                    <fam-i18nbasics
+                        v-else
+                        popper-class="vxe-table--ignore-clear"
+                        type="tableReadOnly"
+                        :max="100"
+                        :value="{attrName: 'nameI18nJson', value: data.row.nameI18nJson}"
+                        :i18nName="i18nMappingObj.name"
+                        :required="true"
+                        :appendToBody="true"
+                        @input="(value)=>(i18nValueInput(value, data, 'nameI18nJson'))"
+                    >
+                    </fam-i18nbasics>
+                </template>
+                <template #column:edit:displayName="{data}">
+                    <fam-i18nbasics
+                        popper-class="vxe-table--ignore-clear"
+                        :max="100"
+                        :value="{attrName: 'nameI18nJson', value: data.row.nameI18nJson}"
+                        :i18nName="i18nMappingObj.name"
+                        :autofocus="true"
+                        :required="true"
+                        :appendToBody="true"
+                        @input="(value)=>(i18nValueInput(value, data, 'nameI18nJson'))"
+                    >
+                    </fam-i18nbasics>
+                    <erd-tooltip
+                        class="item"
+                        :manual="true"
+                        effect="dark"
+                        placement="top-end"
+                        :value="!!data.row[`validerror-${data.row.id}-${data.column.property}`]&&!data.row[data.column.property]"
+                        popper-class="showTooltip"
+                        ref="validateTooltips"
+                    >
+                        <div slot="content">{{i18nMappingObj.pleaseEnterName}}</div>
+                        <span class="tooltip"></span>
+                    </erd-tooltip>
+                </template>
+
+                <template #column:default:identifierNo="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row[data.column.property]}}</span>
+                    <span v-else-if="data.row[data.column.property]">{{data.row[data.column.property]}}</span>
+                    <span
+                        v-else
+                        class="newEdit"
+                        >{{i18nMappingObj.pleaseEnter}}</span
+                    >
+                </template>
+                <template #column:edit:identifierNo="{data}">
+                    <erd-input
+                        v-model="data.row[data.column.property]"
+                        maxlength="100"
+                        :placeholder="i18nMappingObj.pleaseEnter"
+                        @change="(value)=>(inputCallback(value, data))"
+                        ref="numberInput"
+                    >
+                    </erd-input>
+                    <erd-tooltip
+                        class="item"
+                        :manual="true"
+                        effect="dark"
+                        placement="top-end"
+                        :value="data.row[`validerror-${data.row.id}-${data.column.property}`]&&!data.row[data.column.property]"
+                        popper-class="showTooltip"
+                        ref="validateTooltips"
+                    >
+                        <div slot="content">{{i18nMappingObj.pleaseEnterNumber}}</div>
+                        <span class="tooltip"></span>
+                    </erd-tooltip>
+                </template>
+
+                <template #column:default:displayDesc="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row[data.column.property]}}</span>
+                    <fam-i18nbasics
+                        v-else
+                        popper-class="vxe-table--ignore-clear"
+                        type="tableReadOnly"
+                        :max="100"
+                        :value="{attrName: 'descriptionI18nJson', value: data.row.descriptionI18nJson}"
+                        :i18nName="i18nMappingObj.describe"
+                        :appendToBody="false"
+                        @input="(value)=>(i18nValueInput(value, data, 'descriptionI18nJson'))"
+                    >
+                    </fam-i18nbasics>
+                </template>
+                <template #column:edit:displayDesc="{data}">
+                    <fam-i18nbasics
+                        popper-class="vxe-table--ignore-clear"
+                        :max="100"
+                        :value="{attrName: 'descriptionI18nJson', value: data.row.descriptionI18nJson}"
+                        :i18nName="i18nMappingObj.describe"
+                        :autofocus="true"
+                        :appendToBody="false"
+                        @input="(value)=>(i18nValueInput(value, data, 'descriptionI18nJson'))"
+                    >
+                    </fam-i18nbasics>
+                    <erd-tooltip
+                        class="item"
+                        :manual="true"
+                        effect="dark"
+                        placement="top-end"
+                        :value="data.row[`validerror-${data.row.id}-${data.column.property}`]"
+                        popper-class="showTooltip"
+                        ref="validateTooltips"
+                    >
+                        <div slot="content">{{i18nMappingObj.pleaseEnterDescribe}}</div>
+                        <span class="tooltip"></span>
+                    </erd-tooltip>
+                </template>
+
+                <template #column:default:statusName="{data}">
+                    <span v-if="!data.row.editFlag">{{data.row.statusName}}</span>
+                    <span v-else-if="data.row[data.column.property]">{{data.row[data.column.property]}}</span>
+                    <span
+                        v-else
+                        class="newEdit"
+                        >{{i18nMappingObj.pleaseSelect}}</span
+                    >
+                </template>
+                <template
+                    #column:edit:statusName="{data}"
+                    @change.stop
+                >
+                    <erd-select
+                        v-model="data.row[data.column.property]"
+                        ref="statusSelect"
+                        transfer
+                        :placeholder="i18nMappingObj.pleaseSelect"
+                        popper-class="vxe-table--ignore-clear"
+                        @change="(value)=>(customCallback(value, data))"
+                    >
+                        <erd-option
+                            v-for="item in statusRow.referenceList"
+                            :key="item.value"
+                            :label="item.name"
+                            :value="item.value"
+                            :disabled="!data.row.editFlag ? (data.row.status == 0 || data.row.choosableDraft ? false : item.disabled) : false"
+                        >
+                        </erd-option>
+                    </erd-select>
+                    <erd-tooltip
+                        class="item"
+                        :manual="true"
+                        effect="dark"
+                        placement="top-end"
+                        :value="data.row[`validerror-${data.row.id}-${data.column.property}`]&&!data.row[data.column.property]"
+                        popper-class="showTooltip"
+                        ref="validateTooltips"
+                    >
+                        <div slot="content">{{i18nMappingObj.pleaseSelectStatus}}</div>
+                        <span class="tooltip"></span>
+                    </erd-tooltip>
+                </template>
+                <template #column:edit:code="{data}">
+                    <erd-input
+                        ref="codeInput"
+                        v-model="data.row[data.column.property]"
+                        maxlength="100"
+                    ></erd-input>
+                </template>
+
+                <template #column:default:oper="{data}">
+                    <!-- <span v-if="data.row.editFlag">
+                        <erd-button type="text" @click="onSave(data)">保存</erd-button>
+                        <erd-button type="text" @click="onCancle(data)">取消</erd-button>
+                    </span> -->
+                    <span>
+                        <erd-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="isEdit ? i18nMappingObj.createdSameLevel : i18n.noCurrentTenant"
+                            placement="top-start"
+                        >
+                            <erd-button
+                                type="text"
+                                :disabled="!isEdit"
+                                @click="onCreateSameLevel(data)"
+                                >{{i18nMappingObj.createdSameLevel}}</erd-button
+                            >
+                        </erd-tooltip>
+                        <erd-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="isEdit ? i18nMappingObj.createdChildLevel : i18n.noCurrentTenant"
+                            placement="top-start"
+                        >
+                            <erd-button
+                                type="text"
+                                :disabled="!isEdit"
+                                @click="onCreateChildLeveel(data)"
+                                >{{i18nMappingObj.createdChildLevel}}</erd-button
+                            >
+                        </erd-tooltip>
+
+                        <erd-dropdown
+                            trigger="click"
+                            style="margin-left: 8px"
+                            :disabled="!isEdit"
+                            @command="(type)=>(onCommand(type, data))"
+                        >
+                            <erd-button
+                                type="text"
+                                class="more-button"
+                                :disabled="!isEdit"
+                            >
+                                {{i18nMappingObj.more}}<em class="el-icon-arrow-down el-icon--right"></em>
+                            </erd-button>
+                            <erd-dropdown-menu slot="dropdown">
+                                <erd-dropdown-item
+                                    command="delete"
+                                    v-if="data.row.status == '0'"
+                                    :disabled="!isEdit"
+                                    >{{i18nMappingObj.delete}}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    command="moveUp"
+                                    :disabled="!isEdit"
+                                    >{{i18nMappingObj.moveUp}}</erd-dropdown-item
+                                >
+                                <erd-dropdown-item
+                                    command="moveDown"
+                                    :disabled="!isEdit"
+                                    >{{i18nMappingObj.movedown}}</erd-dropdown-item
+                                >
+                            </erd-dropdown-menu>
+                        </erd-dropdown>
+                        <!-- <erd-button type="text" @click="onDelete(data)" v-if="data.row.status == 0">删除</erd-button> -->
+                        <!-- <erd-button type="text" @click="upgrade(data)">升序</erd-button>
+                        <erd-button type="text" @click="sortDesc(data)">降序</erd-button> -->
+                    </span>
+                </template>
+            </erd-table>
+        </div>
+    </div>
+    <div class="DictList-footer">
+        <erd-tooltip
+            class="item"
+            effect="dark"
+            placement="top-start"
+            :content="i18n.noCurrentTenant"
+            :disabled="isEdit"
+        >
+            <erd-button
+                :loading="loading"
+                type="primary"
+                @click="onSaveAll"
+                :disabled="!isChanged || !isEdit"
+            >
+                {{i18nMappingObj.save}}
+            </erd-button>
+        </erd-tooltip>
+        <erd-tooltip
+            class="item"
+            effect="dark"
+            placement="top-start"
+            :content="i18n.noCurrentTenant"
+            :disabled="isEdit"
+        >
+            <erd-button
+                @click="onReset"
+                :disabled="!isChanged || !isEdit"
+            >
+                {{i18nMappingObj.reset}}
+            </erd-button>
+        </erd-tooltip>
+    </div>
+    <dict-mobile-node
+        :visible.sync="visible"
+        :data-list="treeSelectList"
+        @onsubmit="onsubmit"
+    >
+    </dict-mobile-node>
+</div>

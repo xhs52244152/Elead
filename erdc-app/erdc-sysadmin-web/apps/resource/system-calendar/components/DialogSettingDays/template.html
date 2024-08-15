@@ -1,0 +1,28 @@
+<div id="DialogSettingDays">
+    <erd-ex-dialog
+        :title="title"
+        :visible.sync="innerVisible"
+    >
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form="formData"
+            :data="formConfig"
+            @form-change="formChange"
+        >
+        </FamDynamicForm>
+
+        <span
+            slot="footer"
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="submitEditForm()"
+                :loading="loading"
+                :disabled="disabled"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,45 @@
+<div id="CodeRuleTips">
+    <erd-input
+        class="search"
+        :placeholder="i18n.rule"
+        v-model="searchValue"
+    ></erd-input>
+    <div
+        class="code-rule-tips-collapse"
+        v-for="item in tipData"
+    >
+        <div
+            class="tips-collapse-title"
+            :style="style(item.color)"
+            @click="onShow(item)"
+        >
+            {{item.title}}
+        </div>
+        <erd-collapse-transition>
+            <div
+                v-show="item.isShow"
+                class="tips-collapse-content"
+            >
+                <div v-show="item.value === 'text'">
+                    {{i18n.textTips}}
+                </div>
+                <div v-show="item.value === 'date'">
+                    <div>{{i18n.yyyy}}: <span class="">yyyy</span></div>
+                    <div>{{i18n.yy}}: <span>yy</span></div>
+                    <div>{{i18n.MM}}: <span>MM</span></div>
+                    <div>{{i18n.M}}: <span>M</span></div>
+                    <div>{{i18n.dd}}: <span>dd</span></div>
+                    <div>{{i18n.HH}}: <span>HH</span></div>
+                </div>
+                <div v-show="item.value === 'variable'">
+                    <div>{{i18n.variableTips1}}</div>
+                    <div>{{i18n.variableTips2}}</div>
+                </div>
+                <div v-show="item.value === 'codeChar'">
+                    <div>n: 0-9</div>
+                    <div>{{i18n.example}}: nnn: 001-999</div>
+                </div>
+            </div>
+        </erd-collapse-transition>
+    </div>
+</div>

@@ -1,0 +1,240 @@
+
+:root {
+  --fontFamily: AlibabaPuHuiTi-3-55-Regular;
+  --primary-color: var(--colorPrimary);
+  --dashed-background: linear-gradient(white, white) padding-box,
+      repeating-linear-gradient(-45deg, var(--colorBorder) 0, var(--colorBorder) 5px, white 0, white 10px);
+  --famAdvancedTableContainerPadding: 0 16px;
+  --famTableRowHeight: 36px;
+  --famFormItemReadonlyHeight: 22px;
+  --formItemHeight: 32px;
+}
+
+body {
+  font-family: var(--fontFamily);
+}
+
+ul,
+li {
+  padding: 0;
+  list-style: none;
+}
+
+.fam-mp-box {
+  margin: var(--bigSpace);
+  padding: 0 16px;
+}
+
+.fam-container, .fam-mp-box {
+  position: relative;
+  background: #ffffff;
+}
+
+.fam-bg-container {
+  background-color: #f4f4f4;
+}
+
+.fam-max-width-100 {
+  max-width: 100%;
+}
+
+.fam-bg-content {
+  background-color: #ffffff;
+}
+
+.fam-tooltip-max-width .popper__arrow {
+  display: none;
+}
+
+.fam-tooltip-max-width,
+.vxe-table--tooltip-wrapper {
+  max-width: 72em;
+  max-height: 16em;
+  overflow: auto;
+}
+.fam-tooltip-max-width::after,
+.fam-tooltip-max-width .vxe-table--tooltip-arrow,
+.vxe-table--tooltip-wrapper::after,
+.vxe-table--tooltip-wrapper .vxe-table--tooltip-arrow {
+  display: none !important;
+}
+
+.el-app input[type=checkbox],
+.el-app input[type=radio] {
+  width: 0;
+  height: 0;
+  border: 0;
+}
+
+.erd-scrollbar::-webkit-scrollbar, .erd-scollbar::-webkit-scrollbar {
+  width: 8px;
+  height: auto;
+  border-radius: 8px;
+}
+.erd-scrollbar::-webkit-scrollbar:horizontal, .erd-scollbar::-webkit-scrollbar:horizontal {
+  width: auto;
+  height: 8px;
+}
+.erd-scrollbar::-webkit-scrollbar-thumb, .erd-scollbar::-webkit-scrollbar-thumb {
+  position: relative;
+  display: block;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #d9d9d9;
+  -webkit-transition: 0.3s background-color;
+  transition: 0.3s background-color;
+}
+.erd-scrollbar::-webkit-scrollbar-track, .erd-scollbar::-webkit-scrollbar-track {
+  width: 12px;
+  height: auto;
+  background-color: transparent;
+}
+.erd-scrollbar::-webkit-scrollbar-track:horizontal, .erd-scollbar::-webkit-scrollbar-track:horizontal {
+  width: auto;
+  height: 12px;
+}
+
+.el-app .el-input--medium .el-input__inner {
+  line-height: 32px;
+}
+.el-app .el-dialog.no-footer .el-dialog__body {
+  padding: 16px;
+}
+.el-app .el-form--inline .el-form-item {
+  margin-right: 8px;
+}
+
+.ultra-logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-loading {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+.custom-loading .el-loading-spinner i {
+  color: #d1d1d1;
+  font-size: 46px;
+}
+.custom-loading .el-loading-spinner .el-loading-text {
+  font-size: 16px;
+}
+
+.tree-management {
+  padding-bottom: 16px;
+}
+.tree-management .tree-header {
+  padding: var(--largePadding) var(--bigPadding) var(--normalPadding) var(--bigPadding);
+  padding-bottom: var(--normalSpace);
+}
+.tree-management .tree-header .tree-title {
+  color: var(--colorTextNormal);
+  line-height: 28px;
+  font-size: var(--fontSizeLarge);
+  font-weight: 700;
+  margin-bottom: var(--largeSpace);
+}
+.tree-management .tree-header .tree-operation {
+  margin-top: var(--bigSpace);
+}
+.tree-management .el-tree-node__content {
+  display: flex;
+  width: 100%;
+}
+.tree-management .el-tree-node__content .tree-content {
+  display: flex;
+  width: calc(100% - 25px);
+  min-width: 0;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+.tree-management .el-tree-node__content .tree-content .tree-operation {
+  display: none;
+}
+.tree-management .el-tree-node__content .tree-content .tree-operation .tree-drag {
+  margin-right: 6px;
+  background-color: #ebf1ff;
+}
+.tree-management .el-tree-node__content .tree-content .tree-operation .tree-drag i {
+  font-size: 18px !important;
+}
+.tree-management .el-tree-node__content .tree-content .tree-text {
+  flex: 1;
+  width: calc(100% - 35px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tree-management .el-tree-node__content .tree-content:hover .tree-operation {
+  display: inline-flex;
+}
+
+.fam-resizable-container,
+.fam-resizable-container__left,
+.fam-type-tree {
+  height: 100%;
+}
+
+.tree-list {
+  width: 100%;
+}
+
+.hoverable:hover {
+  background-color: var(--colorHover);
+}
+
+.layout-component__plain-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--layoutHeaderPlainButtonSize);
+  height: var(--layoutHeaderPlainButtonSize);
+  line-height: var(--layoutHeaderPlainButtonSize);
+  background-color: var(--layoutHeaderPlainButtonBgColor) !important;
+  margin-left: 0 !important;
+  border-radius: 50%;
+  text-align: center;
+  color: var(--colorWhite);
+}
+.layout-component__plain-button:hover {
+  color: var(--colorWhite) !important;
+}
+.layout-component__plain-button .erd-iconfont {
+  font-size: var(--fontSizeLarge);
+}
+
+.el-scrollbar__bar.is-vertical {
+  width: 12px;
+}
+
+.el-scrollbar__bar.is-vertical > div {
+  width: 4px;
+  margin: 0 auto;
+}
+
+.el-scrollbar__bar.is-horizontal {
+  height: 12px;
+}
+
+.el-scrollbar__bar.is-horizontal > div {
+  height: 4px;
+  line-height: 12px;
+}
+
+.vxe-table--footer-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.vxe-table--footer-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+  background: rgba(144, 147, 153, 0.3);
+}
+.vxe-table--footer-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(144, 147, 153, 0.5);
+}
+
+/*# sourceMappingURL=index.css.map */

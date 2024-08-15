@@ -1,0 +1,152 @@
+<div
+    id="bpm-launcher-content"
+    class="bpm-launcher-content"
+    v-loading="loading"
+    v-cloak
+>
+    <div class="bpm-launcher-content__left h-100p">
+        <BpmProcessNavigation
+            :activities="activities"
+            :currentActivityId="startEventActivityId"
+            :collapsed.sync="collapsed"
+        ></BpmProcessNavigation>
+    </div>
+
+    <div
+        class="bpm-launcher-content__right flex flex-column h-100p"
+        :style="collapsedStyle"
+    >
+        <div
+            class="bpm-launcher-header bg-white"
+            ref="launcherHeader"
+        >
+            <div class="bpm-launcher-title font-bold ellipsis">{{processDefinition.name}}</div>
+            <erd-button
+                size="small"
+                @click="viewFlowChart"
+                >{{i18n.flowChart}}</erd-button
+            >
+        </div>
+        <div class="bpm-launcher-body grow-1">
+            <FamAnchorNavigation
+                :panelConfig="launcherContent"
+                class="bg-white"
+            >
+                <!-- 基本信息 -->
+                <template #bpmProcessBasicInfo>
+                    <component
+                        v-if="bpmProcessPanel.bpmProcessBasicInfo"
+                        ref="bpmProcessBasicInfo"
+                        :is="bpmProcessPanel.bpmProcessBasicInfo"
+                        :basic-infos="basicInfos"
+                        :pbo-data="pboData"
+                        :is-secret="isSecret"
+                        :is-process-security-disabled="isProcessSecurityReadonly"
+                    ></component>
+                    <bpm-process-basic-info
+                        v-if="!bpmProcessPanel.bpmProcessBasicInfo && basicInfoLoading"
+                        ref="bpmProcessBasicInfo"
+                        :basic-infos="basicInfos"
+                        :is-secret="isSecret"
+                        :is-process-security-readonly="isProcessSecurityReadonly"
+                        style="overflow: hidden"
+                        @get-security-label="getSecurityLabel"
+                    ></bpm-process-basic-info>
+                    <BpmProcessVariables
+                        v-if="globalVariable.length"
+                        ref="processVariables"
+                        class="mt-12"
+                        :processVariables="globalVariable"
+                    ></BpmProcessVariables>
+                </template>
+                <!-- 业务对象 -->
+                <template #bpmProcessPartial>
+                    <bpm-process-partial
+                        v-if="partialUrl"
+                        ref="bpmProcessPartial"
+                        :partial-url="partialUrl"
+                        :activity-id="startEventActivityId"
+                        :task-infos="taskInfos"
+                        :custom-form-json="customFormJson"
+                        :process-infos="processDefinition"
+                        :draft-infos="draftInfos"
+                        :process-step="'launcher'"
+                        :basicInfos.sync="basicInfos"
+                        @partial-security="getPartialSecurity"
+                    ></bpm-process-partial>
+                </template>
+                <!-- 处理人配置 -->
+                <template #bpmLauncherParticipant>
+                    <bpm-launcher-participant
+                        v-if="!launcherParticipantLoading"
+                        ref="bpmLauncherParticipant"
+                        :process-role-config="processRoleConfig"
+                        :handler-configuration="handlerConfiguration"
+                        :user-role-map="userRoleMap"
+                        :holder-ref="holderRef"
+                        :container-ref="containerRef"
+                        :process-definition-key="processDefinitionKey"
+                        :activity-id="startEventActivityId"
+                        :process-status="processStatus"
+                        :start-activity="startActivity"
+                        :is-secret="isSecret"
+                        :security-label="securityLabel"
+                        @show-handler-configuration="showHandlerConfiguration"
+                    ></bpm-launcher-participant>
+                </template>
+                <!-- 知会人配置 -->
+                <template #inform>
+                    <FamDynamicForm
+                        ref="informForm"
+                        :form.sync="informForm"
+                        :data="informFormConfigs"
+                    ></FamDynamicForm>
+                </template>
+                <!-- 附件 -->
+                <template #attachment>
+                    <bpm-process-attachment
+                        ref="bpmProcessAttachment"
+                        v-if="customUploadBtnMounted"
+                        :show-upload="false"
+                        :original-attachments="attachments"
+                        :oid="params.pboOid"
+                        :is-secret="isSecret"
+                        reference=".bpm-upload-btn"
+                        :security-label="securityLabel"
+                    ></bpm-process-attachment>
+                </template>
+                <template #attachmentHeaderRight>
+                    <erd-button
+                        size="small"
+                        ref="customUploadBtn"
+                        class="bpm-upload-btn"
+                        @click="attachmentUpLoad"
+                        >{{i18n.uploadAttachment}}
+                    </erd-button>
+                </template>
+            </FamAnchorNavigation>
+        </div>
+        <div
+            class="bpm-launcher-footer bordered-table bg-white"
+            ref="launcherFooter"
+        >
+            <erd-button type="primary" :loading="launchSubmitLoading" @click="launch">{{i18n.submit}}</erd-button>
+            <erd-button :loading="launchSubmitLoading" @click="saveAsDraft">{{i18n.saveDraft}}</erd-button>
+            <erd-button :loading="launchSubmitLoading" @click="goBack">{{i18n.goBack}}</erd-button>
+        </div>
+    </div>
+
+    <!-- 查看流程图 -->
+    <erd-ex-dialog
+        :title="bpmFlowchart.title"
+        :visible.sync="bpmFlowchart.visible"
+        fullscreen
+        :show-fullscreen="false"
+    >
+        <bpm-flowchart
+            v-if="bpmFlowchart.visible"
+            ref="bpmFlowchart"
+            :processDefinitionId="bpmFlowchart.processDefinitionId"
+        ></bpm-flowchart>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,170 @@
+.fam-view-navbar-component {
+    width: 100%;
+    min-height: var(--layoutSecondaryMenuHeiht);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--colorSplit);
+    background-color: var(--colorFullBg);
+    .border-bottom {
+        border-bottom: 1px solid var(--colorSplit);
+    }
+    .hideTop {
+        border-top: none !important;
+        border-top-width: 0 !important;
+        background-color: transparent !important;
+    }
+    .myellipsis {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+    }
+    .el-menu {
+        background-color: var(--colorFullBg) !important;
+    }
+    .el-menu-item,
+    .el-submenu {
+        @extend .hideTop;
+        @extend .myellipsis;
+        margin: 0 var(--bigPadding);
+        &.is-active {
+            border-bottom: 3px solid var(--colorPrimary) !important;
+            background-color: transparent !important;
+            .el-submenu__icon-arrow {
+                color: var(--colorPrimary) !important;
+            }
+        }
+    }
+    .el-menu-item {
+        height: calc(var(--tabsItemHeaderTabHeight));
+        line-height: calc(var(--tabsItemHeaderTabHeight));
+    }
+    .el-menu.el-menu--horizontal {
+        border-bottom: none;
+    }
+    .my-el-submenu {
+        max-width: var(--leftSubMenuWidth);
+        height: calc(var(--tabsItemHeaderTabHeight));
+        line-height: calc(var(--tabsItemHeaderTabHeight));
+        .el-submenu__icon-arrow {
+            margin-left: 4px;
+        }
+        &.is-opened {
+            .el-submenu__icon-arrow {
+                color: var(--colorPrimary);
+            }
+        }
+        .el-submenu__title {
+            @extend .hideTop;
+            color: var(--colorTextExplain);
+            max-width: var(--leftSubMenuWidth);
+            height: calc(var(--navMenuItemHeight) - 2px) !important;
+            margin: 0;
+        }
+    }
+    .more-menu-title {
+        @extend .myellipsis;
+        max-width: 100px;
+        height: calc(var(--tabsItemHeaderTabHeight));
+        line-height: calc(var(--tabsItemHeaderTabHeight));
+    }
+
+    .right-oper-container {
+        display: flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 var(--bigPadding);
+        position: relative;
+        margin-left: 1px;
+        .el-button--medium {
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            color: #bebebe;
+            background-color: #bebebe;
+            width: 1px;
+            height: 16px;
+            top: 8px;
+            left: -1px;
+        }
+    }
+    // .right-oper-container {
+    //     padding: 0 12px 0 0;
+    // }
+    // .right-oper-container::before {
+    //     position: relative;
+    //     top: 8px;
+    //     display: inline-block;
+    //     content: '';
+    //     width: 1px;
+    //     height: 24px;
+    //     margin-right: 12px;
+    //     background-color: var(--colorBorder);
+    // }
+
+    .custom-right-viewNavbar-first-slot, .custom-right-viewNavbar-end-slot { 
+        display: flex;
+        align-items: center;
+    }
+
+    .custom-right-viewNavbar-first-slot {
+        // padding: 0 12px;
+    }
+
+    .custom-right-viewNavbar-end-slot {
+        margin-left: auto;
+        padding: 0 16px;
+    }
+    .left-menubar-container {
+        ul.el-menu--horizontal {
+            .el-menu-item {
+                max-width: 280px;
+                color: var(--colorTextNormal);
+                &:hover,
+                &.is-active {
+                    color: var(--colorPrimary) !important;
+                }
+            }
+        }
+    }
+    //margin-bottom: 8px;
+}
+.my-checkbox input[type='checkbox']:checked::after {
+    content: '';
+}
+.my-el-more-submenu {
+    .el-menu {
+        min-width: 76px;
+        max-height: 370px;
+        overflow: auto;
+        li {
+            flex-wrap: nowrap;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            &.el-menu-item {
+                color: var(--colorTextExplain);
+                display: block;
+            }
+        }
+        /*滚动条样式*/
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+            background: rgba(144, 147, 153, 0.3);
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(144, 147, 153, 0.5);
+        }
+    }
+}

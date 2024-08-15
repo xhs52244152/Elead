@@ -1,0 +1,250 @@
+﻿<html>
+    <head>
+        <meta
+            http-equiv="Content-Type"
+            content="text/html; charset=utf-8"
+        />
+        <!-- <link rel="stylesheet" type="text/css" href="/libs/layui/css/layui.css"/> -->
+        <link
+            rel="stylesheet"
+            href="style.css"
+            type="text/css"
+            media="screen"
+        />
+        <script
+            src="js/jstools.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/raphael.2.1.1-min.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+
+        <script
+            src="js/jquery/jquery.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/jquery/jquery.progressbar.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/jquery/jquery.asyncqueue.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <!-- <script type="text/javascript" src="/libs/layui/layui.js"></script> -->
+        <style>
+            #diagramInfo {
+                position: absolute;
+                display: none;
+                padding: 7px;
+                border-radius: 7px;
+
+                background: linear-gradient(#fff, #ccc 14%, #ededed 86%, #fff);
+                box-shadow: 0px 1px 7px 1px #777;
+            }
+        </style>
+        <style
+            type="text/css"
+            media="screen"
+        >
+            .yourclass {
+                border-radius: 10px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div
+                id="pb1"
+                style="display: none"
+            ></div>
+            <div id="overlayBox">
+                <div
+                    id="diagramBreadCrumbs"
+                    style="display: none"
+                    class="diagramBreadCrumbs"
+                    onmousedown="return false"
+                    onselectstart="return false"
+                ></div>
+                <div
+                    id="diagramHolder"
+                    class="diagramHolder"
+                ></div>
+            </div>
+            <div id="diagramInfo"></div>
+        </div>
+
+        <script
+            src="js/Color.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/Polyline.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/ActivityImpl.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/ActivitiRest.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/LineBreakMeasurer.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/ProcessDiagramGenerator.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+        <script
+            src="js/ProcessDiagramCanvas.js"
+            type="text/javascript"
+            charset="utf-8"
+        ></script>
+
+        <script language="javascript">
+            var DiagramGenerator = {};
+            var pb1;
+            $(document).ready(function () {
+                require(["erdc-kit"], function (ErdcKit) {
+                    var query_string = {};
+                    var query = window.location.search.substring(1);
+                    var vars = query.split("&");
+                    for (var i = 0; i < vars.length; i++) {
+                        var pair = vars[i].split("=");
+                        query_string[pair[0]] = pair[1];
+                    }
+
+                    $.ajaxSetup({
+                        headers: ErdcKit.defaultHeaders()
+                    });
+
+                    var processDefinitionId = query_string["processDefinitionId"];
+                    var processInstanceId = query_string["processInstanceId"];
+
+                    processDefinitionId = processDefinitionId
+                        ? window.decodeURIComponent(processDefinitionId)
+                        : processDefinitionId;
+                    processInstanceId = processInstanceId
+                        ? window.decodeURIComponent(processInstanceId)
+                        : processInstanceId;
+
+                    if (processInstanceId === '""') {
+                        processInstanceId = "";
+                    }
+
+                    pb1 = new $.ProgressBar({
+                        boundingBox: "#pb1",
+                        label: "Progressbar!",
+                        on: {
+                            complete: function () {
+                                //        this.set('label', 'complete!');
+                                //        $('#pb1').remove();
+                                if (processInstanceId) {
+                                    ProcessDiagramGenerator.drawHighLights(processInstanceId);
+                                }
+                            },
+                            valueChange: function (e) {
+                                this.set("label", e.newVal + "%");
+                            }
+                        },
+                        value: 0
+                    });
+                    //
+
+                    ProcessDiagramGenerator.options = {
+                        diagramBreadCrumbsId: "diagramBreadCrumbs",
+                        diagramHolderId: "diagramHolder",
+                        diagramInfoId: "diagramInfo",
+                        on: {
+                            click: function (canvas, element, contextObject) {
+                                window.require(["EventBus"], function (EventBus) {
+                                    EventBus.emit(
+                                        "workflow:flowchart:diagram:click:event",
+                                        canvas,
+                                        element,
+                                        contextObject
+                                    );
+                                });
+                                //        var mouseEvent = this;
+                                //
+                                if (contextObject.getProperty("type") == "userTask") {
+                                    //ProcessDiagramGenerator.showActivityInfo(contextObject,canvas);
+                                }
+                            },
+                            rightClick: function (canvas, element, contextObject) {
+                                var mouseEvent = this;
+                                //
+                            },
+                            over: function (canvas, element, contextObject) {
+                                var mouseEvent = this;
+                                if (contextObject.getProperty("type") == "userTask") {
+                                    ProcessDiagramGenerator.showActivityInfo(contextObject, canvas);
+                                }
+                                // TODO: show tooltip-window with contextObject info
+                            },
+                            out: function (canvas, element, contextObject) {
+                                var mouseEvent = this;
+                                if (contextObject.getProperty("type") == "userTask") {
+                                    ProcessDiagramGenerator.hide("diagramInfo");
+                                }
+                                //ProcessDiagramGenerator.hideInfo();
+                            }
+                        }
+                    };
+
+                    var baseUrl = window.document.location.protocol + "//" + window.document.location.host + "/";
+                    var shortenedUrl = window.document.location.href.replace(baseUrl, "");
+                    baseUrl = baseUrl + shortenedUrl.substring(0, shortenedUrl.indexOf("/"));
+
+                    ActivitiRest.options = {
+                        /* processInstanceHighLightsUrl: baseUrl + "/service/process-instance/{processInstanceId}/highlights?callback=?",
+        processDefinitionUrl: baseUrl + "/service/process-definition/{processDefinitionId}/diagram-layout?callback=?",
+        processDefinitionByKeyUrl: baseUrl + "/service/process-definition/{processDefinitionKey}/diagram-layout?callback=?" */
+                        processInstanceHighLightsUrl: window
+                            .require("erdc-kit")
+                            .urlServicePrefix(
+                                "/bpm/flowchart/processinstance/{processInstanceId}/{processDefinitionId}/highlights?callback=?"
+                            ),
+                        processDefinitionUrl: window
+                            .require("erdc-kit")
+                            .urlServicePrefix(
+                                "/bpm/flowchart/processinstance/{processDefinitionId}/diagramlayout?processInstanceId={processInstanceId}&callback=?"
+                            ),
+                        processDefinitionByKeyUrl: window
+                            .require("erdc-kit")
+                            .urlServicePrefix(
+                                "/bpm/flowchart/processdefinition/{processDefinitionKey}/diagramlayout?callback=?"
+                            ),
+                        processInterfaces: window
+                            .require("erdc-kit")
+                            .urlServicePrefix(
+                                "/bpm/procinst/query/config/list/{processInstanceId}/{processDefinitionId}"
+                            )
+                    };
+
+                    if (processDefinitionId) {
+                        ProcessDiagramGenerator.drawDiagram(processDefinitionId, processInstanceId);
+                    } else {
+                        alert("processDefinitionId parameter is required");
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

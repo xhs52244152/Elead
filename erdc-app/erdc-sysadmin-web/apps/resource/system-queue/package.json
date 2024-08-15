@@ -1,0 +1,7 @@
+{
+  "name": "@erdc-resource/system-queue",
+  "version": "3.1.0",
+  "description": "队列",
+  "erdcData": {},
+  "appId": "plat"
+}

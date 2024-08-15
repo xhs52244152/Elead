@@ -1,0 +1,46 @@
+.permission-title-box {
+    display: flex;
+    justify-content: space-between;
+}
+.permission-title-left {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    align-items: center;
+}
+
+.return-icon {
+    font-size: var(--fontSizeLarge);
+}
+.permission-title-left-content {
+    height: 28px;
+    font-size: var(--fontSizeLarge);
+    color: var(--colorTextNormal);
+    letter-spacing: 0;
+    line-height: 28px;
+    font-weight: 700;
+}
+
+.permission-left-return {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: 14px;
+    font-size: var(--fontSize);
+    cursor: pointer;
+}
+.return-content {
+    padding-left: 4px;
+}
+.permission-line-style {
+    width: 1px;
+    height: 16px;
+    background: #999999;
+    margin: 0px 15px;
+}
+.permission-option-icon {
+    color: #567ffd;
+    font-size: 17px;
+    padding-left: 4px;
+    cursor: pointer;
+}

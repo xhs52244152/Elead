@@ -1,0 +1,214 @@
+<div id="codeRuleConfig">
+    <div class="code-rule-config__container">
+        <div class="code-rule-config left">
+            <div class="code-rule-config__header title">{{i18n.rule}}</div>
+            <div class="content code-rule-config-rule">
+                <vue-draggable
+                    v-model="codeRuleArr"
+                    :options="{group:{name: 'ruleConfig',pull:'clone'},sort: false}"
+                    @choose="onChoose"
+                    @end="onEnd"
+                >
+                    <transition-group>
+                        <div
+                            class="code-rule-config-rule-item"
+                            v-for="item in codeRuleArr"
+                            :key="item.id"
+                            :style="style(item)"
+                        >
+                            {{item.name}}
+                        </div>
+                    </transition-group>
+                </vue-draggable>
+            </div>
+        </div>
+        <div class="code-rule-config right">
+            <div class="top">
+                <div class="code-rule-config__header flex config-header">
+                    <div class="config-left title">{{i18n.config}}</div>
+                    <div class="config-right">
+                        <erd-button
+                            v-if="type === 'CUSTOM'"
+                            size="mini"
+                            @click="variableTranConfig"
+                        >
+                            {{i18n.variableConversionConfig}}
+                        </erd-button>
+                        <erd-dropdown
+                            size="mini"
+                            trigger="click"
+                        >
+                            <erd-button size="mini">
+                                <span>{{i18n.help}}</span><i class="el-icon-arrow-down el-icon--right"></i>
+                            </erd-button>
+                            <template slot="dropdown">
+                                <erd-dropdown-menu>
+                                    <erd-dropdown-item @click.native="codeRuleTipsVisible = true">
+                                        {{i18n.rule}}
+                                    </erd-dropdown-item>
+                                    <erd-dropdown-item
+                                        v-if="type === 'CUSTOM'"
+                                        @click.native="variableTranVisible = true"
+                                    >
+                                        {{i18n.variableConversion}}
+                                    </erd-dropdown-item>
+                                </erd-dropdown-menu>
+                            </template>
+                        </erd-dropdown>
+                    </div>
+                </div>
+                <erd-scrollbar>
+                    <div class="content code-rule-config-config">
+                        <vue-draggable
+                            v-model="codeRuleConfigArr"
+                            class="draggable-content"
+                            :group="{name: 'ruleConfig', put: couldInto}"
+                            @end="darpEnd"
+                        >
+                            <transition-group>
+                                <div
+                                    class="code-rule-config-config-item"
+                                    v-for="(item, index) in codeRuleConfigArr"
+                                    :class="{
+                                        'active' : item.active
+                                    }"
+                                    :key="index + item.id"
+                                    :style="style(item)"
+                                    @click="itemAvtive(item, index)"
+                                >
+                                    <div
+                                        class="right-semicircle"
+                                        :class="{'active-semicircle': item.activeSemicircle}"
+                                        :style="style(item)"
+                                    ></div>
+                                    <div
+                                        class="right-semicircle-half"
+                                        :style="style(item)"
+                                    ></div>
+                                    <em
+                                        v-if="item.key !== 'SERIAL_NUM'"
+                                        class="el-icon-close close"
+                                        @click="onClose(item, index)"
+                                    ></em>
+                                    <em
+                                        class="isFeatureScript"
+                                        v-if="!!item.featureScript"
+                                        >*</em
+                                    >
+
+                                    <template v-if="item.key === 'DATE'">
+                                        <erd-select
+                                            v-model="item.value"
+                                            :placeholder="i18n.date"
+                                        >
+                                            <erd-option-group
+                                                v-for="(option, k) in item.options"
+                                                :key="k"
+                                                :label="option.label"
+                                            >
+                                                <erd-option
+                                                    v-for="i in option.children"
+                                                    :value="i.value"
+                                                    :key="i.value"
+                                                    :label="i.label"
+                                                ></erd-option>
+                                            </erd-option-group>
+                                        </erd-select>
+                                    </template>
+                                    <template v-if="item.key === 'CONSTANT'">
+                                        <erd-input
+                                            v-model="item.value"
+                                            :placeholder="i18n.constant"
+                                            @input="(data) => inputText(data, item)"
+                                            @focus="itemAvtive(item, index)"
+                                        ></erd-input>
+                                    </template>
+                                    <template v-if="item.key === 'SERIAL_NUM'">
+                                        <erd-input
+                                            v-model="item.value"
+                                            :placeholder="i18n.sequenceCode"
+                                            @input="(data) => inputCodeChar(data, item)"
+                                            @focus="itemAvtive(item, index)"
+                                        ></erd-input>
+                                    </template>
+                                    <template v-if="item.key === 'VARIABLE'">
+                                        <erd-ex-select
+                                            v-model="item.value"
+                                            :placeholder="i18n.variable"
+                                            :options="variableData"
+                                            :default-props="{
+                                                label: 'displayName',
+                                                key: 'attrName',
+                                                value: 'attrName'
+                                            }"
+                                            @change="(data) => variableChange(data, item)"
+                                            @focus="itemAvtive(item, index)"
+                                        ></erd-ex-select>
+                                    </template>
+                                    <div
+                                        v-if="item.active"
+                                        class="code-rule-config-placeholder"
+                                    >
+                                        {{item.placeholder}}
+                                    </div>
+                                </div>
+                            </transition-group>
+                        </vue-draggable>
+                    </div>
+                </erd-scrollbar>
+            </div>
+            <div class="bottom">
+                <div class="code-rule-config__header title">{{i18n.dpreviewate}}</div>
+                <div class="content">{{codeRule}}</div>
+                <div class="content code-rule-config__codeRuleTest">
+                    <span
+                        v-for="item in codeRuleTest"
+                        class="codeRuleTest"
+                        :style="style(item)"
+                        >{{item.displayName}}</span
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <erd-ex-dialog
+        v-if="variableTranConfigVisible"
+        size="meduim"
+        :title="i18n.variableConversion"
+        :visible.sync="variableTranConfigVisible"
+    >
+        <variable-tran-config
+            ref="variableTranConfig"
+            :select-data="selectData"
+            :feature-script="featureScriptConfig"
+            :default-variable="defaultVariable"
+        ></variable-tran-config>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="featureScriptSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="variableTranConfigVisible = false">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        v-if="codeRuleTipsVisible"
+        size="small"
+        :title="i18n.rule"
+        :visible.sync="codeRuleTipsVisible"
+    >
+        <code-rule-tips :default-value="codeRuleTipsValue"></code-rule-tips>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        v-if="variableTranVisible"
+        size="small"
+        :title="i18n.variableConversion"
+        :visible.sync="variableTranVisible"
+    >
+        <variable-tran></variable-tran>
+    </erd-ex-dialog>
+</div>

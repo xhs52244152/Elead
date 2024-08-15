@@ -1,0 +1,68 @@
+<div
+    id="bpm-handler-configuration-content"
+    class="bpm-handler-configuration-content"
+    v-cloak
+>
+    <div
+        v-if="false"
+        class="bpm-handler-configuration-content-header"
+    >
+        <erd-button @click="openParticipantConfig">{{ i18nMappingObj['批量配置处理人'] }}</erd-button>
+    </div>
+    <div
+        class="bpm-handler-configuration-content-body"
+    >
+        <template v-if="handlerConfiguration.length">
+            <erd-steps direction="vertical">
+                <erd-step
+                    v-for="(item, index) in handlerConfiguration"
+                    :key="item.nodeKey + '_' + index"
+                    :class="{ 'el-step-one': index === handlerConfiguration.length - 1 }"
+                >
+                    <span
+                        slot="icon"
+                        class="bpm-handler-configuration-content_icon"
+                    ></span>
+                    <template slot="title">
+                        <div class="bpm-handler-configuration-content_title">
+                            <span class="t1">{{ i18nMappingObj['处理节点名称'] }}</span>
+                            <span class="t2">{{ item.nodeName }}</span>
+                        </div>
+                        <bpm-participant-select
+                            v-on="$listeners"
+                            :table-data="item.tableData"
+                            :column="column"
+                        ></bpm-participant-select>
+                    </template>
+                </erd-step>
+            </erd-steps>
+        </template>
+        <template v-else>
+            <div class="no-data">{{ i18nMappingObj['暂无数据'] }}</div>
+        </template>
+    </div>
+
+    <!-- 批量配置处理人 -->
+    <erd-ex-dialog
+        :title="participantConfigForm.title"
+        :visible.sync="participantConfigForm.visible"
+        size="large"
+    >
+        <BpmParticipantConfig
+            ref="bpmParticipantConfig"
+            :column="batchConfigColumn"
+            :table-data="batchConfigTableData"
+            :batch-default-select="batchDefaultSelect"
+            v-on="$listeners"
+            v-if="participantConfigForm.visible"
+        ></BpmParticipantConfig>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="participantHandleClick"
+                >{{ i18nMappingObj['确定'] }}</erd-button
+            >
+            <erd-button @click="popover({ field: 'participantConfigForm' })">{{ i18nMappingObj['取消'] }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

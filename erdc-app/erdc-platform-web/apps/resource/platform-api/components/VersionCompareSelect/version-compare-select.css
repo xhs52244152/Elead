@@ -1,0 +1,13 @@
+.version-select .compare_select {
+  margin-left: 20px;
+}
+.version-select .compare_label {
+  margin-left: 20px;
+  line-height: 22px;
+}
+.version-select .compare_required {
+  color: #f00;
+  margin-left: 5px;
+}
+
+/*# sourceMappingURL=version-compare-select.css.map */

@@ -1,0 +1,46 @@
+<div id="TypeManageConfig">
+    <FamDynamicForm
+        v-if="createFormShows"
+        ref="createForm"
+        :form.sync="createFormData"
+        :data="createFormConfigs"
+    >
+    </FamDynamicForm>
+    <FamAdvancedForm
+        v-if="!isCreate || hasGetCreateLayout || !innerNeedSelectType"
+        ref="editForm"
+        :model.sync="formData"
+        :form-id="formId"
+        :custom-field="customField"
+        :oid="formOid"
+        :class-name="className"
+        :resolve-widget="resolveWidget"
+        :query-layout-params="layoutParams"
+        :type-reference-info="typeReferenceInfo"
+        :model-mapper="modelMapper"
+        :type-oid="typeOid"
+        :editable-attr="editableAttr"
+        @base-form-data="baseFormData"
+    >
+        <template #type-reference="scope">
+            <custom-select
+                v-if="!scope.readonly"
+                v-model="formData.typeReference"
+                :row="typeReferenceRow"
+                @change="onTypeReferenceChange"
+            ></custom-select>
+            <erd-tooltip
+                v-else
+                placement="top"
+                :tabindex="-1"
+            >
+                <span class="fam-dynamic-form__readonly-field">
+                    {{ innerRawData.typeReference && innerRawData.typeReference.displayName || '' }}
+                </span>
+                <template #content>
+                    <span> {{ innerRawData.typeReference && innerRawData.typeReference.displayName || '' }} </span>
+                </template>
+            </erd-tooltip>
+        </template>
+    </FamAdvancedForm>
+</div>

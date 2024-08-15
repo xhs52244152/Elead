@@ -1,0 +1,67 @@
+<div id="process-node-definition-form" class="process-node-definition-form">
+    <erd-contraction-panel
+        :title="i18nMappingObj.basicInfo"
+        :unfold.sync="expanded"
+    >
+        <template #content>
+            <FamAdvancedForm
+                ref="form"
+                :model.sync="formData"
+                :formId="formId"
+                className="processNodeDef"
+                label-width="120px"
+                :validators="validators"
+                :schemaMapper="schemaMapper"
+                :query-layout-params="{ objectOid: nodeInfoOid }"
+                @field:change="onFieldChange"
+            >
+                <template #lifecycle="scope">
+                    <erd-select
+                        v-if="!scope.readonly"
+                        v-model="scope.data[scope.formConfig.field]"
+                        style="width: 100%"
+                        filterable
+                        clearable
+                        @change="onFieldChange(scope.formConfig, scope.data[scope.formConfig.field])"
+                        placeholder="请选择"
+                    >
+                        <erd-option
+                            v-for="state in lifecycleStates"
+                            :key="state.oid"
+                            :label="state.displayName"
+                            :value="state.oid"
+                        ></erd-option>
+                    </erd-select>
+
+                    <span v-else>
+                        {{translateState(scope.data[scope.formConfig.field])}}
+                    </span>
+                </template>
+                <template #terminate="scope">
+                    <erd-checkbox
+                        v-model="scope.data[scope.formConfig.field]"
+                        :disabled="scope.readonly || scope.formConfig.disabled"
+                        @change="onFieldChange(scope.formConfig, scope.data[scope.formConfig.field])"
+                    ></erd-checkbox>
+                </template>
+                <template #ismail="scope">
+                    <erd-checkbox
+                        v-model="scope.data[scope.formConfig.field]"
+                        :disabled="scope.readonly || scope.formConfig.disabled"
+
+                        @change="onFieldChange(scope.formConfig, scope.data[scope.formConfig.field])"
+                    ></erd-checkbox>
+                </template>
+                <template #serialnumber="scope">
+                    <erd-input-number
+                        v-if="!scope.readonly"
+                        v-model="scope.data[scope.formConfig.field]"
+                        :disabled="scope.readonly || scope.formConfig.disabled"
+                        @change="onFieldChange(scope.formConfig, scope.data[scope.formConfig.field])"
+                    ></erd-input-number>
+                    <span v-else>{{scope.data[scope.formConfig.field]}}</span>
+                </template>
+            </FamAdvancedForm>
+        </template>
+    </erd-contraction-panel>
+</div>

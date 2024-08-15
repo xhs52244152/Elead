@@ -1,0 +1,9 @@
+<div class="bpm-participant-config-content">
+    <bpm-participant-select
+        ref="bpmParticipantSelect"
+        @hook:mounted="batchDefaultSelect && batchConfigDefaultSelect()"
+        v-on="$listeners"
+        :table-data="innerTableData"
+        :column="innerColumn"
+    ></bpm-participant-select>
+</div>

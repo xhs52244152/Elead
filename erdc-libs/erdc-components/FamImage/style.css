@@ -1,0 +1,15 @@
+.fam-autograph-upload .el-upload--picture-card {
+    width: auto;
+    height: auto;
+    line-height: 100%;
+    background-color: #f5f5f5;
+}
+.fam-autograph-upload .el-upload--picture-card .el-icon-plus {
+    font-size: 16px;
+}
+.fam-autograph-upload .el-upload-list--picture-card .el-upload-list__item {
+    width: auto;
+    height: auto;
+    line-height: 100%;
+    transition: none;
+}

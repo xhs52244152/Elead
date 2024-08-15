@@ -1,0 +1,38 @@
+<div
+    id="process-signal-definition"
+    class="process-signal-definition"
+>
+    <erd-contraction-panel :unfold.sync="expanded">
+        <template #title>
+            <span class="panel-title">{{i18n.signalDefinition}}</span>
+            <erd-tooltip
+                effect="dark"
+                placement="top"
+                class="ml-4 mr-4 panel-title-icon font-bold"
+                :content="i18n.signalDefinitionTips"
+            >
+                <em class="erd-iconfont erd-icon-help"></em>
+            </erd-tooltip>
+        </template>
+
+        <template #header-right>
+            <erd-button
+                v-if="!readonly && expanded"
+                size="small"
+                @click="addRow"
+                >{{i18n.add}}
+            </erd-button>
+        </template>
+
+        <template #content>
+            <EditableTable
+                ref="table"
+                :data.sync="tableData"
+                :column="column"
+                :rules="rules"
+                keyField="_id"
+                :readonly="readonly"
+            ></EditableTable>
+        </template>
+    </erd-contraction-panel>
+</div>

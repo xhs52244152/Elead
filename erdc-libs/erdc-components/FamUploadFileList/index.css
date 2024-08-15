@@ -1,0 +1,13 @@
+.upload-file-list_table .fam-upload__file-list__table {
+  margin-top: var(--normalPadding);
+}
+.upload-file-list_table .my-link-btn {
+  color: var(--buttonTextColor);
+  cursor: pointer;
+}
+.upload-file-list_table .my-link-btn.disabled {
+  color: unset;
+  cursor: unset;
+}
+
+/*# sourceMappingURL=index.css.map */

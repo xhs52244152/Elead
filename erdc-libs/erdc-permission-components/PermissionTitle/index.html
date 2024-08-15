@@ -1,0 +1,70 @@
+<div id="permissionTitle">
+    <div class="permission-title-box plr-xl">
+        <div class="permission-title-left p-normal align-items-center">
+            <div
+                class="permission-left-return flex align-items-center"
+                v-if="!isEditShow"
+                @click="cancelReadPermission"
+            >
+                <erd-icon
+                    icon="el-icon-back"
+                    class="return-icon"
+                ></erd-icon>
+                <div class="return-content">{{i18nMappingObj.back}}</div>
+                <div class="permission-line-style"></div>
+            </div>
+            <div
+                class="permission-title-left-select flex align-items-center"
+                v-if="isEditShow"
+            >
+                <erd-tooltip
+                    class="item"
+                    effect="dark"
+                    disabled
+                    :content="selectedLabel"
+                    placement="top"
+                >
+                    <erd-select
+                        v-if="currentLevel"
+                        v-model="currentLevel"
+                        :class="['permission-title-select-custom flex align-items-center text-lg h-32', isShowReturnback ? '' : 'custom-none-icon']"
+                        :disabled="!isShowReturnback"
+                        @change="handlerChangeSiteOrg"
+                    >
+                        <template slot="prefix">{{ selectedLabel }}</template>
+                        <erd-option
+                            v-for="item in selectOptions"
+                            :key="item.id"
+                            :label="item.label"
+                            :value="item.id"
+                        ></erd-option>
+                    </erd-select>
+                </erd-tooltip>
+            </div>
+            <div
+                v-else
+                class="no-edit-permission-no-select"
+            >
+                <span>{{i18nMappingObj.viewPermission}}</span>
+                <span class="no-edit-permission-no-select-tips">{{selectedLabel}}</span>
+            </div>
+        </div>
+        <div class="permission-title-right">
+            <erd-button
+                v-if="isShowReadBtn"
+                @click="handlerReadPermission"
+            >
+                {{i18nMappingObj.viewPermission}}
+            </erd-button>
+            <erd-tooltip
+                v-if="!isShowReadBtn"
+                class="item mlr-8 cursor-pointer color-primary"
+                effect="dark"
+                :content="i18n.tooltips"
+                placement="left"
+            >
+                <erd-icon icon="help"></erd-icon>
+            </erd-tooltip>
+        </div>
+    </div>
+</div>

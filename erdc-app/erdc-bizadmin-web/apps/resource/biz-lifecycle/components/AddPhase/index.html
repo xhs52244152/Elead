@@ -1,0 +1,40 @@
+<div id="AddPhase">
+    <erd-ex-dialog
+        :title="i18nMappingObj.addStatus"
+        :visible.sync="innerVisible"
+    >
+        <div id="add-phase-dialog">
+            <div class="bg-normal text-sm p-16 mb-16">{{i18nMappingObj.addStatusTip}}</div>
+            <FamDynamicForm
+                ref="addPhaseForm"
+                :data="data"
+                :form="formData"
+            >
+                <template v-slot:stateComponent="scope">
+                    <custom-select
+                        v-model="scope.data[scope.formConfig.field]"
+                        :row="phaseRow"
+                        multiple
+                        clearable
+                        filterable
+                        :collapse-tags="false"
+                        @callback="phaseCallback"
+                    >
+                    </custom-select>
+                    <div class="phase-tips">
+                        <span>{{i18nMappingObj.noYouWant}}</span>
+                        <a @click="createState">{{i18nMappingObj.addStatus}}</a>
+                    </div>
+                </template>
+            </FamDynamicForm>
+        </div>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="addPhase"
+                >{{i18nMappingObj.confirm}}</erd-button
+            >
+            <erd-button @click="toogleShow">{{i18nMappingObj.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

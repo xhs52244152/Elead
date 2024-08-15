@@ -1,0 +1,67 @@
+<div class="right-container h-100p">
+    <div class="h-100p">
+        <div class="flex flex-column h-100p">
+            <div class="flex align-items-center font-14 mb-12">
+                <span class="title font-bold">{{i18n.globalSearchView}}</span>
+                <span class="ml-8 mr-8 color-disabled">({{viewList.length}})</span>
+                <erd-tooltip placement="right">
+                    <div slot="content">
+                        <div>{{i18n.globalSearchViewTip1}}</div>
+                        <div>{{i18n.globalSearchViewTip2}}</div>
+                    </div>
+                    <i class="erd-iconfont erd-icon-help help font-16 color-primary"></i>
+                </erd-tooltip>
+            </div>
+
+            <div class="main flex-1 flex flex-column p-12 bordered">
+                <div class="main-search mb-12">
+                    <erd-input
+                        v-model="searchKey"
+                        suffix-icon="erd-iconfont erd-icon-search"
+                        :placeholder="i18n.pleaseEnterTips"
+                        clearable
+                        size="large"
+                    >
+                    </erd-input>
+                </div>
+                <div class="main-content flex-1 overflow-hidden">
+                    <erd-scrollbar class="h-100p">
+                        <div
+                            v-show="checkedNodes.length"
+                            class="h-100p"
+                        >
+                            <ul v-show="viewList.length">
+                                <el-radio-group
+                                    v-model="tableKey"
+                                    class="w-100p"
+                                    @change="setTableKey"
+                                >
+                                    <li
+                                        v-for="item in filteredViewList"
+                                        :key="item.key"
+                                        class="p-8"
+                                    >
+                                        <el-radio :label="item.key">{{item.displayName}}</el-radio>
+                                    </li>
+                                </el-radio-group>
+                            </ul>
+                            <div v-show="!viewList.length">
+                                <div
+                                    class="flex justify-center align-items-center"
+                                    style="height: 100px"
+                                >
+                                    <span>{{i18n.notFoundView }} </span>
+                                    <span
+                                        class="link-span pl-4"
+                                        @click="openCreateTableTab"
+                                        >{{i18n.createViewTable}}</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </erd-scrollbar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

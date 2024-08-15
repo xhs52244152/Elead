@@ -1,0 +1,9 @@
+#tenantForm {
+    height: 100%;
+    /* padding: 16px; */
+}
+#tenantForm .title {
+    font-size: 16px;
+    color: rgba(0,0,0,0.85);
+    font-weight: bolder;
+}

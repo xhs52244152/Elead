@@ -1,0 +1,56 @@
+.i18nRoleName {
+  position: relative;
+  width: 100%;
+}
+.i18nRoleName .intermation {
+  position: absolute !important;
+  bottom: 0px !important;
+  right: 1px !important;
+  cursor: pointer;
+  display: flex;
+  width: 30px;
+  height: 100%;
+  border: 1px solid var(--inputBorderColor);
+  background-color: var(--colorFullBg);
+  color: var(--colorPrimary) !important;
+  align-items: center;
+  justify-content: center;
+}
+.i18nRoleName .intermation:hover {
+  color: var(--colorPrimary) !important;
+  border-color: var(--colorPrimary);
+}
+.i18nRoleName .is-active {
+  color: var(--colorPrimary) !important;
+  border-color: var(--colorPrimary) !important;
+}
+.i18nRoleName .is-disabled {
+  cursor: not-allowed !important;
+  color: var(--colorDisabledIcon) !important;
+}
+.i18nRoleName .is-disabled:hover {
+  color: var(--colorDisabledIcon) !important;
+  border-color: var(--borderColorDisabled);
+}
+
+.tableReadOnly {
+  width: 100%;
+  justify-content: space-between;
+}
+.tableReadOnly .text-content {
+  color: var(--colorTextPlaceholder);
+}
+.tableReadOnly .intermation {
+  cursor: pointer;
+}
+.tableReadOnly .intermation:hover {
+  color: var(--colorPrimary);
+}
+.tableReadOnly .is-disabled {
+  cursor: not-allowed !important;
+}
+
+.el-form-item.is-error .i18nRoleName .intermation {
+  border-color: var(--errorBorderColor) !important;
+  box-shadow: 1px 0px 0px var(--errorBorderColor);
+}/*# sourceMappingURL=style.css.map */

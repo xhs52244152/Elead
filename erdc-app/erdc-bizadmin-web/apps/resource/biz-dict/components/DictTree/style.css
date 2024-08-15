@@ -1,0 +1,14 @@
+#dictTree {
+  background-color: #fff;
+}
+#dictTree .search .el-input__suffix {
+  cursor: pointer;
+  line-height: 32px;
+}
+#dictTree .ree-content:hover {
+  color: #567ffd;
+  background: #ebf1ff;
+}
+#dictTree .tree-management .el-tree-node__content .tree-content {
+  width: calc(100% - 16px);
+}/*# sourceMappingURL=style.css.map */

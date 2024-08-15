@@ -1,0 +1,72 @@
+.erdcloud_doc-app {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+.erdcloud_doc-app .app-container {
+  padding-right: 0;
+  flex: 1 1 auto;
+  height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.erdcloud_doc-app .app-container .app-header {
+  flex: 0 0 auto;
+}
+.erdcloud_doc-app .app-container .app-header .erd-dropdown-link {
+  font-size: var(--fontSizeLarge);
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 28px;
+  font-weight: bold;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.erdcloud_doc-app .app-container .app-header .icon {
+  font-size: var(--fontSizeLarge);
+  font-weight: bold;
+  color: #567ffd;
+}
+.erdcloud_doc-app .app-container .app-content {
+  flex: 1 1 auto;
+  height: 0;
+  overflow: auto;
+}
+.erdcloud_doc-app .app-container .app-content .config-content {
+  margin-right: 17px;
+}
+.erdcloud_doc-app .app-container .app-content .config-group {
+  display: grid;
+  grid-row-gap: 12px;
+  margin-bottom: 24px;
+}
+.erdcloud_doc-app .app-container .app-content .config-group .group-name {
+  display: block;
+  padding-left: 16px;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: bold;
+  margin: 8px 0px -4px;
+}
+.erdcloud_doc-app .app-container .app-content .config-item {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  font-size: var(--fontSize);
+  color: rgba(0, 0, 0, 0.85);
+}
+.erdcloud_doc-app .app-container .app-content .config-item label {
+  width: 190px;
+  flex: 0 0 auto;
+  text-align: right;
+  padding-right: 8px;
+}
+.erdcloud_doc-app .app-footer {
+  flex: 0 0 auto;
+  text-align: center;
+  font-size: 0;
+  border-top: 1px solid #EBEBEB;
+}
+
+/*# sourceMappingURL=index.css.map */

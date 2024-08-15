@@ -1,0 +1,22 @@
+#fam-template-manage {
+  padding: 12px;
+}
+#fam-template-manage .manage-search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+#fam-template-manage .manage-search .fam-manage-tree__search {
+  width: 220px;
+  margin-top: 0;
+  vertical-align: middle;
+}
+#fam-template-manage .manage-table .manage-responsible {
+  padding: 2px;
+  font-size: 12px;
+  line-height: 30px;
+  color: rgb(255, 187, 150);
+  border: 1px solid rgb(255, 187, 150);
+  border-radius: 2px;
+  margin-right: 12px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,156 @@
+.iconDetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .editIcon {
+        display: flex;
+        align-items: center;
+        .iconTips {
+            padding: 0 8px;
+            color: #8c8c8c;
+            font-size: 12px;
+        }
+
+        .defaultIconClassStyle {
+            color: #fff;
+            background-color: #bfbfbf;
+            border-radius: 50%;
+        }
+
+        .iconClassStyle {
+            position: relative;
+            margin-right: 4px;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 16px !important;
+
+            i {
+                position: absolute;
+                top: -4px;
+                left: 16px;
+                color: #bfbfbf;
+                cursor: pointer;
+                display: none;
+            }
+            &:hover i {
+                display: block;
+
+                &:hover {
+                    color: #567ffd;
+                }
+            }
+        }
+    }
+}
+
+.iconStyle {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px !important;
+    color: #fff;
+    background-color: #bfbfbf;
+    border-radius: 50%;
+}
+
+.icon-popover {
+    height: 500px;
+    overflow: auto;
+}
+
+.iconLists {
+    overflow: hidden;
+    list-style: none;
+    padding: 0 !important;
+    border: 1px solid #eaeefb;
+    border-radius: 4px;
+    li {
+        float: left;
+        width: 16.66%;
+        text-align: center;
+        height: 120px;
+        line-height: 120px;
+        color: #666;
+        font-size: 13px;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        margin-right: -1px;
+        margin-bottom: -1px;
+
+        i {
+            display: block;
+            width: auto;
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #606266;
+            transition: color 0.15s linear;
+        }
+
+        span {
+            line-height: normal;
+            color: #99a9bf;
+            transition: color 0.15s linear;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .icon-name {
+            display: inline-block;
+            padding: 0 3px;
+            height: 1em;
+        }
+    }
+
+    li:hover {
+        i,
+        span {
+            color: var(--colorPrimary);
+        }
+    }
+
+    [class^='erd-icon-'] {
+        //font-family: element-icons!important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        vertical-align: baseline;
+        display: inline-block;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+.icon-list:not(.timeline) {
+    margin: 10px 0;
+    padding: 0 0 0 20px;
+    font-size: 14px;
+    font-size: var(--fontSize);
+    color: #5e6d82;
+    line-height: 2em;
+}
+.iconDialog.el-dialog {
+    .el-dialog__header {
+        display: none;
+    }
+    .el-dialog__body {
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: #ccc;
+        }
+    }
+}

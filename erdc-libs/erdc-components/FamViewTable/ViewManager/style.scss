@@ -1,0 +1,14 @@
+
+.fam-view-manager-container{
+    .head-form-container{
+        margin-bottom: 12px;
+        .un-exceed {
+            overflow: hidden; /* 隐藏溢出内容 */
+            text-overflow: ellipsis; /* 使用省略号表示被截断的文本 */
+            white-space: nowrap; /* 强制文本在一行内显示，避免换行 */
+        }
+    }
+    .my-table-form .vxe-cell{
+        text-align: center;
+    }
+}

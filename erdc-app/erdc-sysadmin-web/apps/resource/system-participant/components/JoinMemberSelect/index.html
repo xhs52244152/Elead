@@ -1,0 +1,50 @@
+<div
+    id="JoinMemberSelect"
+    class="join-member-select"
+>
+    <div class="left-main-container">
+        <FamDynamicForm
+            ref="dynamicForm"
+            :form.sync="formData"
+            :data="data"
+        >
+            <template v-slot:memberComponent="scope">
+                <fam-member-select
+                    fixed-height
+                    multiple
+                    clearable
+                    searchScop="all"
+                    :default-value="defaultMemebr"
+                    :isgetdisable="false"
+                    :three-member-env="threeMemberEnv"
+                    @change="fnMemberSelect"
+                ></fam-member-select>
+            </template>
+        </FamDynamicForm>
+    </div>
+    <div
+        class="right-main-container"
+        v-if="false"
+    >
+        <span class="sub-title"
+            >{{ i18nMappingObj.selectedUsers}} ({{i18nMappingObj.totals}}{{ selectedMemberList.length }}{{
+            i18nMappingObj.company}})</span
+        >
+        <div class="user-list-body">
+            <div
+                class="user-item"
+                v-for="item in selectedMemberList"
+            >
+                <div class="left-user-body">
+                    <em class="el-input__icon el-icon-user"></em>
+                    <div class="user-info">{{ item.name }} ({{ item.code }})</div>
+                </div>
+                <erd-icon
+                    class="el-icon-hover-class cursor-pointer user-close-icon"
+                    icon="el-icon-close"
+                    @click.native="fnRemoveSelected(item)"
+                ></erd-icon>
+            </div>
+        </div>
+    </div>
+</div>

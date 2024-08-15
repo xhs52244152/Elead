@@ -1,0 +1,174 @@
+<div id="CodeRuleForm">
+    <fam-advanced-form
+        ref="editForm"
+        :model.sync="formData"
+        :form-id="formId"
+        :object-oid="oid"
+        :class-name="className"
+        :schema-mapper="schemaMapper"
+        :resolve-widget="resolveWidget"
+        :editable-attr="['varFromType']"
+        @field:change="handleFieldChange"
+    >
+        <template #app-name="scope">
+            <!-- <erd-button
+                v-if="!scope.formConfig.readonly"
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-edit3"
+                :disabled="scope.formConfig.disabled"
+                @click="setSequenceChars"
+            ></erd-button>
+            <span class="seqCharsMsg">{{seqCharsMsg}}</span> -->
+            <custom-select
+                v-model="scope.data[scope.formConfig.field]"
+                :row="row"
+            >
+            </custom-select>
+        </template>
+        <template #ignore-chars="scope">
+            <erd-button
+                v-if="!scope.formConfig.readonly"
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-edit3"
+                :disabled="scope.formConfig.disabled"
+                @click="setSequenceChars"
+            ></erd-button>
+            <span class="seqCharsMsg">{{seqCharsMsg}}</span>
+        </template>
+        <template #serial-policy-code="scope">
+            <erd-radio-group
+                v-model="scope.data[scope.formConfig.field]"
+                :disabled="scope.formConfig.disabled"
+            >
+                <erd-radio
+                    v-for="(item, index) in serialPolicyCodeData"
+                    :label="item.code"
+                    :key="item.code"
+                >
+                    <div>
+                        <span>{{item.name}}</span>
+                        <erd-tooltip
+                            placement="top"
+                            effect="dark"
+                            :content="item.description"
+                        >
+                            <i class="erd-iconfont erd-icon-help help"></i>
+                        </erd-tooltip>
+                    </div>
+                </erd-radio>
+            </erd-radio-group>
+        </template>
+        <template #type-link-ref="scope">
+            <erd-tree-select
+                v-model="scope.data[scope.formConfig.field]"
+                filterable
+                default-expand-all
+                node-key="oid"
+                :props="treeProps"
+                :data="typeLinkRefTreeData"
+                :disabled="!!typeOid || scope.formConfig.disabled"
+            ></erd-tree-select>
+        </template>
+        <template #custom-variables-btn="scope">
+            <erd-button
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-edit3"
+                :disabled="scope.formConfig.disabled"
+                @click="onCustomVariablesBtn"
+            ></erd-button>
+        </template>
+        <template #var-desc="scope">
+            <erd-input
+                v-model="formData.varDesc"
+                type="textarea"
+                :maxlength="500"
+                :disabled="true"
+                :rows="5"
+            ></erd-input>
+        </template>
+        <template #code-rule="scope">
+            <code-rule-config
+                :type="formData.varFromType"
+                :type-oid="formData.typeLinkRef"
+                :feature-script="featureScript"
+                :pattern-desc="formData.patternDesc"
+                :custom-data="customData"
+                :interface-data="interfaceData"
+                @change="codeRuleChange"
+                @feature-script-change="featureScriptChange"
+                @code-rule-config-change="codeRuleConfigChange"
+            ></code-rule-config>
+        </template>
+        <template #var-desc-url="scope">
+            <erd-input
+                v-model="scope.data[scope.formConfig.field]"
+                :placeholder="scope.formConfig?.props?.placeholder"
+                :disabled="scope.formConfig.disabled"
+            ></erd-input>
+            <erd-button
+                class="btn-left"
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-reset"
+                :disabled="scope.formConfig.disabled"
+                @click="onResetDesc('desc')"
+            ></erd-button>
+        </template>
+        <template #var-from-url="scope">
+            <erd-input
+                v-model="scope.data[scope.formConfig.field]"
+                :placeholder="scope.formConfig?.props?.placeholder"
+                :disabled="scope.formConfig.disabled"
+            ></erd-input>
+            <erd-button
+                class="btn-left"
+                type="fill-icon"
+                icon="erd-iconfont erd-icon-reset"
+                :disabled="scope.formConfig.disabled"
+                @click="onResetDesc('form')"
+            ></erd-button>
+        </template>
+    </fam-advanced-form>
+    <erd-ex-dialog
+        v-if="visibleSequenceChars"
+        size="small"
+        :title="i18n.setCharacter"
+        :visible.sync="visibleSequenceChars"
+    >
+        <sequence-chars
+            ref="ignoreChars"
+            :sequence-chars="this.formData.ignoreChars"
+            :serial-policy-code="this.formData.serialPolicyCode"
+        ></sequence-chars>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="sequenceSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="visibleSequenceChars = !visibleSequenceChars">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <erd-ex-dialog
+        v-if="visibleCustomVariablesBtn"
+        size="small"
+        :title="i18n.editSpecification"
+        :visible.sync="visibleCustomVariablesBtn"
+        @close="customVariablesClose"
+    >
+        <!-- <erd-monaco-editor :options="options"></erd-monaco-editor> -->
+        <fam-monaco-editor
+            ref="famMonacoEditor"
+            :data="formData.varDesc"
+        ></fam-monaco-editor>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="varDescFn"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="customVariablesClose">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

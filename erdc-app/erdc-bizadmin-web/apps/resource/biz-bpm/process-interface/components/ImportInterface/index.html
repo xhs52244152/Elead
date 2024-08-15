@@ -1,0 +1,30 @@
+<div class="import-interface-content">
+    <FamDynamicForm
+        ref="dynamicForm"
+        :form.sync="formDetails"
+        :data="fromList"
+        :readonly="readonly"
+        label-position="right"
+    >
+        <template #uploadFileLabel>
+            <div class="el-form-item__label fam-dynamic-form__label fam-dynamic-form__label--right">
+                <span class="fam-dynamic-form__label--required-identifier color-error">*</span>
+                <span>{{i18n['选择文件']}}</span>
+            </div>
+        </template>
+        <template #uploadTemplate="scope">
+            <fam-upload
+                ref="famUpload"
+                accept=".zip"
+                fileListType="default"
+                :btnConfig="{ disabled: false }"
+                :action="'/bpm/interface/import'"
+                :data="_.omit(formDetails, 'fileList')"
+                :multiple="true"
+                :auto-upload="false"
+                :on-success="onImportSuccess"
+                :on-error="onImportError"
+            ></fam-upload>
+        </template>
+    </FamDynamicForm>
+</div>

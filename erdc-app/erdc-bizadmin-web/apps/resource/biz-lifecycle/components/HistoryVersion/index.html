@@ -1,0 +1,33 @@
+<div id="HistoryVersion" class="h_100p">
+    <div class="h_100p position-relative">
+        <erd-table
+            border
+            :data="tableData"
+            :column="columns"
+            height="100%"
+            class="position-absolute w-100p h-100p"
+            show-overflow
+        >
+            <template #column:default:name="{data}">
+                <erd-button
+                    type="text"
+                    @click="onCheck(data)"
+                    >{{data.row.name}}</erd-button
+                >
+            </template>
+            <template #column:default:enabled="{data}">
+                <!-- <FamRadio v-model="data.row[data.column.property]" :option="optionEnabled" :readonly="true"></FamRadio> -->
+                <span>{{data.row[data.column.property] ? i18n.yes : i18n.no}}</span>
+            </template>
+            <template #column:default:routing="{data}">
+                <span>{{data.row[data.column.property] ? i18n.yes : i18n.no}}</span>
+            </template>
+            <template #column:default:containerRef="{data}">
+                <span>{{data.row[data.column.property].name}}</span>
+            </template>
+            <template #column:default:updateUser="{data}">
+                <fam-user :users="data.row[data.column.property]"></fam-user>
+            </template>
+        </erd-table>
+    </div>
+</div>

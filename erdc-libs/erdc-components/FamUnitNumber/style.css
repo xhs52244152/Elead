@@ -1,0 +1,14 @@
+.fam-unit-number .el-input-group__append,
+.fam-unit-number .el-input-group__prepend {
+  padding: 0 8px;
+  background-color: var(--colorFullBg);
+  border-color: var(--colorBorder);
+  color: #567ffd;
+  transition: border-color 0.3s;
+}
+.fam-unit-number .el-input__inner:focus + .el-input-group__append, .fam-unit-number .el-input__inner:focus + .el-input-group__prepend {
+  border-color: var(--colorPrimary);
+}
+.fam-unit-number .el-input-group__prepend {
+  font-size: var(--inputFontSize);
+}/*# sourceMappingURL=style.css.map */

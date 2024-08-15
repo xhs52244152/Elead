@@ -1,0 +1,275 @@
+#LifecycleForm {
+    position: relative;
+
+    .lifecycleForm-container {
+        .lifecycleForm-header {
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            vertical-align: middle;
+            height: 60px;
+            padding: 16px;
+
+            .lifecycleForm-title {
+                display: flex;
+                font-size: var(--fontSizeLarge);
+                text-align: center;
+                align-items: center;
+                font-weight: 700;
+                color: var(--colorTextNormal);
+                min-width: 0;
+                .lifecycleForm-title__button {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        display: inline-block;
+                        top: 0;
+                        bottom: 0;
+                        right: -1px;
+                        margin: auto;
+                        width: 2px;
+                        height: 16px;
+                        background-color: #ebebeb;
+                    }
+                }
+
+                .callback {
+                    padding-right: 16px;
+                    position: relative;
+                    height: 22px;
+                    font-size: 14px;
+                    font-size: var(--fontSize);
+                    color: var(--colorTextExplain);
+                    line-height: 22px;
+                    font-weight: 400;
+
+                    i {
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+
+                    &:hover {
+                        color: #567ffd;
+                    }
+                }
+
+                .displayName {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .tag {
+                    height: 20px;
+                    font-size: 12px;
+                    color: #f04134;
+                    line-height: 20px;
+                    background-color: rgba(240, 65, 52, 0.1);
+                    align-self: center;
+                    margin-left: 8px;
+                    padding: 0 4px;
+                    border-radius: 2px;
+                    flex-shrink: 0;
+                }
+            }
+
+            .operation {
+                display: flex;
+                padding: 0px;
+                flex-shrink: 0;
+            }
+        }
+        .el-tabs__content {
+            display: none;
+        }
+
+        .phase {
+            align-items: center;
+            width: 100%;
+            padding: 12px 16px;
+            height: 60px;
+            margin-bottom: 12px;
+
+            .add-phase {
+                margin-right: 12px;
+            }
+
+            .detailsStage {
+                position: relative;
+                overflow-x: auto;
+                overflow-y: hidden;
+                align-items: center;
+                width: 100%;
+                padding-bottom: 1px;
+
+                div + div {
+                    margin-left: 12px;
+                }
+
+                .state-line {
+                    display: inline-block;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 24px;
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    background-color: rgba(217, 217, 217, 1);
+                    height: 2px;
+                    margin: auto;
+                }
+
+                .left {
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    border: 4px solid rgba(217, 217, 217, 1);
+                    background-color: #fff;
+                    border-radius: 50%;
+                    position: relative;
+                    flex-shrink: 0;
+                    margin-right: 12px;
+
+                    .connector {
+                        position: absolute;
+                        right: -15px;
+                        top: 0;
+                        bottom: 0;
+                        margin: auto;
+                        background-color: rgba(217, 217, 217, 1);
+                        width: 10px;
+                        height: 2px;
+                    }
+                }
+
+                .right {
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    border: 4px solid rgba(217, 217, 217, 1);
+                    background-color: #959aa9;
+                    border-radius: 50%;
+                    position: relative;
+                    margin-left: 0;
+                    flex-shrink: 0;
+                }
+
+                .content {
+                    width: 100%;
+                    padding-right: 12px;
+
+                    .content-btn {
+                        position: relative;
+                        white-space: nowrap;
+
+                        .connector {
+                            position: absolute;
+                            right: -10px;
+                            top: 0;
+                            bottom: 0;
+                            margin: auto;
+                            background-color: rgba(217, 217, 217, 1);
+                            width: 10px;
+                            height: 2px;
+                        }
+                    }
+                }
+            }
+
+            .tag {
+                width: 84px;
+                border: 1px solid #ccc;
+                background-color: #ccc;
+                padding: 0 12px;
+                height: 32px;
+                color: #fff;
+                border-radius: 2px;
+                position: relative;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .tag-close {
+                    display: none;
+                    position: absolute;
+                    top: -2px;
+                    right: -1px;
+                    font-size: 16px;
+                }
+
+                .drag-icon {
+                    position: absolute;
+                    top: 8px;
+                    left: -2px;
+                    font-size: 16px;
+                    display: none;
+                }
+
+                &:hover {
+                    background-color: #7395ff;
+                    border-color: #7395ff;
+                    cursor: pointer;
+
+                    .tag-close {
+                        display: block;
+                        cursor: pointer;
+                    }
+
+                    .drag-icon {
+                        display: block;
+                        cursor: move;
+                    }
+                }
+
+                .tag-content {
+                    display: inline-block;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .active-tag {
+                border: 1px solid #567ffd;
+                background-color: #567ffd;
+            }
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            .el-scrollbar {
+                > .el-scrollbar__wrap {
+                    > .el-scrollbar__view {
+                        height: calc(100% - 40px)
+                    }
+                }
+            }
+        }
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        z-index: 1;
+        width: 100%;
+        height: 54px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        box-shadow: 0px -2px 16px 0px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.title-item {
+    max-width: 500px;
+}

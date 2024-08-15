@@ -1,0 +1,59 @@
+<div
+    id="UnitMeasureDetail"
+    class="p-xl"
+>
+    <div class="flex measure-header mb-xl">
+        <div class="type-left">{{title}}</div>
+        <div class="type-right">
+            <erd-button
+                type="primary"
+                @click="onEdit"
+            >
+                {{i18nMappingObj.edit}}
+            </erd-button>
+            <erd-button @click="onDelete">{{i18nMappingObj.delete}}</erd-button>
+        </div>
+    </div>
+    <div class="content">
+        <erd-contraction-panel
+            :title="i18nMappingObj.basicInfor"
+            :unfold.sync="bascisUnfold"
+        >
+            <template v-slot:content>
+                <FamDynamicForm
+                    ref="dynamicForm"
+                    :form="formData"
+                    :data="data"
+                    :readonly="true"
+                >
+                </FamDynamicForm>
+            </template>
+        </erd-contraction-panel>
+        <erd-contraction-panel
+            :title="i18nMappingObj.unitMeasure"
+            :unfold.sync="measureUnfold"
+        >
+            <template v-slot:content>
+                <erd-table
+                    border
+                    :max-height="maxHeight"
+                    :column="columns"
+                    :data="listData"
+                    ref="erdTable"
+                    :readonly="true"
+                    :is-embed-table="true"
+                    show-overflow
+                >
+                </erd-table>
+            </template>
+        </erd-contraction-panel>
+    </div>
+    <unit-measure-new-edit
+        v-if="measureVisible"
+        :visible.sync="measureVisible"
+        :title="i18nMappingObj.editingMeasure"
+        :oid="oid"
+        @onsubmit="refresh"
+    >
+    </unit-measure-new-edit>
+</div>

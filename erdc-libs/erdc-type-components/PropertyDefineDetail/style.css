@@ -1,0 +1,26 @@
+#AttrDefineDetail {
+  width: 100%;
+  background-color: #fff;
+  padding: 16px;
+}
+#AttrDefineDetail .attr-header {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#AttrDefineDetail .attr-header .title {
+  font-size: var(--fontSizeLarge);
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  font-weight: 700;
+  max-width: 48em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#AttrDefineDetail .content {
+  height: 100%;
+  padding: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

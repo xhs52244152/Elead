@@ -1,0 +1,87 @@
+<div
+    id="fam-system-viewtable"
+    class="fam-system-viewtable-container h-100p flex flex-column"
+>
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+    >
+        <template #right:toolbar:first>
+            <erd-button
+                type="primary"
+                @click="fnShowDialog('create')"
+            >
+                {{ i18nMappingObj.create }}
+            </erd-button>
+            <erd-button @click="showImportDialog"> {{ i18nMappingObj.import }} </erd-button>
+            <erd-button @click="showExportDialog"> {{ i18nMappingObj.export }} </erd-button>
+        </template>
+
+        <!-- 分页样式 -->
+        <template v-slot:[slotName.pageStyle]="{ scope }"> {{getPageStyleName(scope.row)}} </template>
+
+        <!-- 视图配置项 -->
+        <template v-slot:[slotName.viewConfigItems]="{ scope }"> {{getViewConfigItems(scope.row)}} </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-button
+                type="text"
+                @click="fnEditTable(scope.row)"
+            >
+                {{ i18nMappingObj.edit }}
+            </erd-button>
+            <erd-button
+                type="text"
+                @click="fnDeleteTableRow(scope.row)"
+            >
+                {{ i18nMappingObj.delete }}
+            </erd-button>
+        </template>
+    </fam-view-table>
+
+    <!-- 创建、编辑 -->
+    <erd-ex-dialog
+        ref="createViewTableDialog"
+        :visible.sync="viewTableForm.visible"
+        :title="viewTableForm.editable ? i18nMappingObj.edit : i18nMappingObj.create"
+        :before-close="fnCloseForm"
+        custom-class="view-table-dialog"
+        size="large"
+    >
+        <!-- 表单组件 -->
+        <view-table-form
+            ref="viewTableForm"
+            v-if="viewTableForm.visible"
+            :oid="viewTableForm.oid"
+            :visible="viewTableForm.visible"
+            :editable="viewTableForm.editable"
+            @form-change="fnFormChange"
+        ></view-table-form>
+
+        <template #footer>
+            <erd-button
+                type="primary"
+                :loading="viewTableForm.loading"
+                @click="fnFormSubmit('viewTableForm')"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="fnCloseForm"> {{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+
+    <!-- 导入 -->
+    <FamImport
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        :request-config="importRequestConfig"
+        businessName="TableViewImport"
+    ></FamImport>
+
+    <!-- 导出 -->
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        :request-config="exportRequestConfig"
+        businessName="TableViewExport"
+    ></fam-export>
+</div>

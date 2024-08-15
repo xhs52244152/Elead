@@ -1,0 +1,56 @@
+.urge-dialog .urge-flex,
+.termination-dialog .termination-flex{
+    display: flex;
+    margin-bottom: 20px;
+}
+.urge-dialog .urge-flex .urge-label,
+.termination-dialog .termination-flex .termination-label{
+    font-weight: bold;
+    min-width: 90px;
+    text-align: right;
+    margin-right: 20px;
+}
+.urge-dialog .el-textarea,
+.termination-dialog .el-textarea{
+    width: 600px;
+}
+#my-create-table .active-button{
+    border: 1px solid var(--buttonFontColor);
+}
+#my-create-table .active-button-left{
+    border-left: 1px solid var(--buttonFontColor);
+}
+.termination-dialog{
+    padding-bottom: 100px;
+}
+.circular-running {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00A854;
+    border-radius: 10px;
+}
+  
+.circular-completed {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #567FFD;
+    border-radius: 10px;
+}
+
+.circular-pending {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #FFBF00;
+    border-radius: 10px;
+}
+
+.circular-exception {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #f04134;
+    border-radius: 10px;
+}

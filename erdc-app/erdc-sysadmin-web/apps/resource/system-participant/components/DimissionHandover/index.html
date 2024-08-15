@@ -1,0 +1,29 @@
+<div id="DimissionHandover" class="dimission-handover">
+    <!-- <div class="dimission-member-body">
+        <span class="fontWeight" v-for="(item,index) in dimissionMemberList" :key="item.id">
+            {{ item.displayName}}({{ item.code }}){{ index==(dimissionMemberList.length - 1) ? '' : ','}}
+        </span>
+        <span class="fontWeight">已离职，</span>
+        <span>以下是交接人</span>
+    </div> -->
+
+    <fam-erd-table 
+        border
+        max-height="300"
+        :row-config="{isCurrent: true, isHover: true}"
+        :column-config="{resizable: true}"
+        align="left"
+        :data="tableData"
+        :column="column"
+        show-overflow
+        ref="erdTable"
+        >
+       </fam-erd-table>
+
+    <!-- <fam-member-select 
+        v-bind="$attrs"
+        searchScop="group"
+        clearable
+        @change="fnMemberSelect">
+    </fam-member-select> -->
+</div>

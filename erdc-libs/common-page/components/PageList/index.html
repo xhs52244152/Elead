@@ -1,0 +1,34 @@
+<div class="fam-common-page__list__section h-100p">
+    <fam-view-table
+        ref="famCommonPageViewTable"
+        :view-table-config="viewTableConfig"
+        :form-oid="formOid"
+        @action-click="actionClick"
+    >
+        <template #column:default:operation:content="{ scope }">
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="getActionConfig(scope.row)"
+                :action-data="scope.row"
+                :args="[vm, scope.row]"
+                @click="onCommand"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+    <fam-export
+        v-if="exportVisible"
+        :visible.sync="exportVisible"
+        :business-name="businessName"
+        :add-default-view-export="true"
+        :request-config="requestConfig"
+        @submit-success-callback="handlerDialogSuccess"
+    ></fam-export>
+    <fam-import
+        v-if="importVisible"
+        :visible.sync="importVisible"
+        :business-name="businessName"
+        :add-default-view-export="false"
+        :request-config="requestConfig"
+        @submit-success-callback="handlerDialogSuccess"
+    ></fam-import>
+</div>

@@ -1,0 +1,30 @@
+.fam-action-list {
+    .fontWeightNormal {
+        font-weight: normal;
+    }
+
+    .toolbar-select-component {
+        width: 140px;
+        display: flex;
+        align-items: center;
+    }
+
+    .table_select_title {
+        font-size: 14px;
+        font-size: var(--fontSize);
+        color: var(--infoColor);
+        margin-right: 4px;
+    }
+
+    .select_component {
+        width: calc(100% - 50px);
+    }
+}
+
+.add-border-top-line .el-dialog__footer {
+    border-top: 1px solid #EBEBEB;
+}
+
+.el-dialog.add-border-top-line .el-dialog__body {
+    padding-top: 8px;
+}

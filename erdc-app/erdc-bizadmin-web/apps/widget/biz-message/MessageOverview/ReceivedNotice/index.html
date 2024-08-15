@@ -1,0 +1,34 @@
+<div class="received-notice-list">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        :table-height="tableHeight"
+    >
+        <template #left:toolbar:first>
+            <erd-select
+                v-model="curState"
+                @change="handleStateChange"
+            >
+                <erd-option
+                    v-for="(option, index) in states"
+                    :key="index"
+                    :label="option.text"
+                    :value="option.value"
+                >
+                </erd-option>
+            </erd-select>
+        </template>    
+        <template #column:default:createTime:content="{ scope }">
+            <span>{{ dateFormat(scope.row.createTime) }}</span>
+        </template>
+        <template #column:default:noticeState:content="{ scope }">
+            <erd-tag
+            :type="scope.row.noticeState === 'readed' ? 'success': 'danger'"
+            >
+            {{ displayState(scope.row.noticeState) }}
+           </erd-tag>
+            <!-- <span>{{ displayState(scope.row.noticeState) }}</span> -->
+        </template>
+    </fam-advanced-table>
+    <notice-detail ref="noticeRef" @readed="handleReadByDetail"></notice-detail>
+</div>

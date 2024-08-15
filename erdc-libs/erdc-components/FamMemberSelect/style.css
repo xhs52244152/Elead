@@ -1,0 +1,176 @@
+#ComponentWapper-famMemberSelect {
+  line-height: inherit !important;
+  width: 100%;
+}
+#ComponentWapper-famMemberSelect .inputBox {
+  position: relative;
+}
+#ComponentWapper-famMemberSelect .inputBox > span:nth-child(1) {
+  display: inline-block;
+  width: 100%;
+}
+#ComponentWapper-famMemberSelect .inputBox .wapperInput {
+  position: relative;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  right: 22px;
+  z-index: 100;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox.showWordLimit {
+  right: auto;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .itemBox.once {
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 3px;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .itemBox.once .item {
+  float: none;
+  margin-top: 0;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .item {
+  min-width: 88px;
+  height: 20px;
+  line-height: 20px;
+  background: #f5f5f5;
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 2px;
+  margin-right: 4px;
+  font-size: 12px;
+  justify-content: space-between;
+  padding: 0 3px;
+  cursor: default;
+  float: left;
+  margin-top: 4px;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .item label {
+  margin: 0;
+  display: inline;
+  font-weight: normal;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .item .l {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: inline-block;
+  justify-content: space-between;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .item .el-icon-close {
+  cursor: pointer;
+  padding: 3px 0;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox .moreBox {
+  min-width: 32px;
+  height: 20px;
+  background-color: var(--colorPrimary);
+  border-radius: 2px;
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  padding: 0 2px;
+}
+#ComponentWapper-famMemberSelect .inputBox .selectBox.HAS-VAL:hover + .searchInputWapper .el-icon-circle-close {
+  display: block;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip textarea {
+  border: 0;
+  resize: none;
+  padding: 0;
+  line-height: var(--formItemHeight);
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip .el-input {
+  flex: 1;
+  width: 100%;
+  height: var(--famWidthLabelHeight) !important;
+  line-height: var(--famWidthLabelHeight) !important;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip .el-input input {
+  border: none !important;
+  height: var(--famWidthLabelHeight) !important;
+  line-height: var(--famWidthLabelHeight) !important;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper {
+  border-radius: var(--inputBorderRadius);
+  border: var(--inputBorder);
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper.error {
+  border-color: #f04134;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper .el-input__suffix {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  right: 20px;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper .icon {
+  font-size: var(--inputIconSize);
+  color: var(--inputIconColor);
+  margin-right: 8px;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper .icon.focus {
+  color: var(--inputBorderColor__focus);
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper .icon.el-icon-circle-close {
+  z-index: 1000;
+  display: none;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper .icon.icon-close {
+  color: var(--colorBan);
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper.is-focus {
+  border-color: var(--selectBorderColor__focus);
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper .el-input {
+  align-self: start;
+}
+#ComponentWapper-famMemberSelect .wapperInput .el-tooltip.searchInputWapper.HAS-VAL:hover .el-icon-circle-close {
+  display: block;
+}
+
+.famMemberSelect-popClass-custom {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+.famMemberSelect-popClass-custom .vxe-table--body tr {
+  cursor: pointer;
+}
+.famMemberSelect-popClass-custom .emptyBox {
+  text-align: center;
+  color: var(--colorTextPlaceholder);
+}
+.famMemberSelect-popClass-custom .nodata {
+  color: var(--colorTextPlaceholder);
+}
+.famMemberSelect-popClass-custom.box_manual {
+  top: 40px;
+  width: 100%;
+}
+.famMemberSelect-popClass-custom .vxe-header--column .vxe-resizable {
+  right: -10px !important;
+}
+
+.error-popper-class {
+  max-width: 367px;
+  height: 28px;
+  font-size: 12px !important;
+  text-align: center;
+  background: #f04134 !important;
+}
+.error-popper-class.el-tooltip__popper[x-placement^=top] .popper__arrow {
+  border-top-color: #f04134 !important;
+  right: 20px !important;
+  left: auto !important;
+}
+.error-popper-class.el-tooltip__popper[x-placement^=top] .popper__arrow::after {
+  border-top-color: #f04134 !important;
+}/*# sourceMappingURL=style.css.map */

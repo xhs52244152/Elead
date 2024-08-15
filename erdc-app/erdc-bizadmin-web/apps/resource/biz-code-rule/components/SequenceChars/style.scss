@@ -1,0 +1,40 @@
+#SequenceChars {
+    .codeChars {
+        display: flex;
+        justify-content: center;
+    }
+    .charType {
+        width: 100%;
+        .char-type {
+            width: 80px;
+        }
+    }
+    .char{
+        margin: 4px 4px 0;
+    }
+    .char {
+        display: inline-block;
+        text-align: center;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        height: 24px;
+        line-height: 24px;
+        cursor: pointer;
+    }
+    .drag {
+        cursor: move;
+    }
+    .char-checked {
+        border-color: #567ffd;
+        background-color: #567ffd;
+        color: #fff;
+    }
+    .char-item {
+        width: 48px;
+    }
+    .charItems {
+        border-top: 1px solid #EBEBEB;
+        margin-top: 8px;
+        padding-top: 4px;
+    }
+}

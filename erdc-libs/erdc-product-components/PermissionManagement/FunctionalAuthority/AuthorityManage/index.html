@@ -1,0 +1,13 @@
+<div id="functional-authority-manage" style="height: 100%">
+    <permission-layout :attrName="'isMenuAccess'">
+        <template v-slot:resizableContainer:rightBox="scope">
+            <authority-main
+                ref="functionalAuthorityMain"
+                :max-height="maxHeight"
+                :typeOid="scope.currentMenu && scope.currentMenu.id"
+                :containerOid="scope.productInfo && scope.productInfo.oid"
+                :typeName="scope.currentMenu && scope.currentMenu.typeName"
+            ></authority-main>
+        </template>
+    </permission-layout>
+</div>

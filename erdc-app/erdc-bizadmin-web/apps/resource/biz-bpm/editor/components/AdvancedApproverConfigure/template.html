@@ -1,0 +1,102 @@
+<div
+    id="approver-configure"
+    class="approver-configure"
+>
+    <div
+        v-if="isGlobalConfiguration"
+        class="approver-panel"
+    >
+        <span>
+            <span class="text-normal font-bold">{{i18n.approverConfigure}}</span><erd-tooltip
+            effect="dark"
+            placement="top-start"
+            class="ml-4 mr-4 panel-title-icon font-bold"
+            :content="approverConfigureTips"
+        >
+                <i class="erd-iconfont erd-icon-help"></i>
+            </erd-tooltip>
+        </span>
+        <erd-button
+            size="small"
+            @click="configure"
+        >{{readonly ? i18n.view : i18n.configure}}</erd-button>
+    </div>
+    <erd-button
+        v-else
+        size="small"
+        @click="configure"
+    >{{readonly ? i18n.view : i18n.configure}}</erd-button>
+
+    <erd-ex-dialog
+        size="meduim"
+        custom-class="approver-configure-dialog"
+        :title="i18n.approverConfigure"
+        :visible.sync="dialogVisible"
+        @open="openDialog"
+    >
+        <ResizableContainer>
+            <template #left>
+                <div>{{i18n.participantType}}</div>
+                <erd-ex-tree
+                    ref="tree"
+                    node-key="configRoleRef"
+                    highlight-current
+                    :data="participantLeftList"
+                    :props="{ label: 'configRoleName', children: 'children'}"
+                    @node-click="onCheck"
+                ></erd-ex-tree>
+            </template>
+
+            <template #right>
+                <FamErdTable
+                    :data="tableData"
+                    :column="column"
+                    :is-embed-table="true"
+                    auto-resize
+                    border
+                >
+                    <template #column:header:isView="scope">
+                        <span>
+                            <span class="cursor-pointer" @click="isViewCheckAll = !isViewCheckAll">{{scope.data.header.column.title}}</span>
+                            <erd-checkbox
+                                v-model="isViewCheckAll"
+                                :indeterminate="isViewIndeterminate"
+                                :disabled="readonly"
+                            ></erd-checkbox>
+                        </span>
+                    </template>
+                    <template #column:header:isAdd="scope">
+                        <span>
+                            <span class="cursor-pointer" @click="isAddCheckAll = !isAddCheckAll">{{scope.data.header.column.title}}</span>
+                            <erd-checkbox
+                                v-model="isAddCheckAll"
+                                :indeterminate="isAddIndeterminate"
+                                :disabled="isAddReadonly"
+                            ></erd-checkbox>
+                        </span>
+                    </template>
+                    <template #column:default:isView="{data}">
+                        <erd-checkbox
+                            v-model="data.row[data.column.property]"
+                            :disabled="readonly"
+                        ></erd-checkbox>
+                    </template>
+                    <template #column:default:isAdd="{data: { row, column }}">
+                        <erd-checkbox
+                            v-model="row[column.property]"
+                            :disabled="column.params.disabled({ row, column })"
+                        ></erd-checkbox>
+                    </template>
+                    <template #empty>
+                        <span class="approver-empty">{{i18n.approverEmpty}}</span>
+                    </template>
+                </FamErdTable>
+            </template>
+        </ResizableContainer>
+
+        <span v-if="!readonly" slot="footer" class="dialog-footer">
+            <erd-button type="primary" @click="confirmApproverConfigure">{{i18n.confirm}}</erd-button>
+            <erd-button @click="dialogVisible = false">{{i18n.cancel}}</erd-button>
+        </span>
+    </erd-ex-dialog>
+</div>

@@ -1,0 +1,31 @@
+<div id="agentProcessForm">
+    <FamAdvancedForm
+        ref="editForm"
+        :model.sync="innerFormData"
+        :form-id="formId"
+        :object-oid="oid"
+        :containerRef="containerRef"
+        :class-name="className"
+        :schema-mapper="schemaMapper"
+    >
+        <template #agent-process-config="scope">
+            <div style="width: 100%; position: relative">
+                <agent-process-configuration
+                    ref="agentProcessConfiguration"
+                    :default-select="defaultSelect"
+                    :type="type"
+                ></agent-process-configuration>
+            </div>
+        </template>
+        <template #proxy-user-ref="scope">
+            <fam-participant-select
+                v-model="scope.data[scope.formConfig.field]"
+                :default-value="defaultUserValue"
+                :show-type="['USER']"
+                :query-mode="['FUZZYSEARCH']"
+                :query-params="queryParams"
+                @change="$event => { onChange(scope, $event) }"
+            ></fam-participant-select>
+        </template>
+    </FamAdvancedForm>
+</div>

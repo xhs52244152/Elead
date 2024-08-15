@@ -1,0 +1,182 @@
+<div class="signature-pdf-design">
+    <el-row class="h-100p">
+        <el-col
+            :span="4"
+            class="h-100p"
+        >
+            <el-scrollbar
+                noresize
+                class="h-100p"
+                wrap-class="h-100p"
+            >
+                <div class="signature-doc-tmpl-img_thumbs">
+                    <template v-for="(page, index) in innerPages">
+                        <div
+                            @click.stop="designPage(page)"
+                            class="signature-doc-tmpl-img_thumb"
+                            :class="{'signature-doc-tmpl-img_thumb_active': currentActivePage.id === page.id}"
+                            :key="page.previewId"
+                        >
+                            <div class="signature-doc-tmpl-img_thumb_wrapper">
+                                <img
+                                    :src="`/file/file/site/storage/v1/img/${page.previewId}/download`"
+                                    alt=""
+                                />
+                            </div>
+                            <div class="input-group input-group-sm mt-3">
+                                <erd-input
+                                    v-model="page.pageNum"
+                                    :disabled="disabled"
+                                >
+                                    <template slot="prepend">
+                                        <erd-popover
+                                            placement="top-start"
+                                            width="300"
+                                            trigger="hover"
+                                        >
+                                            <div style="text-align: left">
+                                                <p>{{i18nMappingObj.signature_doc_tmpl_page_tips_single}}：1</p>
+                                                <p>{{i18nMappingObj.signature_doc_tmpl_page_tips_reverse}}</p>
+                                                <p class="ml-18">
+                                                    !3：{{i18nMappingObj.signature_doc_tmpl_page_tips_single_reverse}}
+                                                </p>
+                                                <p>{{i18nMappingObj.signature_doc_tmpl_page_tips_multi}}:</p>
+                                                <p class="ml-18">
+                                                    1,3：{{i18nMappingObj.signature_doc_tmpl_page_tips_multi_and}}
+                                                </p>
+                                                <p class="ml-18">
+                                                    1-3：{{i18nMappingObj.signature_doc_tmpl_page_tips_multi_from_to}}
+                                                </p>
+                                                <p class="ml-18">
+                                                    LAST:5：{{i18nMappingObj.signature_doc_tmpl_page_tips_multi_last}}
+                                                </p>
+                                                <p class="ml-18">
+                                                    3-LAST：{{i18nMappingObj.signature_doc_tmpl_page_tips_multi_from_to_last}}
+                                                </p>
+                                                <p class="ml-18">
+                                                    3-LAST:2：{{i18nMappingObj.signature_doc_tmpl_page_tips_multi_from_to_last_num}}
+                                                </p>
+                                                <p>{{i18nMappingObj.signature_doc_tmpl_page_tips_even}}：EVEN</p>
+                                                <p>{{i18nMappingObj.signature_doc_tmpl_page_tips_odd}}：ODD</p>
+                                                <p>{{i18nMappingObj.signature_doc_tmpl_page_tips_all}}：ALL</p>
+                                            </div>
+                                            <span
+                                                class="text-normal"
+                                                slot="reference"
+                                            >
+                                                <span>{{i18nMappingObj.signature_page_rule}}</span>
+                                                <erd-icon icon="info2"></erd-icon>
+                                            </span>
+                                        </erd-popover>
+                                    </template>
+                                </erd-input>
+                            </div>
+                            <div
+                                class="signature-doc-tmpl-thumb_btns"
+                                v-if="!disabled"
+                            >
+                                <erd-button
+                                    type="icon"
+                                    icon="erd-iconfont erd-icon-delete"
+                                    @click.stop="deletePage(index, page)"
+                                ></erd-button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </el-scrollbar>
+        </el-col>
+        <el-col
+            :span="20"
+            class="h-100p"
+        >
+            <FamImgCropTool
+                :disabled="disabled"
+                v-if="currentActivePage"
+                ref="imgCropTool"
+                :imgSrc="`/file/file/site/storage/v1/img/${currentActivePage.previewId}/download`"
+                :before-hide-tool="beforeHideTool"
+                @active-tool="handleActiveTool"
+                @done="handleDone"
+                @cancel="resetPlaceholderEdit"
+                @scaling="handleScaleDone"
+                @move-done="handleMoveDone"
+                @moving="handleMoveDone"
+            >
+                <template #toolbarLeft>
+                    <erd-ex-select
+                        style="width: 140px"
+                        class="inline-block mr-8"
+                        v-model="type"
+                        :options="contentTypeOptions"
+                    >
+                    </erd-ex-select>
+                    <template v-if="type == CONST.contentTypes.signature_system">
+                        <erd-select
+                            class="inline-block mr-8"
+                            v-model="code"
+                        >
+                            <erd-option
+                                v-for="option in systemSignatureOptions"
+                                :key="option.code"
+                                :label="option.name"
+                                :value="option.code"
+                            ></erd-option>
+                        </erd-select>
+                    </template>
+                    <template v-else>
+                        <FamDynamicFormItem
+                            class="inline-block mr-8 align-top mb-0"
+                            show-error-message
+                            :validate-msg="codeMsg"
+                        >
+                            <erd-input
+                                style="width: 160px"
+                                v-model="code"
+                                placeholder="请输入编码"
+                            ></erd-input>
+                        </FamDynamicFormItem>
+                    </template>
+
+                    <erd-tooltip
+                        class="item"
+                        effect="dark"
+                        content="背景色"
+                        placement="top"
+                    >
+                        <el-color-picker
+                            style="vertical-align: middle"
+                            ref="colorPicker"
+                            v-model="position_bg"
+                            class="theme-picker mr-8"
+                            popper-class="theme-picker-dropdown"
+                        ></el-color-picker>
+                    </erd-tooltip>
+                </template>
+                <template #extend>
+                    <template v-for="(placeholder, index) in calcPlaceholders">
+                        <div
+                            :key="placeholder.code"
+                            @click="editPlaceholder(placeholder)"
+                            :style="getPlaceholderStyle(placeholder)"
+                            :class="{none: activePlaceholder, 'signature-doc-tmpl_move': isActiveDragTool}"
+                            class="signature-doc-tmpl-placeholder"
+                        >
+                            <span>{{placeholder.code}}</span>
+                            <i
+                                v-if="isActiveEditTool"
+                                class="el-icon-close"
+                                @click.stop="deletePlaceholder(index)"
+                            ></i>
+                            <i
+                                v-if="isActiveEditTool"
+                                class="el-icon-copy-document"
+                                @click.stop="copyPlaceholder(index)"
+                            ></i>
+                        </div>
+                    </template>
+                </template>
+            </FamImgCropTool>
+        </el-col>
+    </el-row>
+</div>

@@ -1,0 +1,48 @@
+<div class="fam-member-table ptrl-normal h-100p">
+    <fam-advanced-table
+        :i18n="i18n"
+        ref="famAdvancedTable"
+        :view-table-config="viewTableConfig"
+        isAdaptiveHeight
+    >
+        <template #column:default:code:content="{ scope }">
+            <span
+                class="vxe-cell--label fontWeightNormal link-text"
+                @click="fnViewMemberDetail(scope.row)"
+            >
+                {{ scope.row.code }}
+            </span>
+        </template>
+        <template #column:default:operation:content="{scope}">
+            <erd-button
+                type="text"
+                key="unlock"
+                @click="unlockMembers([scope.row.id])"
+            >
+                {{ i18n.unlock}}
+            </erd-button>
+        </template>
+    </fam-advanced-table>
+    <erd-ex-dialog
+        ref="dialog"
+        width="800px"
+        :visible.sync="form.visible"
+        :title="form.editable ? i18nMappingObj.editMember : form.readonly ? i18nMappingObj.readonlyMember : i18nMappingObj.addMember"
+        @close="fnCloseMemberForm"
+    >
+        <MemberForm
+            v-if="form.visible"
+            ref="memberForm"
+            :oid="form.oid"
+            :default-value="form.defaultValue"
+            :editable="form.editable"
+            :readonly="form.readonly"
+            class="memberForm"
+        ></MemberForm>
+        <template #footer>
+            <erd-button @click="unlockMembers([currentOperMemberRow.id]); form.visible = false;" >
+                {{i18n.unlock}}
+            </erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

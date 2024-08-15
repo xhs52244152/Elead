@@ -1,0 +1,229 @@
+<div
+    id="LifecycleForm"
+    class="h-100p"
+>
+    <fam-empty
+        v-if="isEmpty"
+        :description="i18nMappingObj.lifecycleTemplate"
+    ></fam-empty>
+    <template v-else>
+        <div class="lifecycleForm-container h-100p flex flex-column">
+            <div
+                ref="header"
+                class="lifecycleForm-header flex"
+            >
+                <div class="lifecycleForm-title">
+                    <div
+                        v-if="formType == 'checkHistory'"
+                        class="lifecycleForm-title__button"
+                    >
+                        <erd-button
+                            type="text"
+                            icon="el-icon-back"
+                            class="callback"
+                            @click="onReturn"
+                            >{{i18nMappingObj.return}}</erd-button
+                        >
+                    </div>
+                    <div class="title">
+                        <erd-tooltip
+                            placement="top"
+                            popper-class="fam-tooltip-max-width"
+                        >
+                            <span slot="content">{{title}}</span>
+                            <div
+                                class="displayName"
+                                :class="{ 'pl-16': formType == 'checkHistory' }"
+                            >
+                                {{title}}
+                            </div>
+                        </erd-tooltip>
+                    </div>
+                    <div
+                        class="tag"
+                        v-if="isEditing"
+                    >
+                        {{$t('isEditingBy', { user: editPerson })}}
+                    </div>
+                </div>
+                <div
+                    class="operation"
+                    v-if="formType == 'check'"
+                >
+                    <erd-button
+                        type="primary"
+                        :disabled="!isEdit"
+                        @click="onEdit"
+                        >{{i18nMappingObj.edit}}</erd-button
+                    >
+                    <erd-dropdown
+                        trigger="click"
+                        style="margin-left: 8px"
+                    >
+                        <erd-button>
+                            <span>{{i18nMappingObj.moreOper}}</span><em class="el-icon-arrow-down el-icon--right"></em>
+                        </erd-button>
+                        <erd-dropdown-menu slot="dropdown">
+                            <erd-dropdown-item
+                                v-if="!formData?.enabled"
+                                :disabled="!isEditPerson || !isEdit"
+                                @click.native="onEnabled"
+                                >{{i18nMappingObj.enable}}</erd-dropdown-item
+                            >
+                            <erd-dropdown-item
+                                v-else
+                                :disabled="!isEditPerson || !isEdit"
+                                @click.native="onDisable"
+                                >{{i18nMappingObj.disable}}</erd-dropdown-item
+                            >
+                            <erd-dropdown-item
+                                :disabled="!isEditPerson || !isDelete"
+                                @click.native="onDelete"
+                                >{{i18nMappingObj.delete}}</erd-dropdown-item
+                            >
+                            <erd-dropdown-item
+                                :disabled="!isEditPerson || !isDelete"
+                                @click.native="onDeleteMin"
+                                >{{i18nMappingObj.deleteMinVersion}}</erd-dropdown-item
+                            >
+                        </erd-dropdown-menu>
+                    </erd-dropdown>
+                </div>
+            </div>
+            <div
+                class="phase flex"
+                ref="phase"
+            >
+                <erd-button
+                    v-if="formType != 'check' && formType != 'checkHistory'"
+                    class="add-phase"
+                    @click="addPhase"
+                    >{{i18nMappingObj.addStatus}}</erd-button
+                >
+
+                <erd-scrollbar
+                    :style="{width: '100%', 'overflow-x': 'auto'}"
+                    v-if="formData?.lifecycleStates?.length"
+                >
+                    <div class="detailsStage flex erd-scollbar">
+                        <div class="left">
+                            <!-- <span class="connector"></span> -->
+                        </div>
+                        <span
+                            class="state-line"
+                            :style="{width: tagWidth}"
+                        ></span>
+                        <vue-draggable
+                            v-model="formData.lifecycleStates"
+                            :animation="300"
+                            :group="{ name: 'phaseGroup', pull: true, put: false}"
+                            :disabled="formType == 'check' || formType == 'checkHistory'"
+                            :sort="true"
+                        >
+                            <transition-group
+                                tag="div"
+                                class="content flex"
+                                id="lifecycle-form-content"
+                            >
+                                <div
+                                    v-for="(item, index) in formData.lifecycleStates"
+                                    :key="item.oid"
+                                    class="content-btn"
+                                >
+                                    <erd-tooltip
+                                        effect="dark"
+                                        placement="top"
+                                    >
+                                        <span slot="content">{{item.displayName}}</span>
+                                        <div
+                                            class="tag"
+                                            :class="{'active-tag': item.active}"
+                                            @click="tagBtn(item)"
+                                        >
+                                            <em
+                                                class="erd-iconfont erd-icon-double-drag drag-icon"
+                                                v-if="formType != 'check' && formType != 'checkHistory'"
+                                            ></em>
+                                            <span class="tag-content">{{item.displayName}}</span>
+                                            <em
+                                                class="erd-iconfont erd-icon-error tag-close"
+                                                @click.stop="closeBtn(item)"
+                                                v-if="formType != 'check' && formType != 'checkHistory'"
+                                            ></em>
+                                        </div>
+                                    </erd-tooltip>
+                                </div>
+                            </transition-group>
+                        </vue-draggable>
+                        <div class="right">
+                            <!-- <span class="connector"></span> -->
+                        </div>
+                    </div>
+                </erd-scrollbar>
+            </div>
+            <div class="main grow-1 life-tabs-container overflow-hidden">
+                <erd-tabs
+                    v-model="activeTab"
+                    @tab-click="activeChange"
+                >
+                    <erd-tab-pane
+                        v-for="item in tabList"
+                        :label="item.label"
+                        :name="item.name"
+                        :key="item.name"
+                        v-if="!item.unShow"
+                    >
+                        <div
+                            class="tabIcon"
+                            slot="label"
+                        >
+                            <!-- <el-tooltip effect="dark" :content="item.title || item.label" placement="top-start"> -->
+                            <span>{{item.label}}</span>
+                            <!-- </el-tooltip> -->
+                        </div>
+                    </erd-tab-pane>
+                </erd-tabs>
+                <erd-scrollbar
+                    :view-style="{height: height}"
+                    :style="{height: height}"
+                >
+                    <template v-for="item in tabList">
+                        <component
+                            :is="activeTab"
+                            v-if="activeTab == item.componentName"
+                            :key="item.name"
+                            :type="formType"
+                            @onsubmit="onSubmit"
+                            :ref="item.componentName"
+                            :form-data.sync="formData"
+                            :history-data="historyData"
+                            :phase-oid="phaseOid"
+                            :query-params="queryParams"
+                            class="p-16"
+                        >
+                        </component>
+                    </template>
+                </erd-scrollbar>
+            </div>
+        </div>
+        <div
+            class="footer"
+            v-if="formType != 'check' && formType != 'checkHistory'"
+        >
+            <erd-button
+                type="primary"
+                @click="onSave"
+                >{{i18nMappingObj.save}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18nMappingObj.return}}</erd-button>
+        </div>
+
+        <add-phase
+            v-if="addPhaseVisible"
+            :visible.sync="addPhaseVisible"
+            :select-phase="selectPhase"
+            @onsubmit="addPhaseSubmit"
+        >
+        </add-phase>
+    </template>
+</div>

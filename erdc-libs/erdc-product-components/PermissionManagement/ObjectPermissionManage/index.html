@@ -1,0 +1,87 @@
+<div
+    id="objectPermissionManage"
+    ref="objectPermissionManage"
+    class="flex flex-column h-100p"
+>
+    <resizable-container v-if="true">
+        <template #left>
+            <div class="folder-domain-tree tree-management h-100p">
+                <div class="tree-header">
+                    <div class="tree-title">{{i18n.permissionDomain}}</div>
+                    <div class="search">
+                        <erd-input
+                            v-model="searchValue"
+                            clearable
+                            class="w-100p"
+                            suffix-icon="erd-iconfont erd-icon-search"
+                            :placeholder="i18n.searchKeyword"
+                            @input="folderDomainSearch"
+                        ></erd-input>
+                    </div>
+                </div>
+
+                <erd-scrollbar>
+                    <erd-ex-tree
+                        ref="folderDomainTree"
+                        :data="treeData"
+                        :props="treeProps"
+                        node-key="key"
+                        highlight-current
+                        default-expand-all
+                        :expand-on-click-node="false"
+                        :default-current-keys="currentKey"
+                        :filter-node-method="filterSearch"
+                        @node-click="folderDomainNodeClick"
+                    ></erd-ex-tree>
+                </erd-scrollbar>
+            </div>
+        </template>
+
+        <template #right>
+            <div class="prd-permission-obj-section">
+                <permission-title
+                    ref="title"
+                    :editable="isEditPermission"
+                    :default-current-level="defaultCurrentLevel"
+                    :is-show-returnback="false"
+                    :isShowReadBtn="isShowReadBtn"
+                    :select-options="selectOptions"
+                    @change-organization="handlerChangeOrganization"
+                    @change-edit-permission="handlerChangeEditPermission"
+                ></permission-title>
+            </div>
+            <fam-object-permission
+                class="bg-white ptrl-xl grow-1"
+                ref="objectPermissionMain"
+                :query-params="queryParams"
+                :query-scope="queryScope"
+                :appName="contextDetail.appName"
+                v-bind="$attrs"
+                @permissionReady="permissionReady"
+            ></fam-object-permission>
+        </template>
+    </resizable-container>
+
+    <template v-if="false">
+        <div class="prd-permission-obj-section">
+            <permission-title
+                ref="title"
+                :editable="isEditPermission"
+                :default-current-level="defaultCurrentLevel"
+                :is-show-returnback="false"
+                :isShowReadBtn="isShowReadBtn"
+                :select-options="selectOptions"
+                @change-organization="handlerChangeOrganization"
+                @change-edit-permission="handlerChangeEditPermission"
+            ></permission-title>
+        </div>
+        <fam-object-permission
+            class="bg-white ptrl-xl grow-1"
+            ref="objectPermissionMain"
+            :query-params="queryParams"
+            :query-scope="queryScope"
+            :appName="contextDetail.appName"
+            @permissionReady="permissionReady"
+        ></fam-object-permission>
+    </template>
+</div>

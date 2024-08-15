@@ -1,0 +1,23 @@
+<div
+    ref="securityLevelConfig"
+    id="security-level-config"
+    class="h-100p flex flex-column bg-normal"
+>
+    <FamPageTitle
+        ref="famPageTitle"
+        class="pl-16"
+    ></FamPageTitle>
+    <erd-tabs v-model="activeTab">
+        <erd-tab-pane
+            v-for="component in componentConfig"
+            :label="component.name"
+            :name="component.componentName"
+        >
+            <component
+                v-if="component.componentName === activeTab"
+                :is="component.componentName"
+                v-bind="component.props"
+            ></component>
+        </erd-tab-pane>
+    </erd-tabs>
+</div>

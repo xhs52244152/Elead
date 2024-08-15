@@ -1,0 +1,262 @@
+<div class="system-dashboard_com w-100p h_100p">
+    <div class="system-dashboard_com_content">
+        <div
+            v-if="!cards || cards.length === 0"
+            class="vtable-empty el-dashboard-no-data"
+        >
+            <fam-empty></fam-empty>
+        </div>
+        <el-scrollbar
+            v-else
+            style="height: 100%"
+            :wrap-style="`height: calc(100% + ${gutterWidth}px);`"
+        >
+            <grid-layout
+                ref="gridlayout"
+                :layout.sync="cards"
+                :col-num="24"
+                :row-height="30"
+                :is-draggable="isEditMode"
+                :is-resizable="isEditMode"
+                :autoSize="true"
+                :margin="[10, 10]"
+                :use-css-transforms="true"
+                :vertical-compact="true"
+                :prevent-collision="false"
+            >
+                <grid-item
+                    v-for="card in cards"
+                    :x="card.x"
+                    :y="card.y"
+                    :w="card.w"
+                    :h="card.h"
+                    :i="card.oid || card.i"
+                    :key="card.oid || card.i"
+                    :minW="8"
+                    :minH="8"
+                    :style="{touchAction: 'none'}"
+                    @moved="movedEvent"
+                    @resized="resizedEvent"
+                >
+                    <div
+                        class="w-100p h_100p col-item"
+                        :ref="'card'+ card.id"
+                    >
+                        <div class="x_panel h_100p">
+                            <div
+                                class="h_100p x_content el-scroll"
+                                v-if="card.componentDefine && !card.isError"
+                            >
+                                <component
+                                    :is="card.componentDefine"
+                                    :config="card.config"
+                                    :title="card.title"
+                                    :sub-title="card.subTitle"
+                                ></component>
+                            </div>
+                            <div
+                                v-else
+                                class="error-card"
+                            >
+                                <div class="error-card-title">{{card.title}}</div>
+                                <div class="error-card-content flex justify-center align-items-center">
+                                    <component
+                                        :is="card.componentDefine"
+                                        :config="card.config"
+                                        :title="card.title"
+                                        :sub-title="card.subTitle"
+                                    ></component>
+                                </div>
+                            </div>
+                            <div class="right-btn">
+                                <erd-button
+                                    v-if="!fullState && !isFull"
+                                    type="icon"
+                                    icon="erd-iconfont erd-icon-zoom-in"
+                                    @click="setFull(card.id)"
+                                ></erd-button>
+
+                                <erd-pulldown
+                                    v-if="isEditMode && !isFull"
+                                    :noArrowIcon="true"
+                                    right
+                                    type="text"
+                                >
+                                    <i class="el-icon-more"></i>
+                                    <template #pulldown>
+                                        <erd-pulldown-menu>
+                                            <template
+                                                v-if=" availableCardsMap[card.roleBObjectRef]
+                                                  && availableCardsMap[card.roleBObjectRef].menu
+                                                  && availableCardsMap[card.roleBObjectRef].menu.length"
+                                            >
+                                                <template v-for="item in availableCardsMap[card.roleBObjectRef].menu">
+                                                    <erd-pulldown-menu-item
+                                                        v-if="item.clazz === 'dashboard-card-edit-btn'"
+                                                        @click="editCard(card)"
+                                                    >
+                                                        {{i18nMappingObj.edit}}
+                                                    </erd-pulldown-menu-item>
+                                                    <erd-pulldown-menu-item
+                                                        v-else-if="item.clazz === 'dashboard-card-config-btn'"
+                                                        @click="configCard(card)"
+                                                    >
+                                                        {{i18nMappingObj.config}}
+                                                    </erd-pulldown-menu-item>
+                                                </template>
+                                            </template>
+                                            <erd-pulldown-menu-item @click="deleteCard(card)">
+                                                {{i18nMappingObj.deleteCard}}
+                                            </erd-pulldown-menu-item>
+                                        </erd-pulldown-menu>
+                                    </template>
+                                </erd-pulldown>
+                            </div>
+                        </div>
+                    </div>
+                </grid-item>
+            </grid-layout>
+        </el-scrollbar>
+    </div>
+    <transition name="erd-dashboard-toggle">
+        <div
+            class="system-dashboard_com_add_card"
+            v-if="isEditMode"
+        >
+            <div class="card-title plr-16 pt-16">
+                <h4>{{i18n.chooseCard}}</h4>
+                <erd-input
+                    v-model="searchStr"
+                    :clearable="true"
+                    :placeholder="i18n.searchPlac"
+                    @clear="clearSearch"
+                    @keyup.enter.native="searchCard"
+                    class="mt-16"
+                >
+                    <template #suffix>
+                        <erd-icon
+                            icon="search"
+                            class="el-input__icon search-suffix-icon cursor-pointer"
+                            @click.native="searchCard"
+                        ></erd-icon>
+                    </template>
+                </erd-input>
+            </div>
+            <div
+                v-if="!availableCards || availableCards.length === 0"
+                class="vtable-empty el-dashboard-no-data"
+            >
+                <fam-empty></fam-empty>
+            </div>
+            <el-scrollbar
+                v-else
+                class="plr-16 pb-16"
+                style="height: calc(100% - 80px)"
+                :wrap-style="{height: `calc(100% + ${gutterWidth}px)`, paddingBottom: '10px'}"
+            >
+                <div
+                    class="system-dashboard_com_choose_app_item"
+                    draggable="true"
+                    unselectable="on"
+                    v-for="item in availableCards"
+                    @dragstart="dragstart(item)"
+                    @dragend="dragend"
+                    @drag="drag"
+                >
+                    <div class="system-dashboard_com_choose_app_item_wrapper">
+                        <div class="system-dashboard_com_choose_app_item_desc">
+                            <h4>
+                                {{ item.displayName }}<erd-tag
+                                    v-if="setUsed(item.widget)"
+                                    type="success"
+                                    class="ml-8"
+                                    ><i class="erd-iconfont erd-icon-success mr-4"></i>已启用</erd-tag
+                                >
+                            </h4>
+                            <p>{{item.descriptionI18nJson ? item.descriptionI18nJson.value : ''}}</p>
+                        </div>
+                    </div>
+                </div>
+            </el-scrollbar>
+        </div>
+    </transition>
+    <erd-ex-dialog
+        title="配置"
+        :visible.sync="visibleForCardConfig"
+        width="1200px"
+        @close="cancelAddCard"
+    >
+        <div
+            v-if="cardsConfig.isError"
+            class="h-300 flex justify-center align-items-center"
+        >
+            <component
+                v-if="currentCard"
+                ref="cardConfig"
+                :is="cardsConfig[currentCard.widget]"
+                :config="currentCard.config"
+            ></component>
+        </div>
+        <el-scrollbar
+            v-else
+            class="h-300"
+            :wrap-style="`height: calc(100% + ${gutterWidth}px);`"
+        >
+            <component
+                v-if="currentCard"
+                ref="cardConfig"
+                :is="cardsConfig[currentCard.widget]"
+                :config="currentCard.config"
+            ></component>
+        </el-scrollbar>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                :disabled="currentCard && cardsConfig[currentCard.widget] === ErrorComponent"
+                @click="currentCard && currentCard.i !== 'drop' ? updateCardConfig() : addCard()"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="cancelAddCard">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+    <erd-ex-dialog
+        title="编辑"
+        :visible.sync="visibleForCardEdit"
+        width="1200px"
+        @close="visibleForCardEdit = false"
+    >
+        <FamDynamicForm
+            ref="form"
+            :form="cardEditForm"
+            :data="cardEditFormConfigs"
+        >
+            <template #appName="scope">
+                <el-select v-model="formData.appName">
+                    <el-option
+                        v-for="item in appList"
+                        :key="item.identifierNo"
+                        :label="item.nameI18nJson && item.nameI18nJson[currentLan] ? item.nameI18nJson[currentLan] : item.displayName"
+                        :value="item.identifierNo"
+                    >
+                    </el-option>
+                </el-select>
+            </template>
+        </FamDynamicForm>
+        <template
+            #footer
+            class="dialog-footer"
+        >
+            <erd-button
+                type="primary"
+                @click="updateCardEdit"
+            >
+                {{ i18nMappingObj.confirm }}
+            </erd-button>
+            <erd-button @click="visibleForCardEdit = false">{{ i18nMappingObj.cancel }}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

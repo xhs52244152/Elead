@@ -1,0 +1,45 @@
+.message-configure-dialog .el-form .el-form-item .el-checkbox {
+  margin-right: 8px;
+}
+.message-configure-dialog .el-form .el-form-item .select-width {
+  width: 176px;
+}
+.message-configure-dialog .el-form .el-form-item .input-width {
+  width: 100px;
+}
+.message-configure-dialog .el-form .el-form-item .input-width .el-input__inner {
+  display: inline-block;
+  width: 68px;
+}
+.message-configure-dialog .el-form .el-form-item .black-85 {
+  color: var(--colorTextNormal);
+}
+.message-configure-dialog .el-form .el-form-item .black-45 {
+  color: rgba(0, 0, 0, 0.45);
+}
+.message-configure-dialog .el-form .el-form-item .el-input-group__append {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  background: #F1F1F1;
+  border: 1px solid #d9d9d9;
+  border-left: 0;
+  border-radius: 0 2px 2px 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.85);
+  text-align: center;
+  font-weight: 400;
+  padding: 0;
+}
+.message-configure-dialog .el-form .el-form-item .notify-send-type {
+  height: 22px;
+  line-height: 22px;
+  margin-top: 12px;
+}
+.message-configure-dialog .el-form .el-form-item input::-webkit-outer-spin-button,
+.message-configure-dialog .el-form .el-form-item input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/*# sourceMappingURL=style.css.map */

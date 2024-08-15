@@ -1,0 +1,28 @@
+.type-set-icon-dialog .icon-select-item .el-form-item__content {
+    height: 32px;
+}
+.type-set-icon-dialog .icon-select-item .el-form-item__content .editIcon > div {
+    display: flex;
+    align-item: center;
+}
+.type-set-icon-dialog .icon-color-list li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72px;
+    height: 32px;
+    line-height: var(--formItemHeight);
+    border-radius: var(--borderRadius);
+    color: #fff;
+    cursor: pointer;
+}
+.type-set-icon-dialog .icon-color-list li.is-active {
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #567ffd;
+}
+
+.type-set-icon-dialog .icon-placeholder {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--borderRadius);
+}

@@ -1,0 +1,57 @@
+<div class="fam-action-list h-100p">
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+    >
+        <template #column:default:typeName:content="{ scope: { row } }">
+            <span>{{ getOwningType(row) }}</span>
+        </template>
+        <template #column:default:operation:content="{ scope }">
+            <erd-tooltip
+                class="item"
+                effect="dark"
+                placement="top"
+                :disabled="scope.row.tenantId === tenantId"
+                :content="i18n.noCurrentTenant"
+            >
+                <erd-button
+                    type="text"
+                    :disabled="scope.row.tenantId !== tenantId"
+                    @click="operatingPopover({ visible: true, singleButton: scope.row, type: 'edit' })"
+                >
+                    {{ i18nMappingObj.edit }}
+                </erd-button>
+            </erd-tooltip>
+        </template>
+    </fam-view-table>
+
+    <!--新增、编辑、查看功能按钮-->
+    <erd-ex-dialog
+        ref="dialog"
+        :visible="functionButton.visible"
+        size="large"
+        custom-class="add-border-top-line"
+        :title="functionButton.type === 'create' ? i18nMappingObj.cButton : functionButton.type === 'view' ? i18nMappingObj.vButton : i18nMappingObj.eButton"
+        @close="operatingPopover({})"
+    >
+        <action-list-table
+            :button-info="functionButton"
+            ref="actionListTable"
+        ></action-list-table>
+        <template
+            #footer
+            v-if="functionButton.type === 'edit'"
+        >
+            <div>
+                <erd-button
+                    type="primary"
+                    :loading="functionButton.loading"
+                    @click="functionButton.type === 'view' ? operatingPopover({}) : fnOnSubmit()"
+                >
+                    {{ i18nMappingObj.ok }}
+                </erd-button>
+                <erd-button @click="operatingPopover({})">{{ i18nMappingObj.cancel }}</erd-button>
+            </div>
+        </template>
+    </erd-ex-dialog>
+</div>

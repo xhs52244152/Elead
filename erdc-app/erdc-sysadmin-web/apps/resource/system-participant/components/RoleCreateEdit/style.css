@@ -1,0 +1,48 @@
+.el-dialog__header {
+  font-size: 16px;
+  color: var(--colorTextNormal);
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+.RoleCreateEdit_content .roleName {
+  position: relative;
+  width: 100%;
+}
+.RoleCreateEdit_content .roleName .intermation {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer;
+}
+.RoleCreateEdit_content .describe {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer;
+}
+.RoleCreateEdit_content .el-form-item__label {
+  justify-content: flex-end !important;
+  align-items: center;
+}
+.RoleCreateEdit_content .el-input-group__append > .el-button,
+.RoleCreateEdit_content .el-input-group__prepend > .el-button {
+  padding: 0;
+  margin: -1px -36px;
+}
+.RoleCreateEdit_content .el-input-group__prepend {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.RoleCreateEdit_content .el-input-group__append {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.RoleCreateEdit_content .sort > .el-input__inner {
+  text-align: center;
+}
+.RoleCreateEdit_content .el-input-number {
+  height: 32px;
+}
+
+/*# sourceMappingURL=style.css.map */

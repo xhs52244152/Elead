@@ -1,0 +1,19 @@
+<div class="h-100p">
+    <fam-advanced-table
+        ref="famAdvancedTable"
+        :table-max-height="400"
+        :view-table-config="viewTableConfig"
+        :checkbox-config="{checkField: 'checked', reserve: true }"
+    >
+        <template #left:toolbar:first>
+            <FamBasicFilter
+                v-model="basicFilter"
+                :maxNumber="4"
+                :conditionColumnsList="columnsList"
+                :columnsList="columnsList"
+                :show-data="showData"
+                @condition-change="conditionChange"
+            ></FamBasicFilter>
+        </template>
+    </fam-advanced-table>
+</div>

@@ -1,0 +1,37 @@
+<div class="h_100p SignatureWatermarkManage">
+    <fam-view-table
+        ref="famViewTable"
+        :view-table-config="viewTableConfig"
+        :is-adaptive-height="true"
+        @action-click="actionClick"
+    >
+        <template
+            slot="column:default:operation:content"
+            slot-scope="{scope}"
+        >
+            <fam-action-pulldown
+                :is-operation="true"
+                :action-config="{
+                    name: CONST.operationKey.watermark.row,
+                    objectOid: scope.row.oid,
+                    className: CONST.className.watermark,
+                }"
+                :action-data="scope.row"
+                @click="onCommand"
+                :default-btn-config="defaultBtnConfig"
+            ></fam-action-pulldown>
+        </template>
+    </fam-view-table>
+
+    <WatermarkForm
+        ref="watermarkForm"
+        @done="refreshTable"
+    >
+    </WatermarkForm>
+    <!-- 导入 -->
+    <import-dialog
+        ref="importModal"
+        :action="'/file/watermark/v1/import'"
+        @submitSucess="refreshTable"
+    ></import-dialog>
+</div>

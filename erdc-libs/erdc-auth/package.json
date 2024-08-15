@@ -1,0 +1,28 @@
+{
+  "name": "@erdc-libs/erdc-auth",
+  "description": "Auth服务辅助工具",
+  "version": "3.1.0",
+  "module": "src/index.js",
+  "main": "auth-login.js",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ]
+    ]
+  },
+  "scripts": {
+    "build": "rollup src/index.js --file auth-login.js --name ErdcAuth --format umd --plugin babel"
+  },
+  "dependencies": {
+    "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.25.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "rollup": "^4.19.1"
+  }
+}

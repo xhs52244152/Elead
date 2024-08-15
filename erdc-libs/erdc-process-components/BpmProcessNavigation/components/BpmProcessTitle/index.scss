@@ -1,0 +1,27 @@
+.bpm-process-title-content {
+    .thumbnail-title-one {
+        display: flex;
+    }
+
+    .thumbnail-title-sub {
+        display: flex;
+        justify-content: center;
+
+        .thumbnail-title-sub-sub {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .bpm-process-icon-content {
+                width: auto;
+                height: auto;
+                border-width: 0;
+
+                .el-popover__reference-wrapper {
+                    border-color: inherit;
+                }
+            }
+        }
+    }
+
+}

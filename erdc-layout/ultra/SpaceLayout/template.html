@@ -1,0 +1,41 @@
+<div
+    class="fam-main"
+    :class="{ 'fam-main--collapsed': collapsed }"
+>
+    <div
+        class="fam-main__left"
+        v-if="showMenu"
+        :class="{ 'fam-main__left--collapsed': collapsed }"
+    >
+        <FamSideMenu
+            ref="menuRef"
+            :resources="secondaryResources"
+            :collapsed.sync="collapsed"
+            :current-root="rootResource"
+            :default-active="currentActiveRoutePath"
+            :is-template="readonly"
+            @routeTo="routeTo"
+        >
+            <transition name="el-fade-in">
+                <component
+                    v-show="!collapsed"
+                    :is="spaceSelectComponent"
+                    :type-name="typeName"
+                    :extend-params="extendParams"
+                    :readonly="readonly"
+                    :space-detail="spaceDetail"
+                    @changeSpace="handleSpaceChange"
+                    @clickItem="gotoListPage"
+                ></component>
+            </transition>
+        </FamSideMenu>
+    </div>
+    <div :class="{ 'fam-main__right': true, 'w-100p': !showMenu }">
+        <slot name="third-menu"></slot>
+        <div class="fam-main__right-content flex flex-column fam-main__right-content--include-margin">
+            <keep-alive :include="cachedViews">
+                <router-view :key="routerViewKey"></router-view>
+            </keep-alive>
+        </div>
+    </div>
+</div>

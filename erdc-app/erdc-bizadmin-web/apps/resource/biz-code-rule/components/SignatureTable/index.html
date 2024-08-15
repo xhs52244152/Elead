@@ -1,0 +1,88 @@
+<div id="signatureTable">
+    <FamPageTitle
+        :title="titleName"
+        show-back-button
+        @back="callback"
+    ></FamPageTitle>
+    <div class="signature-header">
+        <div class="h-left">
+<!--            <erd-button-->
+<!--                icon="erd-iconfont erd-icon-return"-->
+<!--                @click="callback"-->
+<!--                >返回</erd-button-->
+<!--            >-->
+            <erd-input
+                v-model="searchValue"
+                class="search"
+                style="width: 320px;"
+                suffix-icon="erd-iconfont erd-icon-search"
+                :placeholder="i18n.enterFeatureCode"
+                clearable
+            ></erd-input>
+        </div>
+        <div class="h-right" style="font-size: 0;">
+            <erd-button @click="onCreate" type="primary">{{i18n.create}}</erd-button>
+            <erd-button
+                style="min-width: 32px;padding: 0 8px 0 8px;"
+                icon="el-icon-refresh"
+                @click="refreshTable"
+            ></erd-button>
+        </div>
+    </div>
+    <div class="table w_100p">
+        <fam-erd-table
+            ref="famErdTable"
+            border
+            show-overflow
+            auto-resize
+            :height="tableHeight"
+            :data="tableData"
+            :column="column"
+            :column-config="{resizable: true}"
+            :edit-config="{trigger: 'click', mode: 'cell'}"
+            @edit-actived="editActived"
+            @edit-closed="editClosed"
+        >
+            <template #column:edit:serialCode="{data}">
+                <erd-input
+                    ref="serialCodeInput"
+                    v-model="data.row[data.column.property]"
+                    @input="(item) => onInput(item, data.row)"
+                ></erd-input>
+            </template>
+        </fam-erd-table>
+    </div>
+    
+    <erd-pagination
+        class="pagination"
+        :total="total"
+        :hide-on-single-page="false"
+        :current-page="pageIndex"
+        :page-sizes="[5, 10, 20, 50, 100]"
+        :page-size="pageSize"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+    ></erd-pagination>
+
+    <erd-ex-dialog
+        v-if="visible"
+        size="large"
+        :visible.sync="visible"
+        :title="i18n.createFeatureCode"
+        @close="onCancel"
+    >
+        <signatrue-form
+            ref="signatrueForm"
+            :rule-id="ruleId"
+            :code-rule-data="codeRuleData"
+        ></signatrue-form>
+        <template #footer>
+            <erd-button
+                type="primary"
+                @click="onSubmit"
+                >{{i18n.confirm}}</erd-button
+            >
+            <erd-button @click="onCancel">{{i18n.cancel}}</erd-button>
+        </template>
+    </erd-ex-dialog>
+</div>

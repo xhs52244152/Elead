@@ -1,0 +1,101 @@
+#mainPage .container_base_info {
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  height: 30px;
+  align-items: center;
+  padding-top: 16px;
+  margin-bottom: 18px;
+}
+#mainPage .container_base_info .top_info {
+  margin-left: 10px;
+  font-weight: 600;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 800px;
+}
+#mainPage .container_base_info .title_button {
+  position: absolute;
+  right: 10px;
+}
+#mainPage .personal_info {
+  display: flex;
+  padding: 0 10px;
+}
+#mainPage .personal_info .personalInfo {
+  height: 40px;
+  margin: 18px 0;
+  margin-right: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: auto 200px;
+}
+#mainPage .personal_info .personalInfo p {
+  margin-bottom: 4px;
+}
+#mainPage .personal_info .personalInfo .avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-size: auto 70px;
+}
+#mainPage .personal_info .personalInfo .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#mainPage .personal_info .personalInfo .details .name {
+  font-size: 14px;
+  font-size: var(--fontSize);
+  font-weight: 700;
+}
+#mainPage .personal_info .personalInfo .details .branch {
+  opacity: 0.8;
+  font-size: 12px;
+  font-weight: 400;
+}
+#mainPage .main_info_container {
+  position: relative;
+}
+#mainPage .main_info_container .el-tabs__content {
+  position: absolute;
+  top: 75px;
+  bottom: 0;
+  overflow: auto;
+  left: 15px;
+  right: 15px;
+}
+#mainPage .main_info_container .add_tabs {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  background: #FFFFFF;
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 2px;
+}
+#mainPage .main_info_container .add_tabs:hover {
+  cursor: pointer;
+}
+#mainPage .main_info_container .tabs_button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+#mainPage .main_info_container .tabs_button .editButoon {
+  min-width: 32px;
+  padding: 0;
+}
+
+/*# sourceMappingURL=style.css.map */
